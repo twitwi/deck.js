@@ -23,6 +23,7 @@
   border-radius: 5px;
   overflow: hidden;
   background: #fff;
+  font-family: sans-serif;
 }
 .js .theme-menu {
   display: block;
@@ -32,6 +33,7 @@
   font-size: 20px;
   border: 0;
   padding: 5px 10px;
+  margin: 0;
   height: 20px;
   position: relative;
   top: -5px;
