@@ -1,3 +1,16 @@
+.introduction {
+	> header {
+		position:absolute;
+		top:0;
+		left:0;
+		z-index:4;
+	}
+	
+	.deck-container h2 {
+		padding-top:1.25em;
+	}
+}
+
 .theme-menu {
 	display:none;
 	position:fixed;
