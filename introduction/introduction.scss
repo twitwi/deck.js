@@ -11,8 +11,22 @@ body, html {
 		z-index:4;
 	}
 	
-	.deck-container h2 {
-		margin-top:32px;
+	.deck-container {
+		> .slide :first-child {
+			margin-top:32px;
+		}
+		
+		&.deck-menu {
+			> .slide {
+				position:relative;
+				left:0;
+				top:32px;
+				
+				:first-child {
+					margin-top:0;
+				}
+			}
+		}
 	}
 }
 
@@ -36,9 +50,6 @@ body, html {
 		font-size:12px;
 		vertical-align:baseline;
 		margin:0 4px 0 15px;
-	}
-	
-	select {
 	}
 }
 

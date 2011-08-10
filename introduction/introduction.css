@@ -9,8 +9,16 @@ body, html {
   left: 0;
   z-index: 4;
 }
-.introduction .deck-container h2 {
+.introduction .deck-container > .slide :first-child {
   margin-top: 32px;
+}
+.introduction .deck-container.deck-menu > .slide {
+  position: relative;
+  left: 0;
+  top: 32px;
+}
+.introduction .deck-container.deck-menu > .slide :first-child {
+  margin-top: 0;
 }
 
 .theme-menu {
