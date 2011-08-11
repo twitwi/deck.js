@@ -1,12 +1,24 @@
-
+@mixin box-shadow($x, $y, $blur, $color) {
+	-webkit-box-shadow:$x $y $blur $color;
+	-moz-box-shadow:$x $y $blur $color;
+	box-shadow:$x $y $blur $color;
+}
 
 .introduction {
 	.deck-container {
 		width:100%;
 		max-width:864px;
-		margin:16px auto 0 auto;
+		margin:16px auto 24px auto;
 		height:540px;
 		font-size:16px;
+		
+		.no-boxshadow & {
+			border:1px solid #e4e4e4;
+		}
+		
+		.boxshadow & {
+			@include box-shadow(0, 5px, 10px, rgba(0,0,0,.3));
+		}
 	}
 }
 
