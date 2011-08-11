@@ -1,12 +1,8 @@
-body {
-	background:#000;
-}
-
 .deck-container {
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
 	font-size:1.25em;
-	background:#000;
 	color:#aaa;
+	background:#000;
 	
 	.slide {
 		background:#000;
@@ -113,7 +109,20 @@ body {
 		font-size:0.6666em;
 	}
 	
+	.goto-form {
+		background:#000;
+		border:1px solid #f0a;
+		
+		label {
+			color:#fff;
+		}
+	}
+	
 	&.deck-menu {
+		.slide {
+			background:#333;
+		}
+		
 		.deck-current {
 			background:#444;
 			
@@ -122,9 +131,6 @@ body {
 				-webkit-box-shadow:0 0 20px #f0a, 0 0 5px #fff;
 				-moz-box-shadow:0 0 20px #f0a, 0 0 5px #fff;
 				box-shadow:0 0 20px #f0a, 0 0 5px #fff;
-				-webkit-border-radius:5px;
-				-moz-border-radius:5px;
-				border-radius:5px;
 			}
 		}
 	}

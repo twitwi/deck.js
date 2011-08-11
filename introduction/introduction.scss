@@ -5,7 +5,7 @@ body, html {
 
 .introduction {
 	> header {
-		position:absolute;
+		position:fixed;
 		top:0;
 		left:0;
 		z-index:4;
@@ -28,6 +28,8 @@ body, html {
 			}
 		}
 	}
+	
+	
 }
 
 .theme-menu {
