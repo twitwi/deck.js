@@ -133,7 +133,7 @@ that use the API provided by core.
 		]);
 		*/	
 		init: function(elements, opts) {
-			$.extend(true, options, $[deck].defaults, opts);
+			options = $.extend(true, {}, $[deck].defaults, opts);
 			slides = [];
 			current = 0;
 			
@@ -161,6 +161,20 @@ that use the API provided by core.
 						e.preventDefault();
 						break;
 				}
+			});
+			
+			/*
+			Kick iframe videos, which dont like to redraw w/ transforms.
+			Remove this if Webkit ever fixes it.
+			 */
+			$.each(slides, function(i, $el) {
+				$el.unbind('webkitTransitionEnd').bind('webkitTransitionEnd',
+				function(event) {
+					var embeds = $(this).find('iframe').css('opacity', 0);
+					window.setTimeout(function() {
+						embeds.css('opacity', 1);
+					}, 100);
+				});
 			});
 			
 			updateStates();
@@ -213,7 +227,7 @@ that use the API provided by core.
 		specified, the current slide is returned.
 		*/
 		getSlide: function(index) {
-			var i = index ? index : current;
+			var i = typeof index !== 'undefined' ? index : current;
 			if (typeof i != 'number' || i < 0 || i >= slides.length) return null;
 			return slides[i];
 		},

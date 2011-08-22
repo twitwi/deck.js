@@ -20,6 +20,9 @@ html {
 .ready .deck-container {
   visibility: visible;
 }
+.touch .deck-container {
+  -webkit-text-size-adjust: none;
+}
 .deck-container div, .deck-container span, .deck-container object, .deck-container iframe,
 .deck-container h1, .deck-container h2, .deck-container h3, .deck-container h4, .deck-container h5, .deck-container h6, .deck-container p, .deck-container blockquote, .deck-container pre,
 .deck-container abbr, .deck-container address, .deck-container cite, .deck-container code, .deck-container del, .deck-container dfn, .deck-container em, .deck-container img, .deck-container ins, .deck-container kbd, .deck-container q, .deck-container samp,
@@ -85,6 +88,9 @@ html {
 }
 .deck-container pre, .deck-container code, .deck-container kbd, .deck-container samp {
   font-family: monospace, sans-serif;
+}
+.deck-container a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .deck-container a:hover, .deck-container a:active {
   outline: none;
@@ -171,7 +177,7 @@ html {
   color: #036;
 }
 .deck-container a:link {
-  -webkit-tap-highlight-color: #FF5E99;
+  -webkit-tap-highlight-color: #fff;
 }
 .deck-container h1 {
   font-size: 4.5em;
@@ -293,6 +299,11 @@ body.deck-container {
     text-shadow: none !important;
     filter: none !important;
     -ms-filter: none !important;
+    -webkit-box-reflect: none !important;
+    -moz-box-reflect: none !important;
+  }
+  * :before, * :after {
+    display: none !important;
   }
 
   a, a:visited {
@@ -342,6 +353,21 @@ body.deck-container {
     position: static !important;
     visibility: visible !important;
     display: block !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -o-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+  }
+
+  h1 {
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -o-transform: none !important;
+    -ms-transform: none !important;
+    transform: none !important;
+    padding: 0 !important;
+    position: static !important;
   }
 
   .deck-container > .slide {
@@ -349,6 +375,8 @@ body.deck-container {
   }
 
   .deck-container {
+    width: 100% !important;
+    padding: 0 !important;
     display: block !important;
   }
 

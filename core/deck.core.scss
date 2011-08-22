@@ -20,6 +20,10 @@ html {
 		visibility:visible;
 	}
 	
+	.touch & {
+		-webkit-text-size-adjust:none;
+	}
+	
 	/* Resets and base styles from HTML5 Boilerplate */
 	div, span, object, iframe,
 	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -101,6 +105,8 @@ html {
 	}
 	
 	a {
+		-webkit-tap-highlight-color:rgba(0,0,0,0);
+		
 		&:hover, &:active {
 			outline:none;
 		}
@@ -214,7 +220,7 @@ html {
 		}
 		
 		&:link {
-			-webkit-tap-highlight-color: #FF5E99;
+			-webkit-tap-highlight-color: #fff;
 		}
 	}
 	/* End HTML5 Boilerplate adaptations */
@@ -356,8 +362,12 @@ body.deck-container {
 
 
 @media print {
-  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important;
-  -ms-filter: none !important; } 
+  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; 	-webkit-box-reflect:none !important; -moz-box-reflect:none !important;
+	
+	:before, :after {
+		display:none !important;
+	}
+} 
   a, a:visited { color: #444 !important; text-decoration: underline; }
   a[href]:after { content: " (" attr(href) ")"; }
   abbr[title]:after { content: " (" attr(title) ")"; }
@@ -373,6 +383,21 @@ body.deck-container {
 		position:static !important;
 		visibility:visible !important;
 		display:block !important;
+		-webkit-transform:none !important;
+		-moz-transform:none !important;
+		-o-transform:none !important;
+		-ms-transform:none !important;
+		transform:none !important;
+	}
+	
+	h1 {
+		-webkit-transform:none !important;
+		-moz-transform:none !important;
+		-o-transform:none !important;
+		-ms-transform:none !important;
+		transform:none !important;
+		padding:0 !important;
+		position:static !important;
 	}
 	
 	.deck-container > .slide {
@@ -380,6 +405,8 @@ body.deck-container {
 	}
 	
 	.deck-container {
+		width:100% !important;
+		padding:0 !important;
 		display:block !important;
 	}
 	

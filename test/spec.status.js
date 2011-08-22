@@ -1,6 +1,12 @@
 describe('Deck JS Status Indicator', function() {
 	beforeEach(function() {
 		loadFixtures('standard.html');
+		if (Modernizr.history) {
+			history.replaceState({}, "", "#")
+		}
+		else {
+			window.location.hash = '#';
+		}
 		$.deck('.slide');
 	});
 	
@@ -14,9 +20,6 @@ describe('Deck JS Status Indicator', function() {
 	
 	it('should update to the correct number on slide change', function() {
 		$.deck('go', 2);
-		// Why does this fail if I remove the setTimeout?
-		setTimeout(function() {
-			expect($(defaults.selectors.statusCurrent)).toHaveText('3');
-		}, 0);
+		expect($(defaults.selectors.statusCurrent)).toHaveText('3');
 	});
 });

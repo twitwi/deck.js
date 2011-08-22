@@ -3,6 +3,12 @@ describe('Deck JS Quick Go-To', function() {
 	
 	beforeEach(function() {
 		loadFixtures('standard.html');
+		if (Modernizr.history) {
+			history.replaceState({}, "", "#")
+		}
+		else {
+			window.location.hash = '#';
+		}
 		$.deck('.slide');
 	});
 	
