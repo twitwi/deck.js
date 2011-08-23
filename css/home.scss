@@ -544,6 +544,28 @@
 	}
 }
 
+.on-slide-1 {
+	#sample pre {
+		position:relative;
+		
+		&:after {
+			content:"Use arrow keys to navigate";
+			text-shadow:1px 1px 1px rgba(0,0,0,.1);
+			color:#aaa;
+			font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+			font-weight:normal;
+			font-size:24px;
+			height:32px;
+			position:absolute;
+			top:50%;
+			margin-top:-16px;
+			left:0;
+			right:0;
+			text-align:center;
+		}
+	}
+}
+
 .on-slide-2 {
 	#sample > pre > code {
 		color:#333;
