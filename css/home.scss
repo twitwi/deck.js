@@ -777,14 +777,30 @@
 			transition-delay:200ms;
 		}
 	}
+}
+
+.pointerevents.csstransforms.csstransitions {
+	.deck-current {
+		z-index:auto; // um, webkit bug if z-index + transforms + transitions
+	}
 	
-	.deck-after, .deck-next {
-		pointer-events:none; // Sorry Opera, IE10.  Get with it.
+	.deck-after, .deck-before, .deck-previous, .deck-next {
+		&:not(.deck-child-current) {
+			pointer-events:none;
+		}
+	}
+	
+	.deck-child-current {
+		.deck-before, .deck-previous {
+			pointer-events:auto;
+		}
 	}
 }
 
-.deck-current {
-	z-index:auto; // um, webkit bug if z-index + transforms + transitions
+.no-pointerevents.csstransforms.csstransitions { //aka Opera
+	.deck-current, .deck-child-current {
+		z-index:4;
+	}
 }
 
 .slide .slide {

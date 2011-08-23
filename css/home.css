@@ -683,12 +683,19 @@
   -o-transition-delay: 200ms;
   transition-delay: 200ms;
 }
-.csstransforms.csstransitions .deck-after, .csstransforms.csstransitions .deck-next {
+
+.pointerevents.csstransforms.csstransitions .deck-current {
+  z-index: auto;
+}
+.pointerevents.csstransforms.csstransitions .deck-after:not(.deck-child-current), .pointerevents.csstransforms.csstransitions .deck-before:not(.deck-child-current), .pointerevents.csstransforms.csstransitions .deck-previous:not(.deck-child-current), .pointerevents.csstransforms.csstransitions .deck-next:not(.deck-child-current) {
   pointer-events: none;
 }
+.pointerevents.csstransforms.csstransitions .deck-child-current .deck-before, .pointerevents.csstransforms.csstransitions .deck-child-current .deck-previous {
+  pointer-events: auto;
+}
 
-.deck-current {
-  z-index: auto;
+.no-pointerevents.csstransforms.csstransitions .deck-current, .no-pointerevents.csstransforms.csstransitions .deck-child-current {
+  z-index: 4;
 }
 
 .slide .slide {
