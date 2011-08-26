@@ -251,6 +251,10 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
    <span class="key">keys</span>: {
       <span class="key">next</span>: <span class="str">39</span>, <span class="cm">// right arrow</span>
       <span class="key">previous</span>: <span class="str">37</span> <span class="cm">// left arrow</span>
+   },
+
+   <span class="key">touch</span>: {
+      <span class="key">swipeTolerance</span>: <span class="str">60</span>
    }
 }</code></pre>
 
@@ -275,6 +279,8 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
 				<dd>The numeric keycode used to go to the next slide.</dd>
 				<dt>options.keys.previous</dt>
 				<dd>The numeric keycode used to go to the previous slide.</dd>
+				<dt>options.touch.swipeTolerance</dt>
+				<dd>The number of pixels the users finger must travel to produce a swipe gesture.</dd>
 			</dl>
 		</section>
 		
@@ -606,6 +612,8 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 				<dd>This class is added to the deck container when showing the slide menu.</dd>
 				<dt>options.keys.menu</dt>
 				<dd>The numeric keycode used to toggle between showing and hiding the slide menu.</dd>
+				<dt>options.touch.doubletapWindow</dt>
+				<dd>Two consecutive touch events within this number of milliseconds will be considered a double tap, and will toggle the menu on touch devices.</dd>
 			</dl>
 		</section>
 

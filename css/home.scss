@@ -306,21 +306,6 @@
 		}
 	}
 	
-	.touch.csstransforms.csstransitions & {
-		display:block;
-		-webkit-transform:scale(1);
-		
-		&.deck-nav-disabled {
-			display:none;
-		}
-	}
-	
-	.touch.csstransforms.csstransitions article:not(.on-slide-8) & {
-		&:after, &:before {
-			display:none;
-		}
-	}
-	
 	&:after {
 		content:"deck.navigation";
 		text-shadow:none;
@@ -562,6 +547,10 @@
 			left:0;
 			right:0;
 			text-align:center;
+			
+			.touch & {
+				content: "Swipe left/right to navigate";
+			}
 		}
 	}
 }
