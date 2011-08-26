@@ -23,6 +23,10 @@ on the deck container.
 	options.keys.menu
 		The numeric keycode used to toggle between showing and hiding the slide
 		menu.
+		
+	options.touch.doubletapWindow
+		Two consecutive touch events within this number of milliseconds will
+		be considered a double tap, and will toggle the menu on touch devices.
 	*/
 	$.extend(true, $[deck].defaults, {
 		classes: {
@@ -31,6 +35,10 @@ on the deck container.
 		
 		keys: {
 			menu: 77 // m
+		},
+		
+		touch: {
+			doubletapWindow: 400
 		}
 	});
 
@@ -67,11 +75,32 @@ on the deck container.
 	});
 
 	$d.bind('deck.init', function() {
+		var opts = $[deck]('getOptions'),
+		touchEndTime = 0,
+		currentSlide;
+		
 		// Bind key events
 		$d.bind('keydown.deck', function(e) {
-			if (e.which == $[deck]('getOptions').keys.menu) {
+			if (e.which == opts.keys.menu) {
 				$[deck]('toggleMenu');
 			}
+		});
+		
+		// Double tap to toggle slide menu for touch devices
+		$[deck]('getContainer').bind('touchstart.deck', function(e) {
+			currentSlide = $[deck]('getSlide');
+		})
+		.bind('touchend.deck', function(e) {
+			var now = Date.now();
+			
+			// Ignore this touch event if it caused a nav change (swipe)
+			if (currentSlide !== $[deck]('getSlide')) return;
+			
+			if (now - touchEndTime < opts.touch.doubletapWindow) {
+				$[deck]('toggleMenu');
+				e.preventDefault();
+			}
+			touchEndTime = now;
 		});
 	})
 	.bind('deck.change', function(e, from, to) {
