@@ -96,6 +96,20 @@
 					</ul>
 				</li>
 				<li>
+					<a href="#deck-scale">deck.scale</a>
+					<ul>
+						<li class="expandable">
+							<a href="#deck-scale-methods">Methods</a>
+							<ul>
+								<li><a href="#deck-scale-enable">enableScale</a></li>
+								<li><a href="#deck-scale-disable">disableScale</a></li>
+								<li><a href="#deck-scale-toggle">toggleScale</a></li>
+							</ul>
+						</li>
+						<li><a href="#deck-scale-options">Options</a></li>
+					</ul>
+				</li>
+				<li>
 					<a href="#deck-status">deck.status</a>
 					<ul>
 						<li><a href="#deck-status-options">Options</a></li>
@@ -735,6 +749,70 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 					<p>Applied to the appropriate link to hide it when on the first or last slide.</p>
 					<pre><code><span class="key">display</span>: <span class="str">none</span>;</code></pre>
 				</dd>
+			</dl>
+		</section>
+	</section>
+	
+	<section id="deck-scale">
+		<h2>deck.scale</h2>
+		
+		<p>This module adds automatic scaling to the deck.  It should only be used on standalone decks where the <code>body</code> is the deck container. Slides are scaled down using CSS transforms to fit within the browser window. If the browser window is big enough to hold the slides without scaling, no scaling occurs. The user can disable and enable scaling with a keyboard shortcut.</p>
+		
+		<p class="warning"><strong>Note:</strong> CSS transforms make Flash videos render incorrectly.  Presenters that need to use Flash videos will want to disable scaling to play them.  HTML5 video works fine.</p>
+		
+		<section id="deck-scale-methods" class="methods">
+			<h3>Methods</h3>
+			
+			<section id="deck-scale-enable">
+				<header>
+					<h4>enableScale - <code>$.deck('enableScale')</code></h4>
+				</header>
+				
+				<p>Enables scaling and adds the scale class to the deck container.</p>
+			</section>
+			
+			<section id="deck-scale-disable">
+				<header>
+					<h4>disableScale - <code>$.deck('disableScale')</code></h4>
+				</header>
+				
+				<p>Disables scaling and removes the scale class from the deck container.</p>
+			</section>
+			
+			<section id="deck-scale-toggle">
+				<header>
+					<h4>toggleScale - <code>$.deck('toggleScale')</code></h4>
+				</header>
+				
+				<p>Toggles between enabling and disabling scaling.</p>
+			</section>
+		</section>
+		
+		<section id="deck-scale-options" class="options">
+			<h3>Options</h3>
+			
+			<pre><code>$.<span class="fn">extend</span>(<span class="kw">true</span>, $[deck].defaults, {
+   <span class="key">classes</span>: {
+      <span class="key">scale</span>: <span class="str">'deck-scale'</span>
+   },
+
+   <span class="key">keys</span>: {
+      <span class="key">scale</span>: <span class="str">83</span> <span class="cm">// s</span>
+   },
+
+   <span class="key">baseHeight</span>: <span class="kw">null</span>,
+   <span class="key">scaleDebounce</span>: <span class="str">200</span>
+});</code></pre>
+
+			<dl>
+				<dt>options.classes.scale</dt>
+				<dd>This class is added to the deck container when scaling is enabled. It is enabled by default when the module is included.</dd>
+				<dt>options.keys.scale</dt>
+				<dd>The numeric keycode used to toggle enabling and disabling scaling.</dd>
+				<dt>options.baseHeight</dt>
+				<dd>When <code>baseHeight</code> is falsy, as it is by default, the deck is scaled in proportion to the height of the slides.  You may instead specify a height as a number of <code>px</code>, and the deck will be scaled against this height regardless of the actual content height.</dd>
+				<dt>options.scaleDebounce</dt>
+				<dd>Scaling on the browser resize event is debounced. This number is the threshold in milliseconds. Check out John Hann&rsquo;s <a href="http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/" rel="external">article on debouncing</a> to learn more about it.</dd>
 			</dl>
 		</section>
 	</section>
