@@ -269,6 +269,12 @@
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
+.warning {
+  background: #ffb;
+  padding: 10px;
+  border: 1px solid #ee9;
+}
+
 .hidden {
   display: none;
 }
