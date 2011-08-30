@@ -263,8 +263,10 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
    },
 
    <span class="key">keys</span>: {
-      <span class="key">next</span>: <span class="str">39</span>, <span class="cm">// right arrow</span>
-      <span class="key">previous</span>: <span class="str">37</span> <span class="cm">// left arrow</span>
+      <span class="cm">// enter, space, page down, right arrow, down arrow</span>
+      <span class="key">next</span>: [<span class="str">13</span>, <span class="str">32</span>, <span class="str">34</span>, <span class="str">39</span>, <span class="str">40</span>],
+      <span class="cm">// backspace, page up, left arrow, up arrow</span>
+      <span class="key">previous</span>: [<span class="str">8</span>, <span class="str">33</span>, <span class="str">37</span>, <span class="str">38</span>]
    },
 
    <span class="key">touch</span>: {
@@ -294,7 +296,7 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
 				<dt>options.keys.previous</dt>
 				<dd>The numeric keycode used to go to the previous slide.</dd>
 				<dt>options.touch.swipeTolerance</dt>
-				<dd>The number of pixels the users finger must travel to produce a swipe gesture.</dd>
+				<dd>The number of pixels the user&rsquo;s finger must travel to produce a swipe gesture.</dd>
 			</dl>
 		</section>
 		
@@ -318,7 +320,7 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
 $.deck.defaults.keys.myExtensionKeycode = <span class="str">70</span>; <span class="cm">// 'h'</span>
 $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span class="kw">function</span>() {
    $d.<span class="fn">bind</span>(<span class="str">'keydown.deck'</span>, <span class="kw">function</span>(<span class="var">event</span>) {
-      <span class="kw">if</span> (<span class="var">event</span>.which == $.deck.<span class="fn">getOptions</span>().keys.myExtensionKeycode) {
+      <span class="kw">if</span> (<span class="var">event</span>.which === $.deck.<span class="fn">getOptions</span>().keys.myExtensionKeycode) {
          <span class="cm">// Rock out</span>
       }
    });
