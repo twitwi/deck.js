@@ -83,6 +83,7 @@ on the deck container.
 		$d.unbind('keydown.deckmenu').bind('keydown.deckmenu', function(e) {
 			if (e.which === opts.keys.menu || $.inArray(e.which, opts.keys.menu) > -1) {
 				$[deck]('toggleMenu');
+				e.preventDefault();
 			}
 		});
 		
@@ -102,9 +103,22 @@ on the deck container.
 			}
 			touchEndTime = now;
 		});
+		
+		// Selecting slides from the menu
+		$.each($[deck]('getSlides'), function(i, $s) {
+			$s.unbind('click.deckmenu').bind('click.deckmenu', function(e) {
+				if (!$[deck]('getContainer').hasClass(opts.classes.menu)) return;
+
+				$[deck]('go', i);
+				$[deck]('hideMenu');
+				e.stopPropagation();
+				e.preventDefault();
+			});
+		});
 	})
 	.bind('deck.change', function(e, from, to) {
 		var container = $[deck]('getContainer');
+		
 		if (container.hasClass($[deck]('getOptions').classes.menu)) {
 			container.scrollTop($[deck]('getSlide', to).offset().top);
 		}
