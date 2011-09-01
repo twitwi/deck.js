@@ -253,6 +253,7 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
       <span class="key">before</span>: <span class="str">'deck-before'</span>,
       <span class="key">childCurrent</span>: <span class="str">'deck-child-current'</span>,
       <span class="key">current</span>: <span class="str">'deck-current'</span>,
+      <span class="key">loading</span>: <span class="str">'deck-loading'</span>,
       <span class="key">next</span>: <span class="str">'deck-next'</span>,
       <span class="key">onPrefix</span>: <span class="str">'on-slide-'</span>,
       <span class="key">previous</span>: <span class="str">'deck-previous'</span>
@@ -283,6 +284,8 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
 				<dd>This class is added to all elements in the DOM tree between the 'current' slide and the deck container.  For standard slides, this is mostly seen and used for nested slides.</dd>
 				<dt>options.classes.current</dt>
 				<dd>This class is added to the current slide.</dd>
+				<dt>options.classes.loading</dt>
+				<dd>This class is applied to the deck container during loading phases and is primarily used as a way to short circuit transitions between states where such transitions are distracting or unwanted.  For example, this class is applied during deck initialization and then removed to prevent all the slides from appearing stacked and transitioning into place on load.</dd>
 				<dt>options.classes.next</dt>
 				<dd>This class is added to the slide immediately following the 'current' slide.</dd>
 				<dt>options.classes.onPrefix</dt>
@@ -315,11 +318,11 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
 				</dd>
 				<dt>deck.init</dt>
 				<dd>
-					This event fires at the end of deck <a href="#deck-core-init">initialization</a>.  Extensions should implement any code that relies on user extensible options (key bindings, element selectors, classes) within a handler for this event. Native events associated with deck.js should be scoped under a <code>.deck</code> event namespace, as with the example below:
+					This event fires at the end of deck <a href="#deck-core-init">initialization</a>.  Extensions should implement any code that relies on user extensible options (key bindings, element selectors, classes) within a handler for this event. Native events associated with deck.js should be scoped under a <code>.deckmodule</code> event namespace, as with the example below:
 					<pre><code><span class="kw">var</span> $d = <span class="fn">$</span>(document);
 $.deck.defaults.keys.myExtensionKeycode = <span class="str">70</span>; <span class="cm">// 'h'</span>
 $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span class="kw">function</span>() {
-   $d.<span class="fn">bind</span>(<span class="str">'keydown.deck'</span>, <span class="kw">function</span>(<span class="var">event</span>) {
+   $d.<span class="fn">bind</span>(<span class="str">'keydown.deckmyextension'</span>, <span class="kw">function</span>(<span class="var">event</span>) {
       <span class="kw">if</span> (<span class="var">event</span>.which === $.deck.<span class="fn">getOptions</span>().keys.myExtensionKeycode) {
          <span class="cm">// Rock out</span>
       }
