@@ -34,6 +34,8 @@
 	transform:$val;
 }
 
+@media screen {
+
 .home {
 	> article {
 		position:absolute;
@@ -795,4 +797,85 @@
 .slide .slide {
 	min-height:0;
 	height:auto;
+}
+
+}
+
+
+@media print {
+	* {
+		background: transparent !important;
+		color: black !important;
+	}
+	
+	a, a:visited { text-decoration: none; }
+	pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+	@page { margin: 0.5cm; }
+	p, h2, h3 { orphans: 3; widows: 3; }
+	h2, h3{ page-break-after: avoid; }
+	
+	header, footer, #intro p, .goto-form, .deck-prev-link, .deck-next-link, .deck-status {
+		display:none;
+	}
+	
+	article {
+		width:auto !important;
+		font-size:12pt;
+		
+		> .slide {
+			page-break-after:always;
+		}
+	}
+	
+	#intro {
+		text-align:center;
+		
+		h1 {
+			font-family: "UltraRegular", Georgia, sans-serif;
+			font-size:90pt;
+		}
+		
+		h2 {
+			font-size:24pt;
+		}
+	}
+	
+	#sample {
+		pre {
+			padding:5px;
+			width:75%;
+		}
+		
+		h2 {
+			font-family: "UltraRegular", Georgia, sans-serif;
+			font-size:24pt;
+			margin:.5em 0;
+		}
+		
+		p {
+			margin:1em 0;
+			width:75%;
+		}
+		
+		span {
+			display: inline !important;
+		}
+	}
+	
+	#now-what {
+		h2 {
+			font-family: "UltraRegular", Georgia, sans-serif;
+			font-size:24pt;
+			margin:.5em 0 .25em 0;
+		}
+		
+		p {
+			margin:.25em 0 1em 0;
+			width:75%;
+		}
+		
+		a {
+			display:none;
+		}
+	}
 }
