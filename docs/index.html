@@ -536,7 +536,7 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 	<section id="deck-hash">
 		<h2>deck.hash</h2>
 		
-		<p>This module adds deep linking to individual slides, enables internal links to slides within decks, and updates the address bar with the hash as the user moves through the deck. A permalink anchor is also updated. Standard themes hide this link in browsers that support the History API, and show it for those that do not. Slides that do not have an <code>id</code> are assigned one according to the <a href="#deck-hash-options">hashPrefix option</a>.</p>
+		<p>This module adds deep linking to individual slides, enables internal links to slides within decks, and updates the address bar with the hash as the user moves through the deck. A permalink anchor is also updated. Standard themes hide this link in browsers that support the History API, and show it for those that do not. Slides that do not have an <code>id</code> are assigned one according to the <a href="#deck-hash-options">hashPrefix option</a>. In addition to the on-slide-(slideNumber) container state class kept by core, this module maintains an on-slide-(slideID) state class.</p>
 		
 		<section id="deck-hash-options" class="options">
 			<h3>Options</h3>
