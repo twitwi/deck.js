@@ -836,7 +836,9 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
    <span class="key">selectors</span>: {
       <span class="key">statusCurrent</span>: <span class="str">'.deck-status-current'</span>,
       <span class="key">statusTotal</span>: <span class="str">'.deck-status-total'</span>
-   }
+   },
+
+   <span class="key">countNested</span>: <span class="kw">true</span>
 });</code></pre>
 
 			<dl>
@@ -844,6 +846,8 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 				<dd>The element matching this selector displays the current slide number.</dd>
 				<dt>options.selectors.statusTotal</dt>
 				<dd>The element matching this selector displays the total number of slides.</dd>
+				<dt>options.countNested</dt>
+				<dd>If false, nested slides will be ignored in the total slide count and any navigation to them will be treated as navigation to the top level slide.</dd>
 			</dl>
 		</section>
 
