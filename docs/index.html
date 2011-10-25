@@ -316,6 +316,10 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
    <span class="fn">alert</span>(<span class="str">'Moving from slide '</span> + <span class="var">from</span> + <span class="str">' to '</span> + <span class="var">to</span>);
 });</code></pre>
 				</dd>
+				<dt>deck.beforeInit</dt>
+				<dd>
+					This event fires at the beginning of deck initialization, after the options are set but before the slides array is created. This event makes a good hook for preprocessing extensions looking to modify the deck.
+				</dd>
 				<dt>deck.init</dt>
 				<dd>
 					This event fires at the end of deck <a href="#deck-core-init">initialization</a>.  Extensions should implement any code that relies on user extensible options (key bindings, element selectors, classes) within a handler for this event. Native events associated with deck.js should be scoped under a <code>.deckmodule</code> event namespace, as with the example below:
