@@ -311,7 +311,7 @@ $.<span class="fn">deck</span>(<span class="str">'alert'</span>, <span class="st
 			<dl>
 				<dt>deck.change</dt>
 				<dd>
-					This event fires whenever the current slide changes, whether by way of <a href="#deck-core-next">next</a>, <a href="#deck-core-prev">prev</a>, or <a href="#deck-core-go">go</a>.  The callback function is passed two parameters, <code>from</code> and <code>to</code>, equal to the indices of the old slide and the new slide respectively.
+					This event fires whenever the current slide changes, whether by way of <a href="#deck-core-next">next</a>, <a href="#deck-core-prev">prev</a>, or <a href="#deck-core-go">go</a>.  The callback function is passed two parameters, <code>from</code> and <code>to</code>, equal to the indices of the old slide and the new slide respectively. If <code>preventDefault</code> is called on the event within this handler the slide change does not occur.
 					<pre><code><span class="fn">$</span>(document).<span class="fn">bind</span>(<span class="str">'deck.change'</span>, <span class="kw">function</span>(<span class="var">event</span>, <span class="var">from</span>, <span class="var">to</span>) {
    <span class="fn">alert</span>(<span class="str">'Moving from slide '</span> + <span class="var">from</span> + <span class="str">' to '</span> + <span class="var">to</span>);
 });</code></pre>
