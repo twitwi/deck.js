@@ -25,13 +25,21 @@ that use the API provided by core.
 		This event fires whenever the current slide changes, whether by way of
 		next, prev, or go. The callback function is passed two parameters, from
 		and to, equal to the indices of the old slide and the new slide
-		respectively.
+		respectively. If preventDefault is called on the event within this handler
+		the slide change does not occur.
 		
 		$(document).bind('deck.change', function(event, from, to) {
 		   alert('Moving from slide ' + from + ' to ' + to);
 		});
 		*/
 		change: 'deck.change',
+		
+		/*
+		This event fires at the beginning of deck initialization, after the options
+		are set but before the slides array is created.  This event makes a good hook
+		for preprocessing extensions looking to modify the deck.
+		*/
+		beforeInitialize: 'deck.beforeInit',
 		
 		/*
 		This event fires at the end of deck initialization. Extensions should
@@ -145,6 +153,9 @@ that use the API provided by core.
 			$container = $(options.selectors.container);
 			tolerance = options.touch.swipeTolerance;
 			
+			// Pre init event for preprocessing hooks
+			$d.trigger(events.beforeInitialize);
+			
 			// Hide the deck while states are being applied to kill transitions
 			$container.addClass(options.classes.loading);
 			
@@ -239,11 +250,15 @@ that use the API provided by core.
 		or not a number the call is ignored.
 		*/
 		go: function(index) {
+			var e = $.Event(events.change);
+			
 			if (typeof index != 'number' || index < 0 || index >= slides.length) return;
 			
-			$d.trigger(events.change, [current, index]);
-			current = index;
-			updateStates();
+			$d.trigger(e, [current, index]);
+			if (!e.isDefaultPrevented()) {
+				current = index;
+				updateStates();
+			}
 		},
 		
 		/*
