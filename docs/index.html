@@ -172,10 +172,10 @@
 
 				<dl>
 					<dt>index:</dt>
-					<dd class="type">integer</dd>
+					<dd class="type">integer | string</dd>
 				</dl>
 
-				<p>Moves to the slide at the specified <code>index</code>.  Index is 0-based, so <code>$.deck('go', 0);</code> will move to the first slide. If <code>index</code> is out of bounds or not a number the call is ignored.</p>
+				<p>Moves to the slide at the specified <code>index</code> if index is a number.  Index is 0-based, so <code>$.deck('go', 0);</code> will move to the first slide. If <code>index</code> is a string this will move to the slide with the specified <code>id</code>. If <code>index</code> is out of bounds or doesn&rsquo;t match a slide <code>id</code> the call is ignored.</p>
 			</section>
 
 			<section id="deck-core-getslide">
@@ -420,7 +420,7 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 	<section id="deck-goto">
 		<h2>deck.goto</h2>
 		
-		<p>This module adds the necessary methods and key bindings to show and hide a form for jumping to any slide number in the deck (and processes that form accordingly). The form-showing state is indicated by the presence of a class on the deck container.</p>
+		<p>This module adds the necessary methods and key bindings to show and hide a form for jumping to any slide number/id in the deck (and processes that form accordingly). The form-showing state is indicated by the presence of a class on the deck container.</p>
 
 		<section id="deck-goto-methods" class="methods">
 			<h3>Methods</h3>
@@ -471,12 +471,14 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 			<dl>
 				<dt>options.classes.goto</dt>
 				<dd>This class is added to the deck container when showing the Go To Slide form.</dd>
+				<dt>options.selectors.gotoDatalist</dt>
+				<dd>The element that matches this selector is the <code>datalist</code> element that will be populated with <code>options</code> for each of the slide ids.  In browsers that support the <code>datalist</code> element, this provides a drop list of slide ids to aid the user in selecting a slide.</dd>
 				<dt>options.selectors.gotoForm</dt>
-				<dd>The element that matches this selector is the form that is submitted when a user hits enter after typing a slide number in the <code>gotoInput</code> element.</dd>
+				<dd>The element that matches this selector is the form that is submitted when a user hits enter after typing a slide number/id in the <code>gotoInput</code> element.</dd>
 				<dt>options.selectors.gotoInput</dt>
-				<dd>The element that matches this selector is the text input field for entering a slide number in the Go To Slide form.</dd>
+				<dd>The element that matches this selector is the text input field for entering a slide number/id in the Go To Slide form.</dd>
 				<dt>options.keys.goto</dt>
-				<dd>The numeric keycode used to toggle between showing and hiding the Go To Slide form.</dd>
+				<dd>The numeric keycode used to show the Go To Slide form.</dd>
 			</dl>
 		</section>
 
@@ -485,7 +487,8 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 			
 			<pre><code>&lt;<span class="kw">form</span> <span class="key">action</span>=<span class="str">&quot;.&quot;</span> <span class="key">method</span>=<span class="str">&quot;get&quot;</span> <span class="key">class</span>=<span class="str">&quot;goto-form&quot;</span>&gt;
    &lt;<span class="kw">label</span> <span class="key">for</span>=<span class="str">&quot;goto-slide&quot;</span>&gt;Go to slide:&lt;<span class="kw">/label</span>&gt;
-   &lt;<span class="kw">input</span> <span class="key">type</span>=<span class="str">&quot;number&quot;</span> <span class="key">name</span>=<span class="str">&quot;slidenum&quot;</span> <span class="key">id</span>=<span class="str">&quot;goto-slide&quot;</span>&gt;
+   &lt;<span class="kw">input</span> <span class="key">type</span>=<span class="str">&quot;number&quot;</span> <span class="key">name</span>=<span class="str">&quot;slidenum&quot;</span> <span class="key">id</span>=<span class="str">&quot;goto-slide&quot;</span> <span class="key">list</span>=<span class="str">&quot;goto-datalist&quot;</span>&gt;
+   &lt;<span class="kw">datalist</span> <span class="key">id</span>=<span class="str">&quot;goto-datalist&quot;</span>&gt;&lt;<span class="kw">/datalist</span>&gt;
    &lt;<span class="kw">input</span> <span class="key">type</span>=<span class="str">&quot;submit&quot;</span> <span class="key">value</span>=<span class="str">&quot;Go&quot;</span>&gt;
 &lt;<span class="kw">/form</span>&gt;</code></pre>
 
@@ -497,9 +500,8 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 <span class="key">z-index</span>: <span class="str">3</span>;
 <span class="key">bottom</span>: <span class="str">10px</span>;
 <span class="key">left</span>: <span class="str">50%</span>;
-<span class="key">width</span>: <span class="str">13.75em</span>;
 <span class="key">height</span>: <span class="str">1.75em</span>;
-<span class="key">margin</span>: <span class="str">0 0 0 -6.875em</span>;
+<span class="key">margin</span>: <span class="str">0 0 0 -9.125em</span>;
 <span class="key">line-height</span>: <span class="str">1.75em</span>;
 <span class="key">padding</span>: <span class="str">0.625em</span>;
 <span class="key">display</span>: <span class="str">none</span>;
@@ -529,7 +531,7 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 				
 				<dt>#goto-slide</dt>
 				<dd>
-					<pre><code><span class="key">width</span>: <span class="str">4.375em</span>;
+					<pre><code><span class="key">width</span>: <span class="str">8.375em</span>;
 <span class="key">margin</span>: <span class="str">0 0.625em</span>;
 <span class="key">height</span>: <span class="str">1.4375em</span>;</code></pre>
 				</dd>
@@ -656,19 +658,6 @@ $d.<span class="fn">bind</span>(<span class="str">'deck.init'</span>, <span clas
 					<pre><code><span class="key">background</span>: <span class="str">#eee</span>;
 <span class="key">position</span>: <span class="str">static</span>;
 <span class="key">visibility</span>: <span class="str">visible</span>;</code></pre>
-				</dd>
-				
-				<dt>.deck-menu &gt; .slide</dt>
-				<dd>
-					<p>Lays out the first-level slides into a grid.</p>
-					<pre><code><span class="key">float</span>: <span class="str">left</span>;
-<span class="key">width</span>: <span class="str">22%</span>;
-<span class="key">height</span>: <span class="str">22%</span>;
-<span class="key">min-height</span>: <span class="str">0</span>;
-<span class="key">margin</span>: <span class="str">1%</span>;
-<span class="key">font-size</span>: <span class="str">0.22em</span>;
-<span class="key">overflow</span>: <span class="str">hidden</span>;
-<span class="key">padding</span>: <span class="str">0 0.5%</span>;</code></pre>
 				</dd>
 				
 				<dt>.deck-menu .deck-current</dt>
