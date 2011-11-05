@@ -233,7 +233,9 @@ that use the API provided by core.
 				});
 			});
 			
-			updateStates();
+			if (slides.length) {
+				updateStates();
+			}
 			
 			// Show deck again now that slides are in place
 			$container.removeClass(options.classes.loading);
@@ -255,7 +257,11 @@ that use the API provided by core.
 			if (typeof index != 'number' || index < 0 || index >= slides.length) return;
 			
 			$d.trigger(e, [current, index]);
-			if (!e.isDefaultPrevented()) {
+			if (e.isDefaultPrevented()) {
+				/* Trigger the event again and undo the damage done by extensions. */
+				$d.trigger(events.change, [index, current]);
+			}
+			else {
 				current = index;
 				updateStates();
 			}
