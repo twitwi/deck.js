@@ -1,0 +1,50 @@
+.deck-container {
+	.deck-toc {
+		position: absolute;
+		z-index: 10;
+		top: 0px;
+                bottom: 0px;
+		left: 0;
+                right: 75%;
+		padding: 0.625em;
+		display: none;
+		background: #ccc;
+                overflow-y: auto;
+                overflow-x: autp;
+                background-color: #DDE4EB;
+                border-right: #A9A9A9 solid 1px;
+                
+                & > ul {
+                    // just to avoid lines break in anchors
+                    // there shoud be another way to do it!!!!!!!!!!!!
+                    width: 500px;
+                }
+                
+                ul {
+                    list-style: none;
+                    margin: 0px;
+                    padding: 0px;
+                    
+                    li {
+                        padding-left: 1em;
+                    }
+                }
+
+                a {
+                    text-decoration: none;
+                    display: block !important;
+                    width: 100%;
+                    color: #595959 !important;
+                }
+	}
+}
+
+.deck-toc-frame .deck-toc {
+	display: block;
+}
+
+@media print {
+	.deck-toc {
+		display:none;
+	}
+}
