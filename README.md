@@ -3,6 +3,16 @@
 Deck.ext.js provides a set of extensions, themes and use cases for the deck.js framework.
 Deck.js is a JavaScript library for building modern HTML presentations which is flexible enough to let advanced CSS and JavaScript authors craft highly customized decks, but also provides templates and themes for the HTML novice to build a standard slideshow.
 
+Currently Deck.ext.js provides the following extensions:
+
+- deck.toc.js, provides a support for TOC
+
+Currently Deck.ext.js provides the following themes:
+
+- beamer, aims to provides a team similar to the Latex beamer
+
+I'll soon provide an illustration on how to use deck.toc.js together with the beamer themes. 
+
 ##deck.toc.js extension
 
 This (alpha) extension provides the support for TOC within the deck.js framework.
