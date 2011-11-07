@@ -177,8 +177,8 @@
     z-index: 3;
     bottom: 35px;
     left: 50%;
-    margin-left: -100px;
-    width: 180px;
+    margin-left: -140px;
+    width: 260px;
     padding: 5px 10px;
     height: 25px;
     line-height: 25px;
@@ -228,7 +228,7 @@
 
   #goto-slide {
     float: left;
-    width: 50px;
+    width: 130px;
     margin-right: 5px;
     height: 20px;
   }
@@ -281,7 +281,7 @@
 
   .deck-prev-link {
     left: 50%;
-    margin-left: -138px;
+    margin-left: -178px;
   }
   .boxshadow .deck-prev-link {
     -webkit-box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
@@ -304,7 +304,7 @@
 
   .deck-next-link {
     left: 50%;
-    margin-left: 113px;
+    margin-left: 153px;
   }
   .boxshadow .deck-next-link {
     -webkit-box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
