@@ -25,7 +25,7 @@
 .csstransitions.csstransforms {
     overflow-x:hidden;
     
-    .deck-container section.slide {
+    .deck-container .slide {
         -webkit-transition:-webkit-transform 500ms ease-in-out;
         -moz-transition:-moz-transform 500ms ease-in-out;
         -ms-transition:-ms-transform 500ms ease-in-out;
@@ -34,7 +34,7 @@
     }
     
     .deck-container:not(.deck-menu) {
-        section.slide {
+        .slide {
             position: absolute;
             top:0;
             left:0;
@@ -45,6 +45,7 @@
             //padding:24px 24px;
             
             .slide {
+                
                 position:relative;
                 left: 0;
                 top: 0;
