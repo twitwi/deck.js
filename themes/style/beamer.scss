@@ -8,11 +8,11 @@ $background_color_dark: rgba(220,220,223,1);
 }
 
 @mixin rotate($deg) {
-    -webkit-transform:rotate($deg);    
-    -moz-transform:rotate($deg);   
-    -ms-transform:rotate($deg);   
-    -o-transform:rotate($deg);
-    transform:rotate($deg);
+    -webkit-transform: rotate($deg);    
+    -moz-transform: rotate($deg);   
+    -ms-transform: rotate($deg);   
+    -o-transform: rotate($deg);
+    transform: rotate($deg);
 }
 
 @mixin box-shadow($x, $y, $blur, $color) {
@@ -52,27 +52,40 @@ $background_color_dark: rgba(220,220,223,1);
     
     h1,h2,h3,h4,h5 {
         border: 0px;
-        display: block;
         position: relative;
     }
     
     h1 {
-        color:#050014;
+        font-size: 4.50em;
+        text-align: center;
+        color: #050014;
+        padding-top: 0.9em;
+        padding-bottom: 3.9em;
+        
+        .csstransforms & {
+                position: relative;
+                top: auto;
+                -webkit-transform: none;
+                -moz-transform: none;
+                -ms-transform: none;
+                -o-transform: none;
+                transform: none;
+        }
     }
     
     h2, h3 {
-        font-size:2.25em;
+        font-size: 2.25em;
         font-weight: bold;
         padding-top:.5em;
-        margin:0 0 .66666em 0;
+        margin: 0 0 .66666em 0;
         color: #050014;
     }
     
     pre {
-        border-color:#cde;
-        background:#fff;
-        position:relative;
-        z-index:auto;
+        border-color: #cde;
+        background: #fff;
+        position: relative;
+        z-index: auto;
         
         .borderradius & {
             @include border-radius(5px);

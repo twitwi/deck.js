@@ -32,10 +32,21 @@
     padding: 40px; }
   .deck-container h1, .deck-container h2, .deck-container h3, .deck-container h4, .deck-container h5 {
     border: 0px;
-    display: block;
     position: relative; }
   .deck-container h1 {
-    color: #050014; }
+    font-size: 4.50em;
+    text-align: center;
+    color: #050014;
+    padding-top: 0.9em;
+    padding-bottom: 3.9em; }
+    .csstransforms .deck-container h1 {
+      position: relative;
+      top: auto;
+      -webkit-transform: none;
+      -moz-transform: none;
+      -ms-transform: none;
+      -o-transform: none;
+      transform: none; }
   .deck-container h2, .deck-container h3 {
     font-size: 2.25em;
     font-weight: bold;
