@@ -96,15 +96,21 @@ This module provides a support for TOC to the deck.
         jQuery.deck('Init')
         */
     $d.bind('deck.init', function() {
-        // Bind key events
+        var opts = $[deck]('getOptions');
+        var container = $[deck]('getContainer');
+        
+        /* Bind key events */
         $d.unbind('keydown.decktoc').bind('keydown.decktoc', function(e) {
             if (e.which === opts.keys.toc || $.inArray(e.which, opts.keys.toc) > -1) {
                 $[deck]('toggleToc');
                 e.preventDefault();
             }
         });
-                
-        var opts = $[deck]('getOptions');
+        
+        /* Hide TOC panel when user click on container */
+        container.click(function(e){
+            $[deck]('hideToc');
+        });
                 
         /* Init TOC and append it to the document */
         $toc = new TOC();
@@ -113,17 +119,14 @@ This module provides a support for TOC to the deck.
         /* Go through all slides */
         $.each($[deck]('getSlides'), function(i, $el) {
             var slide = $[deck]('getSlide',i);
-                    
-            if( slide.children("h1").length > 0 ) {
-                $toc.push(1,slide.children("h1:first").text(),slide);
-            } else if ( slide.children("h2").length > 0 ) {
-                $toc.push(2,slide.children("h2:first").text(),slide);
-            } else if ( slide.children("h3").length > 0 ) {
-                $toc.push(3,slide.children("h3:first").text(),slide);
-            } else if ( slide.children("h4").length > 0 ) {
-                $toc.push(4,slide.children("h4:first").text(),slide);
-            } else if ( slide.children("h5").length > 0 ) {
-                $toc.push(5,slide.children("h5:first").text(),slide);
+            var tocElementFound = false;
+            
+            /* If there is a toc item, push it in the TOC */
+            for(var level=1; level<6; level++) {
+                if( slide.children("h"+level).length > 0) {
+                    $toc.push(level, slide.children("h"+level+":first").text(), slide);
+                    tocElementFound = true;
+                }
             }
         });
     })
@@ -136,54 +139,63 @@ This module provides a support for TOC to the deck.
         if (container.hasClass($[deck]('getOptions').classes.toc)) {
             container.scrollTop(slideTo.offset().top);
         }
-               
-        if( slideTo.children("h1").length > 0 ) {
-            $(opts.selectors.tocTitle).text(slideTo.children("h1:first").text());
-            // clear
+            
+        /* update toc status */
+        if( slideTo.data("toc") ) {
+            // reset
+            $(opts.selectors.tocTitle).text("");
             $(opts.selectors.tocSection).text("");
             $(opts.selectors.tocSubSection).text("");
             $(opts.selectors.tocSubSubSection).text("");
-        } else if( slideTo.children("h2").length > 0 ) {
-            $(opts.selectors.tocSection).text(slideTo.children("h2:first").text());
-            // clear
-            $(opts.selectors.tocSubSection).text("");
-            $(opts.selectors.tocSubSubSection).text("");
-        } else if( slideTo.children("h3").length > 0 ) {
-            $(opts.selectors.tocSubSection).text(slideTo.children("h3:first").text());
-            // clear
-            $(opts.selectors.tocSubSubSection).text("");
-        } else if( slideTo.children("h4").length > 0 ) {
-            $(opts.selectors.tocSubSubSection).text(slideTo.children("h4:first").text());
-        }  
+
+            // update according to the current context
+            var $context = $toc.context(slideTo.data('toc'))            
+            for(var level=1; level<=$context.length; level++) {
+                switch(level) {
+                    case 1: 
+                        $(opts.selectors.tocTitle).text($context[level-1]);
+                        break;
+                    case 2: 
+                        $(opts.selectors.tocSection).text($context[level-1]); 
+                        break;
+                    case 3: 
+                        $(opts.selectors.tocSubSection).text($context[level-1]); 
+                        break;
+                    case 4: 
+                        $(opts.selectors.tocSubSubSection).text($context[level-1]); 
+                        break;
+                }
+            }
+        }
     });
         
     /*
         Simple TOC manager (must be improved)
         */
     var TOC = function() {
-        this.root = $("<ul/>", {
-            "class":"toc"
-        });
+        
+        this.root = $("<ul/>", {"class":"toc"});
             
-        /* push new toc element */
+        /* 
+            Push new item in the TOC 
+          
+            depth is the level (e.g. 1 for h1, 2 for h2, etc.)
+            title is the toc-item title
+            slide is the slide that provides the toc-element
+            */
         this.push = function(depth,title,slide) {
             inc(depth);
                 
-            /* create toc element */
+            /* Create toc element */
             var $tocElm = $("<li />", {
                 id: "toc-"+($c.join('-'))
-            })
-            // keep track of the slide in case...
-            .data({
-                slide: slide
-            })
-            // create an hyperlink
-            .append($("<a />", {
+            }).data({ // keep track of the slide in case...
+                slide: slide,
+                title: title
+            }).append($("<a />", { // create an hyperlink
                 href: "#"+$(slide).attr('id'),
                 text: title
-            }))
-            // allow to add children
-            .append($("<ul />"));
+            })).append($("<ul />"));
                                 
             /* insert it at the right place */
             var $target = this.root;
@@ -191,7 +203,29 @@ This module provides a support for TOC to the deck.
                 $target = ($target.find("li#toc-"+($c.slice(0,$c.length-1).join('-')))).children("ul");
             }
             $tocElm.appendTo($target);
+            
+            /* Keep track of the TOC level in the slide */
+            slide.data({
+                toc: $c.slice(0)
+            });
         };
+        
+        /*
+            Get the current TOC context
+        
+            path is the current path in the TOC
+            */
+        this.context = function(path) {
+            $context = new Array();
+            var $target = this.root;
+            for(var depth=0; depth<path.length; depth++) {
+                var tocElm = $target.find("li#toc-"+(path.slice(0,depth+1).join('-')))
+                $context.push(tocElm.data('title'));
+                $target = (tocElm).children("ul");
+            }
+            
+            return $context;
+        }
             
         /* cursor */
         var $c = [-1];
