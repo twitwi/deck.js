@@ -1,0 +1,26 @@
+.deck-container .deck-svg {
+  background-color: white;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+@box-shadow box-shadow(1px, 1px, 10px, black); }
+  .deck-container .deck-svg .deck-svg-button {
+    display: inline-block;
+    text-align: center;
+    width: 24px;
+    height: 24px; }
+  .deck-container .deck-svg .deck-svg-control {
+    text-align: right;
+    width: 100%;
+    -moz-opacity: 0.5;
+    filter: alpha(opacity=50);
+    opacity: 0.5; }
+  .deck-container .deck-svg #deck-svg-prev {
+    background: url("prev.png") no-repeat center center;
+    background-size: 80%; }
+  .deck-container .deck-svg #deck-svg-reload {
+    background: url("reload.png") no-repeat center center;
+    background-size: 80%; }
+  .deck-container .deck-svg #deck-svg-next {
+    background: url("next.png") no-repeat center center;
+    background-size: 80%; }
