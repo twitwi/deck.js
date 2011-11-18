@@ -7,18 +7,38 @@ https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
 */
 
 /*
-This module provides a support for SVG to the deck.
+This module provides a support for SVG to the deck so as to create animation
+like in most presentation solution e.g powerpoint, keynote, etc.
+Slides can include svg documents which then can be animated using the
+Jquery-SVG plugins.
 */
 
 (function($, deck, undefined) {
     var $d = $(document);
         
+    this.loadObjectParams = function(objectElement) {
+        var attributes = {};
+        $(objectElement).children("param").each(function(index){
+            attributes[$(this).attr("name")] = $(this).attr("value");
+        });
+        return attributes;
+    }
+    
     /*
 	Extends defaults/options.
 	*/
     $.extend(true, $[deck].defaults, {
         
-    });
+        });
+    
+    /*
+	jQuery.deck('createAnimation', target, loadURL, onLoad, anims)
+	
+        ...
+	*/
+    $[deck]('extend', 'createAnimation', function(element) {
+        //alert('creating new animation '+element);
+        });
     
     /*
         jQuery.deck('Init')
@@ -26,36 +46,51 @@ This module provides a support for SVG to the deck.
     $d.bind('deck.init', function() {
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
-        
-        /* Bind key events */
-        $d.unbind('keydown.decktoc').bind('keydown.decktoc', function(e) {
-            if (e.which === opts.keys.toc || $.inArray(e.which, opts.keys.toc) > -1) {
-                $[deck]('toggleToc');
-                e.preventDefault();
-            }
-        });
-        
-        /* Hide TOC panel when user click on container */
-        container.click(function(e){
-            $[deck]('hideToc');
-        });
-                
-        /* Init TOC and append it to the document */
-        $toc = new TOC();
-        $($[deck]('getOptions').selectors.toc).append($toc.root);
-                
+
         /* Go through all slides */
         $.each($[deck]('getSlides'), function(i, $el) {
             var slide = $[deck]('getSlide',i);
-            var tocElementFound = false;
             
-            /* If there is a toc item, push it in the TOC */
-            for(var level=1; level<6; level++) {
-                if( slide.children("h"+level).length > 0) {
-                    $toc.push(level, slide.children("h"+level+":first").text(), slide);
-                    tocElementFound = true;
-                }
-            }
+            /* find all the object of type deckjs/svg */
+            slide.children("object[type='deckjs/svg']").each(function(index) {
+                // load object's attributes
+                var attributes = loadObjectParams(this);
+               
+                // create canvas
+                var $canvas = $("<div />").attr({
+                    'id':  $(this).attr('id'),
+                    'class': $(this).attr('class')
+                }).css({
+                    'height': attributes['height'],
+                    'width': attributes['width']
+                });
+                
+                // create control
+                var $control = $("<div />").addClass('deck-svg-control')
+                .append($("<a href=\"#\"></a>").attr({'id':'deck-svg-prev', 'class':'deck-svg-button'}))
+                .append($("<a href=\"#\"></a>").attr({'id':'deck-svg-reload', 'class':'deck-svg-button'}))
+                .append($("<a href=\"#\"></a>").attr({'id':'deck-svg-next', 'class':'deck-svg-button'}));     
+                    
+                // create placeholder
+                var $placeholder = $("<div />")
+                .addClass('deck-svg')
+                .append($canvas)
+                .append($control);
+                
+                // repace object element by placeholder
+                $(this).replaceWith($placeholder);
+                
+                // init canvas
+                $canvas.svg({
+                    loadURL: attributes['src'],
+                    onLoad: function(svg) {
+                        $("#circleRed",svg.root()).hide();
+                        $("#circleBlue",svg.root()).hide();
+                        $("#circleGreen",svg.root()).show();
+                    },
+                    settings: {}
+                });
+            });
         });
     })
     /* Update current slide number with each change event */
@@ -63,114 +98,7 @@ This module provides a support for SVG to the deck.
         var opts = $[deck]('getOptions');
         var slideTo = $[deck]('getSlide', to);
         var container = $[deck]('getContainer');
-		
-        if (container.hasClass($[deck]('getOptions').classes.toc)) {
-            container.scrollTop(slideTo.offset().top);
-        }
-            
-        /* update toc status */
-        if( slideTo.data("toc") ) {
-            // reset
-            $(opts.selectors.tocTitle).text("");
-            $(opts.selectors.tocSection).text("");
-            $(opts.selectors.tocSubSection).text("");
-            $(opts.selectors.tocSubSubSection).text("");
-
-            // update according to the current context
-            var $context = $toc.context(slideTo.data('toc'))            
-            for(var level=1; level<=$context.length; level++) {
-                switch(level) {
-                    case 1: 
-                        $(opts.selectors.tocTitle).text($context[level-1]);
-                        break;
-                    case 2: 
-                        $(opts.selectors.tocSection).text($context[level-1]); 
-                        break;
-                    case 3: 
-                        $(opts.selectors.tocSubSection).text($context[level-1]); 
-                        break;
-                    case 4: 
-                        $(opts.selectors.tocSubSubSection).text($context[level-1]); 
-                        break;
-                }
-            }
-        }
+	
+    // do nothing
     });
-        
-    /*
-        Simple TOC manager (must be improved)
-        */
-    var TOC = function() {
-        
-        this.root = $("<ul/>", {"class":"toc"});
-            
-        /* 
-            Push new item in the TOC 
-          
-            depth is the level (e.g. 1 for h1, 2 for h2, etc.)
-            title is the toc-item title
-            slide is the slide that provides the toc-element
-            */
-        this.push = function(depth,title,slide) {
-            inc(depth);
-                
-            /* Create toc element */
-            var $tocElm = $("<li />", {
-                id: "toc-"+($c.join('-'))
-            }).data({ // keep track of the slide in case...
-                slide: slide,
-                title: title
-            }).append($("<a />", { // create an hyperlink
-                href: "#"+$(slide).attr('id'),
-                text: title
-            })).append($("<ul />"));
-                                
-            /* insert it at the right place */
-            var $target = this.root;
-            if( depth > 1) {
-                $target = ($target.find("li#toc-"+($c.slice(0,$c.length-1).join('-')))).children("ul");
-            }
-            $tocElm.appendTo($target);
-            
-            /* Keep track of the TOC level in the slide */
-            slide.data({
-                toc: $c.slice(0)
-            });
-        };
-        
-        /*
-            Get the current TOC context
-        
-            path is the current path in the TOC
-            */
-        this.context = function(path) {
-            $context = new Array();
-            var $target = this.root;
-            for(var depth=0; depth<path.length; depth++) {
-                var tocElm = $target.find("li#toc-"+(path.slice(0,depth+1).join('-')))
-                $context.push(tocElm.data('title'));
-                $target = (tocElm).children("ul");
-            }
-            
-            return $context;
-        }
-            
-        /* cursor */
-        var $c = [-1];
-        function inc(depth) {
-            var current_depth = $c.length;
-            if(depth>current_depth) {
-                for(i=current_depth;i<depth;i++) {
-                    $c.push(0);
-                }
-            } else if( current_depth>depth) {
-                for(i=depth;i<current_depth;i++) {
-                    $c.pop();
-                    $c[depth-1]++
-                }
-            } else {
-                $c[depth-1]++
-            }
-        }
-    }
 })(jQuery, 'deck');
