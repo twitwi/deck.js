@@ -18,6 +18,7 @@
 
 .deck-container {
     .deck-svg {
+        display: block;
         background-color: white;
         @include border-radius(2px);
         @box-shadow box-shadow(1px, 1px, 10px, black);

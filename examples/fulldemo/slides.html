@@ -98,27 +98,29 @@
 <section class="slide">
     <h2>Section 3</h2>
     <p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
-    <object type="deckjs/asvg" id="canvas_2">
-      <param name="src" value="media/circle.svg" />
-      <param name="width" value="50%" />
-      <param name="height" value="400px" />
-      <param name="animator" value="c2Anim" />
-      <param name="autoStart" value="0" />
-    </object>
-    <object type="deckjs/asvg" id="canvas_3">
-      <param name="src" value="media/circle.svg" />
-      <param name="width" value="50%" />
-      <param name="height" value="400px" />
-      <param name="animator" value="c3Anim" />
-      <param name="autoStart" value="0" />
-    </object>
+    <div class="centerbox">
+        <object type="deckjs/asvg" id="canvas_2" class="half">
+          <param name="src" value="media/circle.svg" />
+          <param name="width" value="100%" />
+          <param name="height" value="400px" />
+          <param name="animator" value="c2Anim" />
+          <param name="autoStart" value="0" />
+        </object>
+        <object type="deckjs/asvg" id="canvas_3" class="half">
+          <param name="src" value="media/circle.svg" />
+          <param name="width" value="100%" />
+          <param name="height" value="400px" />
+          <param name="animator" value="c3Anim" />
+          <param name="autoStart" value="0" />
+        </object>
+    </div>
     <script type="text/javascript">
         var c2Anim = new Animator("#canvas_2", [
             [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 0),Animator.Appear("#circleBlue", 0)],
             Animator.Disappear("#circleRed", 0),
             Animator.Disappear("#circleBlue", 0)
         ]);
-        var c2Anim = new Animator("#canvas_3", [
+        var c3Anim = new Animator("#canvas_3", [
             [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 0),Animator.Appear("#circleBlue", 0)],
             Animator.Disappear("#circleRed", 0),
             Animator.Disappear("#circleBlue", 0)
@@ -133,11 +135,11 @@
       <param name="src" value="media/schema_1.svg" />
       <param name="width" value="100%" />
       <param name="height" value="400px" />
-      <param name="animator" value="c3Anim" />
+      <param name="animator" value="c4Anim" />
       <param name="autoStart" value="0" />
     </object>
     <script type="text/javascript">
-        var c3Anim = new Animator("#canvas_3", [
+        var c4Anim = new Animator("#canvas_4", [
             [Animator.Disappear("#rect1", 0),Animator.Disappear("#rect2", 0)],
             Animator.Appear("#rect1", 200),
             Animator.Appear("#rect2", 500)

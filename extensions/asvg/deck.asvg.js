@@ -41,7 +41,7 @@ Slides can include svg documents which then can be animated using the Animator.
             }
             
             /* Find all the object of type deckjs/asvg */
-            $slide.children("object[type='deckjs/asvg']").each(function(index) {
+            $slide.find("object[type='deckjs/asvg']").each(function(index) {
                 var id = $(this)
                 /* Load attributes and validate them */
                 var attributes = loadObjectParams(this);
@@ -112,8 +112,7 @@ Slides can include svg documents which then can be animated using the Animator.
         
         /* Create svg canvas */
         $canvas = $("<div />").attr({
-            'id':  $(object).attr('id'),
-            'class': $(object).attr('class')
+            'id':  $(object).attr('id')
         }).css({
             'height': attributes['height'],
             'width': attributes['width']
@@ -148,10 +147,11 @@ Slides can include svg documents which then can be animated using the Animator.
             .append($reload,$next);
 
         /* Create placeholder i.e canvas + control */
-        $placeholder = $("<div />")
-            .addClass($[deck]('getOptions').classes.placeholder)
-            .append($canvas)
-            .append($control);
+        $placeholder = $("<div />").attr({
+            'class': $(object).attr('class')
+        }).addClass($[deck]('getOptions').classes.placeholder)
+          .append($canvas)
+          .append($control);
             
         return {placeholder:$placeholder, canvas:$canvas};
     }

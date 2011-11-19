@@ -1,4 +1,5 @@
 .deck-container .deck-svg {
+  display: block;
   background-color: white;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
