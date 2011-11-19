@@ -108,7 +108,7 @@ function Animator(target, animations) {
 }
 
 /*
-    Animator.Appear(e,t,d)
+    Animator.Appear(e,d)
 
     e   element
     d   duration
@@ -124,7 +124,7 @@ Animator.Appear = function(e, d) {
 }
 
 /*
-    Animator.Disappear(e,t,d)
+    Animator.Disappear(e,d)
 
     e   element
     d   duration
@@ -135,6 +135,23 @@ Animator.Disappear = function(e, d) {
         var $svg = $(t).svg('get');
         $(e, $svg.root()).each( function(){
             $(this).animate({'svgOpacity': 0.}, d);
+        })
+    }
+}
+
+/*
+    Animator.Transform(e,tr,d)
+
+    e   element
+    tr  the transformation
+    d   duration
+    */
+Animator.Transform = function(e,tr,d) {
+    d = d || 0;
+    return function(t) {
+        var $svg = $(t).svg('get');
+        $(e, $svg.root()).each( function(){
+            $(this).animate({'svgTransform': tr}, d);
         })
     }
 }
