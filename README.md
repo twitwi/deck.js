@@ -6,6 +6,7 @@ Deck.js is a JavaScript library for building modern HTML presentations which is 
 Currently Deck.ext.js provides the following extensions:
 
 - deck.toc.js, provides a support for TOC
+- deck.asvg.js, provides a support for including and animating SVG images
 
 Currently Deck.ext.js provides the following themes:
 
@@ -65,7 +66,7 @@ The following:
             <p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
         </section>
 
-will provide the following TOC:
+will build the following TOC:
 
 - The Presentation Title
     - Section 1
@@ -73,3 +74,9 @@ will provide the following TOC:
         - Section 1.2
     - Section 2
     - Section 3
+
+##deck.asvg.js extension
+
+The `deck.asvg.js` extension (for Animated SVG) allows users to add animated schema into their presentation.
+
+TO DETAIL THIS SECTION  
