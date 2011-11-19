@@ -7,38 +7,23 @@ https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
 */
 
 /*
-This module provides a support for SVG to the deck so as to create animation
-like in most presentation solution e.g powerpoint, keynote, etc.
-Slides can include svg documents which then can be animated using the
-Jquery-SVG plugins.
+This module provides a support for animated SVG to the deck so as to create 
+animation like in most presentation solution e.g powerpoint, keynote, etc.
+Slides can include svg documents which then can be animated using the Animator.
 */
 
 (function($, deck, undefined) {
     var $d = $(document);
-        
-    this.loadObjectParams = function(objectElement) {
-        var attributes = {};
-        $(objectElement).children("param").each(function(index){
-            attributes[$(this).attr("name")] = $(this).attr("value");
-        });
-        return attributes;
-    }
-    
+   
     /*
 	Extends defaults/options.
 	*/
     $.extend(true, $[deck].defaults, {
-        
-        });
-    
-    /*
-	jQuery.deck('createAnimation', target, loadURL, onLoad, anims)
-	
-        ...
-	*/
-    $[deck]('extend', 'createAnimation', function(element) {
-        //alert('creating new animation '+element);
-        });
+        classes: {
+            placeholder: 'deck-svg',
+            control: 'deck-svg-control'
+        }
+    });
     
     /*
         jQuery.deck('Init')
@@ -49,46 +34,38 @@ Jquery-SVG plugins.
 
         /* Go through all slides */
         $.each($[deck]('getSlides'), function(i, $el) {
-            var slide = $[deck]('getSlide',i);
+            var $slide = $[deck]('getSlide',i);
             
-            /* find all the object of type deckjs/svg */
-            slide.children("object[type='deckjs/svg']").each(function(index) {
-                // load object's attributes
+            if( $slide.has("object[type='deckjs/asvg']").length>0 ) {
+                $slide.data('animators', new Array());
+            }
+            
+            /* Find all the object of type deckjs/asvg */
+            $slide.children("object[type='deckjs/asvg']").each(function(index) {
+                var id = $(this)
+                /* Load attributes and validate them */
                 var attributes = loadObjectParams(this);
-               
-                // create canvas
-                var $canvas = $("<div />").attr({
-                    'id':  $(this).attr('id'),
-                    'class': $(this).attr('class')
-                }).css({
-                    'height': attributes['height'],
-                    'width': attributes['width']
-                });
+                if( !validateParams(attributes) ) {
+                    throw "Error while initializing "+$(this).attr('id')+", please ensure you have settup the required parameters."
+                    return false;
+                }
                 
-                // create control
-                var $control = $("<div />").addClass('deck-svg-control')
-                .append($("<a href=\"#\"></a>").attr({'id':'deck-svg-prev', 'class':'deck-svg-button'}))
-                .append($("<a href=\"#\"></a>").attr({'id':'deck-svg-reload', 'class':'deck-svg-button'}))
-                .append($("<a href=\"#\"></a>").attr({'id':'deck-svg-next', 'class':'deck-svg-button'}));     
-                    
-                // create placeholder
-                var $placeholder = $("<div />")
-                .addClass('deck-svg')
-                .append($canvas)
-                .append($control);
+                /* Add this animator to the list of animators of the current slide. */
+                $slide.data('animators').push(attributes['animator']);
                 
-                // repace object element by placeholder
-                $(this).replaceWith($placeholder);
+                /* Create aSVG placeholder */
+                var aSVG = createaSVG(this, attributes);
+                $(this).replaceWith(aSVG['placeholder']);
                 
-                // init canvas
-                $canvas.svg({
+                // Finaly load the SVG data
+                aSVG['canvas'].svg({
                     loadURL: attributes['src'],
                     onLoad: function(svg) {
-                        $("#circleRed",svg.root()).hide();
-                        $("#circleBlue",svg.root()).hide();
-                        $("#circleGreen",svg.root()).show();
+                        // nothing to do here
                     },
-                    settings: {}
+                    settings: {
+                        // no settings
+                    }
                 });
             });
         });
@@ -96,9 +73,86 @@ Jquery-SVG plugins.
     /* Update current slide number with each change event */
     .bind('deck.change', function(e, from, to) {
         var opts = $[deck]('getOptions');
-        var slideTo = $[deck]('getSlide', to);
-        var container = $[deck]('getContainer');
+        var $slideTo = $[deck]('getSlide', to);
+        var $container = $[deck]('getContainer');
 	
-    // do nothing
+        /* Restart all animator in the slide */
+        if( $.isArray($slideTo.data('animators')) ) {
+            $.each($slideTo.data('animators'), function(index, animator){
+               $(window).attr(animator).restart();
+            });
+        }
+    }).bind('deck.animator.init', function(e, data) {
+        $('#deck-svg-next').removeClass("disabled");
     });
+    
+    /*
+        Load parameters from an Object element
+        */
+    function loadObjectParams(objectElement) {
+        var attributes = {};
+        $(objectElement).children("param").each(function(index){
+            attributes[$(this).attr("name")] = $(this).attr("value");
+        });
+        return attributes;
+    }
+    
+    /*
+        Return true if default params are set.
+        */
+    function validateParams(params) {
+        return params['src'] && params['width'] && params['height'] && params['animator'];
+    }
+    
+    /*
+        Create aSVG placeholder
+        */
+    function createaSVG(object, attributes) {
+        var $canvas, $control, $next, $reload, $placeholder;
+        
+        /* Create svg canvas */
+        $canvas = $("<div />").attr({
+            'id':  $(object).attr('id'),
+            'class': $(object).attr('class')
+        }).css({
+            'height': attributes['height'],
+            'width': attributes['width']
+        });
+                
+        /* Create canvas control */
+        
+        // next button
+        $next = $("<a href=\"#\"></a>").attr({
+            'id':'deck-svg-next', 
+            'class':'deck-svg-button'
+        }).click(function(e) {
+            var animator = $(window).attr(attributes['animator']);
+            animator.next();
+            if( animator.isCompleted() ) {
+                $(this).addClass("disabled");
+            }
+        });
+                
+        // reload button
+        $reload = $("<a href=\"#\"></a>").attr({
+            'id':'deck-svg-reload', 
+            'class':'deck-svg-button'
+        }).click(function(e) {
+            $(window).attr(attributes['animator']).restart();
+            $next.removeClass("disabled");
+        });
+
+        // append everything in a control panel
+        $control = $("<div />")
+            .addClass($[deck]('getOptions').classes.control)
+            .append($reload,$next);
+
+        /* Create placeholder i.e canvas + control */
+        $placeholder = $("<div />")
+            .addClass($[deck]('getOptions').classes.placeholder)
+            .append($canvas)
+            .append($control);
+            
+        return {placeholder:$placeholder, canvas:$canvas};
+    }
 })(jQuery, 'deck');

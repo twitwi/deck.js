@@ -27,17 +27,13 @@
             text-align: center;
             width: 24px;
             height: 24px;
+            cursor: hand;
         }
         
         .deck-svg-control {
             text-align: right;
             width: 100%;
             @include opacity(0.5);
-        }
-        
-        #deck-svg-prev {
-            background: url('prev.png') no-repeat center center;
-            background-size: 80%;
         }
         
         #deck-svg-reload {
@@ -48,6 +44,11 @@
         #deck-svg-next {
             background: url('next.png') no-repeat center center;
             background-size: 80%;
+            
+            &.disabled {
+                @include opacity(0.2);
+                cursor: default;
+            }
         }
     }
 }

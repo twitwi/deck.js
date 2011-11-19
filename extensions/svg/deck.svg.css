@@ -8,19 +8,22 @@
     display: inline-block;
     text-align: center;
     width: 24px;
-    height: 24px; }
+    height: 24px;
+    cursor: hand; }
   .deck-container .deck-svg .deck-svg-control {
     text-align: right;
     width: 100%;
     -moz-opacity: 0.5;
     filter: alpha(opacity=50);
     opacity: 0.5; }
-  .deck-container .deck-svg #deck-svg-prev {
-    background: url("prev.png") no-repeat center center;
-    background-size: 80%; }
   .deck-container .deck-svg #deck-svg-reload {
     background: url("reload.png") no-repeat center center;
     background-size: 80%; }
   .deck-container .deck-svg #deck-svg-next {
     background: url("next.png") no-repeat center center;
     background-size: 80%; }
+    .deck-container .deck-svg #deck-svg-next.disabled {
+      -moz-opacity: 0.2;
+      filter: alpha(opacity=20);
+      opacity: 0.2;
+      cursor: default; }
