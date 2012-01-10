@@ -125,9 +125,13 @@ This module provides a support for TOC to the deck.
             for(var level=1; level<6; level++) {
                 if( slide.children("h"+level).length > 0) {
                     $toc.push(level, slide.children("h"+level+":first").text(), slide);
+                    $toc.tag(slide);
                     tocElementFound = true;
                 }
             }
+            
+            /* Tag the slide with the current TOC level */
+            $toc.tag(slide);
         });
     })
     /* Update current slide number with each change event */
@@ -145,7 +149,7 @@ This module provides a support for TOC to the deck.
             // reset
             $(opts.selectors.tocTitle).text("");
             $(opts.selectors.tocSection).text("");
-            $(opts.selectors.tocSubSection).text("");
+            $(opts.selectors.tocSubSection).text("----------");
             $(opts.selectors.tocSubSubSection).text("");
 
             // update according to the current context
@@ -156,7 +160,7 @@ This module provides a support for TOC to the deck.
                         $(opts.selectors.tocTitle).text($context[level-1]);
                         break;
                     case 2: 
-                        $(opts.selectors.tocSection).text($context[level-1]); 
+                        $(opts.selectors.tocSection).text($context[level-1]);
                         break;
                     case 3: 
                         $(opts.selectors.tocSubSection).text($context[level-1]); 
@@ -203,12 +207,18 @@ This module provides a support for TOC to the deck.
                 $target = ($target.find("li#toc-"+($c.slice(0,$c.length-1).join('-')))).children("ul");
             }
             $tocElm.appendTo($target);
-            
-            /* Keep track of the TOC level in the slide */
+        };
+        
+        /*
+            Tag the slide with the current TOC level.
+        
+            slide is the slide to tag
+            */
+        this.tag = function(slide) {
             slide.data({
                 toc: $c.slice(0)
             });
-        };
+        }
         
         /*
             Get the current TOC context
