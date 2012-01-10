@@ -1,0 +1,27 @@
+.deck-container {
+	.notes {
+		position: absolute;
+		z-index: 10;
+		top: 0px;
+                bottom: 0px;
+		left: 0;
+                right: 0;
+		padding: 0.625em;
+		display: none;
+		background: #ccc;
+                overflow-y: auto;
+                overflow-x: autp;
+                background-color: #DDE4EB;
+                border-right: #A9A9A9 solid 1px;
+	}
+}
+
+.deck-notes .notes {
+	display: block;
+}
+
+@media print {
+	.deck-toc {
+		display:none;
+	}
+}
