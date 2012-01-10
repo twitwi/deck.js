@@ -149,7 +149,7 @@ This module provides a support for TOC to the deck.
             // reset
             $(opts.selectors.tocTitle).text("");
             $(opts.selectors.tocSection).text("");
-            $(opts.selectors.tocSubSection).text("----------");
+            $(opts.selectors.tocSubSection).text("");
             $(opts.selectors.tocSubSubSection).text("");
 
             // update according to the current context
