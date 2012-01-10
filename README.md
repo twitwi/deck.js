@@ -85,6 +85,8 @@ TO DETAIL THIS SECTION
 
 ##deck.clone.js extension
 
+**ONLY TESTED WITH CHROMIUM and CHROME browser**
+
 The `deck.clone.js` extension allows users to clone a deck presentation so that a clone of this presentation appears in a separate popup window.
 The `deck.change` events of the master presentation are propagated to the cloned windows, so that when you navigate between the slides in the master window the navigation will operate nicely in the all the cloned windows. 
 The advantage of cloning a deck presentation is that, on the master window you have the slides displayed while in the cloned window you have the speaker notes displayed.
