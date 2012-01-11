@@ -46,8 +46,9 @@ $background_color_dark: rgba(220,220,223,1);
     
     section.slide {
         text-shadow: 0px 2px 3px rgba(0,0,0,.5);
-        width: 100%;
-        padding: 40px;
+        padding-left: 40px;
+        padding-top: 40px;
+        margin: 0px;
     }
     
     h1,h2,h3,h4,h5 {
@@ -56,7 +57,7 @@ $background_color_dark: rgba(220,220,223,1);
     }
     
     h1 {
-        font-size: 4em;
+        font-size: 3.5em;
         text-align: center;
         color: #050014;
         padding-top: 0.9em;
@@ -74,7 +75,7 @@ $background_color_dark: rgba(220,220,223,1);
     }
     
     h2, h3 {
-        font-size: 2.25em;
+        font-size: 2.10em;
         font-weight: bold;
         padding-top:.5em;
         margin: 0 0 .66666em 0;

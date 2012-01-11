@@ -14,7 +14,8 @@ only toggle the notes panel for this cloned window.
 */
 (function($, deck, undefined) {
     var $d = $(document);
-
+    var $notesContainer;
+    
     /*
 	Extends defaults/options.
 	
@@ -28,7 +29,8 @@ only toggle the notes panel for this cloned window.
 	*/
     $.extend(true, $[deck].defaults, {
         classes: {
-            notes: 'deck-notes'
+            notes: 'deck-notes',
+            notesContainer: 'deck-notes-container'
         },
 		
         keys: {
@@ -47,7 +49,7 @@ only toggle the notes panel for this cloned window.
 	to the deck container.
 	*/
     $[deck]('extend', 'showNotes', function() {
-        $[deck]('getContainer').addClass($[deck]('getOptions').classes.notes);
+        $("."+$[deck]('getOptions').classes.notes).show();
     });
     
     /*
@@ -57,7 +59,7 @@ only toggle the notes panel for this cloned window.
 	option from the deck container.
 	*/
     $[deck]('extend', 'hideNotes', function() {
-        $[deck]('getContainer').removeClass($[deck]('getOptions').classes.notes);
+        $("."+$[deck]('getOptions').classes.notes).hide();
     });
 
     /*
@@ -66,8 +68,7 @@ only toggle the notes panel for this cloned window.
 	Toggles between showing and hiding the notes.
 	*/
     $[deck]('extend', 'toggleNotes', function() {
-        $[deck]('getContainer').hasClass($[deck]('getOptions').classes.notes) ? 
-        $[deck]('hideNotes') : $[deck]('showNotes');
+        $("."+$[deck]('getOptions').classes.notes).is(":visible") ? $[deck]('hideNotes') : $[deck]('showNotes');
     });
 
 
@@ -85,6 +86,14 @@ only toggle the notes panel for this cloned window.
                 e.preventDefault();
             }
         });
+    })
+    .bind('deck.change', function(e, from, to) {
+        var slideTo = $[deck]('getSlide', to);
         
+        if( slideTo.children(".notes").length > 0) {
+            $("."+$[deck]('getOptions').classes.notesContainer).html(slideTo.find(".notes").html())
+        } else {
+            $("."+$[deck]('getOptions').classes.notesContainer).html("")
+        }
     });
 })(jQuery, 'deck');

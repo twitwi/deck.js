@@ -119,14 +119,14 @@ This module provides a support for TOC to the deck.
         /* Go through all slides */
         $.each($[deck]('getSlides'), function(i, $el) {
             var slide = $[deck]('getSlide',i);
-            var tocElementFound = false;
+            //var tocElementFound = false;
             
             /* If there is a toc item, push it in the TOC */
             for(var level=1; level<6; level++) {
                 if( slide.children("h"+level).length > 0) {
                     $toc.push(level, slide.children("h"+level+":first").text(), slide);
                     $toc.tag(slide);
-                    tocElementFound = true;
+                    //tocElementFound = true;
                 }
             }
             

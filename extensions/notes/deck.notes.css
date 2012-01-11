@@ -1,20 +1,30 @@
 .deck-container .notes {
+  display: none; }
+
+.deck-notes {
   position: absolute;
-  z-index: 10;
+  background-color: #DDE4EB;
+  z-index: 8;
   top: 0px;
   bottom: 0px;
   left: 0;
   right: 0;
-  padding: 0.625em;
   display: none;
-  background: #ccc;
   overflow-y: auto;
-  overflow-x: autp;
-  background-color: #DDE4EB;
-  border-right: #A9A9A9 solid 1px; }
-
-.deck-notes .notes {
-  display: block; }
+  overflow-x: none; }
+  .deck-notes .deck-notes-header {
+    width: 100%;
+    font-size: 1.5em;
+    padding-left: 0.25em;
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2); }
+  .deck-notes .deck-notes-container {
+    margin-top: 2px;
+    border-top: 1px solid white;
+    padding: 0.625em; }
+  .deck-notes .notes {
+    display: block; }
 
 @media print {
   .deck-toc {
