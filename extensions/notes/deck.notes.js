@@ -90,6 +90,7 @@ only toggle the notes panel for this cloned window.
     .bind('deck.change', function(e, from, to) {
         var slideTo = $[deck]('getSlide', to);
         
+        /* Update notes */
         if( slideTo.children(".notes").length > 0) {
             $("."+$[deck]('getOptions').classes.notesContainer).html(slideTo.find(".notes").html())
         } else {
