@@ -124,7 +124,14 @@ This module provides a support for TOC to the deck.
             /* If there is a toc item, push it in the TOC */
             for(var level=1; level<6; level++) {
                 if( slide.children("h"+level).length > 0) {
-                    $toc.push(level, slide.children("h"+level+":first").text(), slide);
+                    var tocTitle = "";
+                    var $tocElement = slide.children("h"+level+":first");
+                    if( $tocElement.attr("title") != undefined && $tocElement.attr("title") != "") {
+                        tocTitle = $tocElement.attr("title");
+                    } else {
+                        tocTitle = $tocElement.text();
+                    }
+                    $toc.push(level, tocTitle, slide);
                     $toc.tag(slide);
                     //tocElementFound = true;
                 }

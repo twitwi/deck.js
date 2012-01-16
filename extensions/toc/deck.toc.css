@@ -1,6 +1,6 @@
 .deck-container .deck-toc {
   position: absolute;
-  z-index: 10;
+  z-index: 40;
   top: 0px;
   bottom: 0px;
   left: 0;

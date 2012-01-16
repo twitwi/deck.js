@@ -175,23 +175,30 @@
   .deck-container .deck-status {
     position: absolute;
     display: block;
+    z-index: 20;
     left: 0px;
     right: 0px;
     bottom: 0px;
     width: 100%;
     font-size: 0.6666em;
     background-color: black;
-    border-top: 1px solid white;
+    -webkit-box-shadow: 0px -1px 1px rgba(255, 255, 255, 0.2);
+    -moz-box-shadow: 0px -1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px -1px 1px rgba(255, 255, 255, 0.2);
     color: white; }
   .deck-container .deck-toc-status {
     position: absolute;
     display: block;
+    z-index: 10;
     left: 0px;
     right: 0px;
     top: 0px;
     width: 100%;
     font-size: 0.6666em;
     background-color: black;
+    -webkit-box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.2);
+    -moz-box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.2);
     color: white; }
   .deck-container.deck-menu {
     background: #EAEFF7;
