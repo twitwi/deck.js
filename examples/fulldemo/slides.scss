@@ -38,6 +38,21 @@
       
 .deck-container {
     
+    /********************** html tags ***************************/
+    
+    table {
+        display: table !important;
+        
+        tr {
+            display: table-row;
+            width: 100%;
+        }
+        
+        td {
+            display: table-cell;
+        }
+    }
+    
     /********************** deck tags ***************************/
     
     .deck-status, .deck-toc-status {

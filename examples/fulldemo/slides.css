@@ -1,9 +1,17 @@
 @media screen {
   .deck-container {
+    /********************** html tags ***************************/
     /********************** deck tags ***************************/
     /********************** slides tags ***************************/
     /********************** asvg tags** ***************************/
     /********************** custom tags ***************************/ }
+    .deck-container table {
+      display: table !important; }
+      .deck-container table tr {
+        display: table-row;
+        width: 100%; }
+      .deck-container table td {
+        display: table-cell; }
     .deck-container .deck-status, .deck-container .deck-toc-status {
       height: 22px; }
       .deck-container .deck-status td, .deck-container .deck-toc-status td {

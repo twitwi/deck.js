@@ -88,6 +88,7 @@
     </object>
     <script type="text/javascript">
         var c1Anim = new Animator("#canvas_1", [
+            Animator.Disappear("path", 0),
             [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 200),Animator.Appear("#circleBlue", 400)],
             Animator.Disappear("#circleGreen", 0),
             Animator.Disappear("#circleBlue", 0)
