@@ -4,7 +4,7 @@
   top: 0px;
   bottom: 0px;
   left: 0;
-  right: 75%;
+  right: 55%;
   padding: 0.625em;
   display: none;
   background: #ccc;
@@ -17,13 +17,19 @@
   .deck-container .deck-toc ul {
     list-style: none;
     margin: 0px;
-    padding: 0px; }
+    padding: 0px;
+    font-size: 1em; }
     .deck-container .deck-toc ul li {
-      padding-left: 1em; }
+      padding-left: 1.5em;
+      font-weight: normal; }
+      .deck-container .deck-toc ul li#toc-0 {
+        font-weight: bold;
+        padding-bottom: 1em;
+        padding-left: 0px; }
   .deck-container .deck-toc a {
-    text-decoration: none;
-    display: block !important;
     width: 100%;
+    display: block !important;
+    text-decoration: none;
     color: #595959 !important; }
 
 .deck-toc-frame .deck-toc {
