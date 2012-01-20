@@ -1,4 +1,4 @@
-$background_color_light: rgba(255,255,255,1);
+$background_color_light: rgba(245,246,247,1);
 $background_color_dark: rgba(220,220,223,1);
 
 @mixin border-radius($r) {
@@ -31,10 +31,10 @@ $background_color_dark: rgba(220,220,223,1);
     background: linear-gradient(top, $light 0%,$dark 100%); /* W3C */
 }
 
-
 .deck-container {
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-    font-size:1.25em;
+    //font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+    font-size: 1.25em;
     @include linear-gradient-background($background_color_light, $background_color_dark, 255);
     background-attachment: fixed;
     position: absolute;

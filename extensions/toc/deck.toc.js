@@ -159,22 +159,24 @@ This module provides a support for TOC to the deck.
             $(opts.selectors.tocSubSection).text("");
             $(opts.selectors.tocSubSubSection).text("");
 
-            // update according to the current context
-            var $context = $toc.context(slideTo.data('toc'))            
-            for(var level=1; level<=$context.length; level++) {
-                switch(level) {
-                    case 1: 
-                        $(opts.selectors.tocTitle).text($context[level-1]);
-                        break;
-                    case 2: 
-                        $(opts.selectors.tocSection).text($context[level-1]);
-                        break;
-                    case 3: 
-                        $(opts.selectors.tocSubSection).text($context[level-1]); 
-                        break;
-                    case 4: 
-                        $(opts.selectors.tocSubSubSection).text($context[level-1]); 
-                        break;
+            if( !slideTo.hasClass('hide-toc-status') ) {
+                // update according to the current context
+                var $context = $toc.context(slideTo.data('toc'))            
+                for(var level=1; level<=$context.length; level++) {
+                    switch(level) {
+                        case 1: 
+                            $(opts.selectors.tocTitle).text($context[level-1]);
+                            break;
+                        case 2: 
+                            $(opts.selectors.tocSection).text($context[level-1]);
+                            break;
+                        case 3: 
+                            $(opts.selectors.tocSubSection).text($context[level-1]); 
+                            break;
+                        case 4: 
+                            $(opts.selectors.tocSubSubSection).text($context[level-1]); 
+                            break;
+                    }
                 }
             }
         }

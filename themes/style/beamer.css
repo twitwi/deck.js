@@ -1,19 +1,19 @@
 .deck-container {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
   font-size: 1.25em;
   background: white;
   /* Old browsers */
-  background: -moz-linear-gradient(top, white 0%, #dcdcdf 100%);
+  background: -moz-linear-gradient(top, #f5f6f7 0%, #dcdcdf 100%);
   /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #dcdcdf));
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f6f7), color-stop(100%, #dcdcdf));
   /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, white 0%, #dcdcdf 100%);
+  background: -webkit-linear-gradient(top, #f5f6f7 0%, #dcdcdf 100%);
   /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, white 0%, #dcdcdf 100%);
+  background: -o-linear-gradient(top, #f5f6f7 0%, #dcdcdf 100%);
   /* Opera11.10+ */
-  background: -ms-linear-gradient(top, white 0%, #dcdcdf 100%);
+  background: -ms-linear-gradient(top, #f5f6f7 0%, #dcdcdf 100%);
   /* IE10+ */
-  background: linear-gradient(top, white 0%, #dcdcdf 100%);
+  background: linear-gradient(top, #f5f6f7 0%, #dcdcdf 100%);
   /* W3C */
   background-attachment: fixed;
   position: absolute;
