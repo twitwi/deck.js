@@ -9,17 +9,17 @@
   display: none;
   background: #ccc;
   overflow-y: auto;
-  overflow-x: autp;
+  overflow-x: auto;
   background-color: #DDE4EB;
-  border-right: #A9A9A9 solid 1px; }
-  .deck-container .deck-toc > ul {
-    width: 500px; }
+  border-right: #A9A9A9 solid 1px;
+  width: 500px; }
   .deck-container .deck-toc ul {
     list-style: none;
     margin: 0px;
     padding: 0px;
     font-size: 1em; }
     .deck-container .deck-toc ul li {
+      white-space: nowrap;
       padding-left: 1.5em;
       font-weight: normal; }
       .deck-container .deck-toc ul li#toc-0 {
