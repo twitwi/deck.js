@@ -58,7 +58,8 @@ This module provides a support for TOC to the deck.
             tocTitle: '.deck-toc-h1',
             tocSection: '.deck-toc-h2',
             tocSubSection: '.deck-toc-h3',
-            tocSubSubSection: '.deck-toc-h4'
+            tocSubSubSection: '.deck-toc-h4',
+            tocStatus: '.deck-toc-status'
         }
     });
 
@@ -159,7 +160,10 @@ This module provides a support for TOC to the deck.
             $(opts.selectors.tocSubSection).text("");
             $(opts.selectors.tocSubSubSection).text("");
 
-            if( !slideTo.hasClass('hide-toc-status') ) {
+            if( slideTo.hasClass('hide-toc-status') ) {
+                $(opts.selectors.tocStatus).hide();
+            } else {
+                $(opts.selectors.tocStatus).show();
                 // update according to the current context
                 var $context = $toc.context(slideTo.data('toc'))            
                 for(var level=1; level<=$context.length; level++) {
@@ -178,7 +182,7 @@ This module provides a support for TOC to the deck.
                             break;
                     }
                 }
-            }
+            } 
         }
     });
         
