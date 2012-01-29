@@ -116,6 +116,13 @@ Slides can include svg documents which then can be animated using the Animator.
         }).css({
             'height': attributes['height'],
             'width': attributes['width']
+        }).click(function(e) {
+            var animator = $(window).attr(attributes['animator']);
+            if( animator.isCompleted() ) {
+                animator.restart();
+            } else {
+                animator.next();
+            }
         });
                 
         /* Create canvas control */

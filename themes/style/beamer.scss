@@ -218,16 +218,16 @@ $background_color_dark: rgba(220,220,223,1);
     }
     
     .deck-prev-link, .deck-next-link {
-        background:#fff;
-        opacity:0.5;
+        background: #fff;
+        opacity: 0.5;
         
         &, &:hover, &:focus, &:active, &:visited {
-            color:#599;
+            color: #599;
         }
         
         &:hover, &:focus {
             opacity:1;
-            text-decoration:none;
+            text-decoration: none;
         }
     }
     
