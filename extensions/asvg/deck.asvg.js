@@ -26,13 +26,6 @@ Slides can include svg documents which then can be animated using the Animator.
     });
 
     $.deck('extend', 'next', function() {
-        // var animator = $(window).attr(attributes['animator']);
-        // alert(animator);
-        // animator.next();
-        // if( animator.isCompleted() ) {
-        //     $(this).addClass("disabled");
-        // }
-        
         var slide = $[deck]('getSlide', $[deck]('getCurrent'));
         if (slide.data('animators')) {
             var animators = slide.data('animators');

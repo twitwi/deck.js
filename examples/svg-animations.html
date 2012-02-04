@@ -168,10 +168,45 @@
             Animator.Disappear("path", 0),
             [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 200),Animator.Appear("#circleBlue", 400)],
             Animator.Disappear("#circleGreen", 0),
+            Animator.Disappear("#circleBlue", 0),
+            Animator.Disappear("#circleRed", 0)
+        ]);
+    </script>
+</section>
+
+<section class="slide">
+    <h2>Section 3</h2>
+    <p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
+    <div class="centerbox">
+        <object type="deckjs/asvg" id="canvas_2" class="half">
+          <param name="src" value="media/circle.svg" />
+          <param name="width" value="100%" />
+          <param name="height" value="400px" />
+          <param name="animator" value="c2Anim" />
+          <param name="autoStart" value="0" />
+        </object>
+        <object type="deckjs/asvg" id="canvas_3" class="half">
+          <param name="src" value="media/circle.svg" />
+          <param name="width" value="100%" />
+          <param name="height" value="400px" />
+          <param name="animator" value="c3Anim" />
+          <param name="autoStart" value="0" />
+        </object>
+    </div>
+    <script type="text/javascript">
+        var c2Anim = new Animator("#canvas_2", [
+            [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 0),Animator.Appear("#circleBlue", 0)],
+            Animator.Disappear("#circleRed", 0),
+            Animator.Disappear("#circleBlue", 0)
+        ]);
+        var c3Anim = new Animator("#canvas_3", [
+            [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 0),Animator.Appear("#circleBlue", 0)],
+            Animator.Disappear("#circleGreen", 0),
             Animator.Disappear("#circleBlue", 0)
         ]);
     </script>
 </section>
+
 
 <section class="slide" id="elements-images">
 	<h2>Other Elements: Images</h2>
