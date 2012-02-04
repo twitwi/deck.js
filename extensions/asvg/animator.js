@@ -24,7 +24,7 @@ function Animator(target, animations) {
 		This event fires whenever an animation is performed. The callback
                 function is passed two parameters, target and index, equal to
                 the target on which the animation is performed and the index of
-                the animation i.e between 0 and animation.lenght.
+                the animation i.e., between 0 and animation.lenght.
 		*/
 		progress: 'deck.animator.progress',
                 
@@ -102,7 +102,7 @@ function Animator(target, animations) {
             
             $(document).trigger(events.initialize, {'target':target});   
         } else {
-            throw "Animator requires at list one animation."
+            throw "Animator requires at least one animation."
         }
     }
 }

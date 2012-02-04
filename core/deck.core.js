@@ -326,6 +326,10 @@ that use the API provided by core.
 		getSlides: function() {
 			return slides;
 		},
+
+		getCurrent: function() {
+			return current;
+		},
 		
 		/*
 		jQuery.deck('getContainer')
