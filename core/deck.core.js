@@ -177,8 +177,16 @@ that use the API provided by core.
 					methods.next();
 					e.preventDefault();
 				}
+				else if (e.which === options.keys.stepNext || $.inArray(e.which, options.keys.stepNext) > -1) {
+					methods.stepNext();
+					e.preventDefault();
+				}
 				else if (e.which === options.keys.previous || $.inArray(e.which, options.keys.previous) > -1) {
 					methods.prev();
+					e.preventDefault();
+				}
+				else if (e.which === options.keys.stepPrevious || $.inArray(e.which, options.keys.stepPrevious) > -1) {
+					methods.stepPrev();
 					e.preventDefault();
 				}
 			});
@@ -292,6 +300,50 @@ that use the API provided by core.
 		*/
 		next: function() {
 			methods.go(current+1);
+		},
+
+		/*
+		jQuery.deck('stepNext')
+		
+		Does the next slide animation or moves to the next slide if animations are finished.
+		*/
+		stepNext: function() {
+                    var slide = $[deck]('getSlide', current);
+                    if (slide.data('animators')) {
+                        var animators = slide.data('animators');
+                        var finished = true;
+                        for (var ia in animators) {
+                            var animator = $(window).attr(animators[ia]);
+                            if (!animator.isCompleted()) {
+                                animator.next();
+                                finished = false;
+                                break;
+                            }
+                        }
+                        if (finished) {
+                            $.deck('go', ($.deck('getCurrent'))+1);
+                        }
+                    } else {
+                        $.deck('go', ($.deck('getCurrent'))+1);
+                    }
+		},
+
+		/*
+		jQuery.deck('stepPrev')
+		
+		Undoes the last animation or moves to the previous slide if no animations have been played in this slide.
+		*/
+		prev: function() {
+			methods.go(current-1);
+		},
+
+		/*
+		jQuery.deck('stepPrev')
+		
+		Undoes the last animation or moves to the previous slide if no animations have been played in this slide.
+		*/
+		stepPrev: function() {
+			methods.go(current-1);
 		},
 		
 		/*
@@ -431,9 +483,15 @@ that use the API provided by core.
 		
 	options.keys.next
 		The numeric keycode used to go to the next slide.
+
+	options.keys.stepNext
+		The numeric keycode used to do the next animation.
 		
 	options.keys.previous
 		The numeric keycode used to go to the previous slide.
+
+	options.keys.stepPrevious
+		The numeric keycode used to undo the previous animation.
 		
 	options.touch.swipeTolerance
 		The number of pixels the users finger must travel to produce a swipe
@@ -456,10 +514,14 @@ that use the API provided by core.
 		},
 		
 		keys: {
-			// enter, space, page down, right arrow, down arrow,
-			next: [13, 32, 34, 39, 40],
-			// backspace, page up, left arrow, up arrow
-			previous: [8, 33, 37, 38]
+			// enter, space, right arrow,
+			stepNext: [13, 32, 39],
+			// page down, down arrow,
+			next: [34, 40],
+			// backspace, left arrow
+			stepPrevious: [8, 37],
+			// page up, up arrow
+			previous: [33, 38]
 		},
 		
 		touch: {
