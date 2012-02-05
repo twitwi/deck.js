@@ -25,6 +25,58 @@ Slides can include svg documents which then can be animated using the Animator.
         }
     });
 
+    $.deck('extend', 'svgAnimate', function(slide, target) {
+        return {
+            appear: function(e, d) {
+                return {
+                    doAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        d = d || 0;
+                        $(e, $svg.root()).each( function(){
+                            $(this).animate({'svgOpacity': 1.}, d);
+                        });
+                    },
+                    initAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        $(e, $svg.root()).each( function(){
+                            $(this).animate({'svgOpacity': 0.}, 0);
+                        });
+                    },
+                    undoAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        $(e, $svg.root()).each( function(){
+                            $(this).animate({'svgOpacity': 0.}, 0);
+                        });
+                    }
+                }
+            },
+            disappear: function(e, d) {
+                return {
+                    doAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        d = d || 0;
+                        $(e, $svg.root()).each( function(){
+                            $(this).animate({'svgOpacity': 0.}, d);
+                        });
+                    },
+                    initAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        $(e, $svg.root()).each( function(){
+                            $(this).animate({'svgOpacity': 1.}, 0);
+                        });
+                    },
+                    undoAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        $(e, $svg.root()).each( function(){
+                            $(this).animate({'svgOpacity': 0.}, 1);
+                        });
+                    }
+                }
+            }
+
+        }
+
+    });
     $.deck('extend', 'DONOTEXTENDnext', function() {
         var slide = $[deck]('getSlide', $[deck]('getCurrent'));
         if (slide.data('animators')) {
@@ -72,7 +124,7 @@ Slides can include svg documents which then can be animated using the Animator.
                 }
                 
                 /* Add this animator to the list of animators of the current slide. */
-                $slide.data('animators').push(attributes['animator']);
+                //$slide.data('animators').push(attributes['animator']);
                 
                 /* Create aSVG placeholder */
                 var aSVG = createaSVG(this, attributes);
@@ -122,7 +174,7 @@ Slides can include svg documents which then can be animated using the Animator.
         Return true if default params are set.
         */
     function validateParams(params) {
-        return params['src'] && params['width'] && params['height'] && params['animator'];
+        return params['src'] && params['width'] && params['height'];// && params['animator'];
     }
     
     /*
@@ -137,14 +189,14 @@ Slides can include svg documents which then can be animated using the Animator.
         }).css({
             'height': attributes['height'],
             'width': attributes['width']
-        }).click(function(e) {
+        })/*.click(function(e) {
             var animator = $(window).attr(attributes['animator']);
             if( animator.isCompleted() ) {
                 animator.restart();
             } else {
                 animator.next();
             }
-        });
+        })*/;
                 
         /* Create canvas control */
         
@@ -152,22 +204,22 @@ Slides can include svg documents which then can be animated using the Animator.
         $next = $("<a href=\"#\"></a>").attr({
             'id':'deck-svg-next', 
             'class':'deck-svg-button'
-        }).click(function(e) {
+        })/*.click(function(e) {
             var animator = $(window).attr(attributes['animator']);
             animator.next();
             if( animator.isCompleted() ) {
                 $(this).addClass("disabled");
             }
-        });
+        })*/;
                 
         // reload button
         $reload = $("<a href=\"#\"></a>").attr({
             'id':'deck-svg-reload', 
             'class':'deck-svg-button'
-        }).click(function(e) {
+        })/*.click(function(e) {
             $(window).attr(attributes['animator']).restart();
             $next.removeClass("disabled");
-        });
+        })*/;
 
         // append everything in a control panel
         $control = $("<div />")

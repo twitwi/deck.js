@@ -18,6 +18,7 @@ that use the API provided by core.
 (function($, deck, document, undefined) {
 	var slides, // Array of all the uh, slides...
 	current, // Array index of the current slide
+	currentStep, // Array index of the current slide's animations
 	$container, // Keeping this cached
 	
 	events = {
@@ -33,6 +34,15 @@ that use the API provided by core.
 		});
 		*/
 		change: 'deck.change',
+
+            /*
+		$(document).bind('deck.change', function(event, delta) {
+                if (delta==-1) {
+                } else {
+                }
+                }
+             */
+	    step: 'deck.step',
 		
 		/*
 		This event fires at the beginning of deck initialization, after the options
@@ -114,7 +124,24 @@ that use the API provided by core.
 			});
 		}
 	},
-	
+
+    initCurrentSlideAnimations = function() {
+        var slide = methods.getSlide(current);
+        if (slide.data('animations')) {
+            var animations = slide.data('animations');
+            for (ia in animations) {
+                var animation = animations[ia];
+                if ($.isArray(animation)) {
+                    $(animation).each(function() {
+                        this.initAnimation();
+                    });
+                } else {
+                    animation.initAnimation();
+                }
+            }
+        }
+    },
+    
 	/* Methods exposed in the jQuery.deck namespace */
 	methods = {
 		
@@ -150,6 +177,7 @@ that use the API provided by core.
 			options = $.extend(true, {}, $[deck].defaults, opts);
 			slides = [];
 			current = 0;
+			currentStep = 0;
 			$container = $(options.selectors.container);
 			tolerance = options.touch.swipeTolerance;
 			
@@ -170,7 +198,16 @@ that use the API provided by core.
 					slides.push($(e));
 				});
 			}
-			
+		
+	            /* Handle the animation core module */
+		    $.each(slides, function(i, slide) {
+                        slide.find("pre.animate").each(function(index) {
+                            eval("___f___ = "+$(this).text());
+                            ___f___(slide);
+                        });
+                    });
+                    
+                    
 			/* Remove any previous bindings, and rebind key events */
 			$d.unbind('keydown.deck').bind('keydown.deck', function(e) {
 				if (e.which === options.keys.next || $.inArray(e.which, options.keys.next) > -1) {
@@ -261,6 +298,7 @@ that use the API provided by core.
 		of bounds or doesn't match a slide id the call is ignored.
 		*/
 		go: function(index) {
+			currentStep = 0;
 			var e = $.Event(events.change),
 			ndx;
 			
@@ -289,8 +327,20 @@ that use the API provided by core.
 			else {
 				current = ndx;
 				updateStates();
+                            initCurrentSlideAnimations();
 			}
 		},
+
+            /*
+              TODO: document this (high level and links to the rest)
+              Animation must be duck-type-proof with init(), do(), undo().
+             */
+            addAnimation: function(slide, animation) {
+                if (!slide.data('animations')) {
+                    slide.data('animations', new Array());
+                }
+                slide.data('animations').push(animation);
+            },
 		
 		/*
 		jQuery.deck('next')
@@ -308,23 +358,25 @@ that use the API provided by core.
 		Does the next slide animation or moves to the next slide if animations are finished.
 		*/
 		stepNext: function() {
-                    var slide = $[deck]('getSlide', current);
-                    if (slide.data('animators')) {
-                        var animators = slide.data('animators');
-                        var finished = true;
-                        for (var ia in animators) {
-                            var animator = $(window).attr(animators[ia]);
-                            if (!animator.isCompleted()) {
-                                animator.next();
-                                finished = false;
-                                break;
+                    var slide = methods.getSlide(current);
+                    if (slide.data('animations')) {
+                        var animations = slide.data('animations');
+                        if (currentStep < animations.length) {
+                            var animation = animations[currentStep];
+                            currentStep++;
+                            if ($.isArray(animation)) {
+                                $(animation).each(function() {
+                                    this.doAnimation();
+                                });
+                            } else {
+                                animation.doAnimation();
                             }
-                        }
-                        if (finished) {
-                            $.deck('go', ($.deck('getCurrent'))+1);
+                            $(document).trigger(events.step, [1]);
+                        } else {
+                            methods.next();
                         }
                     } else {
-                        $.deck('go', ($.deck('getCurrent'))+1);
+                        methods.next();
                     }
 		},
 
@@ -343,7 +395,26 @@ that use the API provided by core.
 		Undoes the last animation or moves to the previous slide if no animations have been played in this slide.
 		*/
 		stepPrev: function() {
-			methods.go(current-1);
+                    var slide = methods.getSlide(current);
+                    if (slide.data('animations')) {
+                        var animations = slide.data('animations');
+                        if (currentStep > 0) {
+                            currentStep--;
+                            var animation = animations[currentStep];
+                            if ($.isArray(animation)) {
+                                $(animation).each(function() {
+                                    this.undoAnimation();
+                                });
+                            } else {
+                                animation.undoAnimation();
+                            }
+                            $(document).trigger(events.step, [-1]);
+                        } else {
+                            methods.prev();
+                        }
+                    } else {
+                        methods.prev();
+                    }
 		},
 		
 		/*

@@ -156,55 +156,50 @@
 <section class="slide">
     <h2>Animated SVG</h2>
     <p>Here:</p>
-    <object type="deckjs/asvg" id="canvas_1">
+    <object type="deckjs/asvg" id="svg1">
       <param name="src" value="media/circle.svg" />
       <param name="width" value="100%" />
       <param name="height" value="400px" />
-      <param name="animator" value="c1Anim" />
       <param name="autoStart" value="0" />
     </object>
-    <script type="text/javascript">
-        var c1Anim = new Animator("#canvas_1", [
-            Animator.Disappear("path", 0),
-            [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 200),Animator.Appear("#circleBlue", 400)],
-            Animator.Disappear("#circleGreen", 0),
-            Animator.Disappear("#circleBlue", 0),
-            Animator.Disappear("#circleRed", 0)
-        ]);
-    </script>
+    <pre class="animate">
+     function(slide) {
+           var a = $[deck]("svgAnimate", slide, "#svg1");
+           $[deck]('addAnimation', slide, a.appear("#circleRed", 200));
+           $[deck]('addAnimation', slide, a.appear("#circleBlue", 300));
+           $[deck]('addAnimation', slide, a.appear("#circleGreen", 400));
+     }
+    </pre>
 </section>
 
 <section class="slide">
     <h2>Section 3</h2>
     <p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
     <div class="centerbox">
-        <object type="deckjs/asvg" id="canvas_2" class="half">
+        <object type="deckjs/asvg" class="half" id="svg2">
           <param name="src" value="media/circle.svg" />
           <param name="width" value="100%" />
           <param name="height" value="400px" />
-          <param name="animator" value="c2Anim" />
           <param name="autoStart" value="0" />
         </object>
-        <object type="deckjs/asvg" id="canvas_3" class="half">
+        <object type="deckjs/asvg" class="half" id="svg3">
           <param name="src" value="media/circle.svg" />
           <param name="width" value="100%" />
           <param name="height" value="400px" />
-          <param name="animator" value="c3Anim" />
           <param name="autoStart" value="0" />
         </object>
     </div>
-    <script type="text/javascript">
-        var c2Anim = new Animator("#canvas_2", [
-            [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 0),Animator.Appear("#circleBlue", 0)],
-            Animator.Disappear("#circleRed", 0),
-            Animator.Disappear("#circleBlue", 0)
-        ]);
-        var c3Anim = new Animator("#canvas_3", [
-            [Animator.Appear("#circleRed", 0),Animator.Appear("#circleGreen", 0),Animator.Appear("#circleBlue", 0)],
-            Animator.Disappear("#circleGreen", 0),
-            Animator.Disappear("#circleBlue", 0)
-        ]);
-    </script>
+    <pre class="animate">
+     function(slide) {
+           var a1 = $[deck]("svgAnimate", slide, "#svg2");
+           var a2 = $[deck]("svgAnimate", slide, "#svg3");
+           $[deck]('addAnimation', slide, a1.appear("#circleRed", 200));
+           $[deck]('addAnimation', slide, a2.appear("#circleBlue", 300));
+           $[deck]('addAnimation', slide, a1.appear("#circleGreen", 400));
+           $[deck]('addAnimation', slide, a2.appear("#circleGreen", 300));
+           $[deck]('addAnimation', slide, a1.appear("#circleBlue", 400));
+     }
+    </pre>
 </section>
 
 

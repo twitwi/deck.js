@@ -55,6 +55,13 @@ This module provides a support for cloning the deck.
         $.each(clones, function(index, clone) {
            clone.deck('go', to);
         });
+    })
+    /* Do the animations locally */
+    .bind('deck.step', function(e, delta) {
+        $.each(clones, function(index, clone) {
+            if (delta == -1) clone.deck('stepPrev');
+            else if (delta == 1) clone.deck('stepNext');
+        });
     });
     
     /*
