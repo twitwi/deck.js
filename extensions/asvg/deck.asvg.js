@@ -76,7 +76,7 @@ Slides can include svg documents which then can be animated using the Animator.
                     undoAnimation: function() {
                         var $svg = $(target, slide).svg('get');
                         $(e, $svg.root()).each( function(){
-                            $(this).animate({'svgOpacity': 0.}, 1);
+                            $(this).animate({'svgOpacity': 1.}, 1);
                         });
                     }
                 }
