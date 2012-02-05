@@ -78,7 +78,7 @@
 </section>
 
 <section class="slide">
-    <h2>Animated SVG</h2>
+    <h2>Animated SVG, simple case</h2>
     <p>Here:</p>
     <object type="deckjs/asvg" class="svg1">
       <param name="src" value="media/circle.svg" />
@@ -88,17 +88,37 @@
     </object>
     <pre class="animate">
      function(slide) {
-           var a = $[deck]("svgAnimate", slide, ".svg1");
-           $[deck]('addAnimation', slide, a.appear("#circleRed", 1200));
-           $[deck]('addAnimation', slide, a.appear("#circleBlue", 300));
-           $[deck]('addAnimation', slide, a.appear("#circleGreen", 400));
+       var a = $[deck]("svgAnimate", slide, ".svg1");
+       $[deck]('addAnimation', slide, a.appear("#circleRed", 1200));
+       $[deck]('addAnimation', slide, a.appear("#circleBlue", 300));
+       $[deck]('addAnimation', slide, a.appear("#circleGreen", 400));
      }
     </pre>
 </section>
 
 <section class="slide">
-    <h2>Section 3</h2>
-    <p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
+    <h2>Animated SVG, same simple case but less verbose</h2>
+    <p>Here:</p>
+    <object type="deckjs/asvg" class="svg1">
+      <param name="src" value="media/circle.svg" />
+      <param name="width" value="100%" />
+      <param name="height" value="400px" />
+      <param name="autoStart" value="0" />
+    </object>
+    <pre class="animate">
+     function(slide) {
+       var a = $[deck]("svgAnimate", slide, ".svg1");
+       $[deck]('addAnimationSequence', slide, [
+         a.appear("#circleRed", 1200),
+         a.appear("#circleBlue", 300),
+         a.appear("#circleGreen", 400)
+       ]);
+     }
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>SVG animations, interleaved stuffs</h2>
     <div class="centerbox">
         <object type="deckjs/asvg" class="half svg1">
           <param name="src" value="media/circle.svg" />
@@ -115,13 +135,15 @@
     </div>
     <pre class="animate">
      function(slide) {
-           var a1 = $[deck]("svgAnimate", slide, ".svg1");
-           var a2 = $[deck]("svgAnimate", slide, ".svg2");
-           $[deck]('addAnimation', slide, a1.appear("#circleRed", 200));
-           $[deck]('addAnimation', slide, a2.appear("#circleBlue", 300));
-           $[deck]('addAnimation', slide, a1.appear("#circleGreen", 400));
-           $[deck]('addAnimation', slide, a2.appear("#circleGreen", 300));
-           $[deck]('addAnimation', slide, a1.appear("#circleBlue", 400));
+       var a1 = $[deck]("svgAnimate", slide, ".svg1");
+       var a2 = $[deck]("svgAnimate", slide, ".svg2");
+       $[deck]('addAnimationSequence', slide, [
+         a1.appear("#circleRed", 200),
+         a2.appear("#circleBlue", 300),
+         a1.appear("#circleGreen", 400),
+         a2.appear("#circleGreen", 300),
+         a1.appear("#circleBlue", 400)
+       ]);
      }
     </pre>
 </section>
@@ -141,52 +163,25 @@
     </object>
     <pre class="animate">
      function(slide) {
-           $[deck]('addAnimation', slide, {initAnimation: function() {$("pre", slide).removeClass("showAnyway")}, undoAnimation: function() {$("pre", slide).removeClass("showAnyway")}, doAnimation: function() {$("pre", slide).addClass("showAnyway")}});
-           var a = $[deck]("svgAnimate", slide, ".svg1");
-           $[deck]('addAnimation', slide, a.appear("#circleBlue, #circleGreen", 600));
-           $[deck]('addAnimation', slide, a.disappear("#circleBlue, #circleGreen", 900));
-           $[deck]('addAnimation', slide, [a.appear("#circleRed", 1200), a.appear("#circleBlue", 300)]); // for finer control (e.g., different durations)
-           $[deck]('addAnimation', slide, [a.disappear("#circleRed", 300), a.disappear("#circleBlue", 900)]);
-           $[deck]('addAnimation', slide, a.and(a.appear("#circleGreen", 400), a.appear("#circleRed", 400))); // useless to use "and" (see above for alternatives)
-           $[deck]('addAnimation', slide, a.disappear("#circleRed, #circleGreen", 100));
-           $[deck]('addAnimation', slide, [a.appear("#circleBlue", 1000), a.withDelay(1000, a.appear("#circleRed, #circleGreen", 300))]);
+     var a = $[deck]("svgAnimate", slide, ".svg1");
+       $[deck]("addAnimationSequence", slide, [
+         a.appear("#circleBlue, #circleGreen", 600),
+         a.disappear("#circleBlue, #circleGreen", 900),
+         [a.appear("#circleRed", 1200), a.appear("#circleBlue", 300)], // for finer control (e.g., different durations)
+         [a.disappear("#circleRed", 300), a.disappear("#circleBlue", 900)],
+         a.and(a.appear("#circleGreen", 400), a.appear("#circleRed", 400)), // useless to use "and" (see above for alternatives)
+         a.disappear("#circleRed, #circleGreen", 100),
+         [a.appear("#circleBlue", 1000), a.withDelay(1000, a.appear("#circleRed, #circleGreen", 300))]
+       ]);
      }
     </pre>
 </section>
 
 
 
-<section class="slide" id="elements-images">
-	<h2>Other Elements: Images</h2>
-	<img src="http://placekitten.com/600/375" alt="Kitties">
-	<pre><code>&lt;img src=&quot;http://placekitten.com/600/375&quot; alt=&quot;Kitties&quot;&gt;</code></pre>
-</section>
-
-<section class="slide" id="elements-blockquotes">
-	<h2>Other Elements: Blockquotes</h2>
-	<blockquote cite="http://example.org">
-		<p>Food is an important part of a balanced diet.</p>
-		<p><cite>Fran Lebowitz</cite></p>
-	</blockquote>
-	<pre><code>&lt;blockquote cite=&quot;http://example.org&quot;&gt;
-  &lt;p&gt;Food is an important part of a balanced diet.&lt;/p&gt;
-  &lt;p&gt;&lt;cite&gt;Fran Lebowitz&lt;/cite&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</code></pre>
-</section>
-
-
-<section class="slide" id="elements-videos">
-	<h2>Other Elements: Video Embeds</h2>
-	<p>Embed videos from your favorite online video service or with an HTML5 video&nbsp;element.</p>
-	
-	<iframe src="http://player.vimeo.com/video/1063136?title=0&amp;byline=0&amp;portrait=0" width="400" height="225" frameborder="0"></iframe>
-	
-	<pre><code>&lt;iframe src=&quot;http://player.vimeo.com/video/1063136?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;400&quot; height=&quot;225&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;</code></pre>
-</section>
-
 <section class="slide" id="digging-deeper">
 	<h2>Digging Deeper</h2>
-	<p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
+	<p>If you want to learn about making your own animations, then...</p>
 </section>
 
 <!-- deck.navigation snippet -->

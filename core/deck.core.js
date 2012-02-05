@@ -337,13 +337,17 @@ that use the API provided by core.
 
             /*
               TODO: document this (high level and links to the rest)
-              Animation must be duck-type-proof with init(), do(), undo().
              */
             addAnimation: function(slide, animation) {
                 if (!slide.data('animations')) {
                     slide.data('animations', new Array());
                 }
                 slide.data('animations').push(animation);
+            },
+            addAnimationSequence: function(slide, animations) {
+                for (ia in animations) {
+                    methods.addAnimation(slide, animations[ia]);
+                }
             },
 		
 		/*
