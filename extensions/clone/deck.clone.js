@@ -72,7 +72,7 @@ This module provides a support for cloning the deck.
         var clone = window.open(window.location);
         
         this.deck = function() {
-            clone['$'].deck.apply(clone['$'], arguments)
+            if (clone['$']) clone['$'].deck.apply(clone['$'], arguments)
         }
     }
 })(jQuery, 'deck');
