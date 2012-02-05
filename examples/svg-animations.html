@@ -59,7 +59,7 @@
 	<h1>Getting Started with deck.js</h1>
 </section>
 
-<section class="slide" id="how-to-overview">
+<section class="slide">
 	<h2>How to Make a Deck</h2>
 	<ol>
 		<li>
@@ -75,81 +75,6 @@
 			<p>Add extra functionality to your deck, or leave it stripped&nbsp;down.</p>
 		</li>
 	</ol>
-</section>
-
-<section class="slide" id="markup">
-	<h2>The Markup</h2>
-	<p>Slides are just HTML elements with a class of <code>slide</code>.</p>
-	<pre><code>&lt;section class=&quot;slide&quot;&gt;
-   &lt;h2&gt;How to Make a Deck&lt;/h2&gt;
-   &lt;ol&gt;
-      &lt;li&gt;
-         &lt;h3&gt;Write Slides&lt;/h3&gt;
-         &lt;p&gt;Slide content is simple HTML.&lt;/p&gt;
-      &lt;/li&gt;
-      &lt;li&gt;
-         &lt;h3&gt;Choose Themes&lt;/h3&gt;
-         &lt;p&gt;One for slide styles and one for deck transitions.&lt;/p&gt;
-      &lt;/li&gt;
-      &hellip;
-   &lt;/ol&gt;
-&lt;/section&gt;</code></pre>
-</section>
-
-<section class="slide" id="themes">
-	<h2>Style Themes</h2>
-	<p>Customizes the colors, typography, and layout of slide&nbsp;content.</p>
-	<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/css/style-theme.css&quot;&gt;</code></pre>
-	<h2>Transition Themes</h2>
-	<p>Defines transitions between slides using CSS3 transitions.  Less capable browsers fall back to cutaways. But <strong>you</strong> aren&rsquo;t using <em>those</em> browsers to give your presentations, are&nbsp;you&hellip;</p>
-	<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/css/transition-theme.css&quot;&gt;</code></pre>
-</section>
-
-<section class="slide" id="extensions">
-	<h2>Extensions</h2>
-	<p>Core gives you basic slide functionality with left and right arrow navigation, but you may want more. Here are the ones included in this&nbsp;deck:</p>
-	
-	<ul>
-		<li class="slide" id="extensions-goto">
-			<strong>deck.goto</strong>: Adds a shortcut key to jump to any slide number.  Hit g, type in the slide number, and hit&nbsp;enter.
-		</li>
-		
-		<li class="slide" id="extensions-hash">
-			<strong>deck.hash</strong>: Enables internal linking within slides, deep linking to individual slides, and updates the address bar &amp; a permalink anchor with each slide&nbsp;change.
-		</li>
-
-		<li class="slide" id="extensions-menu">
-			<strong>deck.menu</strong>: Adds a menu view, letting you see all slides in a grid. Hit m to toggle to menu view, continue navigating your deck, and hit m to return to normal view. Touch devices can double-tap the deck to switch between&nbsp;views.
-		</li>
-
-		<li class="slide" id="extensions-navigation">
-			<strong>deck.navigation</strong>: Adds clickable left and right buttons for the less keyboard&nbsp;inclined.
-		</li>
-
-		<li class="slide" id="extensions-status">
-			<strong>deck.status</strong>: Adds a page number indicator. (current/total)
-		</li>
-	</ul>
-	
-	<p class="slide" id="extension-folders">Each extension folder in the download package contains the necessary JavaScript, CSS, and HTML&nbsp;files. For a complete list of extension modules included in deck.js, check out the&nbsp;<a href="http://imakewebthings.github.com/deck.js/docs">documentation</a>.</p>
-</section>
-
-<section class="slide" id="nested">
-	<h2>Nested Slides</h2>
-	<p>That last slide had a few steps.  To create substeps in slides, just nest them:</p>
-	<pre><code>&lt;section class=&quot;slide&quot;&gt;
-  &lt;h2&gt;Extensions&lt;/h2&gt;
-  &lt;p&gt;Core gives you basic slide functionality...&lt;/p&gt;		
-  &lt;ul&gt;
-     &lt;li class=&quot;slide&quot;&gt;
-        &lt;h3&gt;deck.goto&lt;/h3&gt;
-        &lt;p&gt;Adds a shortcut key to jump to any slide number...&lt;/p&gt;
-     &lt;/li&gt;
-     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;	
-     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;
-     &lt;li class=&quot;slide&quot;&gt;...&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/section&gt;</code></pre>
 </section>
 
 <section class="slide">
@@ -200,6 +125,34 @@
      }
     </pre>
 </section>
+
+<section class="slide">
+    <h2>And now, for more advanced stuffs</h2>
+</section>
+
+<section class="slide">
+    <h2>Animated SVG, multiple stuffs per step</h2>
+    <p>Here:</p>
+    <object type="deckjs/asvg" class="svg1">
+      <param name="src" value="media/circle.svg" />
+      <param name="width" value="100%" />
+      <param name="height" value="400px" />
+      <param name="autoStart" value="0" />
+    </object>
+    <pre class="animate">
+     function(slide) {
+           var a = $[deck]("svgAnimate", slide, ".svg1");
+           $[deck]('addAnimation', slide, a.appear("#circleBlue, #circleGreen", 600));
+           $[deck]('addAnimation', slide, a.disappear("#circleBlue, #circleGreen", 900));
+           $[deck]('addAnimation', slide, [a.appear("#circleRed", 1200), a.appear("#circleBlue", 300)]); // for finer control (e.g., different durations)
+           $[deck]('addAnimation', slide, [a.disappear("#circleRed", 300), a.disappear("#circleBlue", 900)]);
+           $[deck]('addAnimation', slide, a.and(a.appear("#circleGreen", 400), a.appear("#circleRed", 400))); // useless to use "and" (see above for alternatives)
+           $[deck]('addAnimation', slide, a.disappear("#circleRed, #circleGreen", 100));
+           $[deck]('addAnimation', slide, [a.appear("#circleBlue", 1000), a.withDelay(1000, a.appear("#circleRed, #circleGreen", 300))]);
+     }
+    </pre>
+</section>
+
 
 
 <section class="slide" id="elements-images">

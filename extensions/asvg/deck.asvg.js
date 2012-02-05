@@ -14,6 +14,7 @@ Slides can include svg documents which then can be animated using the Animator.
 
 (function($, deck, undefined) {
     var $d = $(document);
+    var may = function(f) {return f ? f : function() {}};
    
     /*
 	Extends defaults/options.
@@ -27,6 +28,13 @@ Slides can include svg documents which then can be animated using the Animator.
 
     $.deck('extend', 'svgAnimate', function(slide, target) {
         return {
+            withDelay: function(d, a) { // TODO move this one to non svg
+                return {
+                    doAnimation: function(ctx) {setTimeout(function() {may(a.doAnimation).apply()}, d);},
+                    initAnimation: function(ctx) {may(a.initAnimation).apply()},
+                    undoAnimation: function(ctx) {may(a.undoAnimation).apply()}
+                }
+            },
             appear: function(e, d) {
                 return {
                     doAnimation: function() {
@@ -72,8 +80,19 @@ Slides can include svg documents which then can be animated using the Animator.
                         });
                     }
                 }
+            },
+            /* This one should be used only in special case.
+               At the higher level, if an animation is an array then all the elements are executed.
+               Use this one only to more nested stuffs, e.g., wait 1sec then do a group of animations.
+               */
+            and: function() {
+                var args = arguments;
+                return {
+                    doAnimation: function(ctx) {for (i=0; i<args.length; i++) may(args[i].doAnimation).apply(args[i], [ctx])},
+                    initAnimation: function(ctx) {for (i=0; i<args.length; i++) may(args[i].initAnimation).apply(args[i], [ctx])},
+                    undoAnimation: function(ctx) {for (i=0; i<args.length; i++)  may(args[i].undoAnimation).apply(args[i], [ctx])}
+                }
             }
-
         }
 
     });

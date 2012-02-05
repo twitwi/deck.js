@@ -125,12 +125,16 @@ that use the API provided by core.
 		}
 	},
 
+    /*
+      Init all animation steps in a antichronological order.
+      TODO document this and explain the why.
+     */
     initCurrentSlideAnimations = function() {
         var slide = methods.getSlide(current);
         if (slide.data('animations')) {
             var animations = slide.data('animations');
             for (ia in animations) {
-                var animation = animations[ia];
+                var animation = animations[animations.length - 1 - ia];
                 if ($.isArray(animation)) {
                     $(animation).each(function() {
                         this.initAnimation();
