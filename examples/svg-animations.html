@@ -141,6 +141,7 @@
     </object>
     <pre class="animate">
      function(slide) {
+           $[deck]('addAnimation', slide, {initAnimation: function() {$("pre", slide).removeClass("showAnyway")}, undoAnimation: function() {$("pre", slide).removeClass("showAnyway")}, doAnimation: function() {$("pre", slide).addClass("showAnyway")}});
            var a = $[deck]("svgAnimate", slide, ".svg1");
            $[deck]('addAnimation', slide, a.appear("#circleBlue, #circleGreen", 600));
            $[deck]('addAnimation', slide, a.disappear("#circleBlue, #circleGreen", 900));
