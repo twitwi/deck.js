@@ -128,10 +128,10 @@ Slides can include svg documents which then can be animated using the Animator.
                 
                 /* Create aSVG placeholder */
                 var aSVG = createaSVG(this, attributes);
-                $(this).replaceWith(aSVG['placeholder']);
+                $(this).replaceWith(aSVG);
                 
                 // Finaly load the SVG data
-                aSVG['canvas'].svg({
+                aSVG.svg({
                     loadURL: attributes['src'],
                     onLoad: function(svg) {
                         // nothing to do here
@@ -185,54 +185,12 @@ Slides can include svg documents which then can be animated using the Animator.
         
         /* Create svg canvas */
         $canvas = $("<div />").attr({
-            'id':  $(object).attr('id')
+            'id':  $(object).attr('id'),
+            'class': $(object).attr('class')
         }).css({
             'height': attributes['height'],
             'width': attributes['width']
-        })/*.click(function(e) {
-            var animator = $(window).attr(attributes['animator']);
-            if( animator.isCompleted() ) {
-                animator.restart();
-            } else {
-                animator.next();
-            }
-        })*/;
-                
-        /* Create canvas control */
-        
-        // next button
-        $next = $("<a href=\"#\"></a>").attr({
-            'id':'deck-svg-next', 
-            'class':'deck-svg-button'
-        })/*.click(function(e) {
-            var animator = $(window).attr(attributes['animator']);
-            animator.next();
-            if( animator.isCompleted() ) {
-                $(this).addClass("disabled");
-            }
-        })*/;
-                
-        // reload button
-        $reload = $("<a href=\"#\"></a>").attr({
-            'id':'deck-svg-reload', 
-            'class':'deck-svg-button'
-        })/*.click(function(e) {
-            $(window).attr(attributes['animator']).restart();
-            $next.removeClass("disabled");
-        })*/;
-
-        // append everything in a control panel
-        $control = $("<div />")
-            .addClass($[deck]('getOptions').classes.control)
-            .append($reload,$next);
-
-        /* Create placeholder i.e canvas + control */
-        $placeholder = $("<div />").attr({
-            'class': $(object).attr('class')
-        }).addClass($[deck]('getOptions').classes.placeholder)
-          .append($canvas)
-          .append($control);
-            
-        return {placeholder:$placeholder, canvas:$canvas};
+        });
+        return $canvas;
     }
 })(jQuery, 'deck');

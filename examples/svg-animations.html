@@ -156,7 +156,7 @@
 <section class="slide">
     <h2>Animated SVG</h2>
     <p>Here:</p>
-    <object type="deckjs/asvg" id="svg1">
+    <object type="deckjs/asvg" class="svg1">
       <param name="src" value="media/circle.svg" />
       <param name="width" value="100%" />
       <param name="height" value="400px" />
@@ -164,8 +164,8 @@
     </object>
     <pre class="animate">
      function(slide) {
-           var a = $[deck]("svgAnimate", slide, "#svg1");
-           $[deck]('addAnimation', slide, a.appear("#circleRed", 200));
+           var a = $[deck]("svgAnimate", slide, ".svg1");
+           $[deck]('addAnimation', slide, a.appear("#circleRed", 1200));
            $[deck]('addAnimation', slide, a.appear("#circleBlue", 300));
            $[deck]('addAnimation', slide, a.appear("#circleGreen", 400));
      }
@@ -176,13 +176,13 @@
     <h2>Section 3</h2>
     <p>If you want to learn about making your own themes, extending deck.js, and more, check out the&nbsp;<a href="../docs/">documentation</a>.</p>
     <div class="centerbox">
-        <object type="deckjs/asvg" class="half" id="svg2">
+        <object type="deckjs/asvg" class="half svg1">
           <param name="src" value="media/circle.svg" />
           <param name="width" value="100%" />
           <param name="height" value="400px" />
           <param name="autoStart" value="0" />
         </object>
-        <object type="deckjs/asvg" class="half" id="svg3">
+        <object type="deckjs/asvg" class="half svg2">
           <param name="src" value="media/circle.svg" />
           <param name="width" value="100%" />
           <param name="height" value="400px" />
@@ -191,8 +191,8 @@
     </div>
     <pre class="animate">
      function(slide) {
-           var a1 = $[deck]("svgAnimate", slide, "#svg2");
-           var a2 = $[deck]("svgAnimate", slide, "#svg3");
+           var a1 = $[deck]("svgAnimate", slide, ".svg1");
+           var a2 = $[deck]("svgAnimate", slide, ".svg2");
            $[deck]('addAnimation', slide, a1.appear("#circleRed", 200));
            $[deck]('addAnimation', slide, a2.appear("#circleBlue", 300));
            $[deck]('addAnimation', slide, a1.appear("#circleGreen", 400));
