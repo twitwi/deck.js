@@ -137,10 +137,10 @@ that use the API provided by core.
                 var animation = animations[animations.length - 1 - ia];
                 if ($.isArray(animation)) {
                     $(animation).each(function() {
-                        this.initAnimation();
+                        if (this.initAnimation) this.initAnimation();
                     });
                 } else {
-                    animation.initAnimation();
+                    if (animation.initAnimation) animation.initAnimation();
                 }
             }
         }
@@ -370,10 +370,10 @@ that use the API provided by core.
                             currentStep++;
                             if ($.isArray(animation)) {
                                 $(animation).each(function() {
-                                    this.doAnimation();
+                                    if (this.doAnimation) this.doAnimation();
                                 });
                             } else {
-                                animation.doAnimation();
+                                if (animation.doAnimation) animation.doAnimation();
                             }
                             $(document).trigger(events.step, [1]);
                         } else {
@@ -407,10 +407,10 @@ that use the API provided by core.
                             var animation = animations[currentStep];
                             if ($.isArray(animation)) {
                                 $(animation).each(function() {
-                                    this.undoAnimation();
+                                    if (this.undoAnimation) this.undoAnimation();
                                 });
                             } else {
-                                animation.undoAnimation();
+                                if (animation.undoAnimation) animation.undoAnimation();
                             }
                             $(document).trigger(events.step, [-1]);
                         } else {
