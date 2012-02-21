@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	
-	<title>Getting Started with deck.js</title>
+	<title>In-Slide Animations in deck.js</title>
 	
 	<meta name="description" content="A jQuery library for modern HTML presentations">
 	<meta name="author" content="Caleb Troughton">
@@ -46,13 +46,16 @@
 <script src="../extensions/navigation/deck.navigation.js"></script>
 <script src="../extensions/animate/deck.animate.js"></script>
 
+<style type="text/css">
+    .highlightInRed {color: red};
+</style>
 </head>
 
 <body class="deck-container">
 
 <!-- Begin slides -->
 <section class="slide">
-	<h2>Using SVG Animations in Deck.js</h2>
+	<h2>In-Slide animations in deck.js</h2>
 	<ol>
 		<li>
 		    <h3>Use right arrow (or space) to <em>DO</em> a step</h3>
@@ -61,28 +64,27 @@
 		    <h3>Use left arrow (or backspace) to <em>UNDO</em> a step</h3>
 		</li>
 		<li>
-		    <h3>Type 's' to disable scaling</h3>
+		    <h3>(optional) Type 's' to disable scaling</h3>
 		</li>
 	</ol>
 </section>
 
 <section class="slide">
-    <h2>Animations, simple case</h2>
-	<ol>
-		<li>
-			<h3>Write Slides</h3>
-			<p class="comment1">Slide content is simple&nbsp;HTML.</p>
-		</li>
-		<li>
-			<h3>Choose Themes</h3>
-			<p class="comment2">One for slide styles and one for deck&nbsp;transitions.</p>
-		</li>
-		<li>
-			<h3>Include Extensions</h3>
-			<p class="comment3">Add extra functionality to your deck, or leave it stripped&nbsp;down.</p>
-		</li>
-	</ol>
-    <p>Here:</p>
+    <h2>Making things appear and disappear</h2>
+    <ul>
+	<li>
+	    <h3>Point 1</h3>
+	    <p class="comment1">this is ok</p>
+	</li>
+	<li>
+	    <h3>Point 2</h3>
+	    <p class="comment2">this is awesome</p>
+	</li>
+	<li>
+	    <h3>Point 3</h3>
+	    <p class="comment3">this is cool</p>
+	</li>
+    </ul>
     <pre class="animate">
      function(slide) {
        var a = $[deck]("animate", slide);
@@ -90,19 +92,118 @@
          a.appear(".comment1", 700),
          a.appear(".comment2", 700),
          a.appear(".comment3", 500),
-         a.animate(".comment3", "color", "#FF0000", 800),
-         a.animate(".comment3", "color", "#00FF00", 800),
-         a.animate(".comment3", "opacity", 0, 400),
-         a.animate(".comment3", "opacity", 1, 400),
-         a.addClass("pre.animate", "showAnyway")
+         [a.disappear(".comment1", 500), a.disappear(".comment3", 900)]
        ]);
      }
     </pre>
 </section>
+
+<section class="slide">
+    <h2>Animating attributes (opacity here)</h2>
+    <ul>
+	<li>
+	    <h3>Idea 1</h3>
+	    <p class="comment1">this is ok</p>
+	</li>
+	<li>
+	    <h3>Idea 2 <span class="withdelay" style="color:red">next step with delays</span></h3>
+	    <p class="comment2">this is awesome</p>
+	</li>
+	<li>
+	    <h3>Idea 3</h3>
+	    <p class="comment3">this is still cool</p>
+	</li>
+    </ul>
+    <pre class="animate">
+     function(slide) {
+       var a = $[deck]("animate", slide);
+       $[deck]('addAnimationSequence', slide, [
+         [a.appear(".comment1", 500), a.appear(".comment2", 900), a.appear(".comment3", 700)],
+         a.animate(".comment3", "opacity", .4, 400),
+         a.animate(".comment1", "opacity", .2, 400),
+         a.appear(".withdelay", 500),
+         // here there is a bug in the undo (needs to be fixed)
+         [a.animate(".comment1,.comment2,.comment3", "opacity", 1, 800), a.withDelay(900, a.animate(".comment1,.comment3", "opacity", 0, 500))]
+       ]);
+     }
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Animating Colors (e.g., Highlighting)</h2>
+    <ul>
+	<li>
+	    <h3>Point 1</h3>
+	    <p class="comment1">this is ok</p>
+	</li>
+	<li>
+	    <h3>Point 2</h3>
+	    <p class="comment2">this is <span class="awesome">awesome</span></p>
+	</li>
+	<li>
+	    <h3>Point 3</h3>
+	    <p class="comment3">this is still cool</p>
+	</li>
+    </ul>
+    <pre class="animate">
+     function(slide) {
+       var a = $[deck]("animate", slide);
+       $[deck]('addAnimationSequence', slide, [
+         a.animate(".comment1", "color", "#00FF00", 800),
+         [a.animate(".comment2", "color", "#00FF00", 800), a.animate(".comment1", "color", "#444", 1200)],
+         [a.animate(".comment3", "color", "#00FF00", 800), a.animate(".comment2", "color", "#444", 1200)],
+         [a.animate(".comment2", "color", "#00FF00", 800), a.animate(".comment3", "color", "#444", 1200)],
+         // here also, back is buggous (need to patch the core deck.js)
+         a.animate(".awesome", "color", "#FF0000", 800)
+       ]);
+     }
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Adding Classes (e.g., Highlighting also)</h2>
+    <pre class="animate" style="float:right; position:relative;">
+function(slide) {
+  var a = $[deck]("animate", slide);
+  $[deck]('addAnimationSequence', slide, [
+    a.appear(".comment1", 800),
+    a.addClass(".awesome", "highlightInRed"),
+    a.appear(".comment2", 800),
+    a.removeClass(".awesome", "highlightInRed"),
+    a.appear(".comment3", 800),
+    [a.addClass("pre.animate", "showAnyway"),
+     a.addClass(".awesome", "highlightInRed")]
+  ]);
+}
+    </pre>
+    <ul>
+	<li>
+	    <h3>Step 1: <span class="awesome">awesome</span></h3>
+	    <p class="comment1">add a class (highlight in red)</p>
+	</li>
+	<li>
+	    <h3>Step 2</h3>
+	    <p class="comment2">and remove it</p>
+	</li>
+	<li>
+	    <h3>Step 3</h3>
+	    <p class="comment3">show the hidden animation code (using a dedicated 'showAnyway' class)</p>
+	</li>
+    </ul>
+</section>
+
 <section class="slide" id="digging-deeper">
 	<h2>Digging Deeper</h2>
-	<p>If you want to learn about making your own animations, then...</p>
-	<p>First you should watch the <a href="svg-animations.html">SVG animations example</a>.</p>
+	<h3>If you want to learn more</h3>
+        <ul>
+            <li>view this page source</li>
+	    <li>see also the <a href="svg-animations.html">SVG animations example</a>.</li>
+            <li><a href="../../../tech-deckjs.html">see my page and contact me</a></li>
+        </ul>
+</section>
+
+<section class="slide">
+    <h1>Done</h1>
 </section>
 
 <!-- deck.navigation snippet -->
