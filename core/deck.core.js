@@ -410,9 +410,11 @@ that use the API provided by core.
                             currentStep--;
                             var animation = animations[currentStep];
                             if ($.isArray(animation)) {
-                                $(animation).each(function() {
-                                    if (this.undoAnimation) this.undoAnimation();
-                                });
+                                var revAnimation = $(animation).get().reverse();
+                                for (var iAnim in revAnimation) {
+                                    var anim = revAnimation[iAnim];
+                                    if (anim.undoAnimation) anim.undoAnimation();
+                                }
                             } else {
                                 if (animation.undoAnimation) animation.undoAnimation();
                             }
