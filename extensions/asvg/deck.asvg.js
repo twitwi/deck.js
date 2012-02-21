@@ -85,30 +85,10 @@ Slides can include svg documents which then can be animated using the Animator.
         }
 
     });
-    $.deck('extend', 'DONOTEXTENDnext', function() {
-        var slide = $[deck]('getSlide', $[deck]('getCurrent'));
-        if (slide.data('animators')) {
-            var animators = slide.data('animators');
-            var finished = true;
-            for (var ia in animators) {
-                var animator = $(window).attr(animators[ia]);
-                if (!animator.isCompleted()) {
-                    animator.next();
-                    finished = false;
-                    break;
-                }
-            }
-            if (finished) {
-                $.deck('go', ($.deck('getCurrent'))+1);
-            }
-        } else {
-            $.deck('go', ($.deck('getCurrent'))+1);
-        }
-    });
     
     /*
-        jQuery.deck('Init')
-        */
+      jQuery.deck('Init')
+    */
     $d.bind('deck.init', function() {
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
@@ -127,7 +107,7 @@ Slides can include svg documents which then can be animated using the Animator.
                 /* Load attributes and validate them */
                 var attributes = loadObjectParams(this);
                 if( !validateParams(attributes) ) {
-                    throw "Error while initializing "+$(this).attr('id')+", please ensure you have settup the required parameters."
+                    throw "Error while initializing "+$(this).attr('id')+", please ensure you have setup the required parameters."
                     return false;
                 }
                 
