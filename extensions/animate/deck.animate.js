@@ -75,8 +75,8 @@ This module provides a support for some classical in-slide animations.
                 var args = arguments;
                 return {
                     doAnimation:   function(ctx) {for (i=0; i<args.length; i++) may(args[i].doAnimation).apply(args[i], [ctx])},
-                    initAnimation: function(ctx) {for (i=0; i<args.length; i++) may(args[i].initAnimation).apply(args[i], [ctx])},
-                    undoAnimation: function(ctx) {for (i=0; i<args.length; i++)  may(args[i].undoAnimation).apply(args[i], [ctx])}
+                    initAnimation: function(ctx) {for (i=args.length-1; i>=0; i--) may(args[i].initAnimation).apply(args[i], [ctx])},
+                    undoAnimation: function(ctx) {for (i=args.length-1; i>=0; i--)  may(args[i].undoAnimation).apply(args[i], [ctx])}
                 }
             }
             // todo: noInit: function(a) { ... }
