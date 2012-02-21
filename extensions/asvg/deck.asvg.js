@@ -28,57 +28,46 @@ Slides can include svg documents which then can be animated using the Animator.
 
     $.deck('extend', 'svgAnimate', function(slide, target) {
         return {
-            withDelay: function(d, a) { // TODO move this one to non svg
-                return {
-                    doAnimation: function(ctx) {setTimeout(function() {may(a.doAnimation).apply()}, d);},
-                    initAnimation: function(ctx) {may(a.initAnimation).apply()},
-                    undoAnimation: function(ctx) {may(a.undoAnimation).apply()}
-                }
-            },
             appear: function(e, d) {
+                d = d || 0;
                 return {
                     doAnimation: function() {
                         var $svg = $(target, slide).svg('get');
-                        d = d || 0;
-                        $(e, $svg.root()).each( function(){
-                            $(this).animate({'svgOpacity': 1.}, d);
-                        });
+                        $(e, $svg.root()).animate({'svgOpacity': 1.}, d);
                     },
                     initAnimation: function() {
                         var $svg = $(target, slide).svg('get');
-                        $(e, $svg.root()).each( function(){
-                            $(this).animate({'svgOpacity': 0.}, 0);
-                        });
+                        $(e, $svg.root()).animate({'svgOpacity': 0.}, 0);
                     },
                     undoAnimation: function() {
                         var $svg = $(target, slide).svg('get');
-                        $(e, $svg.root()).each( function(){
-                            $(this).animate({'svgOpacity': 0.}, 0);
-                        });
+                        $(e, $svg.root()).animate({'svgOpacity': 0.}, 0);
                     }
                 }
             },
             disappear: function(e, d) {
+                d = d || 0;
                 return {
                     doAnimation: function() {
                         var $svg = $(target, slide).svg('get');
-                        d = d || 0;
-                        $(e, $svg.root()).each( function(){
-                            $(this).animate({'svgOpacity': 0.}, d);
-                        });
+                        $(e, $svg.root()).animate({'svgOpacity': 0.}, d);
                     },
                     initAnimation: function() {
                         var $svg = $(target, slide).svg('get');
-                        $(e, $svg.root()).each( function(){
-                            $(this).animate({'svgOpacity': 1.}, 0);
-                        });
+                        $(e, $svg.root()).animate({'svgOpacity': 1.}, 0);
                     },
                     undoAnimation: function() {
                         var $svg = $(target, slide).svg('get');
-                        $(e, $svg.root()).each( function(){
-                            $(this).animate({'svgOpacity': 1.}, 1);
-                        });
+                        $(e, $svg.root()).animate({'svgOpacity': 1.}, 1);
                     }
+                }
+            },
+            // The following are redundant with the 'animate' extension but this is just for convenience
+            withDelay: function(d, a) {
+                return {
+                    doAnimation: function(ctx) {setTimeout(function() {may(a.doAnimation).apply()}, d);},
+                    initAnimation: function(ctx) {may(a.initAnimation).apply()},
+                    undoAnimation: function(ctx) {may(a.undoAnimation).apply()}
                 }
             },
             /* This one should be used only in special case.
