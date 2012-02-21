@@ -23,8 +23,8 @@ html {
 .touch .deck-container {
   -webkit-text-size-adjust: none;
 }
-.deck-container pre.animate {visibility: hidden;}
-.deck-container pre.animate.showAnyway {visibility: visible;}
+.deck-container pre.animate {display: none;}
+.deck-container pre.animate.showAnyway {display: block;}
 
 .deck-container div, .deck-container span, .deck-container object, .deck-container iframe,
 .deck-container h1, .deck-container h2, .deck-container h3, .deck-container h4, .deck-container h5, .deck-container h6, .deck-container p, .deck-container blockquote, .deck-container pre,
