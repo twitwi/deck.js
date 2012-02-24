@@ -140,11 +140,10 @@ Slides can include svg documents which then can be animated using the Animator.
                 $(this).replaceWith(aSVG);
                 
                 // Finaly load the SVG data
+                $[deck]('addLoading');
                 aSVG.svg({
                     loadURL: attributes['src'],
-                    onLoad: function(svg) {
-                        // nothing to do here
-                    },
+                    onLoad: function(svg) {$[deck]('removeLoading')},
                     settings: {
                         // no settings
                     }

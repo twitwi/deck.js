@@ -20,6 +20,7 @@ that use the API provided by core.
 	current, // Array index of the current slide
 	currentStep, // Array index of the current slide's animations
 	$container, // Keeping this cached
+	countLoading = 0, // to wait, e.g. for SVG, to be loaded
 	
 	events = {
 		/*
@@ -130,6 +131,7 @@ that use the API provided by core.
       TODO document this and explain the why.
      */
     initCurrentSlideAnimations = function() {
+        if (countLoading != 0) return;
         var slide = methods.getSlide(current);
         if (slide.data('animations')) {
             var animations = slide.data('animations');
@@ -281,7 +283,8 @@ that use the API provided by core.
 					}
 				});
 			});
-			
+
+			methods.addLoading();
 			if (slides.length) {
 				updateStates();
 			}
@@ -289,6 +292,7 @@ that use the API provided by core.
 			// Show deck again now that slides are in place
 			$container.removeClass(options.classes.loading);
 			$d.trigger(events.initialize);
+			methods.removeLoading();
 		},
 		
 		/*
@@ -334,6 +338,9 @@ that use the API provided by core.
                             initCurrentSlideAnimations();
 			}
 		},
+
+            addLoading: function () {countLoading++;},
+            removeLoading: function () {countLoading--; if (countLoading == 0) initCurrentSlideAnimations()},
 
             /*
               TODO: document this (high level and links to the rest)
