@@ -62,7 +62,28 @@ Slides can include svg documents which then can be animated using the Animator.
                     }
                 }
             },
-            // The following are redundant with the 'animate' extension but this is just for convenience
+            viewBox: function(to, d, d2) {
+                d = d || 0;
+                d2 = d / 10;
+                var getViewBox = function ($svg) {
+                    var a = function (i) {return $svg.root().getAttribute(i)}
+                    return a("viewBox") || ("0 0 "+a('width')+" "+a('height'));
+                };
+                var from;
+                return {
+                    doAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        from = getViewBox($svg);
+                        $svg.root().setAttribute("viewBox", from);
+                        $($svg.root()).animate({'svgViewBox': to}, d);
+                    },
+                    undoAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        $($svg.root()).animate({'svgViewBox': from}, d2);
+                    }
+                }
+            },
+           // The following are redundant with the 'animate' extension but this is just for convenience
             withDelay: function(d, a) {
                 return {
                     doAnimation: function(ctx) {setTimeout(function() {may(a.doAnimation).apply()}, d);},
