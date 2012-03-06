@@ -1,5 +1,5 @@
 /*!
-Deck JS - deck.clone
+Deck JS - deck.animate
 Copyright (c) 2011 Rémi Emonet
 Dual licensed under the MIT license and GPL license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt

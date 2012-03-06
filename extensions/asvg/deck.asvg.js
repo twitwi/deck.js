@@ -1,6 +1,6 @@
 /*!
-Deck JS - deck.svg.toc
-Copyright (c) 2011 Remi BARRAQUAND
+Deck JS - deck.asvg
+Copyright (c) 2012 Remi Emonet as a major refactor from the version from Remi BARRAQUAND
 Dual licensed under the MIT license and GPL license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
@@ -74,6 +74,30 @@ Slides can include svg documents which then can be animated using the Animator.
                     doAnimation: function() {
                         var $svg = $(target, slide).svg('get');
                         from = getViewBox($svg);
+                        $svg.root().setAttribute("viewBox", from);
+                        $($svg.root()).animate({'svgViewBox': to}, d);
+                    },
+                    undoAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        $($svg.root()).animate({'svgViewBox': from}, d2);
+                    }
+                }
+            },
+            viewBoxAs: function(e, d, d2) {
+                d = d || 0;
+                d2 = d / 10;
+                var getViewBox = function ($svg) {
+                    var a = function (i) {return $svg.root().getAttribute(i)}
+                    return a("viewBox") || ("0 0 "+a('width')+" "+a('height'));
+                };
+                var from;
+                return {
+                    doAnimation: function() {
+                        var $svg = $(target, slide).svg('get');
+                        from = getViewBox($svg);
+                        var aa = $(e, $svg.root());
+                        var a = function (i) {return aa.attr(i)}
+                        var to = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
                         $svg.root().setAttribute("viewBox", from);
                         $($svg.root()).animate({'svgViewBox': to}, d);
                     },
