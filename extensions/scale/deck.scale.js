@@ -20,6 +20,7 @@ works fine.
 	var $d = $(document),
 	$w = $(window),
 	baseHeight, // Value to scale against
+	baseWidth, // Value to scale against
 	timer, // Timeout id for debouncing
 	rootSlides,
 
@@ -28,17 +29,20 @@ works fine.
 	*/
 	scaleDeck = function() {
 		var opts = $[deck]('getOptions'),
-		obh = opts.baseHeight,
+	        obh = opts.baseHeight,
+	        obw = opts.baseWidth,
 		$container = $[deck]('getContainer'),
 		baseHeight = obh ? obh : $container.height();
+		baseWidth = obw ? obw : $container.width();
 
 		// Scale each slide down if necessary (but don't scale up)
 		$.each(rootSlides, function(i, $slide) {
 			var slideHeight = $slide.innerHeight(),
+			slideWidth = $slide.innerWidth(),
 			$scaler = $slide.find('.' + opts.classes.scaleSlideWrapper),
-			scale = $container.hasClass(opts.classes.scale) ?
-				baseHeight / slideHeight :
-				1;
+		    scaleX = $container.hasClass(opts.classes.scale) ? baseHeight / slideHeight : 1,
+		    scaleY = $container.hasClass(opts.classes.scale) ? baseWidth / slideWidth : 1,
+                    scale = scaleX < scaleY ? scaleX : scaleY;
 			
 			$.each('Webkit Moz O ms Khtml'.split(' '), function(i, prefix) {
 				if (scale === 1) {
