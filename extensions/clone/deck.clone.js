@@ -30,7 +30,13 @@ This module provides a support for cloning the deck.
         clones.push(clone);
         return clone;
     });
-        
+    $[deck]('extend', 'pointerAt', function(x,y) {
+        var parentPos = $(".deck-current").offset();
+        var pos = {left: x + parentPos.left, top: y + parentPos.top};
+        $(".clonepointer").show().appendTo(".deck-current").offset(pos);
+        //alert("moved: "+x+" "+y);
+    });
+      
     /*
         jQuery.deck('Init')
         */
@@ -38,6 +44,8 @@ This module provides a support for cloning the deck.
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
         
+        $(".clonepointer").hide();
+
         /* Bind key events */
         $d.unbind('keydown.deckclone').bind('keydown.deckclone', function(e) {
             if (e.which === opts.keys.clone || $.inArray(e.which, opts.keys.clone) > -1) {
@@ -62,7 +70,13 @@ This module provides a support for cloning the deck.
             if (delta == -1) clone.deck('stepPrev');
             else if (delta == 1) clone.deck('stepNext');
         });
-    });
+    })
+        .bind('mousemove', function(e) {
+            var parentPos = $(".deck-current").offset();
+            $.each(clones, function(index, clone) {
+                clone.deck('pointerAt', e.clientX - parentPos.left, e.clientY - parentPos.top);
+            });
+        });
     
     /*
         Simple Clone manager (must be improved, by for instance adding cloning
