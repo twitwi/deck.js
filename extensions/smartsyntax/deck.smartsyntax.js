@@ -21,8 +21,15 @@ This module provides a support for a shorter syntax for slides.
         var indent = "";
         var deepestList = null;
         var remain = smart;
+
+        var processMath = function(content) {
+            return content.replace(/\$([^$]*)\$/g, '<span class="latex">$1</span>');
+        }
         
-        var setEnrichedContent = function(what, content) {return what.innerHTML = content;}
+        var setEnrichedContent = function(what, content) {
+            content = processMath(content);
+            return what.innerHTML = content;
+        }
         var endSlide = function() {
             inSlide = null;
             indent = new Array();
@@ -113,7 +120,7 @@ This module provides a support for a shorter syntax for slides.
             } else {
                 while (true) {
                     try {
-                        deepestList.innerHTML = deepestList.innerHTML + line;
+                        deepestList.innerHTML = deepestList.innerHTML + processMath(line) + " ";
                         break;
                     } catch (e) {
                         remain = remain.substring(nl + 1);
