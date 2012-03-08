@@ -137,15 +137,15 @@ This module provides a support for a shorter syntax for slides.
         }
         return res;
     }
-    
-    $(function() {
-        var container = $[deck]('getContainer');
-        $('.smart', container).each(function() {
-            var it = this;
-            var slides = interpretationOfSmartLanguage(it.innerHTML, document);
-            it.innerHTML = ""; // clear the smart node
-            $(it).after(slides);
+
+    // this have to be executed before the deck init
+    $d.bind('deck.beforeInit', function() {
+            $('.smart').each(function() {
+                    var it = this;
+                    var slides = interpretationOfSmartLanguage(it.innerHTML, document);
+                    it.innerHTML = ""; // clear the smart node
+                    $(it).after(slides);
+                });
         });
-    });
 
 })(jQuery, 'deck');
