@@ -12,7 +12,7 @@ This module provides a support for latex equation syntax.
     var $d = $(document);
     var may = function(f) {return f ? f : function() {}};
     
-    $(function() {
+    $d.bind('deck.init', function() {
         var container = $[deck]('getContainer');
         $('.latex', container).each(function() {
             var it = this;
