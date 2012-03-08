@@ -79,6 +79,7 @@ This module provides a support for a shorter syntax for slides.
                     // do not create the li
                 } else if (pref == indent) {
                     var li = doc.createElement("li");
+                    if (addClasses != "") $(li).addClass(addClasses);
                     setEnrichedContent(li, content);
                     deepestList.appendChild(li);
                 } else {
@@ -97,6 +98,7 @@ This module provides a support for a shorter syntax for slides.
                         deepestList = list;
                     }
                     var li = doc.createElement("li");
+                    if (addClasses != "") $(li).addClass(addClasses);
                     setEnrichedContent(li, content);
                     deepestList.appendChild(li);
                 }
