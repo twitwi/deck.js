@@ -119,12 +119,30 @@ This module provides a support for a shorter syntax for slides.
                     line = remain.substring(0, nl).replace(/^ */, "");
                 }
                 $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
+            } else if (startsWith(line, "@<")) {
+                line = line.replace(/^@/, "");
+                var contentToAdd = "";
+                // test on remain to avoid infinite loop
+                while (line != null && remain.length != 0) {
+                    if (line.match(/^@<\//)) {
+                        // normal stopping condition
+                        line = line.replace(/^@/, "");
+                        contentToAdd += "  " + line + "\n";
+                        break;
+                    }
+                    if (nl != -1) remain = remain.substring(nl + 1);
+                    contentToAdd += "  " + line + "\n";
+                    nl = remain.indexOf("\n");
+                    line = remain.substring(0, nl).replace(/^ */, "");
+                }
+                deepestList.innerHTML = deepestList.innerHTML + processMath(contentToAdd) + " ";
             } else {
                 while (true) {
                     try {
                         deepestList.innerHTML = deepestList.innerHTML + processMath(line) + " ";
                         break;
                     } catch (e) {
+                        // TODO was ok with xhtml not really now
                         remain = remain.substring(nl + 1);
                         nl = remain.indexOf("\n");
                         var line2 = remain.substring(0, nl).replace(/^ */, "");
