@@ -23,7 +23,7 @@ This module provides a support for a shorter syntax for slides.
         var remain = smart;
 
         var processMath = function(content) {
-            return content.replace(/\$([^$]*)\$/g, '<span class="latex">$1</span>');
+            return content.replace(/\$([^$][^$]*)\$/g, '<span class="latex">$1</span>').replace(/\$\$/, '$');
         }
         
         var setEnrichedContent = function(what, content) {
