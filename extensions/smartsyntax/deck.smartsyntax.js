@@ -119,6 +119,30 @@ This module provides a support for a shorter syntax for slides.
                     line = remain.substring(0, nl).replace(/^ */, "");
                 }
                 $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
+            } else if (startsWith(line, "@ANIM-SVG-APPEAR:")) {
+                line = line.replace(/@ANIM-SVG-APPEAR\: */, "");
+                var animContent = "";
+                var main = line.split(/ *: */);
+                var dur = main[1];
+                var parts = main[2].split(/ *\| */);
+                animContent += 'var a = $[deck]("svgAnimate", slide, "'+main[0]+'");'; // todo could warn on missing trailing '.'
+                animContent += '$[deck]("addAnimationSequence", slide, [';
+                for (i in parts) {
+                    var subparts = parts[i].split(/ *\+ */);
+                    if (i != 0) animContent += ",\n   ";
+                    if (subparts.length == 1) {
+                        animContent += 'a.appear("'+subparts[0]+'", '+dur+')';
+                    } else {
+                        animContent += "[";
+                        for (ii in subparts) {
+                            if (ii != 0) animContent += ",";
+                            animContent += 'a.appear("'+subparts[ii]+'", '+dur+')';
+                        }
+                        animContent += "]";
+                    }
+                }
+                animContent += "]);";
+                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
             } else if (startsWith(line, "@<")) {
                 line = line.replace(/^@/, "");
                 var contentToAdd = "";
