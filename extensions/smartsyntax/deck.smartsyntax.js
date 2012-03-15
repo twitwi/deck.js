@@ -14,6 +14,13 @@ This module provides a support for a shorter syntax for slides.
     var $d = $(document);
     var may = function(f) {return f ? f : function() {}};
     var startsWith = function(longStr, part) {return longStr.substr(0, part.length) == part;}
+    var maybeAddClasses = function(toWhat, spaceSeparatedClasses) {
+        if (spaceSeparatedClasses == "") return;
+        var parts = spaceSeparatedClasses.split(/ +/);
+        for (i in parts) {
+            $(toWhat).addClass(parts[i]);
+        }
+    }
 
     var interpretationOfSmartLanguage = function(smart, doc) {
         var res = new Array();
@@ -55,7 +62,7 @@ This module provides a support for a shorter syntax for slides.
                 if (inSlide) endSlide();
                 inSlide = doc.createElement("section");
                 $(inSlide).addClass("slide");
-                if (addClasses != "") $(inSlide).addClass(addClasses);
+                maybeAddClasses(inSlide, addClasses);
                 var h = doc.createElement("h1");
                 setEnrichedContent(h, title);
                 inSlide.appendChild(h);
@@ -66,41 +73,52 @@ This module provides a support for a shorter syntax for slides.
                 if (inSlide) endSlide();
                 inSlide = doc.createElement("section");
                 $(inSlide).addClass("slide");
-                if (addClasses != "") $(inSlide).addClass(addClasses);
+                maybeAddClasses(inSlide, addClasses);
                 var h = doc.createElement("h2");
                 setEnrichedContent(h, title);
                 inSlide.appendChild(h);
                 deepestList = inSlide;
                 res[res.length] = inSlide;
-            } else if (line.match(/^([*#]+)(.*)$/)) {
+            } else if (line.match(/^([-*#]+)(.*)$/)) {
                 var pref = RegExp.$1;
                 var content = RegExp.$2;
                 if (indent == "" && pref == "") {
                     // do not create the li
                 } else if (pref == indent) {
                     var li = doc.createElement("li");
-                    if (addClasses != "") $(li).addClass(addClasses);
+                    maybeAddClasses(li, addClasses);
                     setEnrichedContent(li, content);
                     deepestList.appendChild(li);
                 } else {
                     // un-push as needed
                     while (! startsWith(pref, indent)) {
                         deepestList = deepestList.parentNode;
+                        if (deepestList.tagName == "LI") deepestList = deepestList.parentNode;
                         indent = indent.substr(0, indent.length - 1);
                     }
+                    // clean the special '-' that we can use for magic unpush
+                    pref = pref.replace(/^-*/, "");
                     // re-push as needed
                     while (pref.length > indent.length) {
                         var asso = {"*": "ul", "#": "ol"};
                         var toPush = pref.substr(indent.length, 1);
                         indent = indent.concat(toPush);
                         var list = doc.createElement(asso[toPush]);
-                        deepestList.appendChild(list);
+                        if ((deepestList.tagName == "UL" || deepestList.tagName == "OL") && deepestList.childNodes.length > 0) {
+                            deepestList.lastChild.appendChild(list);
+                        } else {
+                            deepestList.appendChild(list);
+                        }
                         deepestList = list;
                     }
-                    var li = doc.createElement("li");
-                    if (addClasses != "") $(li).addClass(addClasses);
-                    setEnrichedContent(li, content);
-                    deepestList.appendChild(li);
+                    if (indent == "" && pref == "") {
+                        // do not create the li
+                    } else {
+                        var li = doc.createElement("li");
+                        maybeAddClasses(li, addClasses);
+                        setEnrichedContent(li, content);
+                        deepestList.appendChild(li);
+                    }
                 }
             } else if (startsWith(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */, "").split(/ +/);
@@ -118,6 +136,30 @@ This module provides a support for a shorter syntax for slides.
                     nl = remain.indexOf("\n");
                     line = remain.substring(0, nl).replace(/^ */, "");
                 }
+                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
+            } else if (startsWith(line, "@ANIM-APPEAR:")) {
+                line = line.replace(/@ANIM-APPEAR\: */, "");
+                var animContent = "";
+                var main = line.split(/ *: */);
+                var dur = main[0];
+                var parts = main[1].split(/ *\| */);
+                animContent += 'var a = $[deck]("animate", slide);';
+                animContent += '$[deck]("addAnimationSequence", slide, [';
+                for (i in parts) {
+                    var subparts = parts[i].split(/ *\+ */);
+                    if (i != 0) animContent += ",\n   ";
+                    if (subparts.length == 1) {
+                        animContent += 'a.appear("'+subparts[0]+'", '+dur+')';
+                    } else {
+                        animContent += "[";
+                        for (ii in subparts) {
+                            if (ii != 0) animContent += ",";
+                            animContent += 'a.appear("'+subparts[ii]+'", '+dur+')';
+                        }
+                        animContent += "]";
+                    }
+                }
+                animContent += "]);";
                 $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-SVG-APPEAR:")) {
                 line = line.replace(/@ANIM-SVG-APPEAR\: */, "");
