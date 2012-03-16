@@ -60,6 +60,19 @@ This module provides a support for some classical in-slide animations.
                     undoAnimation: function(ctx) {$(e,slide).addClass(cl)}
                 }
             },
+            play: function(e) {
+                return {
+                    doAnimation:   function(ctx) {$(e,slide).each(function(){this.play(); })},
+                    initAnimation: function(ctx) {$(e,slide).each(function(){this.pause(); this.currentTime = 0;})},
+                    undoAnimation: function(ctx) {$(e,slide).each(function(){this.pause();})}
+                }
+            },
+            pause: function(e) {
+                return {
+                    doAnimation:   function(ctx) {$(e,slide).each(function(){this.pause(); })},
+                    undoAnimation: function(ctx) {$(e,slide).each(function(){this.play()})},
+                }
+            },
             withDelay: function(d, a) {
                 return {
                     doAnimation:   function(ctx) {setTimeout(function() {may(a.doAnimation).apply()}, d);},
