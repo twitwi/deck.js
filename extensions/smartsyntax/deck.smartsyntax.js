@@ -137,6 +137,22 @@ This module provides a support for a shorter syntax for slides.
                     line = remain.substring(0, nl).replace(/^ */, "");
                 }
                 $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
+            } else if (startsWith(line, "@ANIM-PLAY:")) {
+                line = line.replace(/@ANIM-PLAY\: */, "");
+                var animContent = "";
+                animContent += 'var a = $[deck]("animate", slide);';
+                animContent += '$[deck]("addAnimationSequence", slide, [';
+                animContent += ' a.play("'+line+'")';
+                animContent += "]);";
+                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
+            } else if (startsWith(line, "@ANIM-PAUSE:")) {
+                line = line.replace(/@ANIM-PAUSE\: */, "");
+                var animContent = "";
+                animContent += 'var a = $[deck]("animate", slide);';
+                animContent += '$[deck]("addAnimationSequence", slide, [';
+                animContent += ' a.pause("'+line+'")';
+                animContent += "]);";
+                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-APPEAR:")) {
                 line = line.replace(/@ANIM-APPEAR\: */, "");
                 var animContent = "";
