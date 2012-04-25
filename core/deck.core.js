@@ -133,7 +133,7 @@ that use the API provided by core.
     initCurrentSlideAnimations = function() {
         if (countLoading != 0) return;
         var slide = methods.getSlide(current);
-        if (slide.data('animations')) {
+        if (slide && slide.data('animations')) {
             var animations = slide.data('animations');
             for (ia in animations) {
                 var animation = animations[animations.length - 1 - ia];
