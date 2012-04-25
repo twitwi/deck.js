@@ -35,15 +35,12 @@ that use the API provided by core.
 		});
 		*/
 		change: 'deck.change',
-
-            /*
-		$(document).bind('deck.change', function(event, delta) {
-                if (delta==-1) {
-                } else {
-                }
-                }
-             */
-	    step: 'deck.step',
+		
+		/*
+		This event fires whenever the slide is doing an inner step.
+		The delta parameter is either 1 for a forward step or -1 (backward).
+		*/
+		step: 'deck.step',
 		
 		/*
 		This event fires at the beginning of deck initialization, after the options
@@ -125,29 +122,28 @@ that use the API provided by core.
 			});
 		}
 	},
-
-    /*
-      Init all animation steps in a antichronological order.
-      TODO document this and explain the why.
-     */
-    initCurrentSlideAnimations = function() {
-        if (countLoading != 0) return;
-        var slide = methods.getSlide(current);
-        if (slide && slide.data('animations')) {
-            var animations = slide.data('animations');
-            for (ia in animations) {
-                var animation = animations[animations.length - 1 - ia];
-                if ($.isArray(animation)) {
-                    $(animation).each(function() {
-                        if (this.initAnimation) this.initAnimation();
-                    });
-                } else {
-                    if (animation.initAnimation) animation.initAnimation();
-                }
-            }
-        }
-    },
-    
+	
+	/*
+	Init all animation steps in a antichronological order.
+	*/
+	initCurrentSlideAnimations = function() {
+		if (countLoading != 0) return;
+		var slide = methods.getSlide(current);
+		if (slide && slide.data('animations')) {
+			var animations = slide.data('animations');
+			for (ia in animations) {
+				var animation = animations[animations.length - 1 - ia];
+				if ($.isArray(animation)) {
+					$(animation).each(function() {
+						if (this.initAnimation) this.initAnimation();
+					});
+				} else {
+					if (animation.initAnimation) animation.initAnimation();
+				}
+			}
+		}
+	},
+	
 	/* Methods exposed in the jQuery.deck namespace */
 	methods = {
 		
@@ -204,16 +200,16 @@ that use the API provided by core.
 					slides.push($(e));
 				});
 			}
-		
-	            /* Handle the animation core module */
-		    $.each(slides, function(i, slide) {
-                        slide.find("pre.animate").each(function(index) {
-                            eval("___f___ = "+$(this).text());
-                            ___f___(slide);
-                        });
-                    });
-                    
-                    
+			
+			/* Handle the animation core module */
+			$.each(slides, function(i, slide) {
+				slide.find("pre.animate").each(function(index) {
+					eval("___f___ = "+$(this).text());
+					___f___(slide);
+				});
+			});
+			
+			
 			/* Remove any previous bindings, and rebind key events */
 			$d.unbind('keydown.deck').bind('keydown.deck', function(e) {
 				if (e.which === options.keys.next || $.inArray(e.which, options.keys.next) > -1) {
@@ -283,7 +279,7 @@ that use the API provided by core.
 					}
 				});
 			});
-
+			
 			methods.addLoading();
 			if (slides.length) {
 				updateStates();
@@ -335,27 +331,28 @@ that use the API provided by core.
 			else {
 				current = ndx;
 				updateStates();
-                            initCurrentSlideAnimations();
+				initCurrentSlideAnimations();
 			}
 		},
-
-            addLoading: function () {countLoading++;},
-            removeLoading: function () {countLoading--; if (countLoading == 0) initCurrentSlideAnimations()},
-
-            /*
-              TODO: document this (high level and links to the rest)
-             */
-            addAnimation: function(slide, animation) {
-                if (!slide.data('animations')) {
-                    slide.data('animations', new Array());
-                }
-                slide.data('animations').push(animation);
-            },
-            addAnimationSequence: function(slide, animations) {
-                for (ia in animations) {
-                    methods.addAnimation(slide, animations[ia]);
-                }
-            },
+		
+		addLoading: function () {countLoading++;},
+		removeLoading: function () {countLoading--; if (countLoading == 0) initCurrentSlideAnimations()},
+		
+		/*
+		Allows a slide to add some animation to itself (html animation, svg
+		animation, video start/stop, etc).
+		*/
+		addAnimation: function(slide, animation) {
+			if (!slide.data('animations')) {
+				slide.data('animations', new Array());
+			}
+			slide.data('animations').push(animation);
+		},
+		addAnimationSequence: function(slide, animations) {
+			for (ia in animations) {
+				methods.addAnimation(slide, animations[ia]);
+			}
+		},
 		
 		/*
 		jQuery.deck('next')
@@ -366,35 +363,35 @@ that use the API provided by core.
 		next: function() {
 			methods.go(current+1);
 		},
-
+		
 		/*
 		jQuery.deck('stepNext')
 		
 		Does the next slide animation or moves to the next slide if animations are finished.
 		*/
 		stepNext: function() {
-                    var slide = methods.getSlide(current);
-                    if (slide.data('animations')) {
-                        var animations = slide.data('animations');
-                        if (currentStep < animations.length) {
-                            var animation = animations[currentStep];
-                            currentStep++;
-                            if ($.isArray(animation)) {
-                                $(animation).each(function() {
-                                    if (this.doAnimation) this.doAnimation();
-                                });
-                            } else {
-                                if (animation.doAnimation) animation.doAnimation();
-                            }
-                            $(document).trigger(events.step, [1]);
-                        } else {
-                            methods.next();
-                        }
-                    } else {
-                        methods.next();
-                    }
+			var slide = methods.getSlide(current);
+			if (slide.data('animations')) {
+				var animations = slide.data('animations');
+				if (currentStep < animations.length) {
+					var animation = animations[currentStep];
+					currentStep++;
+					if ($.isArray(animation)) {
+						$(animation).each(function() {
+							if (this.doAnimation) this.doAnimation();
+						});
+					} else {
+						if (animation.doAnimation) animation.doAnimation();
+					}
+					$(document).trigger(events.step, [1]);
+				} else {
+					methods.next();
+				}
+			} else {
+				methods.next();
+			}
 		},
-
+		
 		/*
 		jQuery.deck('stepPrev')
 		
@@ -403,35 +400,35 @@ that use the API provided by core.
 		prev: function() {
 			methods.go(current-1);
 		},
-
+		
 		/*
 		jQuery.deck('stepPrev')
 		
 		Undoes the last animation or moves to the previous slide if no animations have been played in this slide.
 		*/
 		stepPrev: function() {
-                    var slide = methods.getSlide(current);
-                    if (slide.data('animations')) {
-                        var animations = slide.data('animations');
-                        if (currentStep > 0) {
-                            currentStep--;
-                            var animation = animations[currentStep];
-                            if ($.isArray(animation)) {
-                                var revAnimation = $(animation).get().reverse();
-                                for (var iAnim in revAnimation) {
-                                    var anim = revAnimation[iAnim];
-                                    if (anim.undoAnimation) anim.undoAnimation();
-                                }
-                            } else {
-                                if (animation.undoAnimation) animation.undoAnimation();
-                            }
-                            $(document).trigger(events.step, [-1]);
-                        } else {
-                            methods.prev();
-                        }
-                    } else {
-                        methods.prev();
-                    }
+			var slide = methods.getSlide(current);
+			if (slide.data('animations')) {
+				var animations = slide.data('animations');
+				if (currentStep > 0) {
+					currentStep--;
+					var animation = animations[currentStep];
+					if ($.isArray(animation)) {
+						var revAnimation = $(animation).get().reverse();
+						for (var iAnim in revAnimation) {
+							var anim = revAnimation[iAnim];
+							if (anim.undoAnimation) anim.undoAnimation();
+						}
+					} else {
+						if (animation.undoAnimation) animation.undoAnimation();
+					}
+					$(document).trigger(events.step, [-1]);
+				} else {
+					methods.prev();
+				}
+			} else {
+				methods.prev();
+			}
 		},
 		
 		/*
@@ -571,13 +568,13 @@ that use the API provided by core.
 		
 	options.keys.next
 		The numeric keycode used to go to the next slide.
-
+		
 	options.keys.stepNext
 		The numeric keycode used to do the next animation.
 		
 	options.keys.previous
 		The numeric keycode used to go to the previous slide.
-
+		
 	options.keys.stepPrevious
 		The numeric keycode used to undo the previous animation.
 		
