@@ -28,6 +28,9 @@ body.deck-container {
 		-webkit-text-size-adjust:none;
 		-moz-text-size-adjust:none;
 	}
+
+        pre.animate {visibility: hidden;}
+        pre.animate.showAnyway {visibility: visible;}
 	
 	/* Resets and base styles from HTML5 Boilerplate */
 	div, span, object, iframe,
