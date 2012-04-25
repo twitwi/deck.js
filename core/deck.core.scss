@@ -2,10 +2,14 @@ html {
 	height:100%;
 }
 
+body.deck-container {
+	overflow-y:auto;
+	position:static;
+}
+
 .deck-container {
 	position:relative;
-	height:100%;
-	width:70%;
+	min-height:100%;
 	margin:0 auto;
 	padding:0 48px;
 	font-size:16px;
@@ -22,6 +26,7 @@ html {
 	
 	.touch & {
 		-webkit-text-size-adjust:none;
+		-moz-text-size-adjust:none;
 	}
 
         pre.animate {visibility: hidden;}
@@ -363,10 +368,6 @@ html {
 	.deck-previous, .deck-before, .deck-current {
 		visibility:visible;
 	}
-}
-
-body.deck-container {
-	overflow:visible;
 }
 
 @media all and (orientation:portrait) {

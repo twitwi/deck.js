@@ -53,13 +53,19 @@ slide.
 		Every slide that does not have an id is assigned one at initialization.
 		Assigned ids take the form of hashPrefix + slideIndex, e.g., slide-0,
 		slide-12, etc.
+
+	options.preventFragmentScroll
+		When deep linking to a hash of a nested slide, this scrolls the deck
+		container to the top, undoing the natural browser behavior of scrolling
+		to the document fragment on load.
 	*/
 	$.extend(true, $[deck].defaults, {
 		selectors: {
 			hashLink: '.deck-permalink'
 		},
 		
-		hashPrefix: 'slide-'
+		hashPrefix: 'slide-',
+		preventFragmentScroll: true
 	});
 	
 	
@@ -124,6 +130,12 @@ slide.
 		}
 		else {
 			goByHash(window.location.hash);
+		}
+	})
+	/* Prevent scrolling on deep links */
+	.bind('load', function() {
+		if ($[deck]('getOptions').preventFragmentScroll) {
+			$[deck]('getContainer').scrollLeft(0).scrollTop(0);
 		}
 	});
 })(jQuery, 'deck', this);
