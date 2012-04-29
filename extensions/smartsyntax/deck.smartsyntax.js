@@ -14,7 +14,8 @@ This module provides a support for a shorter syntax for slides.
     var $d = $(document);
     var may = function(f) {return f ? f : function() {}};
     var startsWith = function(longStr, part) {return longStr.substr(0, part.length) == part;}
-    var maybeAddClasses = function(toWhat, spaceSeparatedClasses) {
+    var maybeAddClasses = function(toWhat, spaceSeparatedClasses, uniqueId) {
+        if (uniqueId != "") $(toWhat).attr("id", uniqueId);
         if (spaceSeparatedClasses == "") return;
         var parts = spaceSeparatedClasses.split(/ +/);
         for (i in parts) {
@@ -48,7 +49,12 @@ This module provides a support for a shorter syntax for slides.
             var nl = remain.indexOf("\n");
             var line = remain.substring(0, nl).replace(/^ */, "");
             // we iterate over the lines
-            // treat trailing classes before anything
+            // treat trailing unique-id and classes before anything
+            var uniqueId = "";
+            while (line.match(/^(.*)#([^\] ]*)$/)) {
+                uniqueId = RegExp.$2;
+                line = RegExp.$1;
+            }
             var addClasses = "";
             {
                 while (line.match(/^(.*)\[([^\] ]*)\]$/)) {
@@ -62,7 +68,7 @@ This module provides a support for a shorter syntax for slides.
                 if (inSlide) endSlide();
                 inSlide = doc.createElement("section");
                 $(inSlide).addClass("slide");
-                maybeAddClasses(inSlide, addClasses);
+                maybeAddClasses(inSlide, addClasses, uniqueId);
                 var h = doc.createElement("h1");
                 setEnrichedContent(h, title);
                 inSlide.appendChild(h);
@@ -73,7 +79,7 @@ This module provides a support for a shorter syntax for slides.
                 if (inSlide) endSlide();
                 inSlide = doc.createElement("section");
                 $(inSlide).addClass("slide");
-                maybeAddClasses(inSlide, addClasses);
+                maybeAddClasses(inSlide, addClasses, uniqueId);
                 var h = doc.createElement("h2");
                 setEnrichedContent(h, title);
                 inSlide.appendChild(h);
@@ -86,7 +92,7 @@ This module provides a support for a shorter syntax for slides.
                     // do not create the li
                 } else if (pref == indent) {
                     var li = doc.createElement("li");
-                    maybeAddClasses(li, addClasses);
+                    maybeAddClasses(li, addClasses, uniqueId);
                     setEnrichedContent(li, content);
                     deepestList.appendChild(li);
                 } else {
@@ -115,7 +121,7 @@ This module provides a support for a shorter syntax for slides.
                         // do not create the li
                     } else {
                         var li = doc.createElement("li");
-                        maybeAddClasses(li, addClasses);
+                        maybeAddClasses(li, addClasses, uniqueId);
                         setEnrichedContent(li, content);
                         deepestList.appendChild(li);
                     }
