@@ -51,13 +51,13 @@ This module provides a support for a shorter syntax for slides.
             // we iterate over the lines
             // treat trailing unique-id and classes before anything
             var uniqueId = "";
-            while (line.match(/^(.*)#([^\] ]*)$/)) {
+            while (line.match(/^(.*)#([^\] >]*)$/)) {
                 uniqueId = RegExp.$2;
                 line = RegExp.$1;
             }
             var addClasses = "";
             {
-                while (line.match(/^(.*)\[([^\] ]*)\]$/)) {
+                while (line.match(/^(.*)\[([^\] >]*)\]$/)) {
                     addClasses = RegExp.$2 + " " + addClasses;
                     line = RegExp.$1;
                 }
