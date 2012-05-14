@@ -206,7 +206,7 @@ Slides can include svg documents which then can be animated using the Animator.
         Return true if default params are set.
         */
     function validateParams(params) {
-        return params['src'] && params['width'] && params['height'];// && params['animator'];
+        return params['src'];// && params['width'] && params['height'];// && params['animator'];
     }
     
     /*
