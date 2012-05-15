@@ -167,18 +167,25 @@ This module provides a support for a shorter syntax for slides.
                 var main = line.split(/ *: */);
                 var dur = main[0];
                 var parts = main[1].split(/ *\| */);
+                var appearOrDisappear = function (what, duration) {
+                    if (what[0] == '-') {
+                        return 'a.disappear("'+what.substring(1)+'", '+duration+')';
+                    } else {
+                        return 'a.appear("'+what+'", '+duration+')';
+                    }
+                };
                 animContent += 'var a = $[deck]("animate", slide);';
                 animContent += '$[deck]("addAnimationSequence", slide, [';
                 for (i in parts) {
                     var subparts = parts[i].split(/ *\+ */);
                     if (i != 0) animContent += ",\n   ";
                     if (subparts.length == 1) {
-                        animContent += 'a.appear("'+subparts[0]+'", '+dur+')';
+                        animContent += appearOrDisappear(subparts[0], dur);
                     } else {
                         animContent += "[";
                         for (ii in subparts) {
                             if (ii != 0) animContent += ",";
-                            animContent += 'a.appear("'+subparts[ii]+'", '+dur+')';
+                            animContent += appearOrDisappear(subparts[ii], dur);
                         }
                         animContent += "]";
                     }
@@ -192,18 +199,25 @@ This module provides a support for a shorter syntax for slides.
                 var main = line.split(/ *: */);
                 var dur = main[1];
                 var parts = main[2].split(/ *\| */);
-                animContent += 'var a = $[deck]("svgAnimate", slide, "'+main[0]+'");'; // todo could warn on missing trailing '.'
+                var appearOrDisappear = function (what, duration) {
+                    if (what[0] == '-') {
+                        return 'a.disappear("'+what.substring(1)+'", '+duration+')';
+                    } else {
+                        return 'a.appear("'+what+'", '+duration+')';
+                    }
+                };
+                animContent += 'var a = $[deck]("svgAnimate", slide, "'+main[0]+'");'; // todo could warn on missing leading '.'
                 animContent += '$[deck]("addAnimationSequence", slide, [';
                 for (i in parts) {
                     var subparts = parts[i].split(/ *\+ */);
                     if (i != 0) animContent += ",\n   ";
                     if (subparts.length == 1) {
-                        animContent += 'a.appear("'+subparts[0]+'", '+dur+')';
+                        animContent += appearOrDisappear(subparts[0], dur);
                     } else {
                         animContent += "[";
                         for (ii in subparts) {
                             if (ii != 0) animContent += ",";
-                            animContent += 'a.appear("'+subparts[ii]+'", '+dur+')';
+                            animContent += appearOrDisappear(subparts[ii], dur);
                         }
                         animContent += "]";
                     }
