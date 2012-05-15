@@ -199,9 +199,11 @@ This module provides a support for a shorter syntax for slides.
                 var main = line.split(/ *: */);
                 var dur = main[1];
                 var parts = main[2].split(/ *\| */);
-                var appearOrDisappear = function (what, duration) {
+                var appearOrDisappearOrMore = function (what, duration) {
                     if (what[0] == '-') {
                         return 'a.disappear("'+what.substring(1)+'", '+duration+')';
+                    } else if (what[0] == '@') {
+                        return 'a.viewBoxAs("'+what.substring(1)+'", '+duration+')';
                     } else {
                         return 'a.appear("'+what+'", '+duration+')';
                     }
@@ -212,12 +214,12 @@ This module provides a support for a shorter syntax for slides.
                     var subparts = parts[i].split(/ *\+ */);
                     if (i != 0) animContent += ",\n   ";
                     if (subparts.length == 1) {
-                        animContent += appearOrDisappear(subparts[0], dur);
+                        animContent += appearOrDisappearOrMore(subparts[0], dur);
                     } else {
                         animContent += "[";
                         for (ii in subparts) {
                             if (ii != 0) animContent += ",";
-                            animContent += appearOrDisappear(subparts[ii], dur);
+                            animContent += appearOrDisappearOrMore(subparts[ii], dur);
                         }
                         animContent += "]";
                     }
