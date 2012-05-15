@@ -162,6 +162,7 @@ This module provides a support for a shorter syntax for slides.
                 $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-APPEAR:")) {
                 line = line.replace(/@ANIM-APPEAR\: */, "");
+                if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
                 var animContent = "";
                 var main = line.split(/ *: */);
                 var dur = main[0];
@@ -186,6 +187,7 @@ This module provides a support for a shorter syntax for slides.
                 $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-SVG-APPEAR:")) {
                 line = line.replace(/@ANIM-SVG-APPEAR\: */, "");
+                if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
                 var animContent = "";
                 var main = line.split(/ *: */);
                 var dur = main[1];
