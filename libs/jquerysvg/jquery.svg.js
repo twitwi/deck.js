@@ -993,6 +993,9 @@ $.extend(SVGWrapper.prototype, {
 					(messages.length ? messages[0] : errors[0]).firstChild.nodeValue);
 				return;
 			}
+			if (settings.onLoadSize) {
+			    settings.onLoadSize.apply(wrapper._container || wrapper._svg, [data.documentElement.getAttribute('width'), data.documentElement.getAttribute('height')]);
+			}
 			var parent = (settings.parent ? $(settings.parent)[0] : wrapper._svg);
 			var attrs = {};
 			for (var i = 0; i < data.documentElement.attributes.length; i++) {
