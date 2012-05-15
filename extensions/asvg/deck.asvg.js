@@ -167,9 +167,18 @@ Slides can include svg documents which then can be animated using the Animator.
                 $[deck]('addLoading');
                 aSVG.svg({
                     loadURL: attributes['src'],
-                    onLoad: function(svg) {$[deck]('removeLoading')},
-                    settings: {
-                        // no settings
+                    onLoadSize: function(w,h) {
+                        this.__w = w;
+                        this.__h = h;
+                    },
+                    onLoad: function($svg) {
+                        var aa = $($svg.root());
+                        if (aa.attr('viewBox') == undefined) {
+                            var to = "0 0 "+this.__w+" "+this.__h;
+                            $svg.root().setAttribute("viewBox", to);
+                            alert(attributes['src'] + " " +to)
+                        }
+                        $[deck]('removeLoading')
                     }
                 });
             });
