@@ -44,6 +44,11 @@ Each event is given a direction that helps determine whether the user is
 
 ## Example
 
+If you put a placeholder slide `<div id="showGraph" class="slide"></div>` into
+  your source, this event will display a Javascript graph when you visit the
+  slide (forward) and remove it if you hit the back arrow and return to
+  the slide.
+
 ```
 $("#showGraph").bind('deck.becameCurrent', function(ev, direction) {
   if(direction == "forward"){
