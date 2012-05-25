@@ -37,7 +37,9 @@ This module adds a (current)/(total) style status indicator to the deck.
 	$.extend(true, $[deck].defaults, {
 		selectors: {
 			statusCurrent: '.deck-status-current',
-			statusTotal: '.deck-status-total'
+			statusTotal: '.deck-status-total',
+			statusFakeEnd: '.deck-status-fake-end',
+			statusFullTotal: '.deck-status-full-total'
 		},
 		
 		countNested: true
@@ -51,7 +53,17 @@ This module adds a (current)/(total) style status indicator to the deck.
 		
 		// Set total slides once
 		if (opts.countNested) {
-			$(opts.selectors.statusTotal).text(slides.length);
+			var notfound = 1000000;
+			var fakeEnd = notfound;
+			$.each(slides, function(i, $el) {
+				if (fakeEnd > i) {
+					if ($el.filter(opts.selectors.statusFakeEnd).length) {
+						fakeEnd = i;
+					}
+				}
+			});
+			$(opts.selectors.statusTotal).text(fakeEnd == notfound ? slides.length : fakeEnd+1);
+			$(opts.selectors.statusFullTotal).text(slides.length);
 		}
 		else {
 			/* Determine root slides by checking each slide's ancestor tree for
