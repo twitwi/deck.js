@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>In-Slide Animations in deck.js</title>
+	
+	<meta name="description" content="A jQuery library for modern HTML presentations">
+	<meta name="author" content="Caleb Troughton">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+	
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="../extensions/scale/deck.scale.css">
+	
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="../themes/style/neon.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="../themes/transition/horizontal.css">
+	
+	<script src="../modernizr.custom.js"></script>
+
+<!-- Grab CDN jQuery, with a protocol relative URL; fall back to local if offline -->
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+<script>window.jQuery || document.write('<script src="../jquery-1.7.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/scale/deck.scale.js"></script>
+<script src="../extensions/clone/deck.clone.js"></script>
+<script src="../extensions/notes/deck.notes.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/animate/deck.animate.js"></script>
+
+<style type="text/css">
+    .highlightInRed {color: red};
+</style>
+</head>
+
+<body class="deck-container">
+
+<!-- Begin slides -->
+<section class="slide">
+	<h2>In-Slide animations in deck.js</h2>
+	<ol>
+		<li>
+		    <h3>Use right arrow (or space) to <em>DO</em> a step</h3>
+		</li>
+		<li>
+		    <h3>Use left arrow (or backspace) to <em>UNDO</em> a step</h3>
+		</li>
+		<li>
+		    <h3>(optional) Type 's' to disable scaling</h3>
+		</li>
+	</ol>
+</section>
+
+<section class="slide">
+    <h2>Making things appear and disappear</h2>
+    <ul>
+	<li>
+	    <h3>Point 1</h3>
+	    <p class="comment1">this is ok</p>
+	</li>
+	<li>
+	    <h3>Point 2</h3>
+	    <p class="comment2">this is awesome</p>
+	</li>
+	<li>
+	    <h3>Point 3</h3>
+	    <p class="comment3">this is cool</p>
+	</li>
+    </ul>
+    <pre class="animate">
+     function(slide) {
+       var a = $[deck]("animate", slide);
+       $[deck]('addAnimationSequence', slide, [
+         a.appear(".comment1", 700),
+         a.appear(".comment2", 700),
+         a.appear(".comment3", 500),
+         [a.disappear(".comment1", 500), a.disappear(".comment3", 900)]
+       ]);
+     }
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Animating attributes (opacity here)</h2>
+    <ul>
+	<li>
+	    <h3>Idea 1</h3>
+	    <p class="comment1">this is ok</p>
+	</li>
+	<li>
+	    <h3>Idea 2 <span class="withdelay" style="color:red">next step with delays</span></h3>
+	    <p class="comment2">this is awesome</p>
+	</li>
+	<li>
+	    <h3>Idea 3</h3>
+	    <p class="comment3">this is still cool</p>
+	</li>
+    </ul>
+    <pre class="animate">
+     function(slide) {
+       var a = $[deck]("animate", slide);
+       $[deck]('addAnimationSequence', slide, [
+         [a.appear(".comment1", 500), a.appear(".comment2", 900), a.appear(".comment3", 700)],
+         a.animate(".comment3", "opacity", .4, 400),
+         a.animate(".comment1", "opacity", .2, 400),
+         a.appear(".withdelay", 500),
+         // here there is a bug in the undo (needs to be fixed)
+         [a.animate(".comment1,.comment2,.comment3", "opacity", 1, 800), a.withDelay(900, a.animate(".comment1,.comment3", "opacity", 0, 500))]
+       ]);
+     }
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Animating Colors (e.g., Highlighting)</h2>
+    <ul>
+	<li>
+	    <h3>Point 1</h3>
+	    <p class="comment1">this is ok</p>
+	</li>
+	<li>
+	    <h3>Point 2</h3>
+	    <p class="comment2">this is <span class="awesome">awesome</span></p>
+	</li>
+	<li>
+	    <h3>Point 3</h3>
+	    <p class="comment3">this is still cool</p>
+	</li>
+    </ul>
+    <pre class="animate">
+     function(slide) {
+       var a = $[deck]("animate", slide);
+       $[deck]('addAnimationSequence', slide, [
+         a.animate(".comment1", "color", "#00FF00", 800),
+         [a.animate(".comment2", "color", "#00FF00", 800), a.animate(".comment1", "color", "#444", 1200)],
+         [a.animate(".comment3", "color", "#00FF00", 800), a.animate(".comment2", "color", "#444", 1200)],
+         [a.animate(".comment2", "color", "#00FF00", 800), a.animate(".comment3", "color", "#444", 1200)],
+         // here also, back is buggous (need to patch the core deck.js)
+         a.animate(".awesome", "color", "#FF0000", 800)
+       ]);
+     }
+    </pre>
+</section>
+
+<section class="slide">
+    <h2>Adding Classes (e.g., Highlighting also)</h2>
+    <pre class="animate" style="float:right; position:relative;">
+function(slide) {
+  var a = $[deck]("animate", slide);
+  $[deck]('addAnimationSequence', slide, [
+    a.appear(".comment1", 800),
+    a.addClass(".awesome", "highlightInRed"),
+    a.appear(".comment2", 800),
+    a.removeClass(".awesome", "highlightInRed"),
+    a.appear(".comment3", 800),
+    [a.addClass("pre.animate", "showAnyway"),
+     a.addClass(".awesome", "highlightInRed")]
+  ]);
+}
+    </pre>
+    <ul>
+	<li>
+	    <h3>Step 1: <span class="awesome">awesome</span></h3>
+	    <p class="comment1">add a class (highlight in red)</p>
+	</li>
+	<li>
+	    <h3>Step 2</h3>
+	    <p class="comment2">and remove it</p>
+	</li>
+	<li>
+	    <h3>Step 3</h3>
+	    <p class="comment3">show the hidden animation code (using a dedicated 'showAnyway' class)</p>
+	</li>
+    </ul>
+</section>
+
+<section class="slide" id="digging-deeper">
+	<h2>Digging Deeper</h2>
+	<h3>If you want to learn more</h3>
+        <ul>
+            <li>view this page source (Ctrl+U?)</li>
+	    <li>see also the <a href="svg-animations.html">SVG animations example</a></li>
+            <li>see also the <a href="smart-syntax.html">simpler syntax example</a></li>
+            <li>see also the <a href="smart-syntax.html#slide-5">math example</a></li>
+            <li><a href="../../../tech-deckjs.html">see my page on deck.js</a> and contact me</li>
+        </ul>
+</section>
+
+<section class="slide">
+    <h1>Done</h1>
+</section>
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+
+
+
+<!-- Initialize the deck -->
+<script>
+$(function() {
+	$.deck('.slide');
+});
+</script>
+
+</body>
+</html>
