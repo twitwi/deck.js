@@ -88,8 +88,21 @@ This module adds a (current)/(total) style status indicator to the deck.
 					rootIndex++
 				);
 			});
-			
-			$(opts.selectors.statusTotal).text(rootIndex - 1);
+
+			var notfound = 1000000;
+			var fakeEnd = notfound;
+			var rootOfFakeEnd = null;
+			$.each(slides, function(i, $el) {
+				if (fakeEnd > i) {
+					if ($el.filter(opts.selectors.statusFakeEnd).length) {
+						fakeEnd = i;
+						rootOfFakeEnd = $el.data('rootSlide');
+					}
+				}
+			});
+
+			$(opts.selectors.statusTotal).text(fakeEnd == notfound ? rootIndex - 1 : rootOfFakeEnd);
+			$(opts.selectors.statusFullTotal).text(rootIndex - 1);
 		}
 		
 		// Find where we started in the deck and set initial state
