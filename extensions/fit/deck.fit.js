@@ -33,17 +33,13 @@
         var truescaleX = $container.hasClass(opts.classes.globalscale) ? $container.innerWidth() / (sdw) : 1;
         var truescaleY = $container.hasClass(opts.classes.globalscale) ? $container.innerHeight() / (sdh) : 1;
         var scale = scaleX < scaleY ? scaleX : scaleY;
-        //alert(scale);
-	var rootSlides = [];
-	$.each($[deck]('getSlides'), function(i, $el) {
-	    //if (!$el.parentsUntil(opts.selectors.container, slideTest).length) {
-		rootSlides.push($el);
-	    //}
-	});
-        //alert(scaleX+","+scaleY);
+        var rootSlides = [];
+        $.each($[deck]('getSlides'), function(i, $el) {
+            //if (!$el.parentsUntil(opts.selectors.container, slideTest).length) {
+            rootSlides.push($el);
+            //}
+        });
         $.each(rootSlides, function(i, $slide) {
-            /*$slide.css('width', sdw);
-            $slide.css('height', sdh);*/
             $slide.width(sdw);
             $slide.height(sdh);
             $.each('Webkit Moz O ms Khtml'.split(' '), function(i, prefix) {
@@ -55,29 +51,16 @@
                         $slide.css(prefix + 'Transform', 'translate(-50%,-50%) scale(' + scale + ' , ' + scale + ') translate(50%,50%) translate('+(addMarginX/2)+'px,'+(addMarginY/2)+'px)');
                     } else if (fitMode == "center middle") {
                         // ok align center/middle
-                        // KO $slide.css(prefix + 'Transform', 'translate(-50%,-50%) scale(' + scale + ' , ' + scale + ') translate('+($container.innerWidth()/2/scale)+'px,'+($container.innerHeight()/2/scale)+'px)');
-                        // KO when y>sdh $slide.css(prefix + 'Transform', 'scale(' + scale + ' , ' + scale + ') translate('+(($container.innerWidth()-sdw)/2/scale)+'px,'+(($container.innerHeight()-sdh)/2/scale)+'px)');
                         $slide.css(prefix + 'Transform', 'translate(-50%,-50%) scale(' + scale + ' , ' + scale + ') translate(50%, 50%) translate('+($container.innerWidth()/2/scale - sdw/2)+'px,'+($container.innerHeight()/2/scale - sdh/2)+'px)');
-                        // ^ it seems this solution is ok with firefox but not chromium... if the slides would kept their size, there would be no problems (add a wrapper?)
                     } else if (fitMode == "right bottom" || fitMode == "bottom right") {
                         // ok align right/bottom
-                        // KO $slide.css(prefix + 'Transform', 'translate(-50%,-50%) scale(' + scale + ' , ' + scale + ') translate(-50%, -50%) translate('+($container.innerWidth()/scale-addMarginX/2)+'px,'+($container.innerHeight()/scale-addMarginY/2)+'px)');
-                        // ??? $slide.css(prefix + 'Transform', 'scale(' + scale + ' , ' + scale + ') translate('+(($container.innerWidth()-sdw)/2/scale)+'px,'+(($container.innerHeight()-sdh)/2/scale)+'px)');
                         $slide.css(prefix + 'Transform', 'translate(-50%,-50%) scale(' + scale + ' , ' + scale + ') translate(50%, 50%) translate('+($container.innerWidth()/scale - sdw - addMarginX/2)+'px,'+($container.innerHeight()/scale - sdh - addMarginY/2)+'px)');
                     } else if (fitMode == "stretched") {
                         // ok stretched (with respect of the margin, i.e., it is center/middle)
                         $slide.css(prefix + 'Transform', 'scale(' + scaleX + ' , ' + scaleY + ') translate('+(($container.innerWidth()-sdw)/2/scaleX)+'px,'+(($container.innerHeight()-sdh)/2/scaleY)+'px)');
-                    // 
-                    // NB: slides increase in height when they have space so it screws everything if we use with translate(., -50%)
                     }
-                    //$slide.css(prefix + 'Transform', 'translate(-50%,-50%) scale(' + scale + ' , ' + scale + ') translate(50%,50%)');
-                    //$slide.css(prefix + 'Transform', 'translate(-'+(sdw/2)+'px,-'+(sdh/2)+'px) scale(' + scale + ' , ' + scale + ') translate('+($container.innerWidth()/2/scale)+'px,'+($container.innerHeight()/2/scale)+'px)');
-                    //$slide.css(prefix + 'Transform', 'scale(' + scale + ' , ' + scale + ')');
-                    //$slide.css(prefix + 'Transform', 'translate(-50%,-50%) scale(' + scaleX + ' , ' + scaleY + ') translate(50%,50%)');
-                    //$slide.css(prefix + 'Transform', 'scale(' + scale + ' , ' + scale + ') translate(-50%,-50%) translate('+($container.innerWidth()/2)+'px,'+(scale*$container.innerHeight()/2)+'px)');
                 }
-	    });
-            //$container.css(prefix + 'Transform', 'scale(' + scale + ' , ' + scale + ')');
+            });
         });
         
     }
