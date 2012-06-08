@@ -45,7 +45,7 @@ html, body {margin:0;padding:0}
 .resizeable { /* for the demo */
     background: #900;
     margin: 0; padding: 20px;
-    width: 300px; height: 150px; /* just the initial size for the resizeable demo */
+    width: 600px; height: 450px; /* just the initial size for the resizeable demo */
     resize: both;
     overflow: hidden; /* needed for the resize handle to be really shown in ffox */
     border: 1px solid blue;
@@ -80,31 +80,73 @@ html, body {margin:0;padding:0}
         </style>
     </head>
 
-<body>
 <!-- for the demo, the body is not the container so it can be resized by the user -->
+<body>
+
+<!-- for the demo, a select changes the fitMode -->
+<select class="fitModeSelect" style="float:right">
+    <option value="center middle" selected="true">(default) fitMode: "center middle"</option>
+    <option value="top left">fitMode: "top left"</option>
+    <option value="bottom right">fitMode: "bottom right"</option>
+    <option value="stretched">fitMode: "stretched"</option>
+</select>
+This page demonstrates the use of the "fit" extension for deck.js.<br/>
+Use left/right arrow keys to browse the presentation.<br/>
+
+<!-- for the demo, a resizeable wrapper around the container -->
 <div class="resizeable">
 <div class="deck-container">
+
 <!-- Begin slides -->
 <section class="slide" id="title-slide">
 	<h1>Getting started with deck.js: fit extension</h1>
 </section>
 
-<section class="slide" id="how-to-overview">
-    <h2>This is a first slide</h2>
-    <ol>
+<section class="slide">
+    <h2>“fit”: What It Does</h2>
+    <ul>
         <li>
-            <h3>Just some stuff to fill</h3>
-            <p>really</p>
+            <h3>Before anything</h3> please resize the slides by dragging <em>the bottom right corner of the dark-red frame</em>
         </li>
         <li>
-            <h3>Choose Themes</h3>
-            <p>One for slide styles and one for deck&nbsp;transitions.</p>
+            More on the next slide
         </li>
-        <li>
-            <h3>Include Extensions</h3>
-            <p>Add extra functionality to your deck, or leave it stripped&nbsp;down.</p>
-        </li>
-    </ol>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Designing for “fit”</h2>
+    <ul>
+        <li>You decide on a design dimension<br/> (default: 800x600)</li>
+        <li>You write all your slides<br/> as if they were exactly of this size</li>
+        <br/>
+        <li>You put your slides in a container of any size</li>
+        <li>You decide how they should adapt (e.g., center)</li>
+        <br/>
+        <li>And “fit” handles it!</li>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Playing with “fit” demo</h2>
+    <ul>
+        <li>Resize the red box</li>
+        <li>Change the “fitMode”<br/> with the select on the top-right of this page</li>
+        <li>Press the 's' key to make the slides fit to the window</li>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Notes about the demo</h2>
+    <ul>
+        <li>The 8 yellow boxes are to test background elements. You may use them into your slides, e.g., for footer, logos, …</li>
+        <li>The red border just helps understanding where the “deck-container” is</li>
+        <li>The white border just helps understanding where each “slide” is</li>
+        <li>The white border also illustrates the “fitMarginX” and “fitMarginY” options that can be used for adding a margin around the slides</li>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Want More?</h2>
+    <ul>
+        See more about deck.js and extensions
+    </ul>
 </section>
 
 <!-- deck.navigation snippet -->
@@ -112,11 +154,11 @@ html, body {margin:0;padding:0}
 <a href="#" class="deck-next-link" title="Next">&#8594;</a-->
 
 <!-- deck.status snippet -->
-<p class="deck-status">
+<!--p class="deck-status">
 	<span class="deck-status-current"></span>
 	/
 	<span class="deck-status-total"></span>
-</p>
+</p-->
 
 <!-- deck.hash snippet -->
 <a href="." title="Permalink to this slide" class="deck-permalink">#</a>
@@ -127,8 +169,8 @@ html, body {margin:0;padding:0}
 <script>
 $(function() {
 	$.deck('.slide', {
-            //fitMarginX:100, fitMarginY:100,
-            fitMode: "stretched" //"center middle" //"bottom right" //"top left"
+            // fitMarginX:100, fitMarginY:100,
+            // fitMode: "stretched" //"center middle" //"bottom right" //"top left"
         });
 });
 </script>
@@ -145,6 +187,18 @@ $(function() {
                 window.setTimeout(update, 200);
             }
             window.setTimeout(update, 200);
+        });
+    </script>
+    <script> /* This script is just for the demo: change fitMode using a select */
+        $(function(){
+        $(".fitModeSelect").change(function() {
+           $(".fitModeSelect option:selected").each(function () {
+              $['deck']('getOptions').fitMode = $(this).attr('value');
+              $["deck"]('enableScale');
+           });
+           $(".fitModeSelect").blur(); // to avoid the key strokes doing both nextSlide and changing the selected value in the select
+        });
+        $(".fitModeSelect").change();
         });
     </script>
     <script> /* This script is just for the demo: unbinds the 's' key and use it to switch to fullscreen */
