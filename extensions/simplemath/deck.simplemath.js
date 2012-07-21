@@ -17,7 +17,7 @@ This module provides a support for latex equation syntax.
         $('.latex', container).each(function() {
             var it = this;
             var v = $(it).text();
-            it.innerHTML = "$"+v+"$";
+            it.innerHTML = "$\\displaystyle "+v+"$";
             new latex2mml().patch_element(it);
         });
     });
