@@ -7,7 +7,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
             
-        <title>deck.simplemath.js test/demo</title>
+        <title>deck.step.js test/demo</title>
             
         <meta name="description" content="deck.*.js">
         <meta name="author" content="Someone out there">
@@ -37,12 +37,11 @@
         <script src="../extensions/fit/deck.fit.js"></script>
         <link rel="stylesheet" href="../extensions/fit/deck.fit-fs.css">
 
-        <script src="../libs/display-latex2.user.js"></script>
-        <script src="../extensions/simplemath/deck.simplemath.js"></script>
+        <script src="../extensions/step/deck.step.js"></script>
 
             
         <style type="text/css">
-            .deck-container .slide {border: 1px dashed #333;} /* for the demo */
+            .deck-container>.slide {border: 1px dashed #333;} /* for the demo */
             .slide h1 {font-size: 3em;}
             .slide h1 b {color: #0F0;}
             .slide h1 em {color: #445; text-shadow: none; font-size: .3em;}
@@ -60,65 +59,65 @@ Use left/right arrow keys to browse the presentation.<br/>
 
 <!-- Begin slides -->
 <section class="slide" id="title-slide">
-	<h1 title="use arrow keys to navigate">Getting started with deck.js:<br/><b>simplemath</b> extension
+	<h1 title="use arrow keys to navigate">Getting started with deck.js:<br/><b>step</b> extension
             <br/><em>use right arrow to move on</em>
         </h1>
 </section>
 
 <section class="slide">
-    <h2>“simplemath”: What?</h2>
+    <h2>Nested deck.js slides</h2>
     <ul>
-        <li>Add math equations in your slides</li>
-        <li>Use latex syntax</li>
-        <li>Just wrap your maths in a "span" element</li>
-        <li>Wants to latex syntax?</li>
-        <ul>
-            <li>view the source of this page</li>
-            <li>view <a href="http://www.andy-roberts.net/writing/latex/mathematics_1">online resources</a> (there are a lot)</li>
-        </ul>
-        <li>… examples on the next slide</li>
+        <li>Not an extension (in core deck.js)</li>
+        <li>Just have an element with the “slide” class…</li>
+        <li>… and it will appear (hit the right arrow now)</li>
+        <li class="slide">Hey! I appeared! (go on)</li>
+        <li class="slide">The gray-ish style is part of the theme</li>
     </ul>
 </section>
 <section class="slide">
-    <h2>“simplemath” in action</h2>
+    <h2>Why the step extension?</h2>
     <ul>
-        <li>
-            <span class="latex">e=mc^2</span>
-                      <span class="latex">(\frac{x^2}{y^3})</span>
-                      <span class="latex">[\begin{array}{cc} \sqrt{x} & 2 \\ 3 & x^4 \end{array}]</span>
+        <li class="slide">
+        <span class="slide">Nested slides</span>
+        <span class="slide">are cool</span>
+        <span class="slide">and useful</span>
         </li>
-        <li><span class="latex">
-                f(n) = \left\{
-                \begin{array}{l l}
-                   n/2      & \mbox{if } n \mbox{ is even}\\
-                   -(n+1)/2 & \mbox{if } n \mbox{ is odd}
-                \end{array}
-        </span></li>
-        <li><span class="latex">a^2 + \frac{1}{\sqrt{a^2 + \frac{1}{\sqrt{a^2 + \frac{1}{\sqrt{a^2 + b^{\infty}}}}}}}</span></li>
-        <br/>
+        <li class="slide">But there is a problem</li>
+        <li class="slide">
+        <span class="slide">Navigating</span>
+        <span class="slide">is</span>
+        <span class="slide">annoying</span>
+        <span class="slide">with</span>
+        <span class="slide">nesting</span>
+        <span class="slide">!!!</span>
+        </li>
+        <li class="slide">Example:<br/> Try using the left arrow to go back to previous slide</li>
+        <li class="slide">Probably annoying!?</li>
+        <li class="slide">Now try hitting the up arrow</li>
+        <li class="slide">More on the next slide…</li>
     </ul>
 </section>
 <section class="slide">
-    <h2>Principle</h2>
+    <h2>The “step” extension</h2>
     <ul>
-        <li>Written in Javascript</li>
-        <li>Interprets latex syntax</li>
-        <li>Generates MathML (web standard for maths)</li>
-        <li>Lets your browser render the MathML</li>
-        <br/>
-        <li>Works fully offline</li>
-        <ul style="list-style-type:none">
-            <li>− depends on browser support for MathML</li>
-            <li>+ works offline :)</li>
-
+        <li>Adds new key shortcuts</li>
+        <ul>
+            <li>up arrow: previous top level slide</li>
+            <li>down arrow: next top level slide</li>
         </ul>
+        <br/>
+        <li class="slide">Others (minor)
+            <ul>
+                <li>Defaults to not counting nested slides<br/>   (if you use the status extension)</li>
+                <li>Sends "initialization" events to nested slides when the parent gets activated</li>
+            </ul>
+        </li>
     </ul>
 </section>
 <section class="slide">
     <h2>Browser support</h2>
     <ul>
-        <li>Did it work for you? :)</li>
-        <li>See <a href="https://en.wikipedia.org/wiki/MathML#Web_browsers">the wikipedia page on MathML</a></li>
+        <li>Should be ok</li>
     </ul>
 </section>
 <section class="slide">
