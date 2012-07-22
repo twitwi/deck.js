@@ -34,10 +34,13 @@
         var truescaleY = $container.hasClass(opts.classes.globalscale) ? $container.innerHeight() / (sdh) : 1;
         var scale = scaleX < scaleY ? scaleX : scaleY;
         var rootSlides = [];
+        var slideTest = $.map([opts.classes.before, opts.classes.previous, opts.classes.current, opts.classes.next, opts.classes.after],
+                              function(el, i) {return '.' + el;}).join(', ');
+
         $.each($[deck]('getSlides'), function(i, $el) {
-            //if (!$el.parentsUntil(opts.selectors.container, slideTest).length) {
-            rootSlides.push($el);
-            //}
+            if (!$el.parentsUntil(opts.selectors.container).length) {
+                rootSlides.push($el);
+            }
         });
         $.each(rootSlides, function(i, $slide) {
             $slide.width(sdw);
