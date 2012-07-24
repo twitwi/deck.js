@@ -13,7 +13,14 @@ It also overrides the defaults keybinding and countNested value (so it is better
 
 (function($, deck, undefined) {
     var $d = $(document);
-    $.extend(true, $.deck.defaults, {
+    // undo the defaults (to be sure jquery behaves properly when overriding it)
+    $.extend(true, $[deck].defaults, { keys: {next:null, previous:null}});
+    // and go on
+    $.extend(true, $[deck].defaults, {
+        selectors: {
+            subslidesToNotify: ".slide,.onshowtoplevel"
+        },
+        // TODO previousActsAtTopLevel: false, <<<< to make left arrow got to the beginning of previous slide
         // Here we redefined the defaults:
         //  - we avoid counting nested slides
         //  - we keep up/down for top-level slides
@@ -39,54 +46,46 @@ It also overrides the defaults keybinding and countNested value (so it is better
         ], function(el, i) {
             return '.' + el;
         }).join(', ');}
-    
+    var myInArray = function(el, arr) {
+        for (i in arr) if (el.is(arr[i])) return i*1; // cast to int
+        return -1;
+    };
     $[deck]('extend', 'previousTopLevelSlide', function() {
         var opts = $[deck]('getOptions');
         var slideTest = slideTestDelayed(opts);
-        /* Find the real next parent */
+        var topLevelOf = function(node) {
+            var $parentSlides = $(node).parentsUntil(opts.selectors.container, slideTest);
+            return $parentSlides.length ? $parentSlides.last() : node;
+        };
+        /* Find the real previous parent */
         var current = $[deck]('getSlide');
-        var blackListForTopLevel = null;
-        var toGo = null;
-        var stillCounting = true;
-        var slides = ([]).concat($[deck]('getSlides')); // copy the slide's list so we can safely reverse it
-        $.each(slides.reverse(), function(ii, $el) {
-            var $parentSlides = $el.parentsUntil(opts.selectors.container, slideTest);
-            if (blackListForTopLevel == null) { // still not found the current
-                if (current == $el) { // found it!
-                    blackListForTopLevel = $el; // actually if $el is not toplevel then it won't be taken into account below'
-                }
-            } else if (stillCounting) { // it was already found
-                toGo = slides.length - 1 - ii;
-                if ($parentSlides.length == 0 && $el.get(0) !== blackListForTopLevel.get(0)) {
-                    stillCounting = false;
-                }
-            }
-        });
+        var currentParent = topLevelOf(current);
+        var toGo = myInArray(currentParent, $[deck]('getSlides'));
+        if (current.is(currentParent) && toGo > 0) {
+            // This is already toplevel slide, just go to the previous toplevel one (parent of the previous one)
+            toGo = myInArray(topLevelOf($[deck]('getSlide', toGo-1)), $[deck]('getSlides'));
+        }
         $[deck]('go', toGo);
+        
     });
     $[deck]('extend', 'nextTopLevelSlide', function() {
         var opts = $[deck]('getOptions');
         var slideTest = slideTestDelayed(opts);
+        var topLevelOf = function(node) {
+            var $parentSlides = $(node).parentsUntil(opts.selectors.container, slideTest);
+            return $parentSlides.length ? $parentSlides.last() : node;
+        };
         /* Find the real next parent */
         var current = $[deck]('getSlide');
-        var topLevelFromCurrent = null;
-        var toGo = null;
-        var stillCounting = true;
-        $.each($[deck]('getSlides'), function(i, $el) {
-            var $parentSlides = $el.parentsUntil(opts.selectors.container, slideTest);
-            if (topLevelFromCurrent == null) { // still not found the current
-                if (current == $el) { // found it!
-                    topLevelFromCurrent = $parentSlides.length ? $parentSlides.last() : $el;
-                }
-            } else if (stillCounting) { // it was already found
-                toGo = i;
-                var newTopLevel = $parentSlides.length ? $parentSlides.last() : $el;
-                if (newTopLevel.get(0) !== topLevelFromCurrent.get(0)) {
-                    stillCounting = false;
-                }
+        var currentParent = topLevelOf(current);
+        var icur = myInArray(current, $[deck]('getSlides'));
+        for (; icur < $[deck]('getSlides').length; icur++) {
+            var cursorParent = topLevelOf($[deck]('getSlide', icur));
+            if (!currentParent.is(cursorParent)) {
+                $[deck]('go', icur);
+                break;
             }
-        });
-        $[deck]('go', toGo);
+        }
     });
     $d.bind('deck.init', function() {
         $d.unbind('keydown.decknexttoplevel').bind('keydown.decknexttoplevel', function(e) {
@@ -105,5 +104,23 @@ It also overrides the defaults keybinding and countNested value (so it is better
                 $[deck]('previousTopLevelSlide');
             }
         });
+    });
+    // we will init the subslides (in case they are animations), in a backward order
+    $d.bind('deck.change', function(e, from, to) {
+        var opts = $[deck]('getOptions');
+        var slideTest = slideTestDelayed(opts);
+        var topLevelOf = function(node) {
+            var $parentSlides = $(node).parentsUntil(opts.selectors.container, slideTest);
+            return $parentSlides.length ? $parentSlides.last() : node;
+        };
+        // consider only the case where we actually changed slide
+        if (topLevelOf($[deck]('getSlide', to)).is(topLevelOf($[deck]('getSlide', from)))) {
+            return;
+        }
+        var direction = "forward";
+        if (from > to){
+            direction = "reverse";
+        }
+        $(topLevelOf($[deck]('getSlide', to)).find(opts.selectors.subslidesToNotify).get().reverse()).trigger('deck.toplevelBecameCurrent', direction);
     });
 })(jQuery, 'deck');

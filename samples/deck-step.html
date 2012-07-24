@@ -45,6 +45,7 @@
             .slide h1 {font-size: 3em;}
             .slide h1 b {color: #0F0;}
             .slide h1 em {color: #445; text-shadow: none; font-size: .3em;}
+            .slide .demo {font-size: .3em;}
         </style>
     </head>
 
@@ -99,19 +100,32 @@ Use left/right arrow keys to browse the presentation.<br/>
 </section>
 <section class="slide">
     <h2>The “step” extension</h2>
+    <br/>
     <ul>
         <li>Adds new key shortcuts</li>
         <ul>
             <li>up arrow: previous top level slide</li>
             <li>down arrow: next top level slide</li>
         </ul>
-        <br/>
-        <li class="slide">Others (minor)
+    </ul>
+</section>
+</section>
+<section class="slide">
+    <h2>More “step”<span class="demo"> </span></h2>
+    <br/>
+    <ul>
+        <li class="slide">Other stuff… not visible
             <ul>
                 <li>Defaults to not counting nested slides<br/>   (if you use the status extension)</li>
-                <li>Sends "initialization" events to nested slides when the parent gets activated<br/>   (used for animations)</li>
+                <li>Add notifications events to nested slides when the parent gets activated (for animations)</li>
+                <li>(The title ends in "21", see why in the source)</li>
             </ul>
         </li>
+        <!-- demotoshow shows a message (specific to this page) -->
+        <div class="demotoshow1 slide"></div> <!-- any "slide" receives a notification when the toplevel gets shown -->
+        <div class="demotoshow2 onshowtoplevel"></div> <!-- "onshowtoplevel" is a second default class that gets inited -->
+        <!-- the first of these two is a "slide", so it will get activated when "right arrow" is pressed, and the previous part will get gray -->
+        <!-- the second one is not a "slide", so it won't influence the navigation at all -->
     </ul>
 </section>
 <section class="slide">
@@ -144,6 +158,15 @@ Use left/right arrow keys to browse the presentation.<br/>
 <!-- Initialize the deck -->
 <script>
 $(function() {
+
+        // we register the listeners before call the deck init
+        $('.demotoshow1').bind('deck.toplevelBecameCurrent', function() {
+            $(".demo").html($(".demo").html()+"1");
+        });
+        $('.demotoshow2').bind('deck.toplevelBecameCurrent', function() {
+            $(".demo").html($(".demo").html()+"2");
+        });
+        
 	$.deck('.slide', {
             // fitMarginX:100, fitMarginY:100,
             // fitMode: "stretched" //"center middle" //"bottom right" //"top left"
