@@ -1,3 +1,14 @@
+
+This repository is a merge of:
+
+- the main deck.js project
+- the deck.events.js extension project
+- my updates to these
+
+
+NB: the README below is the one from deck.js, as is.
+
+
 #deck.js
 
 A JavaScript library for building modern HTML presentations. deck.js is flexible enough to let advanced CSS and JavaScript authors craft highly customized decks, but also provides templates and themes for the HTML novice to build a standard slideshow.
