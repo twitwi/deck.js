@@ -96,6 +96,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                         if (aa.attr('viewBox') == undefined) {
                             var to = "0 0 " + w + " " + h;
                             $svg.root().setAttribute("viewBox", to);
+                            aa.attr("svgViewBox", to);
                             if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
                         }
                         /*
