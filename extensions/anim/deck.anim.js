@@ -26,20 +26,6 @@
 
         // first we define some tools and grab some info from deck.js
         var o = $[deck]('getOptions');
-        var slideTestDelayed = function(opts) {return $.map([
-            opts.classes.before,
-            opts.classes.previous,
-            opts.classes.current,
-            opts.classes.next,
-            opts.classes.after
-        ], function(el, i) {
-            return '.' + el;
-        }).join(', ');}
-        var slideTest = slideTestDelayed(o);
-        var topLevelOf = function(node) {
-            var $parentSlides = $(node).parentsUntil(o.selectors.container, slideTest);
-            return $parentSlides.length ? $parentSlides.last() : node;
-        };
         var context = function(el) {
             return {
                 what: function() {return $(el).attr("data-what")},
@@ -47,7 +33,7 @@
                 classs: function() {return $(el).attr("data-class")},
                 attribute: function() {return $(el).attr("data-attr").split(':')[0]},
                 value: function() {return $(el).attr("data-attr").split(':')[1]},
-                toplevel: function() {return topLevelOf($(el))},
+                toplevel: function() {return $[deck]('getToplevelSlideOf', el).node},
                 all: function() {return $(this.what(),this.toplevel())}
             }
         };
