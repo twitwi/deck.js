@@ -79,7 +79,7 @@
             init: function(c) {c.all().animate(c.whatFrom, 0)},
             undo: function(c) {c.all().animate(c.whatFrom, 0)},
             doit: function(c) {
-                c.whatFrom[c.attribute()] = c.all().first().css(c.attribute());
+                c.whatFrom[c.attribute()] = c.all().first().attr(c.attribute());
                 var whatTo = {};
                 whatTo[c.attribute()] = c.value();
                 c.all().animate(whatTo, c.dur())
