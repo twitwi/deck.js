@@ -9,11 +9,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="483.95898"
-   height="467.79654"
+   width="500.95898"
+   height="485.79654"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
+   inkscape:version="0.48+devel r"
    sodipodi:docname="circle.svg">
   <defs
      id="defs4" />
@@ -25,21 +25,23 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.55686603"
-     inkscape:cx="413.08593"
+     inkscape:cx="52.137355"
      inkscape:cy="222.34963"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1364"
-     inkscape:window-height="686"
+     inkscape:window-height="679"
      inkscape:window-x="0"
-     inkscape:window-y="25"
+     inkscape:window-y="29"
      inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     borderlayer="false" />
+     borderlayer="false"
+     width="0px"
+     height="0px" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -48,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -56,20 +58,21 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-3.99267,-3.77738)">
+     transform="translate(-3.99267,14.222693)">
     <g
-       id="circleRed">
+       id="circleRed"
+       transform="translate(12,-2)">
       <path
          inkscape:label="#red"
          transform="translate(-131.31983,-224.25387)"
-         d="m 303.04577,311.92038 a 83.842659,83.842659 0 1 1 -167.68532,0 83.842659,83.842659 0 1 1 167.68532,0 z"
+         d="m 303.04577,311.92038 c 0,46.30502 -37.53764,83.84266 -83.84266,83.84266 -46.30502,0 -83.84266,-37.53764 -83.84266,-83.84266 0,-46.30502 37.53764,-83.84266 83.84266,-83.84266 46.30502,0 83.84266,37.53764 83.84266,83.84266 z"
          sodipodi:ry="83.842659"
          sodipodi:rx="83.842659"
          sodipodi:cy="311.92038"
          sodipodi:cx="219.20311"
          id="circleRedCircle"
          sodipodi:type="arc" />
-         <!--style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"-->
+      <!--style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"-->
       <path
          inkscape:transform-center-y="0.10919907"
          inkscape:transform-center-x="0.16050916"
@@ -109,8 +112,8 @@
        sodipodi:cy="311.92038"
        sodipodi:rx="83.842659"
        sodipodi:ry="83.842659"
-       d="m 303.04577,311.92038 c 0,46.30502 -37.53764,83.84266 -83.84266,83.84266 -46.30502,0 -83.84266,-37.53764 -83.84266,-83.84266 0,-46.30502 37.53764,-83.84266 83.84266,-83.84266 46.30502,0 83.84266,37.53764 83.84266,83.84266 z"
-       transform="matrix(1.3373494,0,0,1.3373494,-78.998809,-209.27187)"
+       d="m 303.04577,311.92038 a 83.842659,83.842659 0 1 1 -167.68532,0 83.842659,83.842659 0 1 1 167.68532,0 z"
+       transform="matrix(1.3373494,0,0,1.3373494,-66.998809,-211.27187)"
        inkscape:label="#green" />
     <path
        sodipodi:type="arc"
@@ -120,8 +123,8 @@
        sodipodi:cy="311.92038"
        sodipodi:rx="83.842659"
        sodipodi:ry="83.842659"
-       d="m 303.04577,311.92038 c 0,46.30502 -37.53764,83.84266 -83.84266,83.84266 -46.30502,0 -83.84266,-37.53764 -83.84266,-83.84266 0,-46.30502 37.53764,-83.84266 83.84266,-83.84266 46.30502,0 83.84266,37.53764 83.84266,83.84266 z"
-       transform="matrix(1.6024097,0,0,1.6024097,2.3002143,-162.65004)"
+       d="m 303.04577,311.92038 a 83.842659,83.842659 0 1 1 -167.68532,0 83.842659,83.842659 0 1 1 167.68532,0 z"
+       transform="matrix(1.6024097,0,0,1.6024097,14.300214,-164.65004)"
        inkscape:label="#blue" />
   </g>
 </svg>
