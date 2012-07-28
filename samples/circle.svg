@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.55686603"
-     inkscape:cx="52.137355"
-     inkscape:cy="222.34963"
+     inkscape:zoom="17.819713"
+     inkscape:cx="112.80881"
+     inkscape:cy="355.57557"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="circleRed"
      showgrid="false"
      inkscape:window-width="1364"
      inkscape:window-height="679"
@@ -50,7 +50,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -92,15 +92,15 @@
          sodipodi:type="star"
          transform="translate(3.9926654,3.777383)" />
       <text
-         transform="translate(3.99267,3.77738)"
          sodipodi:linespacing="125%"
-         id="text4285"
-         y="111.85658"
-         x="105.0757"
+         id="coolText"
+         y="115.65632"
+         x="108.87571"
          style="font-size:2px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
-         xml:space="preserve"><tspan
-           y="111.85658"
-           x="105.0757"
+         xml:space="preserve"
+         inkscape:label="#text4285"><tspan
+           y="115.65632"
+           x="108.87571"
            id="tspan4287"
            sodipodi:role="line">cool</tspan></text>
     </g>
@@ -112,7 +112,7 @@
        sodipodi:cy="311.92038"
        sodipodi:rx="83.842659"
        sodipodi:ry="83.842659"
-       d="m 303.04577,311.92038 a 83.842659,83.842659 0 1 1 -167.68532,0 83.842659,83.842659 0 1 1 167.68532,0 z"
+       d="m 303.04577,311.92038 c 0,46.30502 -37.53764,83.84266 -83.84266,83.84266 -46.30502,0 -83.84266,-37.53764 -83.84266,-83.84266 0,-46.30502 37.53764,-83.84266 83.84266,-83.84266 46.30502,0 83.84266,37.53764 83.84266,83.84266 z"
        transform="matrix(1.3373494,0,0,1.3373494,-66.998809,-211.27187)"
        inkscape:label="#green" />
     <path
@@ -123,7 +123,7 @@
        sodipodi:cy="311.92038"
        sodipodi:rx="83.842659"
        sodipodi:ry="83.842659"
-       d="m 303.04577,311.92038 a 83.842659,83.842659 0 1 1 -167.68532,0 83.842659,83.842659 0 1 1 167.68532,0 z"
+       d="m 303.04577,311.92038 c 0,46.30502 -37.53764,83.84266 -83.84266,83.84266 -46.30502,0 -83.84266,-37.53764 -83.84266,-83.84266 0,-46.30502 37.53764,-83.84266 83.84266,-83.84266 46.30502,0 83.84266,37.53764 83.84266,83.84266 z"
        transform="matrix(1.6024097,0,0,1.6024097,14.300214,-164.65004)"
        inkscape:label="#blue" />
   </g>
