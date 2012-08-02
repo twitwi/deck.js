@@ -128,104 +128,48 @@ This module provides a support for a shorter syntax for slides.
                 }
             } else if (startsWith(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */, "").split(/ +/);
-                var obj = $("<object type='deckjs/asvg'/>");
+                var obj = $("<object type='deckjs/svg'/>");
                 $.each(parts[0].split(/,/), function(i,c){obj.addClass(c);});
                 obj.append($("<param name='src'/>").attr("value", parts[1]))
                     .append($("<param name='width'/>").attr("value", parts[2]))
                     .append($("<param name='height'/>").attr("value", parts[3]))
                     .appendTo(inSlide);
-            } else if (startsWith(line, "@ANIM:")) {
-                line = line.replace(/@ANIM\:/, "");
-                var animContent = "";
-                while (line != null && !line.match(/^@END$/)) {
-                    if (nl != -1) remain = remain.substring(nl + 1);
-                    animContent += "  " + line + "\n";
-                    nl = remain.indexOf("\n");
-                    line = remain.substring(0, nl).replace(/^ */, "");
-                }
-                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-PLAY:")) {
                 line = line.replace(/@ANIM-PLAY\: */, "");
-                var animContent = "";
-                animContent += 'var a = $[deck]("animate", slide);';
-                animContent += '$[deck]("addAnimationSequence", slide, [';
-                animContent += ' a.play("'+line+'")';
-                animContent += "]);";
-                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
+                $("<div/>").addClass("anim-play slide").attr("data-what", line).appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-PAUSE:")) {
                 line = line.replace(/@ANIM-PAUSE\: */, "");
-                var animContent = "";
-                animContent += 'var a = $[deck]("animate", slide);';
-                animContent += '$[deck]("addAnimationSequence", slide, [';
-                animContent += ' a.pause("'+line+'")';
-                animContent += "]);";
-                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
+                $("<div/>").addClass("anim-pause slide").attr("data-what", line).appendTo(inSlide);
+            } else if (startsWith(line, "@ANIM-ATTRIBUTE:")) {
+                line = line.replace(/@ANIM-ATTRIBUTE\: */, "");
+                var main = line.split(/ *: */);
+                $("<div/>").addClass("anim-attribute slide").attr("data-dur", main[0]).attr("data-what", main[1]).attr("data-attr", main[2]+":"+main[3]).appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-APPEAR:")) {
                 line = line.replace(/@ANIM-APPEAR\: */, "");
                 if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
-                var animContent = "";
                 var main = line.split(/ *: */);
                 var dur = main[0];
                 var parts = main[1].split(/ *\| */);
-                var appearOrDisappear = function (what, duration) {
-                    if (what[0] == '-') {
-                        return 'a.disappear("'+what.substring(1)+'", '+duration+')';
-                    } else {
-                        return 'a.appear("'+what+'", '+duration+')';
-                    }
-                };
-                animContent += 'var a = $[deck]("animate", slide);';
-                animContent += '$[deck]("addAnimationSequence", slide, [';
                 for (i in parts) {
+                    // process each group of simultaneous animations
                     var subparts = parts[i].split(/ *\+ */);
-                    if (i != 0) animContent += ",\n   ";
-                    if (subparts.length == 1) {
-                        animContent += appearOrDisappear(subparts[0], dur);
-                    } else {
-                        animContent += "[";
-                        for (ii in subparts) {
-                            if (ii != 0) animContent += ",";
-                            animContent += appearOrDisappear(subparts[ii], dur);
+                    for (ii in subparts) {
+                        var what = subparts[ii];
+                        var continuating  = ii != subparts.length-1;
+                        var add = $("<div/>");
+                        if (what[0] == '-') {
+                            add.addClass("anim-hide");
+                            what = what.substring(1);
+                        } else if (what[0] == '@') {
+                            // TODO
+                        } else {
+                            add.addClass("anim-show");
                         }
-                        animContent += "]";
+                        add.addClass("slide").attr("data-what", what);
+                        if (continuating) add.addClass("anim-continue");
+                        add.appendTo(inSlide);
                     }
                 }
-                animContent += "]);";
-                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
-            } else if (startsWith(line, "@ANIM-SVG-APPEAR:")) {
-                line = line.replace(/@ANIM-SVG-APPEAR\: */, "");
-                if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
-                var animContent = "";
-                var main = line.split(/ *: */);
-                var dur = main[1];
-                var parts = main[2].split(/ *\| */);
-                var appearOrDisappearOrMore = function (what, duration) {
-                    if (what[0] == '-') {
-                        return 'a.disappear("'+what.substring(1)+'", '+duration+')';
-                    } else if (what[0] == '@') {
-                        return 'a.viewBoxAs("'+what.substring(1)+'", '+duration+')';
-                    } else {
-                        return 'a.appear("'+what+'", '+duration+')';
-                    }
-                };
-                animContent += 'var a = $[deck]("svgAnimate", slide, "'+main[0]+'");'; // todo could warn on missing leading '.'
-                animContent += '$[deck]("addAnimationSequence", slide, [';
-                for (i in parts) {
-                    var subparts = parts[i].split(/ *\+ */);
-                    if (i != 0) animContent += ",\n   ";
-                    if (subparts.length == 1) {
-                        animContent += appearOrDisappearOrMore(subparts[0], dur);
-                    } else {
-                        animContent += "[";
-                        for (ii in subparts) {
-                            if (ii != 0) animContent += ",";
-                            animContent += appearOrDisappearOrMore(subparts[ii], dur);
-                        }
-                        animContent += "]";
-                    }
-                }
-                animContent += "]);";
-                $("<pre/>").addClass("animate").text("function(slide){"+animContent+"}").appendTo(inSlide);
             } else if (startsWith(line, "@<")) {
                 line = line.replace(/^@/, "");
                 var contentToAdd = "";
