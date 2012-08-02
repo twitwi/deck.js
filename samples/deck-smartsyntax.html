@@ -117,7 +117,7 @@ Use left/right arrow keys to browse the presentation.<br/>
     ** normal slides with a <tt>&lt;h2></tt> (using "<tt>=....=</tt>")
 
     =Deck.*.js Friendly=
-    @SVG: svgThatFloatsRight smiley.svg 150px 150px
+    @svg: svgThatFloatsRight smiley.svg 150px 150px
     * Friend with some deck.js extensions
     ** SVG inclusion <br/>(smiley from <a href="http://openclipart.org/detail/77641/smiley-face-by-inky2010">inky2010</a>)
     ** Latex maths using a pair of $$ signs
@@ -130,14 +130,14 @@ Use left/right arrow keys to browse the presentation.<br/>
     * Progressive display: use the <tt>slide</tt> class
     * This has both <tt>slide</tt> and <tt>highlight</tt> classes[slide][highlight]
     * Next: more things[slide]
-    @SVG: svg,floatright smiley.svg 150px 300px
+    @svg: svg,floatright smiley.svg 150px 300px
     <video class="myvid" style="float:left" src="simple.ogv" height="200" width="200" onclick="this.paused ? this.play() : this.pause()" controls="true"></video>
 
-    @ANIM-APPEAR:800: #bottom | #left + #right | .svg #reflect + -#bottom | #bottom
-    @ANIM-PLAY: .myvid
-    @ANIM-PAUSE: video
-    @ANIM-ATTRIBUTE:400: h2: font-size: .75em
-    @ANIM-ATTRIBUTE:400: h2: font-size: 2.5em
+    @anim-appear:800: #bottom | #left + #right | .svg #reflect + -#bottom | #bottom
+    @anim-play: .myvid
+    @anim-pause: video
+    @anim-attribute:400: h2: font-size: .75em
+    @anim-attribute:400: h2: font-size: 2.5em
 </section>
 
 <!-- we can make stop the smartsyntax section and start another afterwards -->
@@ -150,11 +150,14 @@ Use left/right arrow keys to browse the presentation.<br/>
 
 <section class="smart">
     =Additional Notes=
-    * Case insensitive <tt>@ANIM ≡ @aNiM ≡ @anim</tt>
-    * No compilation phase
+    * Case insensitive… <tt><span class="s1">@ANIM-…</span> ≡ <span class="s2">@aNiM-…</span> ≡ <span class="s3">@anim-…</span></tt>
+    @ANIM-APPEAR:600: .s1
+    @aNiM-aPPear:600: .s2
+    @anim-appear:600: .s3
+    * No compilation phase[slide]
     ** interpreted at loading time
     ** faster development
-    * Backward compatible with old version
+    * Backward compatible with old version[slide]
 
 </section>
 
