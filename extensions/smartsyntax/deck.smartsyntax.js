@@ -14,6 +14,7 @@ This module provides a support for a shorter syntax for slides.
     var $d = $(document);
     var may = function(f) {return f ? f : function() {}};
     var startsWith = function(longStr, part) {return longStr.substr(0, part.length) == part;}
+    var startsWithIgnoreCase = function(longStr, part) {return longStr.substr(0, part.length).toUpperCase() == part.toUpperCase();}
     var maybeAddClasses = function(toWhat, spaceSeparatedClasses, uniqueId) {
         if (uniqueId != "") $(toWhat).attr("id", uniqueId);
         if (spaceSeparatedClasses == "") return;
@@ -126,26 +127,26 @@ This module provides a support for a shorter syntax for slides.
                         deepestList.appendChild(li);
                     }
                 }
-            } else if (startsWith(line, "@SVG:")) {
-                var parts = line.replace(/@SVG\: */, "").split(/ +/);
+            } else if (startsWithIgnoreCase(line, "@SVG:")) {
+                var parts = line.replace(/@SVG\: */i, "").split(/ +/);
                 var obj = $("<object type='deckjs/svg'/>");
                 $.each(parts[0].split(/,/), function(i,c){obj.addClass(c);});
                 obj.append($("<param name='src'/>").attr("value", parts[1]))
                     .append($("<param name='width'/>").attr("value", parts[2]))
                     .append($("<param name='height'/>").attr("value", parts[3]))
                     .appendTo(inSlide);
-            } else if (startsWith(line, "@ANIM-PLAY:")) {
-                line = line.replace(/@ANIM-PLAY\: */, "");
+            } else if (startsWithIgnoreCase(line, "@ANIM-PLAY:")) {
+                line = line.replace(/@ANIM-PLAY\: */i, "");
                 $("<div/>").addClass("anim-play slide").attr("data-what", line).appendTo(deepestList);
-            } else if (startsWith(line, "@ANIM-PAUSE:")) {
-                line = line.replace(/@ANIM-PAUSE\: */, "");
+            } else if (startsWithIgnoreCase(line, "@ANIM-PAUSE:")) {
+                line = line.replace(/@ANIM-PAUSE\: */i, "");
                 $("<div/>").addClass("anim-pause slide").attr("data-what", line).appendTo(deepestList);
-            } else if (startsWith(line, "@ANIM-ATTRIBUTE:")) {
-                line = line.replace(/@ANIM-ATTRIBUTE\: */, "");
+            } else if (startsWithIgnoreCase(line, "@ANIM-ATTRIBUTE:")) {
+                line = line.replace(/@ANIM-ATTRIBUTE\: */i, "");
                 var main = line.split(/ *: */);
                 $("<div/>").addClass("anim-attribute slide").attr("data-dur", main[0]).attr("data-what", main[1]).attr("data-attr", main[2]+":"+main[3]).appendTo(deepestList);
-            } else if (startsWith(line, "@ANIM-APPEAR:")) {
-                line = line.replace(/@ANIM-APPEAR\: */, "");
+            } else if (startsWithIgnoreCase(line, "@ANIM-APPEAR:")) {
+                line = line.replace(/@ANIM-APPEAR\: */i, "");
                 if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
                 var main = line.split(/ *: */);
                 var dur = main[0];
