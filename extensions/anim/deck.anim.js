@@ -22,7 +22,7 @@
         }
     });
 
-    $(document).bind('deck.beforeInit', function() {
+    $(document).bind('deck.init', function() {
 
         // first we define some tools and grab some info from deck.js
         var o = $[deck]('getOptions');
