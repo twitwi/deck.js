@@ -136,14 +136,14 @@ This module provides a support for a shorter syntax for slides.
                     .appendTo(inSlide);
             } else if (startsWith(line, "@ANIM-PLAY:")) {
                 line = line.replace(/@ANIM-PLAY\: */, "");
-                $("<div/>").addClass("anim-play slide").attr("data-what", line).appendTo(inSlide);
+                $("<div/>").addClass("anim-play slide").attr("data-what", line).appendTo(deepestList);
             } else if (startsWith(line, "@ANIM-PAUSE:")) {
                 line = line.replace(/@ANIM-PAUSE\: */, "");
-                $("<div/>").addClass("anim-pause slide").attr("data-what", line).appendTo(inSlide);
+                $("<div/>").addClass("anim-pause slide").attr("data-what", line).appendTo(deepestList);
             } else if (startsWith(line, "@ANIM-ATTRIBUTE:")) {
                 line = line.replace(/@ANIM-ATTRIBUTE\: */, "");
                 var main = line.split(/ *: */);
-                $("<div/>").addClass("anim-attribute slide").attr("data-dur", main[0]).attr("data-what", main[1]).attr("data-attr", main[2]+":"+main[3]).appendTo(inSlide);
+                $("<div/>").addClass("anim-attribute slide").attr("data-dur", main[0]).attr("data-what", main[1]).attr("data-attr", main[2]+":"+main[3]).appendTo(deepestList);
             } else if (startsWith(line, "@ANIM-APPEAR:")) {
                 line = line.replace(/@ANIM-APPEAR\: */, "");
                 if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
@@ -167,7 +167,7 @@ This module provides a support for a shorter syntax for slides.
                         }
                         add.addClass("slide").attr("data-what", what);
                         if (continuating) add.addClass("anim-continue");
-                        add.appendTo(inSlide);
+                        add.appendTo(deepestList);
                     }
                 }
             } else if (startsWith(line, "@<")) {
