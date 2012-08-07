@@ -59,7 +59,6 @@ This module provides a support for cloning the deck.
         var opts = $[deck]('getOptions');
         var slideTo = $[deck]('getSlide', to);
         var container = $[deck]('getContainer');
-	
         $.each(clones, function(index, clone) {
            clone.deck('go', to);
         });
@@ -71,12 +70,13 @@ This module provides a support for cloning the deck.
             else if (delta == 1) clone.deck('stepNext');
         });
     })
-        .bind('mousemove', function(e) {
-            var parentPos = $(".deck-current").offset();
-            $.each(clones, function(index, clone) {
-                clone.deck('pointerAt', e.clientX - parentPos.left, e.clientY - parentPos.top);
-            });
+    /* Replicate mouse cursor */
+    .bind('mousemove', function(e) {
+        var parentPos = $(".deck-current").offset();
+        $.each(clones, function(index, clone) {
+            clone.deck('pointerAt', e.clientX - parentPos.left, e.clientY - parentPos.top);
         });
+    });
     
     /*
         Simple Clone manager (must be improved, by for instance adding cloning
