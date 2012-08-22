@@ -46,7 +46,8 @@
             .deck-container>.slide {border: 1px dashed #333;} /* for the demo */
             .slide h1 {font-size: 3em;}
             .slide h1 b {color: #0F0;}
-            .slide h1 em {color: #445; text-shadow: none; font-size: .3em;}
+            .slide h1 em, .slide .smallcomment {color: #445; text-shadow: none; font-size: .3em;}
+            .slide .smallcomment {font-size: .6em;}
         </style>
     </head>
 
@@ -84,17 +85,41 @@ Use left/right arrow keys to browse the presentation.<br/>
 
 <section class="slide">
     <h2>“clone”: let's get cloned</h2>
+    <div class="firefox-message" style="position: absolute; border: 2px solid red; background: #181818; padding: 1em; margin: 1em; font-size: .8em; margin-top: 0;">
+        With firefox and "file://..." URLs (local files), the popup might be blocked, refusing to be shown.
+        To fix that:
+        <ul>
+            <li>on the bar that pops up, click on Preferences&gt;Edit Pop-Up Blocker Preferences…</li>
+            <li>type “&lt;file&gt;” (without the quotes, with the brackets)</li>
+            <li>click allow</li>
+            <li>click close</li>
+            <li>close the poped-up bar and hit 'c' again</li>
+        </ul>
+    </div>
     <ul>
         <li>Clone your view!
             <ul>
                 <li>NB: the browser will probably open a new tab</li>
-                <li>clone your view by typing 'c'</li>
+                <li>clone your view by typing 'c'
+                    <br/><span class="smallcomment">(in local, show how to <a class="show-firefox-message">tell firefox to not block the popup</a>)</span>
+                </li>
                 <li>detach your tab (drag it out of the browser)</li>
                 <li>go to the main view and hit the right arrow</li>
             </ul>
         </li>
     </ul>
 </section>
+<script>
+$(function() {
+   $('.firefox-message').hide();
+   $('.firefox-message').click(function(){
+      $('.firefox-message').hide(300);
+   });
+   $('.show-firefox-message').click(function(){
+      $('.firefox-message').fadeIn(500);
+   });
+});
+</script>
 
 <section class="slide">
     <h2>“clone”: Propagation</h2>
