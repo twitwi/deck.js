@@ -162,7 +162,11 @@ This module provides a support for a shorter syntax for slides.
                             add.addClass("anim-hide");
                             what = what.substring(1);
                         } else if (what[0] == '@') {
-                            // TODO
+                            // TODO if it looks like @....@ then the target is specified, else it is just all SVGs root elements
+                            add.addClass("anim-viewboxas");
+                            what = what.substring(1);
+                            add.attr("data-as", what);
+                            what = "svg";
                         } else {
                             add.addClass("anim-show");
                         }
