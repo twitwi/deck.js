@@ -158,6 +158,7 @@ This module provides a support for a shorter syntax for slides.
                         var what = subparts[ii];
                         var continuating  = ii != subparts.length-1;
                         var add = $("<div/>");
+                        add.attr("data-dur", dur);
                         if (what[0] == '-') {
                             add.addClass("anim-hide");
                             what = what.substring(1);
