@@ -13,8 +13,11 @@
             animAddClass: ".anim-addclass",
             animRemoveClass: ".anim-removeclass",
             animAttribute: ".anim-attribute",
+            // specific ones
             animPlay: ".anim-play",
             animPause: ".anim-pause",
+            animViewboxAs: ".anim-viewboxas",
+            //
             animContinue: ".anim-continue"
         },
         anim: {
@@ -32,6 +35,7 @@
                 dur: function() {return $(el).attr("data-dur")*1 || o.anim.duration},
                 classs: function() {return $(el).attr("data-class")},
                 attribute: function() {return $(el).attr("data-attr").split(':')[0]},
+                as: function() {return $(el).attr("data-as")},
                 value: function() {return $(el).attr("data-attr").split(':')[1]},
                 toplevel: function() {return $[deck]('getToplevelSlideOf', el).node},
                 all: function() {return $(this.what(),this.toplevel())}
@@ -93,6 +97,21 @@
         classical(o.selectors.animPause, {
             undo: function(c) {c.all().each(function(){this.play()})},
             doit: function(c) {c.all().each(function(){this.pause()})}
+        });
+        classical(o.selectors.animViewboxAs, {
+            create: function(c) {c.whatFrom = {}},
+            init: function(c) {c.all().animate(c.whatFrom, 0)},
+            undo: function(c) {c.all().animate(c.whatFrom, 0)},
+            doit: function(c) {
+                var attr = "svgViewBox";
+                c.whatFrom[attr] = c.all().first().attr(attr);
+                var whatTo = {};
+                var asWhat = $(c.as());
+                var a = function (i) {return asWhat.attr(i)}
+                var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
+                whatTo[attr] = toViewBox;
+                c.all().animate(whatTo, c.dur())
+            }
         });
         classical(o.selectors.animContinue, {
             doit: function(c) {setTimeout(function(){$[deck]('next')}, 1)}
