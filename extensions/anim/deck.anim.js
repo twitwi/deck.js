@@ -104,10 +104,10 @@
             undo: function(c) {c.all().animate(c.whatFrom, 0)},
             doit: function(c) {
                 var attr = "svgViewBox";
-                c.whatFrom[attr] = c.all().first().attr(attr);
                 var whatTo = {};
                 var asWhat = $(c.as());
                 var a = function (i) {return asWhat.attr(i)}
+                c.whatFrom[attr] = c.all().first().attr("svgviewbox"); // lower-case, don't know really why...
                 var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
                 whatTo[attr] = toViewBox;
                 c.all().animate(whatTo, c.dur())
