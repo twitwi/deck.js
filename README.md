@@ -9,7 +9,7 @@ Allows you to annotate deck.js presentation slides
 
 ## Example:
 
-![Sample Image](raw/master/example.png)
+![Sample Image](deck.annotate.js/raw/master/example.png)
 
 ## Features:
 
