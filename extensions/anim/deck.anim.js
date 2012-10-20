@@ -79,13 +79,24 @@
             doit: function(c) {c.all().removeClass(c.classs())}
         });
         classical(o.selectors.animAttribute, {
-            create: function(c) {c.whatFrom = {}},
-            init: function(c) {c.all().animate(c.whatFrom, 0)},
-            undo: function(c) {c.all().animate(c.whatFrom, 0)},
+            init: function(c) {this.undo(c)},
+            undo: function(c) {
+                // originally (at init), these values are undefined and we don't want to do anything
+                // after, they either have a value or 'null' (meaning we should unset the attr/css)
+                var k = c.attribute()
+                if (c.previousAttr === null) c.all().removeAttr(k)
+                else if (c.previousAttr !== undefined) c.all().attr(k, c.previousAttr)
+                if (c.previousCss === null) c.all().css(k, '')
+                else if (c.previousCss !== undefined) c.all().css(k, c.previousCss)
+            },
             doit: function(c) {
-                c.whatFrom[c.attribute()] = c.all().first().attr(c.attribute());
-                var whatTo = {};
-                whatTo[c.attribute()] = c.value();
+                var k = c.attribute()
+                c.previousAttr = c.all().first().attr(k)
+                if (c.previousAttr === undefined) c.previousAttr = null
+                c.previousCss = c.all().first().css(k)
+                if (c.previousCss === undefined) c.previousCss = null
+                var whatTo = {}
+                whatTo[c.attribute()] = c.value()
                 c.all().animate(whatTo, c.dur())
             }
         });
