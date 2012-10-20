@@ -116,6 +116,14 @@
         classical(o.selectors.animContinue, {
             doit: function(c) {setTimeout(function(){$[deck]('next')}, 1)}
         });
+        // handle the chained undo for "anim-continue"
+        $(o.selectors.animContinue).each(function(i, curSlide) {
+            $(curSlide).bind('deck.becameCurrent', function(_, direction) {
+                if (direction == 'forward') return;
+                setTimeout(function(){$[deck]('prev')}, 1)
+            });
+
+        });
     });
 })(jQuery, 'deck');
 
