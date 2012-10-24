@@ -45,8 +45,10 @@
             $(selector).each(function(i, el) {
                 var c = context(el);
                 may(methods, methods.create)(c);
-                $(el).bind('deck.toplevelBecameCurrent', function() {
+                $(el).bind('deck.toplevelBecameCurrent', function(_, direction) {
                     may(methods, methods.init)(c);
+                }).bind('deck.afterToplevelBecameCurrent', function(_, direction) {
+                    may(methods, methods.fast)(c);
                 }).bind('deck.lostCurrent', function(_, direction) {
                     if (direction == 'forward') return;
                     may(methods, methods.undo)(c);
@@ -61,22 +63,26 @@
         classical(o.selectors.animShow, {
             init: function(c) {c.all().animate({'opacity': 0.}, 0)},
             undo: function(c) {c.all().animate({'opacity': 0.}, c.dur()/100)},
-            doit: function(c) {c.all().animate({'opacity': 1.}, c.dur())}
+            doit: function(c) {c.all().animate({'opacity': 1.}, c.dur())},
+            fast: function(c) {c.all().animate({'opacity': 1.}, 0)}
         });
         classical(o.selectors.animHide, {
             init: function(c) {c.all().animate({'opacity': 1.}, 0)},
             undo: function(c) {c.all().animate({'opacity': 1.}, c.dur()/100)},
-            doit: function(c) {c.all().animate({'opacity': 0.}, c.dur())}
+            doit: function(c) {c.all().animate({'opacity': 0.}, c.dur())},
+            fast: function(c) {c.all().animate({'opacity': 0.}, 0)}
         });
         classical(o.selectors.animAddClass, {
             init: function(c) {c.all().removeClass(c.classs())},
             undo: function(c) {c.all().removeClass(c.classs())},
-            doit: function(c) {c.all().addClass(c.classs())}
+            doit: function(c) {c.all().addClass(c.classs())},
+            fast: function(c) {c.all().addClass(c.classs())}
         });
         classical(o.selectors.animRemoveClass, {
             init: function(c) {c.all().addClass(c.classs())},
             undo: function(c) {c.all().addClass(c.classs())},
-            doit: function(c) {c.all().removeClass(c.classs())}
+            doit: function(c) {c.all().removeClass(c.classs())},
+            fast: function(c) {c.all().removeClass(c.classs())}
         });
         classical(o.selectors.animAttribute, {
             init: function(c) {this.undo(c)},
@@ -89,7 +95,8 @@
                 if (c.previousCss === null) c.all().css(k, '')
                 else if (c.previousCss !== undefined) c.all().css(k, c.previousCss)
             },
-            doit: function(c) {
+            doit: function(c, factor) {
+                if (factor === undefined) factor = 1
                 var k = c.attribute()
                 c.previousAttr = c.all().first().attr(k)
                 if (c.previousAttr === undefined) c.previousAttr = null
@@ -97,23 +104,27 @@
                 if (c.previousCss === undefined) c.previousCss = null
                 var whatTo = {}
                 whatTo[c.attribute()] = c.value()
-                c.all().animate(whatTo, c.dur())
-            }
+                c.all().animate(whatTo, c.dur()*factor)
+            },
+            fast: function(c) {this.doit(c,0)}
         });
         classical(o.selectors.animPlay, {
             init: function(c) {c.all().each(function(){this.pause(); try{this.currentTime=0}catch(e){} })},
             undo: function(c) {c.all().each(function(){this.pause()})},
-            doit: function(c) {c.all().each(function(){this.play()})}
+            doit: function(c) {c.all().each(function(){this.play()})},
+            fast: function(c) {c.all().each(function(){this.play()})}
         });
         classical(o.selectors.animPause, {
             undo: function(c) {c.all().each(function(){this.play()})},
-            doit: function(c) {c.all().each(function(){this.pause()})}
+            doit: function(c) {c.all().each(function(){this.pause()})},
+            fast: function(c) {c.all().each(function(){this.pause()})}
         });
         classical(o.selectors.animViewboxAs, {
             create: function(c) {c.whatFrom = {}},
             init: function(c) {c.all().animate(c.whatFrom, 0)},
             undo: function(c) {c.all().animate(c.whatFrom, 0)},
-            doit: function(c) {
+            doit: function(c, factor) {
+                if (factor === undefined) factor = 1
                 var attr = "svgViewBox";
                 var whatTo = {};
                 var asWhat = $(c.as());
@@ -121,11 +132,13 @@
                 c.whatFrom[attr] = c.all().first().attr("svgviewbox"); // lower-case, don't know really why...
                 var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
                 whatTo[attr] = toViewBox;
-                c.all().animate(whatTo, c.dur())
-            }
+                c.all().animate(whatTo, c.dur()*factor)
+            },
+            fast: function(c) {this.doit(c, 0)}
         });
         classical(o.selectors.animContinue, {
             doit: function(c) {setTimeout(function(){$[deck]('next')}, 1)}
+            // do not do it in fast mode
         });
         // handle the chained undo for "anim-continue"
         $(o.selectors.animContinue).each(function(i, curSlide) {
