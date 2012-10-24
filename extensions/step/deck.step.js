@@ -111,5 +111,8 @@ It also overrides the defaults keybinding and countNested value (so it is better
             direction = "reverse";
         }
         $($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).trigger('deck.toplevelBecameCurrent', direction);
+        for (icur = $[deck]('getToplevelSlideOfIndex', to).index + 1; icur < to+1; icur++) {
+            $[deck]('getSlides')[icur].trigger('deck.afterToplevelBecameCurrent', 'forward');
+        }
     });
 })(jQuery, 'deck');
