@@ -30,13 +30,7 @@
         <!-- proper slide scaling (type 's' to disable) -->
         <script src="deck.js/extensions/fit/deck.fit.js"></script>
         <link rel="stylesheet" href="deck.js/extensions/fit/deck.fit-fs.css"> <!-- fit to window -->
-        <!-- animations, svg etc -->
-        <script src="deck.js/extensions/step/deck.step.js"></script>
-        <script src="deck.js/extensions/events/deck.events.js"></script>
-        <script src="deck.js/extensions/anim/deck.anim.js"></script>
-        <script src="deck.js/libs/jquerysvg/jquery.svg.min.js"></script>
-        <script src="deck.js/libs/jquerysvg/jquery.svganim.min.js"></script>
-        <script src="deck.js/extensions/svg/deck.svg.js"></script>
+        <!-- animations, svg etc (better to include it after the 'status' extension... so see below) -->
         <!-- math equations -->
         <script src="deck.js/libs/display-latex2.user.js"></script>
         <script src="deck.js/extensions/simplemath/deck.simplemath.js"></script>
@@ -59,6 +53,13 @@
         <!-- permalink   (uses "hash snippet" at the end of the page) -->
         <link rel="stylesheet" href="deck.js/extensions/hash/deck.hash.css">
         <script src="deck.js/extensions/hash/deck.hash.js"></script>
+        <!-- animations, svg etc (better to include it after the 'status' extension (to avoid huge fake slide numbers) -->
+        <script src="deck.js/extensions/step/deck.step.js"></script>
+        <script src="deck.js/extensions/events/deck.events.js"></script>
+        <script src="deck.js/extensions/anim/deck.anim.js"></script>
+        <script src="deck.js/libs/jquerysvg/jquery.svg.min.js"></script>
+        <script src="deck.js/libs/jquerysvg/jquery.svganim.min.js"></script>
+        <script src="deck.js/extensions/svg/deck.svg.js"></script>
 
 
         <!-- Deck.js options (advanced) -->
