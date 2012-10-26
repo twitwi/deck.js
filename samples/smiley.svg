@@ -14,7 +14,7 @@
    height="200"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48+devel r"
+   inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="smiley.svg">
   <defs
      id="defs4">
@@ -118,16 +118,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.2274641"
-     inkscape:cx="59.334189"
-     inkscape:cy="99.18298"
+     inkscape:zoom="1.8101934"
+     inkscape:cx="-23.134185"
+     inkscape:cy="108.14566"
      inkscape:document-units="px"
-     inkscape:current-layer="g5196"
+     inkscape:current-layer="layer2"
      showgrid="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="682"
+     inkscape:window-width="1600"
+     inkscape:window-height="850"
      inkscape:window-x="0"
-     inkscape:window-y="29"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
@@ -245,6 +245,28 @@
          id="bottom"
          style="fill:#000000;fill-opacity:1;stroke:none"
          inkscape:label="#path4604" />
+    </g>
+    <g
+       inkscape:groupmode="layer"
+       id="layer2"
+       inkscape:label="Invisible Rects"
+       style="display:none">
+      <rect
+         style="opacity:0.7;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="zoom"
+         width="53.515625"
+         height="65.234375"
+         x="101.61211"
+         y="30.771442"
+         inkscape:label="#rect3021" />
+      <rect
+         style="opacity:0.7;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="far"
+         width="374.4758"
+         height="330.95184"
+         x="-88.975266"
+         y="-79.713989"
+         inkscape:label="#rect3021" />
     </g>
   </g>
 </svg>

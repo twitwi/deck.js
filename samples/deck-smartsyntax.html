@@ -133,7 +133,7 @@ Use left/right arrow keys to browse the presentation.<br/>
     @svg: svg,floatright smiley.svg 150px 300px
     <video class="myvid" style="float:left" src="simple.ogv" height="200" width="200" onclick="this.paused ? this.play() : this.pause()" controls="true"></video>
 
-    @anim-appear:800: #bottom | #left + #right | .svg #reflect + -#bottom | #bottom
+    @anim-appear:800: #bottom | #left + #right | .svg #reflect + -#bottom | @#zoom | @#far | #bottom
     @anim-play: .myvid
     @anim-pause: video
     @anim-attribute:400: h2: font-size: .75em
