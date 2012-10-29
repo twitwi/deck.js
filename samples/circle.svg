@@ -13,7 +13,7 @@
    height="485.79654"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48+devel r"
+   inkscape:version="0.48.3.1 r9886"
    sodipodi:docname="circle.svg">
   <defs
      id="defs4" />
@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="17.819713"
-     inkscape:cx="112.80881"
-     inkscape:cy="355.57557"
+     inkscape:zoom="1.1137321"
+     inkscape:cx="-177.36038"
+     inkscape:cy="320.05246"
      inkscape:document-units="px"
-     inkscape:current-layer="circleRed"
+     inkscape:current-layer="layer2"
      showgrid="false"
-     inkscape:window-width="1364"
-     inkscape:window-height="679"
+     inkscape:window-width="1920"
+     inkscape:window-height="1150"
      inkscape:window-x="0"
-     inkscape:window-y="29"
-     inkscape:window-maximized="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -126,5 +126,42 @@
        d="m 303.04577,311.92038 c 0,46.30502 -37.53764,83.84266 -83.84266,83.84266 -46.30502,0 -83.84266,-37.53764 -83.84266,-83.84266 0,-46.30502 37.53764,-83.84266 83.84266,-83.84266 46.30502,0 83.84266,37.53764 83.84266,83.84266 z"
        transform="matrix(1.6024097,0,0,1.6024097,14.300214,-164.65004)"
        inkscape:label="#blue" />
+    <text
+       xml:space="preserve"
+       style="font-size:13.80142117px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="60.66827"
+       y="-82.57074"
+       id="text2989"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan2991"
+         x="60.66827"
+         y="-82.57074">NB: for convenience we</tspan><tspan
+         sodipodi:role="line"
+         x="60.66827"
+         y="-65.318962"
+         id="tspan2993">use a layer (hidden) for boxes</tspan><tspan
+         sodipodi:role="line"
+         x="60.66827"
+         y="-48.067188"
+         id="tspan2995">that we will be using for zoom</tspan><tspan
+         sodipodi:role="line"
+         x="60.66827"
+         y="-30.815411"
+         id="tspan2997">Hit ctrl+shift+L for layer control (in inkscape)</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="zoomboxes"
+     style="display:none">
+    <rect
+       style="opacity:0.7;color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="zoomBox1"
+       width="12.289753"
+       height="12.682584"
+       x="112.90867"
+       y="121.1442"
+       inkscape:label="#rect3001" />
   </g>
 </svg>
