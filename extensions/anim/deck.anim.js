@@ -25,8 +25,15 @@
         }
     });
 
-    $(document).bind('deck.init', function() {
+    var waitFor = 0
+    $[deck]('extend', 'animWaitMore', function(){ waitFor++ });
+    $[deck]('extend', 'animWaitLess', function(){ waitFor-- });
 
+    var doInitIfReady = function hoho() {
+        if (waitFor>0) {
+            setTimeout(doInitIfReady, 10) // retry until all is loaded
+            return;
+        }
         // first we define some tools and grab some info from deck.js
         var o = $[deck]('getOptions');
         var context = function(el) {
@@ -150,6 +157,20 @@
             });
 
         });
+
+        // finally force "refresh" (notification of slide change)
+        var current = $[deck]('getSlide')
+        var icur = 0
+        for (; icur < $[deck]('getSlides').length; icur++) {
+            if ($[deck]('getSlides')[icur] == current) break;                
+        }
+	$d.trigger("deck.change", [icur, 0]);
+	$d.trigger("deck.change", [0, icur]);
+
+    }
+    $(document).bind('deck.init', function() {
+        setTimeout(doInitIfReady, 10) // try the first time after init
     });
+        
 })(jQuery, 'deck');
 
