@@ -89,6 +89,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 
                 // Finaly load the SVG data
                 //$[deck]('addLoading');
+                $[deck]("animWaitMore");
                 SVG.svg({
                     loadURL: attributes['src'],
                     onLoad: function($svg, w, h) {
@@ -99,6 +100,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                             aa.attr("svgViewBox", to);
                             if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
                         }
+                        $[deck]("animWaitLess");
                         /*
                           $[deck]('removeLoading')
                         */
