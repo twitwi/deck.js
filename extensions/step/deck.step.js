@@ -105,11 +105,6 @@ It also overrides the defaults keybinding and countNested value (so it is better
             direction = "reverse";
         }
         var opts = $[deck]('getOptions');
-        /*
-        for (icur = from ; icur >  $[deck]('getToplevelSlideOfIndex', from).index ; icur--) {
-            alert("undo: "+icur);
-            //$[deck]('getSlides')[icur].trigger('deck.beforeToplevelBecameCurrent', 'backward');
-        }*/
         $($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).trigger('deck.toplevelBecameCurrent', direction);
         for (icur = $[deck]('getToplevelSlideOfIndex', to).index + 1; icur < to+1; icur++) {
             $[deck]('getSlides')[icur].trigger('deck.afterToplevelBecameCurrent', 'forward');
@@ -121,13 +116,4 @@ It also overrides the defaults keybinding and countNested value (so it is better
             bigJump(from, to);
         }
     });
-    /*
-    $d.bind('deck.change', function(e, from, to) {
-        if (Math.abs(from - to) > 1 || $[deck]('getToplevelSlideOfIndex', to).node.is($[deck]('getToplevelSlideOfIndex', from).node)) {
-            return;
-        }
-        //var opts = $[deck]('getOptions');
-        //$($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).trigger('deck.toplevelBecameCurrent', direction);
-        bigJump(from, to);
-    });*/
 })(jQuery, 'deck');
