@@ -20,7 +20,6 @@ It also overrides the defaults keybinding and countNested value (so it is better
         selectors: {
             subslidesToNotify: ".slide,.onshowtoplevel"
         },
-        // TODO previousActsAtTopLevel: false, <<<< to make left arrow got to the beginning of previous slide
         // Here we redefined the defaults:
         //  - we avoid counting nested slides
         //  - we keep up/down for top-level slides
@@ -99,20 +98,36 @@ It also overrides the defaults keybinding and countNested value (so it is better
             }
         });
     });
-    // we will init the subslides (in case they are animations), in a backward order
-    $d.bind('deck.change', function(e, from, to) {
-        var opts = $[deck]('getOptions');
-        // consider only the case where we actually changed slide
-        if ($[deck]('getToplevelSlideOfIndex', to).node.is($[deck]('getToplevelSlideOfIndex', from).node)) {
-            return;
-        }
+    // When jumping (not steping), we will init the subslides (in case they are animations), in a backward order, and then fast forward necessary animations
+    var bigJump = function(from, to) {
         var direction = "forward";
         if (from > to){
             direction = "reverse";
         }
+        var opts = $[deck]('getOptions');
+        /*
+        for (icur = from ; icur >  $[deck]('getToplevelSlideOfIndex', from).index ; icur--) {
+            alert("undo: "+icur);
+            //$[deck]('getSlides')[icur].trigger('deck.beforeToplevelBecameCurrent', 'backward');
+        }*/
         $($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).trigger('deck.toplevelBecameCurrent', direction);
         for (icur = $[deck]('getToplevelSlideOfIndex', to).index + 1; icur < to+1; icur++) {
             $[deck]('getSlides')[icur].trigger('deck.afterToplevelBecameCurrent', 'forward');
         }
+    }
+    $d.bind('deck.change', function(e, from, to) {
+        if (  Math.abs(from - to) > 1 || ! $[deck]('getToplevelSlideOfIndex', to).node.is($[deck]('getToplevelSlideOfIndex', from).node)) {
+            // consider natural jumps and the case where we actually changed (top level) slide (even with a step)
+            bigJump(from, to);
+        }
     });
+    /*
+    $d.bind('deck.change', function(e, from, to) {
+        if (Math.abs(from - to) > 1 || $[deck]('getToplevelSlideOfIndex', to).node.is($[deck]('getToplevelSlideOfIndex', from).node)) {
+            return;
+        }
+        //var opts = $[deck]('getOptions');
+        //$($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).trigger('deck.toplevelBecameCurrent', direction);
+        bigJump(from, to);
+    });*/
 })(jQuery, 'deck');
