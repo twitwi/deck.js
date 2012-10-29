@@ -129,7 +129,7 @@
                 var whatTo = {};
                 var asWhat = $(c.as());
                 var a = function (i) {return asWhat.attr(i)}
-                c.whatFrom[attr] = c.all().first().attr("svgviewbox"); // lower-case, don't know really why...
+                c.whatFrom[attr] = c.all().first().get(0).attributes.getNamedItem('viewBox').nodeValue // custom access to the svg viewbox attribute
                 var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
                 whatTo[attr] = toViewBox;
                 c.all().animate(whatTo, c.dur()*factor)
