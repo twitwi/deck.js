@@ -85,23 +85,24 @@
             fast: function(c) {c.all().removeClass(c.classs())}
         });
         classical(o.selectors.animAttribute, {
-            init: function(c) {this.undo(c)},
+            init: function(c) {
+                c.previousElement = [];
+                c.all().css(c.attribute(), '') // for the jquery anim to work the css attribute should not be defined in the element (in the html) so we suppose it is empty by default (and thus, if it is not empty, it means it has been set by jquery)
+            },
             undo: function(c) {
-                // originally (at init), these values are undefined and we don't want to do anything
-                // after, they either have a value or 'null' (meaning we should unset the attr/css)
                 var k = c.attribute()
-                if (c.previousAttr === null) c.all().removeAttr(k)
-                else if (c.previousAttr !== undefined) c.all().attr(k, c.previousAttr)
-                if (c.previousCss === null) c.all().css(k, '')
-                else if (c.previousCss !== undefined) c.all().css(k, c.previousCss)
+                for (i in c.previousElement) { // use the saved list of elements and values
+                    var whatTo = {}
+                    whatTo[k] = c.previousCss[i]
+                    $(c.previousElement[i]).animate(whatTo, 0)
+                }
             },
             doit: function(c, factor) {
                 if (factor === undefined) factor = 1
                 var k = c.attribute()
-                c.previousAttr = c.all().first().attr(k)
-                if (c.previousAttr === undefined) c.previousAttr = null
-                c.previousCss = c.all().first().css(k)
-                if (c.previousCss === undefined) c.previousCss = null
+                c.previousCss = []
+                c.previousElement = []
+                c.all().each( function(){c.previousElement.push(this); c.previousCss.push($(this).css(k))}) // save a list of elements and values
                 var whatTo = {}
                 whatTo[c.attribute()] = c.value()
                 c.all().animate(whatTo, c.dur()*factor)
@@ -121,7 +122,7 @@
         });
         classical(o.selectors.animViewboxAs, {
             create: function(c) {c.whatFrom = {}},
-            init: function(c) {c.all().animate(c.whatFrom, 0)},
+            init: function(c) {this.undo(c)},
             undo: function(c) {c.all().animate(c.whatFrom, 0)},
             doit: function(c, factor) {
                 if (factor === undefined) factor = 1
@@ -129,6 +130,7 @@
                 var whatTo = {};
                 var asWhat = $(c.as());
                 var a = function (i) {return asWhat.attr(i)}
+                // todo should do as with the generic attribute above (maintain a list)
                 c.whatFrom[attr] = c.all().first().get(0).attributes.getNamedItem('viewBox').nodeValue // custom access to the svg viewbox attribute
                 var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
                 whatTo[attr] = toViewBox;
