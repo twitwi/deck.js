@@ -49,11 +49,11 @@
                     may(methods, methods.init)(c);
                 }).bind('deck.afterToplevelBecameCurrent', function(_, direction) {
                     may(methods, methods.fast)(c);
-                }).bind('deck.lostCurrent', function(_, direction) {
-                    if (direction == 'forward') return;
+                }).bind('deck.lostCurrent', function(_, direction, from, to) {
+                    if (direction == 'forward' || Math.abs(from - to)>1 ) return; // if a big step, let the "step" extension do its job
                     may(methods, methods.undo)(c);
-                }).bind('deck.becameCurrent', function(_, direction) {
-                    if (direction == 'reverse') return;
+                }).bind('deck.becameCurrent', function(_, direction, from, to) {
+                    if (direction == 'reverse' || Math.abs(from - to)>1 ) return; // if a big step, let the "step" extension do its job
                     may(methods, methods.doit)(c);
                 });
             });
