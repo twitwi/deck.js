@@ -13,6 +13,7 @@
             animAddClass: ".anim-addclass",
             animRemoveClass: ".anim-removeclass",
             animAttribute: ".anim-attribute",
+            animWait: ".anim-wait",
             // specific ones
             animPlay: ".anim-play",
             animPause: ".anim-pause",
@@ -152,8 +153,11 @@
             doit: function(c) {setTimeout(function(){$[deck]('next')}, 1)}
             // do not do it in fast mode
         });
+        classical(o.selectors.animWait, {
+            doit: function(c) {setTimeout(function(){$[deck]('next')}, c.dur())}
+        });
         // handle the chained undo for "anim-continue"
-        $(o.selectors.animContinue).each(function(i, curSlide) {
+        $(o.selectors.animContinue + "," + o.selectors.animWait).each(function(i, curSlide) {
             $(curSlide).bind('deck.becameCurrent', function(_, direction) {
                 if (direction == 'forward') return;
                 setTimeout(function(){$[deck]('prev')}, 1)
