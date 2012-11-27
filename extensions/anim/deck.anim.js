@@ -20,6 +20,9 @@
             //
             animContinue: ".anim-continue"
         },
+        classes: {
+            animReady: "deck-anim-ready"
+        },
         anim: {
             duration: 400
         }
@@ -167,6 +170,8 @@
 	$d.trigger("deck.change", [icur, 0]);
 	$d.trigger("deck.change", [0, icur]);
 
+        var container = $[deck]('getContainer');
+        $(container).addClass(o.classes.animReady)
     }
     $(document).bind('deck.init', function() {
         setTimeout(doInitIfReady, 10) // try the first time after init
