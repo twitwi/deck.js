@@ -105,9 +105,9 @@ It also overrides the defaults keybinding and countNested value (so it is better
             direction = "reverse";
         }
         var opts = $[deck]('getOptions');
-        $($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).trigger('deck.toplevelBecameCurrent', direction);
+        $($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).each(function(ind, el) {$(el).triggerHandler('deck.toplevelBecameCurrent', direction)});
         for (icur = $[deck]('getToplevelSlideOfIndex', to).index + 1; icur < to+1; icur++) {
-            $[deck]('getSlides')[icur].trigger('deck.afterToplevelBecameCurrent', 'forward');
+            $[deck]('getSlides')[icur].triggerHandler('deck.afterToplevelBecameCurrent', 'forward');
         }
     }
     $d.bind('deck.change', function(e, from, to) {
