@@ -19,6 +19,7 @@ This module provides a support for cloning the deck.
             clonepointer: ".clonepointer"
         },
         classes: {
+            isClone: 'is-clone',
             hasClones: 'has-clones'
         },
         keys: {
@@ -41,6 +42,7 @@ This module provides a support for cloning the deck.
             $("body").removeClass(opts.classes.hasClones);
         }
     };
+
     /*
 	jQuery.deck('addClone')
 	
@@ -79,9 +81,14 @@ This module provides a support for cloning the deck.
         $d.unbind('keydown.deckclone').bind('keydown.deckclone', function(e) {
             if (e.which === opts.keys.clone || $.inArray(e.which, opts.keys.clone) > -1) {
                 $[deck]('addClone');
+                window.___iscloner___ = true;
                 e.preventDefault();
             }
         });
+
+        if (window.opener && window.opener.___iscloner___) {
+            $("body").addClass(opts.classes.isClone);
+        }
     })
     /* Update current slide number with each change event */
     .bind('deck.change', function(e, from, to) {
