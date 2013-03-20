@@ -48,7 +48,7 @@ This module provides a support for a shorter syntax for slides.
         
         while (true) {
             var nl = remain.indexOf("\n");
-            var line = remain.substring(0, nl).replace(/^ */, "");
+            var line = remain.substring(0, nl).replace(/^[ \t]*/, "");
             // we iterate over the lines
             // treat trailing unique-id and classes before anything
             var uniqueId = "";
