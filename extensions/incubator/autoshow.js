@@ -1,6 +1,6 @@
 
 
-$.initAutoshow = function() {
+$(document).bind('deck.init', function() {
 
 $(".autoshow").each(function(){
     $('>div:gt(0)', this).hide();
@@ -23,5 +23,5 @@ $('.autoshow').each(function(){
   });
 
 
-}
+});
 
