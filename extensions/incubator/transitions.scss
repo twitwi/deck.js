@@ -1,0 +1,81 @@
+
+
+
+.deck-container {
+    
+    &>.slide {
+        
+        &.leave-left {
+            -webkit-transition: display 0s linear 0.4s, left 0.4s linear, right 0.4s linear;
+            transition: display 0s linear 0.4s, left 0.4s linear, right 0.4s linear;
+            &.deck-before, &.deck-previous {
+                left: -100%;
+                display: block;
+            }
+            &.deck-current, &.deck-child-current {
+                display: block;
+                left: 0;
+            }
+        }
+        
+        &.enter-right {
+            -webkit-transition: left 0.4s linear, right 0.4s linear;
+            transition: left 0.4s linear, right 0.4s linear;
+            &.deck-after, &.deck-next {
+                display: block;
+                left: 100%;
+            }
+            &.deck-current, &.deck-child-current {
+                display: block;
+                left: 0;
+            }
+        }
+        
+        &.leave-top {
+            -webkit-transition: display 0s linear 0.4s, top 0.4s linear, bottom 0.4s linear;
+            transition: display 0s linear 0.4s, top 0.4s linear, bottom 0.4s linear;
+            &.deck-before, &.deck-previous {
+                top: -100%;
+                display: block;
+            }
+            &.deck-current, &.deck-child-current {
+                display: block;
+                top: 0;
+            }
+        }
+        
+        &.enter-bottom {
+            -webkit-transition: top 0.4s linear, bottom 0.4s linear;
+            transition: top 0.4s linear, bottom 0.4s linear;
+            &.deck-after, &.deck-next {
+                display: block;
+                top: 100%;
+            }
+            &.deck-current, &.deck-child-current {
+                top: 0;
+            }
+        }
+        
+    }
+    
+    
+    &>.slide {
+        
+        .slide.slide-in {
+            -webkit-transition: left 0.4s linear;
+            transition: left 0.4s linear;
+            
+            &.deck-next {
+                position: relative;
+                display: block;
+                left: 800px;
+            }
+            &.deck-current {
+                position: relative;
+                display: block;
+                left: 0;
+            }
+            
+        }
+    }
+}

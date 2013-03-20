@@ -1,0 +1,46 @@
+.deck-container > .slide.leave-left {
+  -webkit-transition: display 0s linear 0.4s, left 0.4s linear, right 0.4s linear;
+  transition: display 0s linear 0.4s, left 0.4s linear, right 0.4s linear; }
+  .deck-container > .slide.leave-left.deck-before, .deck-container > .slide.leave-left.deck-previous {
+    left: -100%;
+    display: block; }
+  .deck-container > .slide.leave-left.deck-current, .deck-container > .slide.leave-left.deck-child-current {
+    display: block;
+    left: 0; }
+.deck-container > .slide.enter-right {
+  -webkit-transition: left 0.4s linear, right 0.4s linear;
+  transition: left 0.4s linear, right 0.4s linear; }
+  .deck-container > .slide.enter-right.deck-after, .deck-container > .slide.enter-right.deck-next {
+    display: block;
+    left: 100%; }
+  .deck-container > .slide.enter-right.deck-current, .deck-container > .slide.enter-right.deck-child-current {
+    display: block;
+    left: 0; }
+.deck-container > .slide.leave-top {
+  -webkit-transition: display 0s linear 0.4s, top 0.4s linear, bottom 0.4s linear;
+  transition: display 0s linear 0.4s, top 0.4s linear, bottom 0.4s linear; }
+  .deck-container > .slide.leave-top.deck-before, .deck-container > .slide.leave-top.deck-previous {
+    top: -100%;
+    display: block; }
+  .deck-container > .slide.leave-top.deck-current, .deck-container > .slide.leave-top.deck-child-current {
+    display: block;
+    top: 0; }
+.deck-container > .slide.enter-bottom {
+  -webkit-transition: top 0.4s linear, bottom 0.4s linear;
+  transition: top 0.4s linear, bottom 0.4s linear; }
+  .deck-container > .slide.enter-bottom.deck-after, .deck-container > .slide.enter-bottom.deck-next {
+    display: block;
+    top: 100%; }
+  .deck-container > .slide.enter-bottom.deck-current, .deck-container > .slide.enter-bottom.deck-child-current {
+    top: 0; }
+.deck-container > .slide .slide.slide-in {
+  -webkit-transition: left 0.4s linear;
+  transition: left 0.4s linear; }
+  .deck-container > .slide .slide.slide-in.deck-next {
+    position: relative;
+    display: block;
+    left: 800px; }
+  .deck-container > .slide .slide.slide-in.deck-current {
+    position: relative;
+    display: block;
+    left: 0; }
