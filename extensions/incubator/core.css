@@ -1,0 +1,26 @@
+.js html {
+  visibility: hidden; }
+.ready html {
+  visibility: visible; }
+
+.deck-container {
+  position: relative;
+  overflow: hidden;
+  margin: 0; }
+  .deck-container.deck-loading {
+    display: none; }
+  .touch .deck-container {
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none; }
+  .deck-container > .slide {
+    position: absolute; }
+    .deck-container > .slide:not(.deck-current), .deck-container > .slide:not(.deck-child-current) {
+      display: none; }
+    .deck-container > .slide.deck-current, .deck-container > .slide.deck-child-current {
+      display: block;
+      position: absolute;
+      /* relative to parent */ }
+      .deck-container > .slide.deck-current .slide, .deck-container > .slide.deck-child-current .slide {
+        visibility: hidden; }
+      .deck-container > .slide.deck-current .deck-previous, .deck-container > .slide.deck-current .deck-before, .deck-container > .slide.deck-current .deck-current, .deck-container > .slide.deck-child-current .deck-previous, .deck-container > .slide.deck-child-current .deck-before, .deck-container > .slide.deck-child-current .deck-current {
+        visibility: visible; }

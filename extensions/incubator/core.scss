@@ -1,0 +1,47 @@
+
+html {
+    .js & {
+        visibility: hidden;
+    }
+    
+    .ready & {
+        visibility: visible;
+    }
+    
+}
+
+.deck-container {
+    
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    
+    &.deck-loading {
+        display:none;
+    }
+    
+    .touch & {
+        -webkit-text-size-adjust: none;
+        -moz-text-size-adjust: none;
+    }
+    
+    &>.slide {
+        
+        position: absolute;
+        
+        &:not(.deck-current), &:not(.deck-child-current) {
+            display: none;
+        }
+
+        &.deck-current, &.deck-child-current {
+            display: block;
+            position: absolute; /* relative to parent */
+            .slide {
+                visibility: hidden;
+            }
+            .deck-previous, .deck-before, .deck-current {
+                visibility: visible;
+            }
+        }
+    }
+}
