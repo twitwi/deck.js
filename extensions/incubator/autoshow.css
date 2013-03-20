@@ -1,0 +1,23 @@
+.deck-container .autoshow, .autoshow { 
+    position: relative;
+    width: 500px;
+    height: 300px;
+    box-shadow: 0 0 20px white; 
+    background: black;
+    border: 2px solid rgb(170, 255, 170);
+    border-radius: 20px;
+}
+
+.autoshow > div { 
+    position: absolute; 
+    top: 10px; 
+    left: 10px; 
+    right: 10px; 
+    bottom: 10px;
+    text-align: center;
+}
+
+.autoshow > div img {
+    max-width: 480px;
+    height: 280px;
+}
