@@ -88,6 +88,7 @@ This module provides a support for cloning the deck.
 
         if (window.opener && window.opener.___iscloner___) {
             $("body").addClass(opts.classes.isClone);
+            $(".anim-continue", container).removeClass("anim-continue"); // friend with anim extension
         }
     })
     /* Update current slide number with each change event */
