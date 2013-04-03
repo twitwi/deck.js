@@ -11,10 +11,21 @@ html {
 }
 
 .deck-container {
-    
     position: relative;
     overflow: hidden;
     margin: 0;
+}
+
+.deck-container.mathjaxwait {
+    &>.slide {
+        &:not(.deck-current), &:not(.deck-child-current) {
+            display: block;
+        }
+    }
+    
+}
+
+.deck-container:not(.mathjaxwait) {
     
     &.deck-loading {
         display:none;
@@ -32,7 +43,7 @@ html {
         &:not(.deck-current), &:not(.deck-child-current) {
             display: none;
         }
-
+        
         &.deck-current, &.deck-child-current {
             display: block;
             position: absolute; /* relative to parent */
@@ -44,4 +55,5 @@ html {
             }
         }
     }
+    
 }
