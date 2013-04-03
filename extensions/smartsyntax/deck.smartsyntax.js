@@ -127,6 +127,8 @@ This module provides a support for a shorter syntax for slides.
                         deepestList.appendChild(li);
                     }
                 }
+            } else if (startsWithIgnoreCase(line, "// ")) {
+                $("<div/>").addClass("comment").text(line.replace("// *", "")).appendTo(deepestList);
             } else if (startsWithIgnoreCase(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */i, "").split(/ +/);
                 var obj = $("<object type='deckjs/svg'/>");
@@ -190,7 +192,7 @@ This module provides a support for a shorter syntax for slides.
                     if (nl != -1) remain = remain.substring(nl + 1);
                     contentToAdd += "  " + line + "\n";
                     nl = remain.indexOf("\n");
-                    line = remain.substring(0, nl).replace(/^ */, "");
+                    line = remain.substring(0, nl);//.replace(/^ */, "");
                 }
                 deepestList.innerHTML = deepestList.innerHTML + processMath(contentToAdd) + " ";
             } else {
