@@ -93,9 +93,10 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 SVG.svg({
                     loadURL: attributes['src'],
                     onLoad: function($svg, w, h) {
+                        var px = function (str) {return str.replace("px", "")}
                         var aa = $($svg.root());
                         if (aa.attr('viewBox') == undefined) {
-                            var to = "0 0 " + w + " " + h;
+                            var to = "0 0 " + px(w) + " " + px(h);
                             $svg.root().setAttribute("viewBox", to);
                             aa.attr("svgViewBox", to);
                             if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
