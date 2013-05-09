@@ -111,8 +111,8 @@ This module provides a support for a shorter syntax for slides.
                         var toPush = pref.substr(indent.length, 1);
                         indent = indent.concat(toPush);
                         var list = doc.createElement(asso[toPush]);
-                        if ((deepestList.tagName == "UL" || deepestList.tagName == "OL") && deepestList.childNodes.length > 0) {
-                            deepestList.lastChild.appendChild(list);
+                        if ((deepestList.tagName == "UL" || deepestList.tagName == "OL") && $(">li",deepestList).size() > 0) {
+                            $(">li", deepestList).last().append(list);
                         } else {
                             deepestList.appendChild(list);
                         }
@@ -128,7 +128,10 @@ This module provides a support for a shorter syntax for slides.
                     }
                 }
             } else if (startsWithIgnoreCase(line, "// ")) {
-                $("<div/>").addClass("comment").text(line.replace("// *", "")).appendTo(deepestList);
+                var di = doc.createElement("div");
+                maybeAddClasses(di, addClasses, uniqueId);
+                //alert(line + "\n" + deepestList.innerHTML)
+                $(di).addClass("comment").text(line.replace(/\/\/ */, "")).appendTo($("*:not(.comment)", deepestList).last());
             } else if (startsWithIgnoreCase(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */i, "").split(/ +/);
                 var obj = $("<object type='deckjs/svg'/>");
