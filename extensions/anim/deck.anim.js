@@ -44,6 +44,7 @@
             return {
                 what: function() {return $(el).attr("data-what")},
                 dur: function() {return $(el).attr("data-dur")*1 || o.anim.duration},
+                delay: function() {return $(el).attr("data-delay")*1 || 0},
                 classs: function() {return $(el).attr("data-class")},
                 attribute: function() {return $(el).attr("data-attr").split(':')[0]},
                 as: function() {return $(el).attr("data-as")},
@@ -65,7 +66,13 @@
                     may(methods, methods.undo)(c);
                 }).bind('deck.becameCurrent', function(_, direction, from, to) {
                     if (direction == 'reverse' || Math.abs(from - to)>1 ) return; // if a big step, let the "step" extension do its job
-                    may(methods, methods.doit)(c);
+                    if (c.delay()>0) {
+                        setTimeout(function() {
+                            may(methods, methods.doit)(c);
+                        }, c.delay());
+                    } else {
+                        may(methods, methods.doit)(c);
+                    }
                 });
             });
         };
