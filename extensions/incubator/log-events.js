@@ -38,3 +38,17 @@ $(document).bind('deck.init', function() {
     });
 
 });
+
+/* Example at design time
+
+CSS:
+
+            body:not(.has-clones):not(.show-comments) .logs { display: none;}
+            body .logs { height:100%; width:10px; overflow-y: scroll; background: white; float: right; opacity: 0.2;}
+            body .logs:hover { width:400px; opacity: .85;}
+
+HTML (with the goto form etc):
+
+     <pre class="logs" ></pre>
+
+*/
