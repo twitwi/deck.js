@@ -131,7 +131,7 @@ This module provides a support for a shorter syntax for slides.
                 var di = doc.createElement("div");
                 maybeAddClasses(di, addClasses, uniqueId);
                 //alert(line + "\n" + deepestList.innerHTML)
-                $(di).addClass("comment").text(line.replace(/\/\/ */, "")).appendTo($("*:not(.comment)", deepestList).last());
+                $(di).addClass("comment").text(line.replace(/\/\/ */, "")).appendTo($(">*:not(.comment)", deepestList).last());
             } else if (startsWithIgnoreCase(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */i, "").split(/ +/);
                 var obj = $("<object type='deckjs/svg'/>");
