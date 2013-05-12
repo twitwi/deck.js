@@ -80,6 +80,7 @@ This module provides a support for cloning the deck.
         /* Bind key events */
         $d.unbind('keydown.deckclone').bind('keydown.deckclone', function(e) {
             if (e.which === opts.keys.clone || $.inArray(e.which, opts.keys.clone) > -1) {
+                if (e.ctrlKey) return; // do not trigger on Ctrl+C (by default)
                 $[deck]('addClone');
                 window.___iscloner___ = true;
                 e.preventDefault();
