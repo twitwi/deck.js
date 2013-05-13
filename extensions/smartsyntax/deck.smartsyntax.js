@@ -127,6 +127,16 @@ This module provides a support for a shorter syntax for slides.
                         deepestList.appendChild(li);
                     }
                 }
+            } else if (line.match(/\/[*]/)) { // block-comments
+                while (line != null && remain.length != 0) {
+                    if (line.match(/.*[*]\//)) {
+                        // normal stopping condition
+                        break;
+                    }
+                    if (nl != -1) remain = remain.substring(nl + 1);
+                    nl = remain.indexOf("\n");
+                    line = remain.substring(0, nl);//.replace(/^ */, "");
+                }
             } else if (startsWithIgnoreCase(line, "// ")) {
                 var di = doc.createElement("div");
                 maybeAddClasses(di, addClasses, uniqueId);
