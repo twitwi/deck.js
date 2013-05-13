@@ -75,6 +75,20 @@ $(document).bind('deck.init', function() {
         }
     });
 
+
+    // also a timer feature
+
+    var period = 500;
+    setInterval(function() {
+        var k = "deckjs-logs-clearbase";
+        var v = localStorage.getItem(k);
+        if (v != null) {
+            var t = new Date() - new Date(JSON.parse(v));
+            var time = formatTime(t);
+            $(".logs-timer").html(time);
+        }
+    }, period);
+    
 });
 
 /* Example at design time
