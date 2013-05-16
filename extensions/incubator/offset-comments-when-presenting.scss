@@ -1,0 +1,14 @@
+
+.deck-container:not(.deck-globalscale) /* maybe condition on comment visibility */ {
+    >.slide {
+        overflow: visible;
+    }
+    div.comment, .comment {
+        transform: translate(400px,0);
+        z-index: 1000;
+        /* might need theme specific thing here */
+        background-color: yellow; /* force opaque... */
+        color: darkred;
+    }
+}
+            

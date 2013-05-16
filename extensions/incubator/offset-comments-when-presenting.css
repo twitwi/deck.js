@@ -1,0 +1,9 @@
+.deck-container:not(.deck-globalscale) > .slide {
+  overflow: visible; }
+.deck-container:not(.deck-globalscale) div.comment, .deck-container:not(.deck-globalscale) .comment {
+  transform: translate(400px, 0);
+  z-index: 1000;
+  /* might need theme specific thing here */
+  background-color: yellow;
+  /* force opaque... */
+  color: darkred; }
