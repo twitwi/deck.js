@@ -63,12 +63,16 @@ $(document).bind('deck.init', function() {
 
     // Bind key event to add a marker in the logs
     var $d = $(document);
+    var doBang = function() {
+        log("BANG " + saveCurrent);
+        $(".logs-bang").stop(true,true).show(200).hide(400);
+        reset();
+    }
     $d.unbind('keydown.logbang').bind('keydown.logbang', function(e) {
-        var K = 27; // escape
+        if (e.ctrlKey) return;
+        var K = [27, 75]; // escape, k
         if (e.which === K || $.inArray(e.which, K) > -1) {
-            log("BANG " + saveCurrent);
-            $(".logs-bang").stop(true,true).show(200).hide(400);
-            reset();
+            doBang();
             if (e.shiftKey) {
                 clearStorage();
             }
