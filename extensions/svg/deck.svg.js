@@ -14,6 +14,9 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
     $.extend(true, $[deck].defaults, {
         classes: {
             svgPlaceholder: 'deck-svg'
+        },
+        alert: {
+            missingSVG: true
         }
     });
 
@@ -96,10 +99,14 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                         var px = function (str) {return str.replace("px", "")}
                         var aa = $($svg.root());
                         if (aa.attr('viewBox') == undefined) {
-                            var to = "0 0 " + px(w) + " " + px(h);
-                            $svg.root().setAttribute("viewBox", to);
-                            aa.attr("svgViewBox", to);
-                            if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
+                            if (w==undefined || h==undefined) {
+                                if (opts.alert.missingSVG) alert("There seem to be a problem with the loading of\n   '"+attributes['src']+"'\n\n(or it has no w or h attribute?)");
+                            } else {
+                                var to = "0 0 " + px(w) + " " + px(h);
+                                $svg.root().setAttribute("viewBox", to);
+                                aa.attr("svgViewBox", to);
+                                if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
+                            }
                         }
                         $[deck]("animWaitLess");
                         /*
