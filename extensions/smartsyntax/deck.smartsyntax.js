@@ -142,6 +142,10 @@ This module provides a support for a shorter syntax for slides.
                 maybeAddClasses(di, addClasses, uniqueId);
                 //alert(line + "\n" + deepestList.innerHTML)
                 $(di).addClass("comment").text(line.replace(/\/\/ */, "")).appendTo($(">*:not(.comment)", deepestList).last());
+            } else if (startsWithIgnoreCase(line, "@CSS ") || startsWithIgnoreCase(line, "@CSS:")) {
+                var what = line.replace(/@CSS\:? */i, "");
+                var obj = $("<style type='text/css'/>");
+                $(obj).html(what).appendTo(inSlide);
             } else if (startsWithIgnoreCase(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */i, "").split(/ +/);
                 var obj = $("<object type='deckjs/svg'/>");
