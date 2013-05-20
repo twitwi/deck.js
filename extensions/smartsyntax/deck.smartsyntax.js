@@ -128,10 +128,17 @@ This module provides a support for a shorter syntax for slides.
                     }
                 }
             } else if (line.match(/\/[*]/)) { // block-comments
+                var opened = 0;
                 while (line != null && remain.length != 0) {
+                    if (line.match(/\/[*]/)) {
+                        opened += 1;
+                    }
                     if (line.match(/.*[*]\//)) {
-                        // normal stopping condition
-                        break;
+                        opened -= 1;
+                        if (opened <= 0) {
+                            // normal stopping condition
+                            break;
+                        }
                     }
                     if (nl != -1) remain = remain.substring(nl + 1);
                     nl = remain.indexOf("\n");
