@@ -153,6 +153,10 @@ This module provides a support for a shorter syntax for slides.
                 var what = line.replace(/@CSS\:? */i, "");
                 var obj = $("<style type='text/css'/>");
                 $(obj).html(what).appendTo(inSlide);
+            } else if (startsWithIgnoreCase(line, "@CSS!")) {
+                var what = line.replace(/@CSS!\:? */i, "");
+                var obj = $("<style type='text/css' scoped/>"); // scoped limits the css to it parent and all children of it (see support at http://caniuse.com/#feat=style-scoped )
+                $(obj).html(what).appendTo(inSlide);
             } else if (startsWithIgnoreCase(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */i, "").split(/ +/);
                 var obj = $("<object type='deckjs/svg'/>");
