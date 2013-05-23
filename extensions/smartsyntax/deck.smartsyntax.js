@@ -144,7 +144,7 @@ This module provides a support for a shorter syntax for slides.
                     nl = remain.indexOf("\n");
                     line = remain.substring(0, nl);//.replace(/^ */, "");
                 }
-            } else if (startsWithIgnoreCase(line, "// ")) {
+            } else if (startsWithIgnoreCase(line, "//")) {
                 var di = doc.createElement("div");
                 maybeAddClasses(di, addClasses, uniqueId);
                 //alert(line + "\n" + deepestList.innerHTML)
