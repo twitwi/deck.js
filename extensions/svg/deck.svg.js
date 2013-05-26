@@ -100,7 +100,13 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                         var aa = $($svg.root());
                         if (aa.attr('viewBox') == undefined) {
                             if (w==undefined || h==undefined) {
-                                if (opts.alert.missingSVG) alert("There seem to be a problem with the loading of\n   '"+attributes['src']+"'\n\n(or it has no w or h attribute?)");
+                                if (opts.alert.missingSVG) alert(
+                                    "There seem to be a problem with the loading of\n   '"+attributes['src'] + "'\n"
+                                        +"\nMaybe the file does not exist?"
+                                        +"\nOr maybe"
+                                        +"\n - it has no w or h attribute?"
+                                        +"\n - you're using chrome with local files?"
+                                        +"\n   ⇒ try to restart chrome with '--disable-web-security'");
                             } else {
                                 var to = "0 0 " + px(w) + " " + px(h);
                                 $svg.root().setAttribute("viewBox", to);
