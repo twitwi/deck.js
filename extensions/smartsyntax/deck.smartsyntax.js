@@ -175,6 +175,10 @@ This module provides a support for a shorter syntax for slides.
                 line = line.replace(/@ANIM-ATTRIBUTE\: */i, "");
                 var main = line.split(/ *: */);
                 $("<div/>").addClass("anim-attribute slide").attr("data-dur", main[0]).attr("data-what", main[1]).attr("data-attr", main[2]+":"+main[3]).appendTo(deepestList);
+            } else if (startsWithIgnoreCase(line, "@ANIM-ATTRIBUTE!:")) {
+                line = line.replace(/@ANIM-ATTRIBUTE\!\: */i, "");
+                var main = line.split(/ *: */);
+                $("<div/>").addClass("anim-attribute slide anim-continue").attr("data-dur", main[0]).attr("data-what", main[1]).attr("data-attr", main[2]+":"+main[3]).appendTo(deepestList);
             } else if (startsWithIgnoreCase(line, "@ANIM-APPEAR:")) {
                 line = line.replace(/@ANIM-APPEAR\: */i, "");
                 if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
