@@ -182,9 +182,10 @@ This module provides a support for a shorter syntax for slides.
             } else if (startsWithIgnoreCase(line, "@ANIM-APPEAR:")) {
                 line = line.replace(/@ANIM-APPEAR\: */i, "");
                 if (uniqueId != "") line += "#"+uniqueId; // restore possibly removed id
-                var main = line.split(/ *: */);
+                var main = line.split(/(:.*)/);
                 var dur = main[0];
-                var parts = main[1].split(/ *\| */);
+                var rhs = main[1].replace(/: */, "");
+                var parts = rhs.split(/ *\| */);
                 for (i in parts) {
                     // process each group of simultaneous animations
                     var subparts = parts[i].split(/ *\+ */);
