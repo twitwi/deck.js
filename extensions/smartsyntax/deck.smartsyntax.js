@@ -185,7 +185,13 @@ This module provides a support for a shorter syntax for slides.
                 var main = line.split(/(:.*)/);
                 var dur = main[0];
                 var rhs = main[1].replace(/: */, "");
+                var animContinue = false;
+                if (rhs.endsWith("+")) {
+                    rhs = rhs.substring(0, rhs.length-1);
+                    animContinue = true;
+                }
                 var parts = rhs.split(/ *\| */);
+                var lastAdded = $("<div/>");
                 for (i in parts) {
                     // process each group of simultaneous animations
                     var subparts = parts[i].split(/ *\+ */);
@@ -209,7 +215,11 @@ This module provides a support for a shorter syntax for slides.
                         add.addClass("slide").attr("data-what", what);
                         if (continuating) add.addClass("anim-continue");
                         add.appendTo(deepestList);
+                        lastAdded = add;
                     }
+                }
+                if (animContinue) {
+                    $(lastAdded).addClass("anim-continue");
                 }
             } else if (startsWith(line, "@<")) {
                 line = line.replace(/^@/, "");
