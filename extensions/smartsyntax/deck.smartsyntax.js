@@ -209,6 +209,12 @@ This module provides a support for a shorter syntax for slides.
                             what = what.substring(1);
                             add.attr("data-as", what);
                             what = "svg";
+                        } else if (startsWithIgnoreCase(what, "%play:")) {
+                            what = what.replace(/%play\: */i, "");
+                            add.addClass("anim-play").attr("data-what", what);
+                        } else if (startsWithIgnoreCase(what, "%pause:")) {
+                            what = what.replace(/%pause\: */i, "");
+                            add.addClass("anim-pause").attr("data-what", what);
                         } else {
                             add.addClass("anim-show");
                         }
