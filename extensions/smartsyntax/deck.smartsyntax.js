@@ -186,7 +186,7 @@ This module provides a support for a shorter syntax for slides.
                 var dur = main[0];
                 var rhs = main[1].replace(/: */, "");
                 var animContinue = false;
-                if (rhs.endsWith("+")) {
+                if (rhs.substr(rhs.length-1, 1) == "+") {
                     rhs = rhs.substring(0, rhs.length-1);
                     animContinue = true;
                 }
