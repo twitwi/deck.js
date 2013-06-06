@@ -1,4 +1,24 @@
 
+/*!
+ * Includedeck.
+ *
+ * Copyright (c) 2013 Rémi Emonet.
+ * Dual licensed under the MIT license and GPL license.
+ * https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
+ * https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
+ *
+ * The goal of this extension is to simplify include of deck.js,
+ * its profiles/themes and the extensions.
+ *
+ * The first goal is not performance of loading (still it should
+ * allow the display of a message while loading) but on ease of
+ * use and extensibility (i.e., includedeck does not need to know
+ * about all existing extensions, even if by default it does know
+ * some of them).
+ *
+ */
+
+
 
 var head_conf = {
     
