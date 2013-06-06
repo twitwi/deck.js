@@ -42,9 +42,8 @@ function includedeck(m, c, a) {
             "deck.js/modernizr.custom.js",
             "deck.js/core/deck.core.js"
         ],
-        "fit": [
-            "deck.js/extensions/fit/deck.fit.js"
-        ],
+        // ^ todo this is "core" deck, shoult it be included by default or not? also, provide an alternative with new css
+        "fit": [ "deck.js/extensions/fit/deck.fit.js" ],
         "fit-fs": [
             "deck.js/extensions/fit/deck.fit-fs.css",
             "deck.js/extensions/fit/deck.fit.js" // "@fit" <- todo replace by this
@@ -53,15 +52,42 @@ function includedeck(m, c, a) {
             "deck.js/libs/display-latex2.user.js",
             "deck.js/extensions/simplemath/deck.simplemath.js"
         ],
-        "smartsyntax": [
-            "deck.js/extensions/smartsyntax/deck.smartsyntax.js"
+        "smartsyntax": [ "deck.js/extensions/smartsyntax/deck.smartsyntax.js" ],
+        "clone": [ "deck.js/extensions/clone/deck.clone.js" ],
+        "goto": [
+            "deck.js/extensions/goto/deck.goto.css",
+            "deck.js/extensions/goto/deck.goto.js"
         ],
-        // todo add some: clone, goto, navigation, menu, hash, svg, anim, (and maybe some subparts of anim)
+        "status": [
+            "deck.js/extensions/status/deck.status.css",
+            "deck.js/extensions/status/deck.status.js"
+        ],
+        "navigation": [
+            "deck.js/extensions/navigation/deck.navigation.css",
+            "deck.js/extensions/navigation/deck.navigation.js"
+        ],
+        "menu": [
+            "deck.js/extensions/menu/deck.menu.css",
+            "deck.js/extensions/menu/deck.menu.js"
+        ],
+        "hash": [
+            "deck.js/extensions/hash/deck.hash.css",
+            "deck.js/extensions/hash/deck.hash.js"
+        ],
+        "step": [ "deck.js/extensions/step/deck.step.js" ],
+        "events": [ "deck.js/extensions/events/deck.events.js" ],
+        "anim": [ "deck.js/extensions/anim/deck.anim.js" ],
+        "svg": [
+            "deck.js/libs/jquerysvg/jquery.svg.min.js" ,
+            "deck.js/libs/jquerysvg/jquery.svganim.min.js",
+            "deck.js/extensions/svg/deck.svg.js"
+        ],
         dummy: {} // TODO add a newdeck
     };
 
     // todo: recursively process info to make metapackages (@...)
-    // todo handle default extensions (deck.js/extensions/N/deck.N.{js,css}
+    // todo: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
+    // todo: have a conf to change the base path
 
     var toLoad = [];
 
