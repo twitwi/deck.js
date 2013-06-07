@@ -117,9 +117,16 @@ function includedeck(m, c, a) {
         toLoad = toLoad.concat(info[modules[i]]);
     }
 
-    head.js.apply(head,toLoad);
-    head.ready(function() {
-        $.deck(deckSelector, conf);
-    });
+    { // First insert a CSS, just to fit modernizr
+        var c = document.createElement("style");
+        c.type = "text/css";
+        document.getElementsByTagName("head")[0].appendChild(c);
+    }
+    
+    head.js.apply(head,toLoad.concat(function() {
+        $(function() {
+            $.deck(deckSelector, conf);
+        });
+    }));
 }
 
