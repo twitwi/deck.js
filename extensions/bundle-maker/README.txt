@@ -1,8 +1,9 @@
 
 PRESENTATION FILE
 =================
-An bare example file including most used extensions is given in the current folder as "presentation.html".
-This files references and uses the files from the "deck.js" folder.
+An bare example file including most used extensions is given in the current folder as "presentation-includedeck.html".
+An older, more verbose version is also proposed as "presentation.html".
+These files are independant of each others but they reference and use the files from the "deck.js" folder.
 If you want to reduce the overall size of the "deck.js" folder, you can safely remove the "deck.js/samples" directory (if you don't need the samples obviously).
 
 
@@ -18,7 +19,4 @@ NOTE FOR USE WITH CHROME/CHROMIUM
 =================================
 To allow the presentation page to load all the resources when stored locally, you must start chrome/chromium with a special command line option.
 Use "chromium-browser --disable-web-security " to do so.
-
-
-
 
