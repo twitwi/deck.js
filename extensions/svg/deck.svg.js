@@ -32,7 +32,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         styleToAttributes: function(root) {
             walk(root, function() {
                 var $n = $(this);
-                if ($n.attr("style")) { // mostly ok (at least for correct style values)
+                if ($n.attr("style")) {
                     $($n.attr("style").trim().split(/ *; */)).each(function(index, style) {
                         if (style && style.substring(0,1) != "-") {
                             var s = style.trim().split(/ *: */);
