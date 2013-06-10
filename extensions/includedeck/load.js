@@ -49,11 +49,14 @@ return}i()}}()}setTimeout(function(){C=!0;g(B,function(b){b()})},300)})(window);
 // this is the actual includedeck
 
 function includedeck(m, c, a) {
-    // todo: handle m as being a single string separated by \W+
     var modules = m || [];
     var conf = c || {};
     var atExit = a || [];
     var deckSelector = conf.DECK || '.slide';
+
+    if (typeof(modules) == "string") {
+        modules = modules.split(/ +/);
+    }
     
     // todo: make this externally extensible
     // todo: maybe have a mechanism to load a list of dependency (e.g., mymodule-files.js)
