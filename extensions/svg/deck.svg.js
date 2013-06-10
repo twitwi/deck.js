@@ -20,6 +20,31 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         }
     });
 
+    function walk(node, fn) {
+        if (node) do {
+            if (node.nodeType === 1) {
+                fn.call(node);
+                walk(node.firstChild, fn);
+            }
+        } while (node = node.nextSibling);
+    }
+    var svgPatcher = {
+        styleToAttributes: function(root) {
+            walk(root, function() {
+                var $n = $(this);
+                if ($n.attr("style")) { // mostly ok (at least for correct style values)
+                    $($n.attr("style").trim().split(/ *; */)).each(function(index, style) {
+                        if (style) {
+                            var s = style.trim().split(/ *: */);
+                            $n.attr(s[0], s[1]);
+                        }
+                    });
+                }
+                $n.attr("style", "");
+            })
+        }
+    }
+
     /*
       jQuery.deck('Init')
     */
@@ -112,6 +137,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                 $svg.root().setAttribute("viewBox", to);
                                 aa.attr("svgViewBox", to);
                                 if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
+                                svgPatcher.styleToAttributes($svg.root());
                             }
                         }
                         $[deck]("animWaitLess");
