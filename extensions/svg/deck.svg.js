@@ -34,7 +34,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 var $n = $(this);
                 if ($n.attr("style")) { // mostly ok (at least for correct style values)
                     $($n.attr("style").trim().split(/ *; */)).each(function(index, style) {
-                        if (style) {
+                        if (style && style.substring(0,1) != "-") {
                             var s = style.trim().split(/ *: */);
                             $n.attr(s[0], s[1]);
                         }
