@@ -62,17 +62,20 @@ function includedeck(m, c, a) {
     // todo: maybe have a mechanism to load a list of dependency (e.g., mymodule-files.js)
 
     var info = {
-        "deck": [
+        "deck-core-dependencies": [
             "deck.js/jquery-1.7.2.min.js",
+            "deck.js/modernizr.custom.js"
+        ],
+        "deck": [
+            "@_deck-core-dependencies",
 	    "deck.js/core/deck.core.css",
-            "deck.js/modernizr.custom.js",
             "deck.js/core/deck.core.js"
         ],
         // ^ todo this is "core" deck, shoult it be included by default or not? also, provide an alternative with new css
         "fit": [ "deck.js/extensions/fit/deck.fit.js" ],
         "fit-fs": [
             "deck.js/extensions/fit/deck.fit-fs.css",
-            "deck.js/extensions/fit/deck.fit.js" // "@fit" <- todo replace by this
+            "@_fit"
         ],
         "simplemath": [
             "deck.js/libs/display-latex2.user.js",
@@ -111,16 +114,24 @@ function includedeck(m, c, a) {
         dummy: {} // TODO add a newdeck
     };
 
-    // todo: recursively process info to make metapackages (@...)
     // todo: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
     // todo: have a conf to change the base path
 
-    var toLoad = [];
+    modules = ["deck"].concat(modules); // "deck" by default (todo: yes/no?)
 
-    modules = ["deck"].concat(modules);
+    var toLoad = [];
+    var addInfo = function(k) {
+        for (i in info[k]) {
+            if (info[k][i].substring(0,2) == "@_") {
+                addInfo(info[k][i].substring(2));
+            } else {
+                toLoad = toLoad.concat(info[k][i]);
+            }
+        }
+    }
 
     for (i in modules) {
-        toLoad = toLoad.concat(info[modules[i]]);
+        addInfo(modules[i]);
     }
 
     { // First insert a CSS, just to fit modernizr
