@@ -111,7 +111,9 @@ function includedeck(m, c, a) {
             "deck.js/libs/jquerysvg/jquery.svganim.min.js",
             "deck.js/extensions/svg/deck.svg.js"
         ],
-        dummy: {} // TODO add a newdeck
+        // Some default profiles
+        "profile-1": ["@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
+        dummy: {} // TODO add a newdeck (remove the in-adapted default css from deck core)
     };
 
     // todo: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
