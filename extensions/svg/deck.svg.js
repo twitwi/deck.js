@@ -29,7 +29,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         } while (node = node.nextSibling);
     }
     var svgPatcher = {
-        styleToAttributes: function(root) {
+        styleToAttributes: function(root, svgfile) {
             walk(root, function() {
                 var $n = $(this);
                 if ($n.attr("style")) {
@@ -40,7 +40,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                         }
                     });
                 }
-                $n.attr("style", "");
+                $n.attr("style", null);
             })
         }
     }
@@ -79,6 +79,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
             /* Create svg canvas */
             $canvas = $("<div />").attr({
                 'id':  $(object).attr('id'),
+                'data-src': attributes['src'],
                 'class': opts.classes.svgPlaceholder + " " + $(object).attr('class')
             }).css({
                 'height': attributes['height'],
@@ -137,7 +138,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                 $svg.root().setAttribute("viewBox", to);
                                 aa.attr("svgViewBox", to);
                                 if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
-                                svgPatcher.styleToAttributes($svg.root());
+                                svgPatcher.styleToAttributes($svg.root(), attributes['src']);
                             }
                         }
                         $[deck]("animWaitLess");
