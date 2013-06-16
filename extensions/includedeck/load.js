@@ -61,55 +61,56 @@ function includedeck(m, c, a) {
     // todo: make this externally extensible
     // todo: maybe have a mechanism to load a list of dependency (e.g., mymodule-files.js)
 
+    var prefix = head_conf.prefix || "deck.js";
     var info = {
         "deck-core-dependencies": [
-            "deck.js/jquery-1.7.2.min.js",
-            "deck.js/modernizr.custom.js"
+            prefix + "/jquery-1.7.2.min.js",
+            prefix + "/modernizr.custom.js"
         ],
         "deck": [
             "@_deck-core-dependencies",
-	    "deck.js/core/deck.core.css",
-            "deck.js/core/deck.core.js"
+	    prefix + "/core/deck.core.css",
+            prefix + "/core/deck.core.js"
         ],
         // ^ todo this is "core" deck, shoult it be included by default or not? also, provide an alternative with new css
-        "fit": [ "deck.js/extensions/fit/deck.fit.js" ],
+        "fit": [ prefix + "/extensions/fit/deck.fit.js" ],
         "fit-fs": [
-            "deck.js/extensions/fit/deck.fit-fs.css",
+            prefix + "/extensions/fit/deck.fit-fs.css",
             "@_fit"
         ],
         "simplemath": [
-            "deck.js/libs/display-latex2.user.js",
-            "deck.js/extensions/simplemath/deck.simplemath.js"
+            prefix + "/libs/display-latex2.user.js",
+            prefix + "/extensions/simplemath/deck.simplemath.js"
         ],
-        "smartsyntax": [ "deck.js/extensions/smartsyntax/deck.smartsyntax.js" ],
-        "clone": [ "deck.js/extensions/clone/deck.clone.js" ],
+        "smartsyntax": [ prefix + "/extensions/smartsyntax/deck.smartsyntax.js" ],
+        "clone": [ prefix + "/extensions/clone/deck.clone.js" ],
         "goto": [
-            "deck.js/extensions/goto/deck.goto.css",
-            "deck.js/extensions/goto/deck.goto.js"
+            prefix + "/extensions/goto/deck.goto.css",
+            prefix + "/extensions/goto/deck.goto.js"
         ],
         "status": [
-            "deck.js/extensions/status/deck.status.css",
-            "deck.js/extensions/status/deck.status.js"
+            prefix + "/extensions/status/deck.status.css",
+            prefix + "/extensions/status/deck.status.js"
         ],
         "navigation": [
-            "deck.js/extensions/navigation/deck.navigation.css",
-            "deck.js/extensions/navigation/deck.navigation.js"
+            prefix + "/extensions/navigation/deck.navigation.css",
+            prefix + "/extensions/navigation/deck.navigation.js"
         ],
         "menu": [
-            "deck.js/extensions/menu/deck.menu.css",
-            "deck.js/extensions/menu/deck.menu.js"
+            prefix + "/extensions/menu/deck.menu.css",
+            prefix + "/extensions/menu/deck.menu.js"
         ],
         "hash": [
-            "deck.js/extensions/hash/deck.hash.css",
-            "deck.js/extensions/hash/deck.hash.js"
+            prefix + "/extensions/hash/deck.hash.css",
+            prefix + "/extensions/hash/deck.hash.js"
         ],
-        "step": [ "deck.js/extensions/step/deck.step.js" ],
-        "events": [ "deck.js/extensions/events/deck.events.js" ],
-        "anim": [ "deck.js/extensions/anim/deck.anim.js" ],
+        "step": [ prefix + "/extensions/step/deck.step.js" ],
+        "events": [ prefix + "/extensions/events/deck.events.js" ],
+        "anim": [ prefix + "/extensions/anim/deck.anim.js" ],
         "svg": [
-            "deck.js/libs/jquerysvg/jquery.svg.min.js" ,
-            "deck.js/libs/jquerysvg/jquery.svganim.min.js",
-            "deck.js/extensions/svg/deck.svg.js"
+            prefix + "/libs/jquerysvg/jquery.svg.min.js" ,
+            prefix + "/libs/jquerysvg/jquery.svganim.min.js",
+            prefix + "/extensions/svg/deck.svg.js"
         ],
         // Some default profiles
         "profile-1": ["@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
