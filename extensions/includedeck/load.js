@@ -51,7 +51,7 @@ return}i()}}()}setTimeout(function(){C=!0;g(B,function(b){b()})},300)})(window);
 function includedeck(m, c, a) {
     var modules = m || [];
     var conf = c || {};
-    var atExit = a || [];
+    var atExit = a || (function(){});
     var deckSelector = conf.DECK || '.slide';
 
     if (typeof(modules) == "string") {
@@ -146,6 +146,7 @@ function includedeck(m, c, a) {
     head.js.apply(head,toLoad.concat(function() {
         $(function() {
             $.deck(deckSelector, conf);
+            atExit();
         });
     }));
 }
