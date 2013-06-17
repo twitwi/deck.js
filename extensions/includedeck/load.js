@@ -119,6 +119,7 @@ function includedeck(m, c, a) {
 
     // todo: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
     // todo: have a conf to change the base path
+    // TODO: some should come before others, e.g. anim before svg, (or before any (deck) or before most (loading...))
 
     modules = ["deck"].concat(modules); // "deck" by default (todo: yes/no?)
 
