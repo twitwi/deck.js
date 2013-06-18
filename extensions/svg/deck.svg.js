@@ -94,15 +94,9 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         $($[deck]('getSlides')).each( function(i, $el) {
             var $slide = $[deck]('getSlide', i);
 
-            /*
-            if ($slide.has("object[type='deckjs/svg']").length>0) {
-                $slide.data('animators', new Array());
-            }*/
-            
             /* Find all the object of type deckjs/svg */
             if ($slide == null) return true;
             $slide.find("object[type='deckjs/svg']").each(function(index, obj) {
-                //var id = $(this);
                 /* Load attributes and validate them */
                 var attributes = loadObjectParams(obj);
                 if (!validateParams(attributes) ) {
@@ -110,16 +104,13 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                     return false;
                 }
                 
-                /* Add this animator to the list of animators of the current slide. */
-                //$slide.data('animators').push(attributes['animator']);
-                
                 /* Create SVG placeholder */
                 var SVG = createSVG(obj, attributes);
                 $(obj).replaceWith(SVG);
                 
                 // Finaly load the SVG data
-                //$[deck]('addLoading');
                 $[deck]("animWaitMore");
+
                 SVG.svg({
                     loadURL: attributes['src'],
                     onLoad: function($svg, w, h) {
@@ -143,9 +134,6 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                             }
                         }
                         $[deck]("animWaitLess");
-                        /*
-                          $[deck]('removeLoading')
-                        */
                     }
                 });
             });
