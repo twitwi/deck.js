@@ -25,6 +25,16 @@ html {
     
 }
 
+
+.deck-container:not(.mathjaxwait).deck-anim-ready>.slide {
+    &:not(.deck-current), &:not(.deck-child-current) {
+        display: none;
+    }
+    &.deck-current, &.deck-child-current {
+        display: block;
+    }
+}
+
 .deck-container:not(.mathjaxwait) {
     
     &.deck-loading {
@@ -40,12 +50,7 @@ html {
         
         position: absolute;
         
-        &:not(.deck-current), &:not(.deck-child-current) {
-            display: none;
-        }
-        
         &.deck-current, &.deck-child-current {
-            display: block;
             position: absolute; /* relative to parent */
             .slide {
                 visibility: hidden;

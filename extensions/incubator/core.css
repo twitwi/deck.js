@@ -11,6 +11,11 @@
 .deck-container.mathjaxwait > .slide:not(.deck-current), .deck-container.mathjaxwait > .slide:not(.deck-child-current) {
   display: block; }
 
+.deck-container:not(.mathjaxwait).deck-anim-ready > .slide:not(.deck-current), .deck-container:not(.mathjaxwait).deck-anim-ready > .slide:not(.deck-child-current) {
+  display: none; }
+.deck-container:not(.mathjaxwait).deck-anim-ready > .slide.deck-current, .deck-container:not(.mathjaxwait).deck-anim-ready > .slide.deck-child-current {
+  display: block; }
+
 .deck-container:not(.mathjaxwait).deck-loading {
   display: none; }
 .touch .deck-container:not(.mathjaxwait) {
@@ -18,10 +23,7 @@
   -moz-text-size-adjust: none; }
 .deck-container:not(.mathjaxwait) > .slide {
   position: absolute; }
-  .deck-container:not(.mathjaxwait) > .slide:not(.deck-current), .deck-container:not(.mathjaxwait) > .slide:not(.deck-child-current) {
-    display: none; }
   .deck-container:not(.mathjaxwait) > .slide.deck-current, .deck-container:not(.mathjaxwait) > .slide.deck-child-current {
-    display: block;
     position: absolute;
     /* relative to parent */ }
     .deck-container:not(.mathjaxwait) > .slide.deck-current .slide, .deck-container:not(.mathjaxwait) > .slide.deck-child-current .slide {
