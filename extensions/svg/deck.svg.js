@@ -161,6 +161,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
 
             /* Find all the object of type deckjs/svg */
             if ($slide == null) return true;
+            // TODO: allow loading from a div with data-* values (to avoid missing plugin message)
             $slide.find("object[type='deckjs/svg']").each(function(index, obj) {
                 /* Load attributes and validate them */
                 var attributes = loadObjectParams(obj);
@@ -196,6 +197,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                 $svg.root().setAttribute("viewBox", to);
                                 aa.attr("svgViewBox", to);
                                 if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
+                                // TODO: make each optional based on parameters of the loader
                                 svgPatcher.styleToAttributes($svg.root(), attributes['src']);
                                 svgPatcher.makeReferencedIdsUnique($svg.root(), attributes['src'], function() {
                                     $[deck]("animWaitLess");
