@@ -42,6 +42,71 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 }
                 $n.attr("style", null);
             })
+        },
+        referencingAttributes: ["clip-path", "color-profile", "fill", "filter", "marker-start", "marker-mid", "marker-end", "mask", "stroke"],
+        nextId: 1,
+        generateId: function(oldId) {
+            var id = "uniquesvg"+svgPatcher.nextId;
+            svgPatcher.nextId++;
+            return id;
+        },
+        makeReferencedIdsUnique: function(root, svgfile, continuation) {
+            var andThen = continuation || function(){}
+            var byId = {};
+            var referencersIds = {};
+            var pushAdd = function(k, o) {
+                if (referencersIds[k]) {
+                    referencersIds[k].push(o);
+                } else {
+                    referencersIds[k] = [ o ];
+                }
+            };
+            // gather all ids and references
+            walk(root, function() {
+                var that = this;
+                var $n = $(this);
+                var id = that.id;
+                if (id) {
+                    byId[id] = this;
+                }
+                $(svgPatcher.referencingAttributes).each(function(i,attr) {
+                    var val = $n.attr(attr);
+                    if (val) {
+                        var groups = val.trim().match(/^url\(#(.+?)\)$/)
+                        if (groups) pushAdd(groups[1], {o:that, a:attr})
+                    }
+                });
+                var xlink = $n.attr("xlink:href");
+                if (xlink) {
+                    var groups = xlink.trim().match(/^#(.+?)$/)
+                    if (groups) pushAdd(groups[1], {o:that, a:"xlink:href"})
+                }
+            })
+            // patch used ids and references (keep unreferenced ids fixed (to allow for identification from the editor to the css, even if classes should be preferred))
+            var newIds = {};
+            for (id in referencersIds) {
+                var newId = svgPatcher.generateId(id);
+                byId[id].id = newId;
+                newIds[id] = newId;
+            }
+
+            setTimeout( // to help firefox in having updated ids
+                (function() {
+                for (id in referencersIds) {
+                    var newId = newIds[id];
+                    var refs = referencersIds[id];
+                    $(refs).each(function(i,pair){
+                        var prev = $(pair.o).attr(pair.a);
+                        if (pair.a == "xlink:href") {
+                            pair.o.setAttributeNS($.svg.xlinkNS, "href", prev.replace("#" + id, "#" + newId));
+                        } else {
+                            $(pair.o).attr(pair.a, prev.replace("#" + id, "#" + newId));
+                        }
+                    })
+                        }
+                    andThen();
+                }), 0)
+
         }
     }
 
@@ -125,15 +190,18 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                         +"\n - it has no w or h attribute?"
                                         +"\n - you're using chrome with local files?"
                                         +"\n   ⇒ try to restart chrome with '--disable-web-security'");
+                                $[deck]("animWaitLess");
                             } else {
                                 var to = "0 0 " + px(w) + " " + px(h);
                                 $svg.root().setAttribute("viewBox", to);
                                 aa.attr("svgViewBox", to);
                                 if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
                                 svgPatcher.styleToAttributes($svg.root(), attributes['src']);
+                                svgPatcher.makeReferencedIdsUnique($svg.root(), attributes['src'], function() {
+                                    $[deck]("animWaitLess");
+                                });
                             }
                         }
-                        $[deck]("animWaitLess");
                     }
                 });
             });
