@@ -48,6 +48,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
     /*
       jQuery.deck('Init')
     */
+    $[deck]("animWaitMore"); // ensure we wait for the initialization of "svg" ext to end "anim" init
     $d.bind('deck.init', function() {
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
@@ -149,6 +150,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 });
             });
         });
+        $[deck]("animWaitLess");
     })
     
     
