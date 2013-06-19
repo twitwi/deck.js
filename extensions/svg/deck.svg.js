@@ -15,6 +15,9 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         classes: {
             svgPlaceholder: 'deck-svg'
         },
+	selectors: {
+            svgObject: "object[type='deckjs/svg'], div.svg-object"
+        },
         alert: {
             missingSVG: true
         }
@@ -126,6 +129,11 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
             $(objectElement).children("param").each(function(index){
                 attributes[$(this).attr("name")] = $(this).attr("value");
             });
+            $.each(objectElement.attributes, function (index, attr) {
+                if ("data-" == attr.name.substr(0, 5)) {
+                    attributes[attr.name.substr(5)] = attr.value;
+                }
+            });
             return attributes;
         }
         
@@ -162,7 +170,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
             /* Find all the object of type deckjs/svg */
             if ($slide == null) return true;
             // TODO: allow loading from a div with data-* values (to avoid missing plugin message)
-            $slide.find("object[type='deckjs/svg']").each(function(index, obj) {
+            $slide.find(opts.selectors.svgObject).each(function(index, obj) {
                 /* Load attributes and validate them */
                 var attributes = loadObjectParams(obj);
                 if (!validateParams(attributes) ) {
