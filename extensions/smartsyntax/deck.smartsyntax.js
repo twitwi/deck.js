@@ -159,12 +159,21 @@ This module provides a support for a shorter syntax for slides.
                 $(obj).html(what).appendTo(inSlide);
             } else if (startsWithIgnoreCase(line, "@SVG:")) {
                 var parts = line.replace(/@SVG\: */i, "").split(/ +/);
+                /*
                 var obj = $("<object type='deckjs/svg'/>");
                 $.each(parts[0].split(/,/), function(i,c){obj.addClass(c);});
                 obj.append($("<param name='src'/>").attr("value", parts[1]))
                     .append($("<param name='width'/>").attr("value", parts[2]))
                     .append($("<param name='height'/>").attr("value", parts[3]))
                     .appendTo(inSlide);
+                /*/
+                var obj = $("<div class='svg-object'/>");
+                $.each(parts[0].split(/,/), function(i,c){obj.addClass(c);});
+                obj.attr("data-src", parts[1])
+                    .attr("data-width", parts[2])
+                    .attr("data-height", parts[3])
+                    .appendTo(inSlide);
+                //*/
             } else if (startsWithIgnoreCase(line, "@ANIM-PLAY:")) {
                 line = line.replace(/@ANIM-PLAY\: */i, "");
                 $("<div/>").addClass("anim-play slide").attr("data-what", line).appendTo(deepestList);
