@@ -169,7 +169,6 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
 
             /* Find all the object of type deckjs/svg */
             if ($slide == null) return true;
-            // TODO: allow loading from a div with data-* values (to avoid missing plugin message)
             $slide.find(opts.selectors.svgObject).each(function(index, obj) {
                 /* Load attributes and validate them */
                 var attributes = loadObjectParams(obj);
