@@ -184,6 +184,12 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 // Finaly load the SVG data
                 $[deck]("animWaitMore");
 
+                var notDisabled = function(k) {
+                    var kk = 'no'+k;
+                    var disabled = attributes[kk] && attributes[kk] == "true"
+                    return !disabled;
+                };
+
                 SVG.svg({
                     loadURL: attributes['src'],
                     onLoad: function($svg, w, h) {
@@ -204,11 +210,16 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                 $svg.root().setAttribute("viewBox", to);
                                 aa.attr("svgViewBox", to);
                                 if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
-                                // TODO: make each optional based on parameters of the loader
-                                svgPatcher.styleToAttributes($svg.root(), attributes['src']);
-                                svgPatcher.makeReferencedIdsUnique($svg.root(), attributes['src'], function() {
+                                if (notDisabled('stylerewrite')) {
+                                    svgPatcher.styleToAttributes($svg.root(), attributes['src']);
+                                }
+                                if (notDisabled('idrewrite')) {
+                                    svgPatcher.makeReferencedIdsUnique($svg.root(), attributes['src'], function() {
+                                        $[deck]("animWaitLess");
+                                    });
+                                } else {
                                     $[deck]("animWaitLess");
-                                });
+                                }
                             }
                         }
                     }
