@@ -26,9 +26,9 @@ It also overrides the defaults keybinding and countNested value (so it is better
         //  - we still use pgup/pgdown for inner slides as they are sent by some pluggable remote controls
         keys: {
             // backspace, left arrow, page down
-            previous: [8, 37, 34],
+            previous: [8, 37, 33],
             // enter, space, right arrow, page up
-            next: [13, 32, 39, 33],
+            next: [13, 32, 39, 34],
             // up arrow
             previousTopLevel: [38],
             // down arrow,
