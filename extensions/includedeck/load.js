@@ -48,10 +48,10 @@ return}i()}}()}setTimeout(function(){C=!0;g(B,function(b){b()})},300)})(window);
 
 // this is the actual includedeck
 
-function includedeck(m, c, a) {
+function includedeck(m, c) {
     var modules = m || [];
     var conf = c || {};
-    var atExit = a || (function(){});
+    var atExit = conf.ATEXIT || (function(){});
     var deckSelector = conf.DECK || '.slide';
 
     if (typeof(modules) == "string") {
