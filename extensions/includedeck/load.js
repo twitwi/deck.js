@@ -63,6 +63,8 @@ function includedeck(m, c) {
 
     var prefix = conf.PREFIX || "deck.js";
     var info = {
+        //
+        // core (differerent possible cores)
         "deck-core-dependencies": [
             prefix + "/jquery-1.7.2.min.js",
             prefix + "/modernizr.custom.js"
@@ -72,7 +74,13 @@ function includedeck(m, c) {
 	    prefix + "/core/deck.core.css",
             prefix + "/core/deck.core.js"
         ],
-        // ^ todo this is "core" deck, shoult it be included by default or not? also, provide an alternative with new css
+        "newdeck": [
+            "@_deck-core-dependencies",
+	    prefix + "/extensions/style-chunks/core.css",
+            prefix + "/core/deck.core.js"
+        ],
+        //
+        // extensions
         "fit": [ prefix + "/extensions/fit/deck.fit.js" ],
         "fit-fs": [
             prefix + "/extensions/fit/deck.fit-fs.css",
@@ -113,14 +121,16 @@ function includedeck(m, c) {
             prefix + "/extensions/svg/deck.svg.js"
         ],
         // Some default profiles
-        "profile-1": ["@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
+        //
+        /// profile-1: default deck with most extensions and no theme
+        "profile-1": ["@_deck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
+        /// profile-2: new deck (cleaner css) with most extensions and no theme
+        "profile-2": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
         dummy: {} // TODO add a newdeck (remove the in-adapted default css from deck core)
     };
 
     // todo: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
     // TODO: some should come before others, e.g. anim before svg, (or before any (deck) or before most (loading...))
-
-    modules = ["deck"].concat(modules); // "deck" by default (todo: yes/no?)
 
     var toLoad = [];
     var addInfo = function(k) {
