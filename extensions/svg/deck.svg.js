@@ -17,6 +17,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         },
 	selectors: {
             svgObject: "object[type='deckjs/svg'], div.svg-object"
+            // TODO: allow some classes to disable different filter/processing steps
         },
         alert: {
             missingSVG: true
