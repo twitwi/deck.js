@@ -120,6 +120,10 @@ function includedeck(m, c) {
             prefix + "/libs/jquerysvg/jquery.svganim.min.js",
             prefix + "/extensions/svg/deck.svg.js"
         ],
+        //
+        // Themes
+        // // by convention, "theme:blabla" will load the default blabla theme
+        //
         // Some default profiles
         //
         /// profile-1: default deck with most extensions and no theme
@@ -134,6 +138,10 @@ function includedeck(m, c) {
 
     var toLoad = [];
     var addInfo = function(k) {
+        if(k.substring(0, 6) == "theme:") {
+            toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
+            return;
+        }
         for (i in info[k]) {
             if (info[k][i].substring(0,2) == "@_") {
                 addInfo(info[k][i].substring(2));
