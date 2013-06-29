@@ -16,8 +16,11 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
             svgPlaceholder: 'deck-svg'
         },
 	selectors: {
-            svgObject: "object[type='deckjs/svg'], div.svg-object"
-            // TODO: allow some classes to disable different filter/processing steps
+            svgObject: "object[type='deckjs/svg'], div.svg-object",
+            svgObjectDisable: {
+                idrewrite: "div.svg-object.no-idrewrite",
+                stylerewrite: "div.svg-object.no-stylerewrite"
+            }
         },
         alert: {
             missingSVG: true
@@ -187,7 +190,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
 
                 var notDisabled = function(k) {
                     var kk = 'no'+k;
-                    var disabled = attributes[kk] && attributes[kk] == "true"
+                    var disabled = (attributes[kk] && attributes[kk] == "true") || $(obj).filter(opts.selectors.svgObjectDisable[k]).length > 0
                     return !disabled;
                 };
 
