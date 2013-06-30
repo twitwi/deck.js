@@ -138,7 +138,7 @@ function includedeck(m, c) {
 
     var toLoad = [];
     var addInfo = function(k) {
-        if(k.substring(0, 6) == "theme:") {
+        if (k.substring(0, 6) == "theme:") {
             toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
             return;
         }
