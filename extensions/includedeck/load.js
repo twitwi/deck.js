@@ -142,6 +142,10 @@ function includedeck(m, c) {
             toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
             return;
         }
+        if (/\.(css|js)$/.test(k)) {
+            toLoad = toLoad.concat(k);
+            return;
+        }
         for (i in info[k]) {
             if (info[k][i].substring(0,2) == "@_") {
                 addInfo(info[k][i].substring(2));
