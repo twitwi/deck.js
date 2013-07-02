@@ -133,6 +133,15 @@ function includedeck(m, c) {
         dummy: {} // TODO add a newdeck (remove the in-adapted default css from deck core)
     };
 
+    var endsInJsOrCss = /\.(css|js)$/;
+
+    // Defensive check that there are no *.js/*.css in the info (as they won't be useable anyways)
+    for (k in info) {
+        if (endsInJsOrCss.test(k)) {
+            alert("Internal problem detected in includedeck: '" + k + "' won't be useable.");
+        }
+    }
+
     // todo: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
     // TODO: some should come before others, e.g. anim before svg, (or before any (deck) or before most (loading...))
 
@@ -142,7 +151,7 @@ function includedeck(m, c) {
             toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
             return;
         }
-        if (/\.(css|js)$/.test(k)) {
+        if (endsInJsOrCss.test(k)) {
             toLoad = toLoad.concat(k);
             return;
         }
