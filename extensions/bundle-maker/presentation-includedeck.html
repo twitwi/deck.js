@@ -19,11 +19,21 @@
             /* example */ body.has-clones .deck-container {background: lightslategrey;}
             /* example */ .deck-container .title-slide {border: 1px solid red; font-size: 70%}
         </style>
+        <link rel="stylesheet" href="deck.js/extensions/incubator/core.css">
 	<script src="deck.js/extensions/includedeck/load.js"></script>
         <script>
             // includedeck("smartsyntax fit-fs simplemath clone goto status navigation menu hash step events anim svg");
             // includedeck(["smartsyntax", "fit-fs", "simplemath", "clone", "goto", "status", "navigation", "menu", "hash", "step", "events", "anim svg"]);
-            includedeck("profile-1")
+            // includedeck("profile-1");
+            
+            includedeck("profile-2 theme:swiss", {
+               // PREFIX: "deck.js",
+               // ATEXIT: function() {alert('loaded')},
+               // fitMarginX:100, fitMarginY:100, // uncomment to tune margin
+               // fitMode: "stretched", // uncomment to strech
+               dummy: ""
+            })
+
         </script>
     </head>
 
@@ -35,6 +45,7 @@ This text should not be displayed if everything goes well: use left/right arrow 
 
  <!-- this presentation uses smart syntax -->
 <section class="smart">
+
     ==New Presentation With deck.js and Extensions==[title-slide]
 
     =Hello=
