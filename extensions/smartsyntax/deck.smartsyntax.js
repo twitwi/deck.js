@@ -244,11 +244,11 @@ This module provides a support for a shorter syntax for slides.
                     if (line.match(/^@<\//)) {
                         // normal stopping condition
                         line = line.replace(/^@/, "");
-                        contentToAdd += "  " + line + "\n";
+                        contentToAdd += line + "\n";
                         break;
                     }
                     if (nl != -1) remain = remain.substring(nl + 1);
-                    contentToAdd += "  " + line + "\n";
+                    contentToAdd += line + "\n";
                     nl = remain.indexOf("\n");
                     line = remain.substring(0, nl);//.replace(/^ */, "");
                 }
