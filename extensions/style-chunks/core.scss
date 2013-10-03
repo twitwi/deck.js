@@ -26,7 +26,7 @@ html {
 }
 
 
-.deck-container:not(.mathjaxwait).deck-anim-ready>.slide {
+.deck-container:not(.show-all-slides):not(.deck-menu):not(.mathjaxwait).deck-anim-ready>.slide {
     &:not(.deck-current), &:not(.deck-child-current) {
         display: none;
     }

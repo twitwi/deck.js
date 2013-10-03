@@ -11,9 +11,9 @@
 .deck-container.mathjaxwait > .slide:not(.deck-current), .deck-container.mathjaxwait > .slide:not(.deck-child-current) {
   display: block; }
 
-.deck-container:not(.mathjaxwait).deck-anim-ready > .slide:not(.deck-current), .deck-container:not(.mathjaxwait).deck-anim-ready > .slide:not(.deck-child-current) {
+.deck-container:not(.deck-menu):not(.mathjaxwait).deck-anim-ready > .slide:not(.deck-current), .deck-container:not(.deck-menu):not(.mathjaxwait).deck-anim-ready > .slide:not(.deck-child-current) {
   display: none; }
-.deck-container:not(.mathjaxwait).deck-anim-ready > .slide.deck-current, .deck-container:not(.mathjaxwait).deck-anim-ready > .slide.deck-child-current {
+.deck-container:not(.deck-menu):not(.mathjaxwait).deck-anim-ready > .slide.deck-current, .deck-container:not(.deck-menu):not(.mathjaxwait).deck-anim-ready > .slide.deck-child-current {
   display: block; }
 
 .deck-container:not(.mathjaxwait).deck-loading {
