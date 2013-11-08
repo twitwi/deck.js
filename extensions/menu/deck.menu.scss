@@ -1,3 +1,7 @@
+.csstransforms.deck-menu-html {
+	overflow:auto;
+}
+
 .deck-menu {
 	.slide {
 		background:#eee;
@@ -7,7 +11,7 @@
 		visibility:visible;
 		cursor:pointer;
 	}
-	
+
 	> .slide {
 		.no-csstransforms & {
 			float:left;
@@ -19,19 +23,14 @@
 			overflow:hidden;
 			padding:0 0.5%;
 		}
-		
+
 		.csstransforms & {
 			-webkit-transform:scale(.22) !important;
-			-moz-transform:scale(.22) !important;
-			-o-transform:scale(.22) !important;
 			-ms-transform:scale(.22) !important;
 			transform:scale(.22) !important;
 			-webkit-transform-origin:0 0;
-			-moz-transform-origin:0 0;
-			-o-transform-origin:0 0;
 			-ms-transform-origin:0 0;
 			transform-origin:0 0;
-			-webkit-box-sizing: border-box;
 			-moz-box-sizing: border-box;
 			box-sizing: border-box;
 			width:100%;
@@ -41,15 +40,15 @@
 			margin:12px;
 		}
 	}
-	
+
 	iframe, img, video {
 		max-width:100%;
 	}
-	
+
 	.deck-current, .no-touch & .slide:hover {
 		background:#ddf;
 	}
-	
+
 	&.deck-container:hover {
 		.deck-prev-link, .deck-next-link {
 			display:none;
