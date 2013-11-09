@@ -241,8 +241,35 @@ Use left/right arrow keys to browse the presentation.<br/>
         <param name="height" value="200px" />
     </object>
     <ul>
-        <li>The same file is included three times using different styles (move your mouse on the yellow circle)</li>
-        <li>Needs for the SVG file to not contain the css attribute of interest<br/>(removed manually for the example)</li>
+        <li>The same file
+            <ul>
+                <li>included three times</li>
+                <li>using different styles</li>
+                <li>(move your mouse on the yellow circle)</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Deck.svg.js: helpers</h2>
+    <span style="padding-right: 150px;"> </span>
+    <object type="deckjs/svg" class="svgitem floatright style3 no-stylerewrite no-idrewrite">
+        <param name="src" value="circle.svg" />
+        <param name="width" value="200px" />
+        <param name="height" value="150px" />
+    </object>
+    <object type="deckjs/svg" class="svgitem floatright style3">
+        <param name="src" value="circle.svg" />
+        <param name="width" value="200px" />
+        <param name="height" value="150px" />
+    </object>
+    <ul>
+        <li>The same image+style (but different options) (mouse on blue circles)</li>
+        <li>The extension processes your SVG on loading</li>
+        <ul>
+            <li>changes "style" to attributes in SVG<br/> to allow styling (e.g., of inkscape SVG)<br/><span style="font-size: 80%"> (unless class <tt>no-stylerewrite</tt> is set (e.g., right one))</span></li>
+            <li>rewrites some duplicate IDs when including multiple SVGs (fixes missing arrows, ...)<br/> <span style="font-size: 80%">(unless class <tt>no-idrewrite</tt> is set)</span></li>
+        </ul>
     </ul>
 </section>
 <section class="slide">
