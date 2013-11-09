@@ -18,8 +18,8 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
 	selectors: {
             svgObject: "object[type='deckjs/svg'], div.svg-object",
             svgObjectDisable: {
-                idrewrite: "div.svg-object.no-idrewrite",
-                stylerewrite: "div.svg-object.no-stylerewrite"
+                idrewrite: ".no-idrewrite",
+                stylerewrite: ".no-stylerewrite"
             }
         },
         alert: {
