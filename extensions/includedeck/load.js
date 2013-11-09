@@ -66,7 +66,7 @@ function includedeck(m, c) {
         //
         // core (differerent possible cores)
         "deck-core-dependencies": [
-            prefix + "/jquery-1.7.2.min.js",
+            prefix + "/jquery.min.js",
             prefix + "/modernizr.custom.js"
         ],
         "deck": [
