@@ -149,7 +149,7 @@
                 var asWhat = $(c.as());
                 var a = function (i) {return asWhat.attr(i)}
                 // todo should do as with the generic attribute above (maintain a list)
-                c.whatFrom[attr] = c.all().first().get(0).attributes.getNamedItem('viewBox').nodeValue // custom access to the svg viewbox attribute
+                c.whatFrom[attr] = c.all().first().get(0).attributes.getNamedItem('viewBox').value // custom access to the svg viewbox attribute
                 var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
                 whatTo[attr] = toViewBox;
                 c.all().animate(whatTo, c.dur()*factor)
