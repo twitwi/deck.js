@@ -128,6 +128,7 @@ function includedeck(m, c) {
         //
         /// profile-1: default deck with most extensions and no theme
         "profile-1": ["@_deck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
+        "profile-1-fitnofs": ["@_deck", "@_smartsyntax", "@_fit", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
         /// profile-2: new deck (cleaner css) with most extensions and no theme
         "profile-2": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_hash", "@_step", "@_events", "@_anim", "@_svg"],
         dummy: {} // TODO add a newdeck (remove the in-adapted default css from deck core)
