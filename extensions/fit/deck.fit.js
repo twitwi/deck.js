@@ -43,8 +43,8 @@
             }
         });
         $.each(rootSlides, function(i, $slide) {
-            $slide.width(sdw);
-            $slide.height(sdh);
+            $slide.css('width', sdw);
+            $slide.css('height', sdh);
             $.each('Webkit Moz O ms Khtml'.split(' '), function(i, prefix) {
                 if (scale == 1) {
                     $slide.css(prefix + 'Transform', '');
