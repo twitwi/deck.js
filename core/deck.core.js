@@ -176,6 +176,10 @@ that use the API provided by core.
 
   var bindTouchEvents = function() {
     var startTouch;
+    var direction = options.touch.swipeDirection;
+    var tolerance = options.touch.swipeTolerance;
+    var listenToHorizontal = ({ both: true, horizontal: true })[direction];
+    var listenToVertical = ({ both: true, vertical: true })[direction];
 
     $container.unbind('touchstart.deck');
     $container.bind('touchstart.deck', function(event) {
@@ -192,22 +196,25 @@ that use the API provided by core.
         }
         var xDistance = touch.screenX - startTouch.screenX;
         var yDistance = touch.screenY - startTouch.screenY;
-        var swipedLeftToRight = xDistance > options.touch.swipeTolerance;
-        var swipedRightToLeft = xDistance < -options.touch.swipeTolerance;
-        var swipedTopToBottom = yDistance > options.touch.swipeTolerance;
-        var swipedBottomToTop = yDistance < -options.touch.swipeTolerance;
+        var leftToRight = xDistance > tolerance && listenToHorizontal;
+        var rightToLeft = xDistance < -tolerance && listenToHorizontal;
+        var topToBottom = yDistance > tolerance && listenToVertical;
+        var bottomToTop = yDistance < -tolerance && listenToVertical;
 
-        if (swipedLeftToRight || swipedTopToBottom) {
+        if (leftToRight || topToBottom) {
           $.deck('prev');
           startTouch = undefined;
         }
-        else if (swipedRightToLeft || swipedBottomToTop) {
+        else if (rightToLeft || bottomToTop) {
           $.deck('next');
           startTouch = undefined;
         }
         return false;
       });
-      event.preventDefault();
+
+      if (listenToVertical) {
+        event.preventDefault();
+      }
     });
 
     $container.unbind('touchend.deck');
@@ -220,26 +227,24 @@ that use the API provided by core.
     });
   };
 
-  /*
-      Kick iframe videos, which dont like to redraw w/ transforms.
-      Remove this if Webkit ever fixes it.
-       */
-  var hackWebkitIframes = function() {
-    $.each(slides, function(i, $slide) {
-      $slide.unbind('webkitTransitionEnd.deck');
-      $slide.bind('webkitTransitionEnd.deck', function(event) {
-        if ($el.hasClass($.deck('getOptions').classes.current)) {
-          var embeds = $(this).find('iframe').css('opacity', 0);
-          window.setTimeout(function() {
-            embeds.css('opacity', 1);
-          }, 100);
-        }
-      });
-    });
-  };
-
   var indexInBounds = function(index) {
     return typeof index === 'number' && index >=0 && index < slides.length;
+  };
+
+  var createBeforeInitEvent = function() {
+    var event = $.Event(events.beforeInitialize);
+    event.locks = 0;
+    event.done = $.noop;
+    event.lockInit = function() {
+      ++event.locks;
+    };
+    event.releaseInit = function() {
+      --event.locks;
+      if (!event.locks) {
+        event.done();
+      }
+    };
+    return event;
   };
 
   /* Methods exposed in the jQuery.deck namespace */
@@ -268,31 +273,46 @@ that use the API provided by core.
     ]);
     */
     init: function(elements, opts) {
+      var beforeInitEvent = createBeforeInitEvent();
+
       options = $.extend(true, {}, $.deck.defaults, opts);
       slides = [];
       currentIndex = 0;
       $container = $(options.selectors.container);
-      tolerance = options.touch.swipeTolerance;
-
-      // Pre init event for preprocessing hooks
-      $document.trigger(events.beforeInitialize);
 
       // Hide the deck while states are being applied to kill transitions
       $container.addClass(options.classes.loading);
 
-      initSlidesArray(elements);
-      bindKeyEvents();
-      bindTouchEvents();
-      // hackWebkitIframes();
-      $container.scrollLeft(0).scrollTop(0);
+      // Pre init event for preprocessing hooks
+      beforeInitEvent.done = function() {
+        initSlidesArray(elements);
+        bindKeyEvents();
+        bindTouchEvents();
+        $container.scrollLeft(0).scrollTop(0);
 
-      if (slides.length) {
-        updateStates();
+        if (slides.length) {
+          updateStates();
+        }
+
+        // Show deck again now that slides are in place
+        $container.removeClass(options.classes.loading);
+        $document.trigger(events.initialize);
+      };
+
+      $document.trigger(beforeInitEvent);
+      if (!beforeInitEvent.locks) {
+        beforeInitEvent.done();
       }
-
-      // Show deck again now that slides are in place
-      $container.removeClass(options.classes.loading);
-      $document.trigger(events.initialize);
+      window.setTimeout(function() {
+        if (beforeInitEvent.locks) {
+          if (window.console) {
+            window.console.warn('Something locked deck initialization\
+              without releasing it before the timeout. Proceeding with\
+              initialization anyway.');
+          }
+          beforeInitEvent.done();
+        }
+      }, options.initLockTimeout);
     },
 
     /*
@@ -486,6 +506,11 @@ that use the API provided by core.
   options.keys.previous
     The numeric keycode used to go to the previous slide.
 
+  options.touch.swipeDirection
+    The direction swipes occur to cause slide changes. Can be 'horizontal',
+    'vertical', or 'both'. Any other value or a falsy value will disable
+    swipe gestures for navigation.
+
   options.touch.swipeTolerance
     The number of pixels the users finger must travel to produce a swipe
     gesture.
@@ -514,8 +539,11 @@ that use the API provided by core.
     },
 
     touch: {
+      swipeDirection: 'horizontal',
       swipeTolerance: 60
-    }
+    },
+
+    initLockTimeout: 10000
   };
 
   $document.ready(function() {
