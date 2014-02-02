@@ -52,7 +52,6 @@ function includedeck(m, c) {
     var modules = m || [];
     var conf = c || {};
     var atExit = conf.ATEXIT || (function(){});
-    var deckSelector = conf.DECK || '.slide';
 
     if (typeof(modules) == "string") {
         modules = modules.split(/ +/);
@@ -174,7 +173,7 @@ function includedeck(m, c) {
     // the dummy js file below is to workaround a problem in headjs that does not fire the callback when the last thing is a css
     head.js.apply(head, toLoad.concat(prefix + "/extensions/includedeck/___dummy___auto___.js").concat(function() {
         $(function() {
-            $.deck(deckSelector, conf);
+            $.deck(conf);
             atExit();
         });
     }));
