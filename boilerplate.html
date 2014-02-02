@@ -15,7 +15,6 @@
   <link rel="stylesheet" media="screen" href="extensions/menu/deck.menu.css">
   <link rel="stylesheet" media="screen" href="extensions/navigation/deck.navigation.css">
   <link rel="stylesheet" media="screen" href="extensions/status/deck.status.css">
-  <link rel="stylesheet" media="screen" href="extensions/hash/deck.hash.css">
   <link rel="stylesheet" media="screen" href="extensions/scale/deck.scale.css">
 
   <!-- Style theme. More available in /themes/style/ or create your own. -->
@@ -49,14 +48,16 @@
 
     <!-- End slides. -->
 
-  <!-- Begin extension snippets. Add or remove as needed. -->
+    <!-- Begin extension snippets. Add or remove as needed. -->
 
     <!-- deck.navigation snippet -->
-    <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
-    <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    <div aria-role="navigation">
+      <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
 
     <!-- deck.status snippet -->
-    <p class="deck-status">
+    <p class="deck-status" aria-role="status">
       <span class="deck-status-current"></span>
       /
       <span class="deck-status-total"></span>
@@ -70,9 +71,6 @@
       <input type="submit" value="Go">
     </form>
 
-    <!-- deck.hash snippet -->
-    <a href="." title="Permalink to this slide" class="deck-permalink">#</a>
-
     <!-- End extension snippets. -->
   </div>
 
@@ -81,8 +79,6 @@
 <script src="core/deck.core.js"></script>
 
 <!-- Extension JS files. Add or remove as needed. -->
-<script src="core/deck.core.js"></script>
-<script src="extensions/hash/deck.hash.js"></script>
 <script src="extensions/menu/deck.menu.js"></script>
 <script src="extensions/goto/deck.goto.js"></script>
 <script src="extensions/status/deck.status.js"></script>
