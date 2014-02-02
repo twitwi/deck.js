@@ -72,10 +72,11 @@
 
         <!-- override some style here if needed (or in an external file) -->
         <style type="text/css">
-            /* example */ .slide b {color: blue;}
-            /* example */ .deck-container > .slide {border: 1px solid green;}
-            /* example */ body.has-clones .deck-container {background: lightslategrey;}
-            /* example */ .deck-container .title-slide {border: 1px solid red; font-size: 70%}
+            .niceClass {border: 1px solid black;}
+            .slide b {color: blue;}
+            .deck-container > .slide {border: 1px solid green;}
+            body.has-clones .deck-container {background: lightslategrey;}
+            .deck-container .title-slide {border: 1px solid red; font-size: 70%}
         </style>
     </head>
 
@@ -87,18 +88,23 @@ This text should not be displayed if everything goes well: use left/right arrow 
 
  <!-- this presentation uses smart syntax -->
 <section class="smart">
-    ==New Presentation With deck.js and Extensions==[title-slide]
 
-    =Hello=
-    * Hi, .....
-    * Todo
-    ** Write you presentation
-    ** <b>Rehearse a little</b>
-    * See also
-    ** <a href="http://home.heeere.com/tech-deckjs-ext.html">online samples</a>
-    ** <a href="deck.js/samples">local samples</a>
+==New Presentation With deck.js and Extensions==[title-slide]
 
-    ==Thank you for your attention==[end-slide]
+=SVG + Animations=
+@svg:niceClass deck.js/samples/smiley.svg 700px 400px
+@anim-appear:300: #left | #right + #bottom | -#right
+
+=Hello=
+* Hi, .....
+* Todo
+** Write you presentation
+** <b>Rehearse a little</b>
+* See also these links[slide]
+** <a href="http://home.heeere.com/tech-deckjs-ext.html">online samples</a>
+** <a href="deck.js/samples">local samples</a>
+
+==Thank you for your attention==[end-slide]
 
 </section>
 

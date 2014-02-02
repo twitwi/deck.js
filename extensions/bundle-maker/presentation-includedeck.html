@@ -14,24 +14,26 @@
 
         <!-- override some style here if needed (or in an external file) -->
         <style type="text/css">
-            /* example */ .slide b {color: blue;}
-            /* example */ .deck-container > .slide {border: 1px solid green;}
-            /* example */ body.has-clones .deck-container {background: lightslategrey;}
-            /* example */ .deck-container .title-slide {border: 1px solid red; font-size: 70%}
+            .niceClass {border: 1px solid black;}
+            .slide b {color: blue;}
+            .deck-container > .slide {border: 1px solid green;}
+            body.has-clones .deck-container {background: lightslategrey;}
+            .deck-container .title-slide {border: 1px solid red; font-size: 70%}
         </style>
 	<script src="deck.js/extensions/includedeck/load.js"></script>
         <script>
-            // includedeck("smartsyntax fit-fs simplemath clone goto status navigation menu hash step events anim svg");
-            // includedeck(["smartsyntax", "fit-fs", "simplemath", "clone", "goto", "status", "navigation", "menu", "hash", "step", "events", "anim svg"]);
-            // includedeck("profile-1");
-            
-            includedeck("profile-2 theme:swiss", {
-               // PREFIX: "deck.js",
-               // ATEXIT: function() {alert('loaded')},
-               // fitMarginX:100, fitMarginY:100, // uncomment to tune margin
-               // fitMode: "stretched", // uncomment to strech
-               dummy: ""
-            })
+            includedeck("profile-2 theme:web-2.0", {})
+
+            // The "{}" can be filled with optional arguments such as
+            //// PREFIX: "deck.js",
+            //// ATEXIT: function() {alert('loaded')},
+            //// fitMarginX:100, fitMarginY:100, // to tune margin
+            //// fitMode: "stretched", // to strech (variable aspect ratio)
+
+            // You can alternatively select what to include (as in these commented out examples)
+            //// includedeck("smartsyntax fit-fs simplemath clone goto status navigation menu hash step events anim svg");
+            //// includedeck(["smartsyntax", "fit-fs", "simplemath", "clone", "goto", "status", "navigation", "menu", "hash", "step", "events", "anim svg"]);
+            //// includedeck("profile-1");
 
         </script>
     </head>
@@ -42,22 +44,25 @@ This text should not be displayed if everything goes well: use left/right arrow 
 
 <div class="deck-container">
 
- <!-- this presentation uses smart syntax -->
+<!-- this presentation uses smart syntax -->
 <section class="smart">
 
-    ==New Presentation With deck.js and Extensions==[title-slide]
+==New Presentation With deck.js and Extensions==[title-slide]
 
-    =Hello=
-    * Hi, .....
-    * Todo
-    ** Write you presentation
-    ** <b>Rehearse a little</b>
-    * See also
-    ** <a href="http://home.heeere.com/tech-deckjs-ext.html">online samples</a>
-    ** <a href="deck.js/samples">local samples</a>
+=SVG + Animations=
+@svg:niceClass deck.js/samples/smiley.svg 700px 400px
+@anim-appear:300: #left | #right + #bottom | -#right
 
-    ==Thank you for your attention==[end-slide]
+=Hello=
+* Hi, .....
+* Todo
+** Write you presentation
+** <b>Rehearse a little</b>
+* See also these links[slide]
+** <a href="http://home.heeere.com/tech-deckjs-ext.html">online samples</a>
+** <a href="deck.js/samples">local samples</a>
 
+==Thank you for your attention==[end-slide]
 </section>
 
 <!-- end of the presentation -->
