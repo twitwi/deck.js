@@ -117,11 +117,9 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         }
     }
 
-    /*
-      jQuery.deck('Init')
-    */
-    $[deck]("animWaitMore"); // ensure we wait for the initialization of "svg" ext to end "anim" init
-    $d.bind('deck.init', function() {
+
+    $d.bind('deck.beforeInit', function (event) {
+        event.lockInit();
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
 
@@ -153,7 +151,6 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         */
         var createSVG = function(object, attributes) {
             var $canvas, $control, $next, $reload, $placeholder;
-            
             /* Create svg canvas */
             $canvas = $("<div />").attr({
                 'id':  $(object).attr('id'),
@@ -168,11 +165,9 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
 
         
         /* Go through all toplevel slides */
-        $($[deck]('getSlides')).each( function(i, $el) {
-            var $slide = $[deck]('getSlide', i);
+        $($[deck]('getTopLevelSlides')).each( function(i, $slide) {
 
             /* Find all the object of type deckjs/svg */
-            if ($slide == null) return true;
             $slide.find(opts.selectors.svgObject).each(function(index, obj) {
                 /* Load attributes and validate them */
                 var attributes = loadObjectParams(obj);
@@ -186,7 +181,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 $(obj).replaceWith(SVG);
                 
                 // Finaly load the SVG data
-                $[deck]("animWaitMore");
+                event.lockInit();
 
                 var notDisabled = function(k) {
                     var kk = 'no'+k;
@@ -208,7 +203,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                         +"\n - it has no w or h attribute?"
                                         +"\n - you're using chrome with local files?"
                                         +"\n   ⇒ try to restart chrome with '--disable-web-security'");
-                                $[deck]("animWaitLess");
+                                event.releaseInit();
                             } else {
                                 var to = "0 0 " + px(w) + " " + px(h);
                                 $svg.root().setAttribute("viewBox", to);
@@ -219,10 +214,10 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                 }
                                 if (notDisabled('idrewrite')) {
                                     svgPatcher.makeReferencedIdsUnique($svg.root(), attributes['src'], function() {
-                                        $[deck]("animWaitLess");
+                                        event.releaseInit();
                                     });
                                 } else {
-                                    $[deck]("animWaitLess");
+                                    event.releaseInit();
                                 }
                             }
                         }
@@ -230,7 +225,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 });
             });
         });
-        $[deck]("animWaitLess");
+        event.releaseInit();
     })
     
     
