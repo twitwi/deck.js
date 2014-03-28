@@ -30,15 +30,7 @@
         }
     });
 
-    var waitFor = 0
-    $[deck]('extend', 'animWaitMore', function(){ waitFor++ });
-    $[deck]('extend', 'animWaitLess', function(){ waitFor-- });
-
-    var doInitIfReady = function hoho() {
-        if (waitFor>0) {
-            setTimeout(doInitIfReady, 10) // retry until all is loaded
-            return;
-        }
+    var doInit = function() {
         // first we define some tools and grab some info from deck.js
         var o = $[deck]('getOptions');
         var context = function(el) {
@@ -186,7 +178,7 @@
         $(container).addClass(o.classes.animReady)
     }
     $(document).bind('deck.init', function() {
-        setTimeout(doInitIfReady, 10) // try the first time after init
+        doInit();
     });
         
 })(jQuery, 'deck');
