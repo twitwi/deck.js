@@ -428,6 +428,19 @@ that use the API provided by core.
     },
 
     /*
+    jQuery.deck('reInitSlidesArray')
+    
+    Force a recomputation of the "slides" array. This method is meant
+    to be used by extensions that generate new slides in the
+    beforeInit phase.
+    */
+
+    reInitSlidesArray: function() {
+        slides = [];
+        initSlidesArray(options.selectors.slides);
+    },
+
+    /*
     jQuery.deck('go', index)
 
     index: integer | string
