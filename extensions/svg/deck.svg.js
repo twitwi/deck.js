@@ -194,6 +194,8 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                     onLoad: function($svg, w, h) {
                         var px = function (str) {return str.replace("px", "")}
                         var aa = $($svg.root());
+                        aa.attr('width', '100%');
+                        aa.attr('height', '100%');
                         if (aa.attr('viewBox') == undefined) {
                             if (w==undefined || h==undefined) {
                                 if (opts.alert.missingSVG) alert(
