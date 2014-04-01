@@ -394,6 +394,10 @@ that use the API provided by core.
       initSlidesArray(options.selectors.slides);
       // Pre init event for preprocessing hooks
       beforeInitEvent.done = function() {
+        // reInitSlidesArray is meant only for beforeInit
+        methods['reInitSlidesArray'] = function() {
+            alert('Deck.js method "reInitSlidesArray" is meant to be called in the beforeInit phase only.');
+        }
         // re-populate the array of slides
         slides = [];
         initSlidesArray(options.selectors.slides);
