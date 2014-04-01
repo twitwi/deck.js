@@ -411,10 +411,9 @@ that use the API provided by core.
         $document.trigger(events.initialize);
       };
 
+      beforeInitEvent.lockInit();
       $document.trigger(beforeInitEvent);
-      if (!beforeInitEvent.locks) {
-        beforeInitEvent.done();
-      }
+      beforeInitEvent.releaseInit();
       window.setTimeout(function() {
         if (beforeInitEvent.locks) {
           if (window.console) {
