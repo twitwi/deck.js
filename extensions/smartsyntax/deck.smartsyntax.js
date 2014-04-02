@@ -281,6 +281,7 @@ This module provides a support for a shorter syntax for slides.
                     it.innerHTML = ""; // clear the smart node
                     $(it).after(slides);
                 });
+        $[deck]('reInitSlidesArray')
         });
 
 })(jQuery, 'deck');
