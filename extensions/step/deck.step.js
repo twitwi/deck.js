@@ -32,7 +32,9 @@ It also overrides the defaults keybinding and countNested value (so it is better
             // up arrow
             previousTopLevel: [38],
             // down arrow,
-            nextTopLevel: [40]
+            nextTopLevel: [40],
+            // key 'z'
+            nextEndOfTopLevel: [90]
         },
         countNested: false
     });
@@ -40,6 +42,11 @@ It also overrides the defaults keybinding and countNested value (so it is better
         for (i in arr) if (arr[i].is(el)) return i*1; // cast to int
         return -1;
     };
+    $[deck]('extend', 'getSlideIndex', function(node) {
+        var slides = $[deck]('getSlides');
+        var ind = myInArray(node, slides);
+        return ind;
+    });
     $[deck]('extend', 'getToplevelSlideOf', function(node) {
         var opts = $[deck]('getOptions');
         var slides = $[deck]('getSlides');
@@ -80,6 +87,19 @@ It also overrides the defaults keybinding and countNested value (so it is better
             }
         }
     });
+    $[deck]('extend', 'nextEndOfTopLevelSlide', function() {
+        /* Find the real next parent */
+        var current = $[deck]('getSlideIndex', $[deck]('getSlide'));
+        var nextParent = $[deck]('getToplevelSlideOfIndex', current + 1);
+        var icur = nextParent.index;
+        for (; icur < $[deck]('getSlides').length; icur++) {
+            var cursorParent = $[deck]('getToplevelSlideOfIndex', icur).node;
+            if (!cursorParent.is(nextParent.node)) {
+                $[deck]('go', icur-1);
+                break;
+            }
+        }
+    });
     $d.bind('deck.init', function() {
         $d.unbind('keydown.decknexttoplevel').bind('keydown.decknexttoplevel', function(e) {
             var $opts = $[deck]('getOptions');
@@ -87,6 +107,14 @@ It also overrides the defaults keybinding and countNested value (so it is better
             if (e.which === key || $.inArray(e.which, key) > -1) {
                 e.preventDefault();
                 $[deck]('nextTopLevelSlide');
+            }
+        });
+        $d.unbind('keydown.decknextendoftoplevel').bind('keydown.decknextendoftoplevel', function(e) {
+            var $opts = $[deck]('getOptions');
+            var key = $opts.keys.nextEndOfTopLevel;
+            if (e.which === key || $.inArray(e.which, key) > -1) {
+                e.preventDefault();
+                $[deck]('nextEndOfTopLevelSlide');
             }
         });
         $d.unbind('keydown.deckprevioustoplevel').bind('keydown.deckprevioustoplevel', function(e) {
