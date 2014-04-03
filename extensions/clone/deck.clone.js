@@ -56,14 +56,14 @@ This module provides a support for cloning the deck.
     });
     $[deck]('extend', 'pointerAt', function(rx, ry) {
         var opts = $[deck]('getOptions');
-        var r = $(".deck-current").get(0).getBoundingClientRect();
+        var current = $[deck]('getToplevelSlideOf', $[deck]('getSlide')).node; // actually uses the step extension
+        var r = current.get(0).getBoundingClientRect();
         var x = r.left + r.width * rx;
         var y = r.top + r.height * ry;
         var pos = {left: x, top: y};
-        var current = $(".deck-current").get(0);
         var pointers = $(opts.selectors.clonepointer);
-        if (pointers.get(0).parentNode != current) { // move them within the new slide if it changed
-            pointers.show().appendTo(".deck-current");
+        if (!current.is(pointers.parent())) { // move them within the new slide if it changed
+            pointers.show().appendTo(current);
         }
         pointers.offset(pos);
     });
@@ -112,7 +112,8 @@ This module provides a support for cloning the deck.
     })
     /* Replicate mouse cursor */
     .bind('mousemove', function(e) {
-        var r = $(".deck-current").get(0).getBoundingClientRect();
+        var current = $[deck]('getToplevelSlideOf', $[deck]('getSlide')).node; // actually uses the step extension
+        var r = current.get(0).getBoundingClientRect();
         var x = (e.clientX - r.left) / r.width;
         var y = (e.clientY - r.top) / r.height;
         cleanClones();
