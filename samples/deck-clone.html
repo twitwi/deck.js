@@ -15,7 +15,7 @@
             
         <style type="text/css">
             .deck-container>section.slide {padding:0;} /* as samples were originally designed with neon padding */
-            body.has-clones .deck-container {background: grey;}
+            body.has-clones .deck-container {background: #333;}
             .deck-container>.slide {border: 1px dashed #333;} /* for the demo */
             .slide h1 {font-size: 3em;}
             .slide h1 b {color: #0F0;}
@@ -26,7 +26,18 @@
 	<script src="../extensions/includedeck/load.js"></script>
         <script>
             includedeck("profile-2 theme:neon", {
-               PREFIX: "../" // deck.js is in the parent folder for this presentation
+               PREFIX: "../", // deck.js is in the parent folder for this presentation
+               ATEXIT: function() {
+                  $(function() {
+                     $('.firefox-message').hide();
+                     $('.firefox-message').click(function(){
+                        $('.firefox-message').hide(300);
+                     });
+                     $('.show-firefox-message').click(function(){
+                        $('.firefox-message').fadeIn(500);
+                     });
+                  });
+               }
             })
         </script>
 
@@ -88,17 +99,6 @@ Use left/right arrow keys to browse the presentation.<br/>
         </li>
     </ul>
 </section>
-<script>
-$(function() {
-   $('.firefox-message').hide();
-   $('.firefox-message').click(function(){
-      $('.firefox-message').hide(300);
-   });
-   $('.show-firefox-message').click(function(){
-      $('.firefox-message').fadeIn(500);
-   });
-});
-</script>
 
 <section class="slide">
     <h2>“clone”: Propagation</h2>
