@@ -275,13 +275,13 @@ This module provides a support for a shorter syntax for slides.
 
     // this have to be executed before the deck init
     $d.bind('deck.beforeInit', function() {
-            $('.smart').each(function() {
-                    var it = this;
-                    var slides = interpretationOfSmartLanguage(it.innerHTML, document);
-                    it.innerHTML = ""; // clear the smart node
-                    $(it).after(slides);
-                });
-        $[deck]('reInitSlidesArray')
+        $('.smart').each(function() {
+            var it = this;
+            var slides = interpretationOfSmartLanguage(it.innerHTML, document);
+            it.innerHTML = ""; // clear the smart node
+            $(it).after(slides);
         });
+        $[deck]('reInitSlidesArray')
+    });
 
 })(jQuery, 'deck');
