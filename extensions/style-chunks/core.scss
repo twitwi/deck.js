@@ -1,32 +1,11 @@
 
-html {
-    .js & {
-        visibility: hidden;
-    }
-    
-    .ready & {
-        visibility: visible;
-    }
-    
-}
-
 .deck-container {
     position: relative;
     overflow: hidden;
     margin: 0;
 }
 
-.deck-container.mathjaxwait {
-    &>.slide {
-        &:not(.deck-current), &:not(.deck-child-current) {
-            display: block;
-        }
-    }
-    
-}
-
-
-.deck-container:not(.show-all-slides):not(.deck-menu):not(.mathjaxwait).deck-anim-ready>.slide {
+.deck-container:not(.show-all-slides):not(.deck-menu):not(.deck-loading)>.slide {
     &:not(.deck-current), &:not(.deck-child-current) {
         display: none;
     }
@@ -35,21 +14,20 @@ html {
     }
 }
 
-.deck-container:not(.mathjaxwait) {
-    
-    &.deck-loading {
-        display:none;
+.deck-container {
+
+    &.deck-loading>*:not(.deck-loading-splash) {
+        visibility: hidden;
     }
-    
+
     .touch & {
         -webkit-text-size-adjust: none;
         -moz-text-size-adjust: none;
     }
     
     &>.slide {
-        
         position: absolute;
-        
+
         &.deck-current, &.deck-child-current {
             position: absolute; /* relative to parent */
             .slide {
@@ -61,4 +39,32 @@ html {
         }
     }
     
+    &.deck-anim-ready .deck-loading-splash {
+        visibility: hidden;
+        opacity: 0;
+        /*
+            right: 100%;
+            left: -100%;
+        */
+        -webkit-transition: visibility 0s linear 0.5s, all 0.5s linear;
+        transition: visibility 0s linear .5s, all 0.5s linear;
+    }
+    
+    & .deck-loading-splash {
+        visibility: visible;
+        opacity:1;
+        position: absolute;
+        text-align: center;
+        padding-top: 200px;
+        display: flex;
+        margin: 0 auto;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: black;
+        color: white;
+        z-index: 100;
+    }
+
 }
