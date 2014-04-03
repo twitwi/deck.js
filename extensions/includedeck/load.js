@@ -51,6 +51,7 @@ return}i()}}()}setTimeout(function(){C=!0;g(B,function(b){b()})},300)})(window);
 function includedeck(m, c) {
     var modules = m || [];
     var conf = c || {};
+    var initDelay = conf.INITDELAY;
     var atExit = conf.ATEXIT || (function(){});
 
     if (typeof(modules) == "string") {
@@ -173,8 +174,15 @@ function includedeck(m, c) {
     // the dummy js file below is to workaround a problem in headjs that does not fire the callback when the last thing is a css
     head.js.apply(head, toLoad.concat(prefix + "/extensions/includedeck/___dummy___auto___.js").concat(function() {
         $(function() {
-            $.deck(conf);
-            atExit();
+            if (initDelay) {
+                setTimeout(function() {
+                    $.deck(conf);
+                    atExit();
+                }, initDelay)
+            } else {
+                $.deck(conf);
+                atExit();
+            }
         });
     }));
 }
