@@ -3,9 +3,8 @@
  * Includedeck.
  *
  * Copyright (c) 2013-2014 Rémi Emonet.
- * Dual licensed under the MIT license and GPL license.
+ * Licensed under the MIT license.
  * https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
- * https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
  *
  * The goal of this extension is to simplify include of deck.js,
  * its profiles/themes and the extensions.
@@ -116,6 +115,7 @@ function includedeck(m, c) {
             prefix + "/libs/jquerysvg/jquery.svganim.min.js",
             prefix + "/extensions/svg/deck.svg.js"
         ],
+        "metadata": [ prefix + "/extensions/metadata/deck.metadata.js" ],
         //
         // Themes
         // // by convention, "theme:blabla" will load the default blabla theme
@@ -128,6 +128,8 @@ function includedeck(m, c) {
         /// profile-2: new deck (cleaner css) with most extensions and no theme
         "profile-2": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
         "profile-2-fitnofs": ["@_newdeck", "@_smartsyntax", "@_fit", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
+        /// profile-3: big profile = profile-2 + all good bundled extensions
+        "profile-3": ["@_profile-2", "@_metadata"],
         dummy: {} // TODO add a newdeck (remove the in-adapted default css from deck core)
     };
 
