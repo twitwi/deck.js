@@ -14,25 +14,66 @@ Note however, that it does not handle the countNested=true case.
 (function($, undefined) {
     var $document = $(document);
     var rootCounter;
+    var INITEVENT = "dummy";
     
     var updateCurrent = function(event, from, to) {
         var opts = $.deck('getOptions');
         var currentSlideNumber = to + 1;
+        var $container = $.deck('getContainer');
         currentSlideNumber = $.deck('getSlide', to).data('rootSlide');
         $(opts.selectors.statusCurrent).text(currentSlideNumber);
 
         var icur = 0;
         for (; icur < $.deck('getSlides').length; icur++) {
             var top = $.deck('getSlide', icur).data('rootSlide');
-            if (top == currentSlideNumber) break;
+            if (top == currentSlideNumber) {
+                break;
+            }
         }
         var last = null;
+        var currentDetail = to;
+        var lastDetail = icur;
         for (; icur < $.deck('getSlides').length; icur++) {
             last = $.deck('getSlide', icur).data('rootSlide');
+            lastDetail = icur;
             if ($.deck('getSlide', icur).filter(opts.selectors.statusFakeEnd).size() > 0) break;
         }
 	$(opts.selectors.statusTotal).text(last);
 
+        // handle the data-progress
+        var progresses = $('*['+opts.dataProgress+'], *['+opts.dataProgressOnce+']');
+        if (progresses.size() > 0) {
+            var visibleSlide = $.deck('getSlide').parentsUntil(opts.selectors.container).addBack().filter(opts.selectors.slides);
+            // the eval context
+            var slide = visibleSlide.get(0).getBoundingClientRect();
+            var screen = {width: $container.innerWidth(), height: $container.innerHeight()};
+            var n = currentSlideNumber;
+            var N = last;
+            var fullTotal = $.deck('getTopLevelSlides').length;
+            var detail = {n: currentDetail+1, N: lastDetail, fullTotal: $.deck('getSlides').length};
+            var p = n/N;
+            var pFull = n/fullTotal;
+            detail.p = detail.n/detail.N;
+            detail.pFull = detail.n/detail.fullTotal;
+            // 
+            progresses.each(function(i, el) {
+                var att = $(el).attr(event == INITEVENT ? opts.dataProgressOnce : opts.dataProgress);
+                if (att == null || att.length == 0) return;
+                var tasks = att.split(/ *; */);
+                for (t in tasks) {
+                    var parts = tasks[t].split(/ *: */);
+                    if (parts.length != 2) {
+                        if (opts.alert.wrongDataProgress) alert(
+                            "There seem to be a problem with the following data-progress of\n   '" +tasks[t]+ "'\n");
+                    } else {
+                        var what = parts[0];
+                        var expr = parts[1];
+                        var val = eval(expr);
+                        $(el).css(what, val);
+                    }
+                }
+            });
+        }
     };
     
     var markRootSlides = function() {
@@ -75,7 +116,7 @@ Note however, that it does not handle the countNested=true case.
                 return false;
             }
         });
-        updateCurrent(null, index, index);
+        updateCurrent(INITEVENT, index, index);
     };
     
     var setTotalSlideNumber = function() {
@@ -105,8 +146,13 @@ Note however, that it does not handle the countNested=true case.
             statusCurrent: '.deck-status-current',
 	    statusTotal: '.deck-status-total',
 	    statusFakeEnd: '.deck-status-fake-end',
-	    statusFullTotal: '.deck-status-full-total'
-        }
+	    statusFullTotal: '.deck-status-full-total',
+        },
+        alert: {
+            wrongDataProgress: true
+        },
+        dataProgress: "data-progress",
+        dataProgressOnce: "data-progress-once"
     });
     
     $document.bind('deck.init', function() {
