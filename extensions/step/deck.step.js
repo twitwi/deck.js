@@ -1,9 +1,8 @@
 /*!
 Deck JS - deck.step
-Copyright (c) 2011 Rémi Emonet
-Dual licensed under the MIT license and GPL license.
+Copyright (c) 2011-2014 Rémi Emonet
+Licensed under the MIT license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
-https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
 */
 
 /*
