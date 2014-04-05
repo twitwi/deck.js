@@ -17,14 +17,12 @@ This extension relies on the events extension.
         $('*[data-container-class]').each(function(i, el) {
             var toRemove = ""; // one 'toRemove' per element (that's why we do .each
             $(el).bind('deck.becameCurrent', function(_, direction) {
-                console.log("became")
                 var target = $(_.target);
                 var toAdd = target.attr('data-container-class');
                 $[deck]('getContainer').addClass(toAdd);
                 toRemove = toAdd;
             }).bind('deck.lostCurrent', function(_, direction) {
                 $[deck]('getContainer').removeClass(toRemove);
-                console.log("lost")
                 toRemove = "";
             });
         });
@@ -35,7 +33,6 @@ This extension relies on the events extension.
         for (; icur < $[deck]('getSlides').length; icur++) {
             if ($[deck]('getSlides')[icur] == current) break;                
         }
-        console.log(icur)
         $(document).trigger("deck.change", [icur, icur]);
     });
 })(jQuery, 'deck');
