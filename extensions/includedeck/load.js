@@ -139,10 +139,23 @@ function includedeck(m, c) {
     // TODO?: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
     // TODO?: some should come before others, e.g. anim before svg, (or before any (deck) or before most (loading...))
 
+    // if there are two '#' in the url, take everything after the second as a theme name
+    var forceTheme = null;
+    if (window.location.hash.replace(/[^#]/gi, '').length == 2) {
+        var theme = window.location.hash.replace(/^.*#/gi, '')
+        var base = window.location.hash.replace(/#[^#]*$/gi, '')
+        forceTheme = theme;
+        window.location.hash = base;
+    }
+
     var toLoad = [];
     var addInfo = function(k) {
         if (k.substring(0, 6) == "theme:") {
-            toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
+            if (forceTheme) { // replace by the url forced theme (works only with default themes...
+                toLoad = toLoad.concat(prefix + "/themes/style/" + forceTheme + ".css");
+            } else {
+                toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
+            }
             return;
         }
         if (k.substring(0, 10) == "extension:") {
