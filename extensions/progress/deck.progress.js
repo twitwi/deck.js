@@ -16,10 +16,10 @@ Note however, that it does not handle the countNested=true case.
     var rootCounter;
     
     var updateCurrent = function(event, from, to) {
-        var options = $.deck('getOptions');
+        var opts = $.deck('getOptions');
         var currentSlideNumber = to + 1;
         currentSlideNumber = $.deck('getSlide', to).data('rootSlide');
-        $(options.selectors.statusCurrent).text(currentSlideNumber);
+        $(opts.selectors.statusCurrent).text(currentSlideNumber);
 
         var icur = 0;
         for (; icur < $.deck('getSlides').length; icur++) {
@@ -29,20 +29,20 @@ Note however, that it does not handle the countNested=true case.
         var last = null;
         for (; icur < $.deck('getSlides').length; icur++) {
             last = $.deck('getSlide', icur).data('rootSlide');
-            if ($.deck('getSlide', icur).filter(options.selectors.statusFakeEnd).size() > 0) break;
+            if ($.deck('getSlide', icur).filter(opts.selectors.statusFakeEnd).size() > 0) break;
         }
+	$(opts.selectors.statusTotal).text(last);
 
-	$(options.selectors.statusTotal).text(last);
     };
     
     var markRootSlides = function() {
-        var options = $.deck('getOptions');
+        var opts = $.deck('getOptions');
         var slideTest = $.map([
-            options.classes.before,
-            options.classes.previous,
-            options.classes.current,
-            options.classes.next,
-            options.classes.after
+            opts.classes.before,
+            opts.classes.previous,
+            opts.classes.current,
+            opts.classes.next,
+            opts.classes.after
         ], function(el, i) {
             return '.' + el;
         }).join(', ');
@@ -50,7 +50,7 @@ Note however, that it does not handle the countNested=true case.
         rootCounter = 0;
         $.each($.deck('getSlides'), function(i, $slide) {
             var $parentSlides = $slide.parentsUntil(
-                options.selectors.container,
+                opts.selectors.container,
                 slideTest
             );
             
@@ -90,13 +90,13 @@ Note however, that it does not handle the countNested=true case.
     /*
       Extends defaults/options.
       
-      options.selectors.statusCurrent
+      opts.selectors.statusCurrent
       The element matching this selector displays the current slide number.
       
-      options.selectors.statusTotal
+      opts.selectors.statusTotal
       The element matching this selector displays the total number of slides.
       
-      options.countNested
+      opts.countNested
       If false, only top level slides will be counted in the current and
       total numbers.
     */
