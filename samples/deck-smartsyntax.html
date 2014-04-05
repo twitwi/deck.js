@@ -14,7 +14,6 @@
         <!--meta name="viewport" content="width=1024, user-scalable=no"/-->
             
         <style type="text/css">
-            .deck-container.nostatus .deck-status {display:none}
             .deck-container>section.slide {padding:0;} /* as samples were originally designed with neon padding */
             .deck-container>.slide {border: 1px dashed #333;} /* for the demo */
             .slide ul ul {margin-bottom: 0.25em;} /* remove some big spacing with neon nested lists */
@@ -36,7 +35,7 @@
 
 	<script src="../extensions/includedeck/load.js"></script>
         <script>
-            includedeck("profile-2 theme:neon", {
+            includedeck("profile-3 theme:neon", {
                PREFIX: "../" // deck.js is in the parent folder for this presentation
             })
         </script>
@@ -60,7 +59,7 @@ Use left/right arrow keys to browse the presentation.<br/>
     </div>
 
 <section class="smart">
-    ==Getting started with deck.js:<br/><b>smartsyntax</b> extension<br/><em>use right arrow to move on</em>==[*nostatus]#title-slide
+    ==Getting started with deck.js:<br/><b>smartsyntax</b> extension<br/><em>use right arrow to move on</em>==[*no-status]#title-slide
 
     =SmartSynt. ≃ Wiki Synt.=
     * Easy bullet points (numbered or not)
@@ -102,7 +101,7 @@ Use left/right arrow keys to browse the presentation.<br/>
     *** (use two consecutive dollar signs to output a dollar)[smaller]
     ** more on next slide
 
-    =Animations Friendly=
+    =Animations Friendly=[deck-status-fake-end]
     * Progressive display: use the <tt>slide</tt> class
     * This has both <tt>slide</tt> and <tt>highlight</tt> classes[slide][highlight]
     * Next: more things[slide]
