@@ -19,7 +19,11 @@ This module provides a support for a shorter syntax for slides.
         if (spaceSeparatedClasses == "") return;
         var parts = spaceSeparatedClasses.split(/ +/);
         for (i in parts) {
-            $(toWhat).addClass(parts[i]);
+            if (startsWith(parts[i], "*")) {
+                $(toWhat).attr("data-container-class", parts[i].substring(1));
+            } else {
+                $(toWhat).addClass(parts[i]);
+            }
         }
     }
 
