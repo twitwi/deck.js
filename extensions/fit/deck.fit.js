@@ -1,9 +1,8 @@
 /*!
   Deck JS - deck.fit
   Copyright (c) 2012 Rémi Emonet
-  Dual licensed under the MIT license and GPL license.
+  Licensed under the MIT license.
   https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
-  https://github.com/imakewebthings/deck.js/blob/master/GPL-license.txt
 */
 
 /*
