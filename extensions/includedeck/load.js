@@ -145,6 +145,10 @@ function includedeck(m, c) {
             toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
             return;
         }
+        if (k.substring(0, 10) == "extension:") {
+            toLoad = toLoad.concat(prefix + "/extensions/" + k.substring(10));
+            return;
+        }
         if (endsInJsOrCss.test(k)) {
             toLoad = toLoad.concat(k);
             return;
