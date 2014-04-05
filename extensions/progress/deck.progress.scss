@@ -1,0 +1,14 @@
+
+.deck-container.no-status .deck-status { display: none; }
+
+.deck-status {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom:0;
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  /*outline: 1px solid red;*/
+  color: #888;
+}
