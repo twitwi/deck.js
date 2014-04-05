@@ -92,6 +92,10 @@ function includedeck(m, c) {
             prefix + "/extensions/status/deck.status.css",
             prefix + "/extensions/status/deck.status.js"
         ],
+        "progress": [
+            prefix + "/extensions/progress/deck.progress.css",
+            prefix + "/extensions/progress/deck.progress.js"
+        ],
         "navigation": [
             prefix + "/extensions/navigation/deck.navigation.css",
             prefix + "/extensions/navigation/deck.navigation.js"
@@ -123,8 +127,9 @@ function includedeck(m, c) {
         /// profile-2: new deck (cleaner css) with most extensions and no theme
         "profile-2": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
         "profile-2-fitnofs": ["@_newdeck", "@_smartsyntax", "@_fit", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
-        /// profile-3: big profile = profile-2 + all good bundled extensions
-        "profile-3": ["@_profile-2", "@_metadata", "@_attribution", "@_container-styling"],
+        /// profile-3: big profile = profile-2 / with new status (progress) + all good bundled extensions
+        "profile-3": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
+                      "@_metadata", "@_attribution", "@_container-styling"],
         dummy: {}
     };
 
