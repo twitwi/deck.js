@@ -1,3 +1,10 @@
+/*!
+Deck JS - deck.anim
+Copyright (c) 2012-2014 Rémi Emonet
+Licensed under the MIT license.
+https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
+*/
+
 
 (function($, deck, undefined) {
     // The next two lines are the color plugin from jquery
