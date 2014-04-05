@@ -24,7 +24,6 @@ This module automatically adds some text and a link for elements having a "data-
     $d.bind('deck.init', function() {
         var o = $.deck('getOptions');
         $('*['+o.dataAttribution+']').each(function(i, el){
-            console.log(el)
             var c = $(el).attr(o.dataAttributionContent);
             var cc = $(el).attr(o.dataAttributionClass);
             var a = $(el).attr(o.dataAttribution);
