@@ -10,14 +10,14 @@
         direction = "reverse";
       }
 
-      $[deck]('getSlide', to).triggerHandler('deck.becameCurrent', [direction, from, to]);
       $[deck]('getSlide', from).triggerHandler('deck.lostCurrent', [direction, from, to]);
-
-      $prev && $prev.triggerHandler('deck.becamePrevious', [direction, from, to]);
-      $next && $next.triggerHandler('deck.becameNext', [direction, from, to]);
+      $[deck]('getSlide', to).triggerHandler('deck.becameCurrent', [direction, from, to]);
 
       $oldprev && $oldprev.triggerHandler('deck.lostPrevious', [direction, from, to]);
       $oldnext && $oldnext.triggerHandler('deck.lostNext', [direction, from, to]);
+
+      $prev && $prev.triggerHandler('deck.becamePrevious', [direction, from, to]);
+      $next && $next.triggerHandler('deck.becameNext', [direction, from, to]);
    });
 })(jQuery, 'deck');
 
