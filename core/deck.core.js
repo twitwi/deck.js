@@ -394,6 +394,10 @@ that use the API provided by core.
       initSlidesArray(options.selectors.slides);
       // Pre init event for preprocessing hooks
       beforeInitEvent.done = function() {
+        // reInitSlidesArray is meant only for beforeInit
+        methods['reInitSlidesArray'] = function() {
+            alert('Deck.js method "reInitSlidesArray" is meant to be called in the beforeInit phase only.');
+        }
         // re-populate the array of slides
         slides = [];
         initSlidesArray(options.selectors.slides);
@@ -425,6 +429,19 @@ that use the API provided by core.
           beforeInitEvent.done();
         }
       }, options.initLockTimeout);
+    },
+
+    /*
+    jQuery.deck('reInitSlidesArray')
+    
+    Force a recomputation of the "slides" array. This method is meant
+    to be used by extensions that generate new slides in the
+    beforeInit phase.
+    */
+
+    reInitSlidesArray: function() {
+        slides = [];
+        initSlidesArray(options.selectors.slides);
     },
 
     /*
