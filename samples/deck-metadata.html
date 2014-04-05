@@ -72,22 +72,31 @@ Use left/right arrow keys to browse the presentation.<br/>
         <li>An element with class <b>var-author</b>: <span class="var-author tinyhighlight"/></li>
         <li class="slide">An element with class <b>var-title</b>: <span class="var-title tinyhighlight"/></li>
         <li class="slide">An element with class <b>var-venue</b>: <span class="var-venue tinyhighlight"/></li>
-        <li class="slide">Another one with class <b>var-author</b>: <span class="var-author tinyhighlight"/></li>
+        <li class="slide">Another one with class <b>var-title</b>: <span class="var-title tinyhighlight"/></li>
         <li class="slide">
-            An element with class <b>var-title-br</b>: <span class="var-title-br tinyhighlight"></span>
-            (<b>-br</b> &rArr; special separator replaced by a <b>br</b> tag)
+            An element with class <b>var-title-full</b>: <span class="var-title-full tinyhighlight"></span><br/>
+            (<b>...-full</b> &rArr; special separator <span style="font-size:66%">(non-breaking space)</span> kept as is)
         </li>
         <li class="slide">
-            An element with class <b>var-title-full</b>: <span class="var-title-full tinyhighlight"></span>
-            (<b>-full</b> &rArr; special separator kept as is)
+            An element with class <b>var-title-br</b>: <span class="var-title-br tinyhighlight"></span>
+            (<b>...-br</b> &rArr; separator replaced by a <b>br</b> tag)
         </li>
         <li class="slide">The footer uses classes <b>var-author</b> and <b>var-title</b></li>
     </ul>
 </section>
 <section class="slide">
-    <h2>Browser support</h2>
+    <h1>Talking about: <span class="var-title-br tinyhighlight"/></h1>
+    <p>Here, <b>var-title-br</b> is used in the big header</p>
+</section>
+<section class="slide">
+    <h2>Support and notes</h2>
     <ul>
-        <li>Should be ok</li>
+        <li>Support: should be ok on all browsers</li>
+        <li>NB: to use this feature</li>
+        <ul>
+            <li>include the metadata extension</li>
+            <li>or use an includedeck profile that does it</li>
+        </ul>
     </ul>
 </section>
 <!-- DEMO: metadata -->
