@@ -144,6 +144,14 @@ Use left/right arrow keys to browse the presentation.<br/>
 
 <!-- deck.status snippet -->
 <p class="deck-status"> <span class="deck-status-current"></span> / <span class="deck-status-total"></span> </p>
+<div data-progress="left: 0 ; width: n / fullTotal * screen.width" class="deck-status" style="background: red; bottom:0; height: 2px;"> </div>
+<div data-progress="left: slide.left ; width: n / fullTotal * slide.width" class="deck-status" style="background: #0F0; bottom:3px; height: 2px;"> </div>
+<div data-progress="left: slide.left ; width: detail.n / detail.fullTotal * slide.width" class="deck-status" style="background: #FFF; bottom:6px; height: 2px;"> </div>
+
+<div data-progress="opacity: pFull" class="deck-status" style="background: #0F0; bottom:9px; height: 2px;"> </div>
+<div data-progress="opacity: detail.pFull" class="deck-status" style="background: #0FF; bottom:12px; height: 2px;"> </div>
+
+<div data-progress="background: 'rgb('+Math.round(255*detail.pFull)+',0,0)'" data-progress-once="left: slide.left ; width: slide.width" class="deck-status" style="background: #0FF; bottom:15px; height: 2px;"> </div>
 
 <!-- deck.goto snippet -->
 <form action="." method="get" class="goto-form">
