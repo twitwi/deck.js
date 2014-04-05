@@ -110,6 +110,7 @@ function includedeck(m, c) {
         ],
         "metadata": [ prefix + "/extensions/metadata/deck.metadata.js" ],
         "attribution": [ prefix + "/extensions/attribution/deck.attribution.js" ],
+        "container-styling": [ prefix + "/extensions/container-styling/deck.container-styling.js" ],
         //
         // Themes
         // // by convention, "theme:blabla" will load the default blabla theme
@@ -123,7 +124,7 @@ function includedeck(m, c) {
         "profile-2": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
         "profile-2-fitnofs": ["@_newdeck", "@_smartsyntax", "@_fit", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
         /// profile-3: big profile = profile-2 + all good bundled extensions
-        "profile-3": ["@_profile-2", "@_metadata", "@_attribution"],
+        "profile-3": ["@_profile-2", "@_metadata", "@_attribution", "@_container-styling"],
         dummy: {}
     };
 
