@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            
+        <title>deck.metadata.js   test/demo</title>
+            
+        <meta name="description" content="deck.*.js">
+        <meta name="author" content="Rémi Emonet">
+        <meta name="venue" content="website for   deck.js extensions">
+        <!--meta name="viewport" content="width=1024, user-scalable=no"/-->
+            
+        <style type="text/css">
+            .deck-container>section.slide {padding:0;} /* as samples were originally designed with neon padding */
+            .deck-container>.slide {border: 1px dashed #333;} /* for the demo */
+            .slide h1 {font-size: 3em;}
+            .slide h1 b {color: #0F0;}
+            .slide h1 em {color: #445; text-shadow: none; font-size: .3em;}
+
+            .deck-container .slide .slide {opacity: 1;} /* undo the shaded of non-current slides */
+            .slide .tinyhighlight {color: #F77; font-size: 66%;}
+            .slide b {color: #0F0; font-size: 75%;}
+        </style>
+
+	<script src="../extensions/includedeck/load.js"></script>
+        <script>
+            includedeck("profile-2 theme:neon metadata", {
+               PREFIX: "../" // deck.js is in the parent folder for this presentation
+            })
+        </script>
+
+    </head>
+
+<body>
+
+This page surely has a purpose.<br/>
+Use left/right arrow keys to browse the presentation.<br/>
+
+<div class="deck-container">
+
+<!-- Begin slides -->
+<section class="slide" id="title-slide">
+	<h1 title="use arrow keys to navigate">Getting started with deck.js:<br/><b>metadata</b> extension
+            <br/><em>use right arrow to move on</em>
+        </h1>
+</section>
+
+<section class="slide">
+    <h2>“metadata”: What?</h2>
+    <ul>
+        <li>Use and goal</li>
+        <ul>
+            <li>use HTML metadata and title in your slides</li>
+            <li>have “variables” that you can use in the slides</li>
+            <li>create generic title pages and footers</li>
+        </ul>
+        <li>Principle</li>
+        <ul>
+            <li>consider all <b>meta</b> tags + the <b>title</b> tag</li>
+            <li>set content of elements based on their class</li>
+            <li>examples on next slide</li>
+        </ul>
+    </ul>
+</section>
+<section class="slide">
+    <h2>“metadata”: Examples</h2>
+    <ul>
+        <li>An element with class <b>var-author</b>: <span class="var-author tinyhighlight"/></li>
+        <li class="slide">An element with class <b>var-title</b>: <span class="var-title tinyhighlight"/></li>
+        <li class="slide">An element with class <b>var-venue</b>: <span class="var-venue tinyhighlight"/></li>
+        <li class="slide">Another one with class <b>var-author</b>: <span class="var-author tinyhighlight"/></li>
+        <li class="slide">
+            An element with class <b>var-title-br</b>: <span class="var-title-br tinyhighlight"></span>
+            (<b>-br</b> &rArr; special separator replaced by a <b>br</b> tag)
+        </li>
+        <li class="slide">
+            An element with class <b>var-title-full</b>: <span class="var-title-full tinyhighlight"></span>
+            (<b>-full</b> &rArr; special separator kept as is)
+        </li>
+        <li class="slide">The footer uses classes <b>var-author</b> and <b>var-title</b></li>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Browser support</h2>
+    <ul>
+        <li>Should be ok</li>
+    </ul>
+</section>
+<!-- DEMO: metadata -->
+
+<!-- deck.navigation snippet -->
+<!--a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a-->
+
+<!-- deck.status snippet -->
+<p class="deck-status" style="left:35%"> <span class="deck-status-current"></span> / <span class="deck-status-total"></span> − <span class="var-author">will be replaced by author</span> − <span class="var-title">will be replaced by the title</span></p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+    <label for="goto-slide">Go to slide:</label> <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+    <datalist id="goto-datalist"></datalist> <input type="submit" value="Go">
+</form>
+
+</div>
+</body>
+</html>
