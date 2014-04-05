@@ -1,6 +1,8 @@
 /*!
 Deck JS - deck.svg
-Copyright (c) 2012 Rémi Emonet, as a major refactor from an early version from Rémi Barraquand.
+Copyright (c) 2012-2014 Rémi Emonet, as a major refactor from an early version from Rémi Barraquand.
+Licensed under the MIT license.
+https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 */
 
 /*
