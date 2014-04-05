@@ -9,6 +9,7 @@
         <!-- ================ -->
         <title>ZZZZ A Deck.js Presentation</title>
         <meta name="author" content="ZZZZ Author">
+        <meta name="date" content="2099-12-31">
             
 	<!-- Required stylesheet -->
 	<link rel="stylesheet" href="deck.js/core/deck.core.css">
@@ -58,6 +59,8 @@
         <script src="deck.js/libs/jquerysvg/jquery.svganim.min.js"></script>
         <script src="deck.js/extensions/svg/deck.svg.js"></script>
 
+        <script src="deck.js/extensions/metadata/deck.metadata.js"></script>
+
 
         <!-- Deck.js options (advanced) -->
         <script>$(function() {$.deck({
@@ -88,6 +91,11 @@ This text should not be displayed if everything goes well: use left/right arrow 
 
 ==New Presentation With deck.js and Extensions==[title-slide]
 
+=Metadata usage=
+* Title: <span class="var-title"/>
+* Author: <span class="var-author"/>
+* Date: <span class="var-date"/>
+
 =SVG + Animations=
 @svg:niceClass deck.js/samples/smiley.svg 700px 400px
 @anim-appear:300: #left | #right + #bottom | -#right
@@ -112,10 +120,13 @@ This text should not be displayed if everything goes well: use left/right arrow 
 
 <!-- deck.status snippet -->
 <p class="deck-status">
-    footer − 
-	<span class="deck-status-current"></span>
-	/
-	<span class="deck-status-total"></span>
+    <span class="deck-status-current"></span>
+    /
+    <span class="deck-status-total"></span>
+    −
+    <span class="var-author"></span>
+    −
+    <span class="var-title"></span>
 </p>
 <!-- deck.goto snippet -->
 <form action="." method="get" class="goto-form">
@@ -128,9 +139,8 @@ This text should not be displayed if everything goes well: use left/right arrow 
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
 <!-- deck.clone snippet: simple red box with top-left corner as cursor position -->
-<div class="clonepointer" style="position:absolute; width:20px; height:20px; background:red; z-index:10"></div>
-<!-- deck.clone snippet: simple green box with center as cursor position -->
-<div class="clonepointer" style="position:absolute; z-index:11"><div style="margin: -13px 0 0 -13px; width:18px; height:18px; border:4px solid green;"></div></div>
+<div class="clonepointer" style="position:absolute; z-index:11"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -11px 0 0 -11px; width:20px; height:20px; opacity: .5;"></div></div>
+<div class="clonepointer" style="position:absolute; z-index:11"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -16px 0 0 -16px; width:30px; height:30px;"></div></div>
 
 
 

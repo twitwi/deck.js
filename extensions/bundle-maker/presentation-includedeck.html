@@ -9,6 +9,7 @@
         <!-- ================ -->
         <title>ZZZZ An Includedeck Presentation</title>
         <meta name="author" content="ZZZZ Author">
+        <meta name="date" content="2099-12-31">
 
 
 
@@ -22,12 +23,15 @@
         </style>
 	<script src="deck.js/extensions/includedeck/load.js"></script>
         <script>
-            includedeck("profile-2 theme:web-2.0", {})
+            includedeck("profile-3 theme:web-2.0", {})
 
             // The "{}" can be filled with optional arguments such as
             //// PREFIX: "deck.js",
-            //// ATEXIT: function() {alert('loaded')},
-            //// fitMarginX:100, fitMarginY:100, // to tune margin
+            //// BEFORELOAD: function() {alert('will load')},
+            //// BEFOREINIT: function() {alert('loaded')},
+            //// AFTERINIT: function() {alert('inited')},
+            //// GENERIC: function(whe, wha) {if (whe == "AFTER" && wha == "svg") alert("AFTER SVG")},
+            //// fitMarginX:100, fitMarginY:100, // to tune margins
             //// fitMode: "stretched", // to strech (variable aspect ratio)
 
             // You can alternatively select what to include (as in these commented out examples)
@@ -48,6 +52,11 @@ This text should not be displayed if everything goes well: use left/right arrow 
 <section class="smart">
 
 ==New Presentation With deck.js and Extensions==[title-slide]
+
+=Metadata usage=
+* Title: <span class="var-title"/>
+* Author: <span class="var-author"/>
+* Date: <span class="var-date"/>
 
 =SVG + Animations=
 @svg:niceClass deck.js/samples/smiley.svg 700px 400px
@@ -72,10 +81,13 @@ This text should not be displayed if everything goes well: use left/right arrow 
 
 <!-- deck.status snippet -->
 <p class="deck-status">
-    footer − 
-	<span class="deck-status-current"></span>
-	/
-	<span class="deck-status-total"></span>
+    <span class="deck-status-current"></span>
+    /
+    <span class="deck-status-total"></span>
+    −
+    <span class="var-author"></span>
+    −
+    <span class="var-title"></span>
 </p>
 <!-- deck.goto snippet -->
 <form action="." method="get" class="goto-form">
@@ -87,10 +99,9 @@ This text should not be displayed if everything goes well: use left/right arrow 
 <!-- deck.navigation snippet -->
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
-<!-- deck.clone snippet: simple red box with top-left corner as cursor position -->
-<div class="clonepointer" style="position:absolute; width:20px; height:20px; background:red; z-index:10"></div>
-<!-- deck.clone snippet: simple green box with center as cursor position -->
-<div class="clonepointer" style="position:absolute; z-index:11"><div style="margin: -13px 0 0 -13px; width:18px; height:18px; border:4px solid green;"></div></div>
+<!-- deck.clone snippet: two circles -->
+<div class="clonepointer" style="position:absolute; z-index:11"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -11px 0 0 -11px; width:20px; height:20px; opacity: .5;"></div></div>
+<div class="clonepointer" style="position:absolute; z-index:11"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -16px 0 0 -16px; width:30px; height:30px;"></div></div>
 
 
 
