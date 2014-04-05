@@ -154,9 +154,9 @@ Use left/right arrow keys to browse the presentation.<br/>
 
 
 <script>
-            includedeck("profile-2-fitnofs theme:neon", {
-               PREFIX: "../", // deck.js is in the parent folder for this presentation
-               ATEXIT: function() {
+includedeck("profile-2-fitnofs theme:neon", {
+   PREFIX: "../", // deck.js is in the parent folder for this presentation
+   AFTERINIT: function() {
         /* This script is just for the demo with live resizing */
         $(function(){
             var $c = $(".deck-container");
@@ -196,7 +196,7 @@ Use left/right arrow keys to browse the presentation.<br/>
             }
         })
         });
-}
+   }
 });
     </script>        
 </div>

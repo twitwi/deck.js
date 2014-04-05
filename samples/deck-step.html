@@ -124,17 +124,16 @@
 <script>
             includedeck("profile-2 theme:neon", {
                PREFIX: "../", // deck.js is in the parent folder for this presentation
-               ATEXIT: function() {
-        // we register the listeners before call the deck init
-        $('.demotoshow1').bind('deck.toplevelBecameCurrent', function() {
-            $(".demo").html($(".demo").html()+"1");
-        });
-        $('.demotoshow2').bind('deck.toplevelBecameCurrent', function() {
-            $(".demo").html($(".demo").html()+"2");
-        });
-        
-}
-});
+               AFTERINIT: function() {
+                  // we register the listeners before call the deck init
+                  $('.demotoshow1').bind('deck.toplevelBecameCurrent', function() {
+                     $(".demo").html($(".demo").html()+"1");
+                  });
+                  $('.demotoshow2').bind('deck.toplevelBecameCurrent', function() {
+                     $(".demo").html($(".demo").html()+"2");
+                  });
+               }
+            });
 </script>
 </div>
 </body>

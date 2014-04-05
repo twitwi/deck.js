@@ -27,7 +27,7 @@
         <script>
             includedeck("profile-2 theme:neon", {
                PREFIX: "../", // deck.js is in the parent folder for this presentation
-               ATEXIT: function() {
+               AFTERINIT: function() {
                   $(function() {
                      $('.firefox-message').hide();
                      $('.firefox-message').click(function(){
