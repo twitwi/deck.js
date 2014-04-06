@@ -98,6 +98,9 @@ It also overrides the defaults keybinding and countNested value (so it is better
                 break;
             }
         }
+        if (icur == $[deck]('getSlides').length) {
+            $[deck]('go', icur-1);            
+        }
     });
     $d.bind('deck.init', function() {
         $d.unbind('keydown.decknexttoplevel').bind('keydown.decknexttoplevel', function(e) {
