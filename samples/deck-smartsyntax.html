@@ -142,16 +142,35 @@ Use left/right arrow keys to browse the presentation.<br/>
 <!--a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a-->
 
-<!-- deck.status snippet -->
-<p class="deck-status"> <span class="deck-status-current"></span> / <span class="deck-status-total"></span> </p>
+<!-- deck.progress snippet -->
+
+<!-- example: a bar taking up to the whole (screen) width, progressing continuously (ignoring fake-end) -->
 <div data-progress="left: 0 ; width: n / fullTotal * screen.width" class="deck-status" style="background: red; bottom:0; height: 2px;"> </div>
+
+<!-- example: a bar taking up to the slide width, progressing continuously (ignoring fake-end) -->
 <div data-progress="left: slide.left ; width: n / fullTotal * slide.width" class="deck-status" style="background: #0F0; bottom:3px; height: 2px;"> </div>
+
+<!-- example: a bar taking up to the slide width, progressing at each step (not only on toplevel slides) continuously (ignoring fake-end) -->
 <div data-progress="left: slide.left ; width: detail.n / detail.fullTotal * slide.width" class="deck-status" style="background: #FFF; bottom:6px; height: 2px;"> </div>
 
+<!-- example: a bar taking the full screen width, changing on toplevel slide, changing opacity (ignoring fake-end) -->
 <div data-progress="opacity: pFull" class="deck-status" style="background: #0F0; bottom:9px; height: 2px;"> </div>
+
+<!-- example: a bar taking the full screen width, continuously changing opacity (ignoring fake-end) -->
 <div data-progress="opacity: detail.pFull" class="deck-status" style="background: #0FF; bottom:12px; height: 2px;"> </div>
 
-<div data-progress="background: 'rgb('+Math.round(255*detail.pFull)+',0,0)'" data-progress-once="left: slide.left ; width: slide.width" class="deck-status" style="background: #0FF; bottom:15px; height: 2px;"> </div>
+<!-- example: a bar smartly placed in the slide, increasing in redness at each step with some x² form, considering fake-end-->
+<div data-progress="background: 'rgb('+Math.round(255*detail.p*detail.p)+',0,0)'"
+     data-progress-size="left: slide.left ; top: (slide.bottom - 10)+'px'; width: slide.width"
+     class="deck-status" style="background: #0FF; bottom:15px; height: 2px;"> </div>
+
+<!-- a more classical progress: adapt the position and the size according to the slides, display slide count-->
+<p class="deck-status" 
+   data-progress-size="font-size: (10*designRatio)+'px' ; top: (slide.bottom - 10 - 14*designRatio)+'px'">
+    <!--         ^ called only if resized (and at the beginning)               ^ to be above the example bars  -->
+    <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
+</p>
+
 
 <!-- deck.goto snippet -->
 <form action="." method="get" class="goto-form">
