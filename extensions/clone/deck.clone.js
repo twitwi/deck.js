@@ -101,14 +101,6 @@ This module provides a support for cloning the deck.
            clone.deck('go', to);
         });
     })
-    /* Do the animations locally */
-    .bind('deck.step', function(e, delta) {
-        cleanClones();
-        $.each(clones, function(index, clone) {
-            if (delta == -1) clone.deck('stepPrev');
-            else if (delta == 1) clone.deck('stepNext');
-        });
-    })
     /* Replicate mouse cursor */
     .bind('mousemove', function(e) {
         var current = $[deck]('getToplevelSlideOf', $[deck]('getSlide')).node; // actually uses the step extension
