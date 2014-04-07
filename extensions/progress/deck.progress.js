@@ -164,6 +164,7 @@ Note however, that it does not handle the countNested=true case.
     $document.bind('deck.init', function() {
         markRootSlides();
         fireEventOnCurrentSlide(INITEVENT);
+        fireEventOnCurrentSlide(SIZEEVENT);
         setTotalSlideNumber();
     });
     var timer = -1;
