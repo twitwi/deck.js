@@ -78,7 +78,7 @@ the deck container.
       var index = parseInt(indexOrId, 10);
 
       if (!options.countNested) {
-        if (!isNaN(index) && index >= rootCounter) {
+        if (!isNaN(index) && (index > rootCounter || index <= 0)) {
           return false;
         }
         $.each($.deck('getSlides'), function(i, $slide) {
