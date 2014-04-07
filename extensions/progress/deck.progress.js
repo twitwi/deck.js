@@ -52,6 +52,7 @@ Note however, that it does not handle the countNested=true case.
             var N = last;
             var fullTotal = $.deck('getTopLevelSlides').length;
             var detail = {n: currentDetail+1, N: lastDetail, fullTotal: $.deck('getSlides').length};
+            var designRatio = slide.width / opts.designWidth;
             var o = opts;
             var p = n/N;
             var pFull = n/fullTotal;
