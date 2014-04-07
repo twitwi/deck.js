@@ -14,7 +14,8 @@ Note however, that it does not handle the countNested=true case.
 (function($, undefined) {
     var $document = $(document);
     var rootCounter;
-    var INITEVENT = "dummy";
+    var INITEVENT = "dummyinit";
+    var SIZEEVENT = "dummysize";
     
     var updateCurrent = function(event, from, to) {
         var opts = $.deck('getOptions');
@@ -41,7 +42,7 @@ Note however, that it does not handle the countNested=true case.
 	$(opts.selectors.statusTotal).text(last);
 
         // handle the data-progress
-        var progresses = $('*['+opts.dataProgress+'], *['+opts.dataProgressOnce+']');
+        var progresses = $('*['+opts.dataProgress+'], *['+opts.dataProgressOnce+'], *['+opts.dataProgressSize+']');
         if (progresses.size() > 0) {
             var visibleSlide = $.deck('getSlide').parentsUntil(opts.selectors.container).addBack().filter(opts.selectors.slides);
             // the eval context
@@ -51,13 +52,14 @@ Note however, that it does not handle the countNested=true case.
             var N = last;
             var fullTotal = $.deck('getTopLevelSlides').length;
             var detail = {n: currentDetail+1, N: lastDetail, fullTotal: $.deck('getSlides').length};
+            var o = opts;
             var p = n/N;
             var pFull = n/fullTotal;
             detail.p = detail.n/detail.N;
             detail.pFull = detail.n/detail.fullTotal;
             // 
             progresses.each(function(i, el) {
-                var att = $(el).attr(event == INITEVENT ? opts.dataProgressOnce : opts.dataProgress);
+                var att = $(el).attr(event == INITEVENT ? opts.dataProgressOnce : event == SIZEEVENT ? opts.dataProgressSize : opts.dataProgress);
                 if (att == null || att.length == 0) return;
                 var tasks = att.split(/ *; */);
                 for (t in tasks) {
@@ -105,7 +107,7 @@ Note however, that it does not handle the countNested=true case.
         });
     };
     
-    var setInitialSlideNumber = function() {
+    var fireEventOnCurrentSlide = function(ev) {
         var slides = $.deck('getSlides');
         var $currentSlide = $.deck('getSlide');
         var index;
@@ -116,7 +118,7 @@ Note however, that it does not handle the countNested=true case.
                 return false;
             }
         });
-        updateCurrent(INITEVENT, index, index);
+        updateCurrent(ev, index, index);
     };
     
     var setTotalSlideNumber = function() {
@@ -149,16 +151,33 @@ Note however, that it does not handle the countNested=true case.
 	    statusFullTotal: '.deck-status-full-total',
         },
         alert: {
-            wrongDataProgress: true
+            wrongDataProgress: true,
+            possibleDebounceProblem: true
         },
         dataProgress: "data-progress",
-        dataProgressOnce: "data-progress-once"
+        dataProgressOnce: "data-progress-once",
+        dataProgressSize: "data-progress-size",
+        progressSizeDebounce: 201 /* somewhat, it should be bigger that the fit debounce */
     });
     
     $document.bind('deck.init', function() {
         markRootSlides();
-        setInitialSlideNumber();
+        fireEventOnCurrentSlide(INITEVENT);
         setTotalSlideNumber();
+    });
+    var timer = -1;
+    $(window).unbind('resize.deckprogress').bind('resize.deckprogress', function() {
+        var opts = $.deck('getOptions');
+        if (opts.alert.possibleDebounceProblem && opts.progressSizeDebounce < opts.scaleDebounce + 1) {
+            alert(
+                "There might be a problem with the respective debounce value:\n   progressSizeDebounce: "+opts.progressSizeDebounce+"\n   scaleDebounce: "+opts.scaleDebounce);
+
+        }
+        window.clearTimeout(timer);
+        timer = window.setTimeout( function() {
+            fireEventOnCurrentSlide(SIZEEVENT);
+            fireEventOnCurrentSlide("fire also the update event as some things might also need resizing");
+        }, opts.progressSizeDebounce);
     });
     $document.bind('deck.change', updateCurrent);
 })(jQuery, 'deck');
