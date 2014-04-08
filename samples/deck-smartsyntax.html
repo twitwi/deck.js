@@ -171,6 +171,10 @@ Use left/right arrow keys to browse the presentation.<br/>
     <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
 </p>
 
+<!-- advanced, more flexible, less useful stuff -->
+<p class="deck-status" style="top:0" data-progress-size="$text: designRatio"> will be removed by the designRatio value</p>
+<p class="deck-status" style="top:20px" data-progress-size="$html: '&lt;em>'+designRatio+'&lt;/em>'"> will be removed by the designRatio value</p>
+<p class="deck-status" style="top:40px" data-progress-size="@class: 'deck-status size'+Math.round(designRatio*10)">This has a varying class</p>
 
 <!-- deck.goto snippet -->
 <form action="." method="get" class="goto-form">
