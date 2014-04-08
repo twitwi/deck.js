@@ -72,7 +72,19 @@ Note however, that it does not handle the countNested=true case.
                         var what = parts[0];
                         var expr = parts[1];
                         var val = eval(expr);
-                        $(el).css(what, val);
+                        if (what == "") {
+                            // skip: expected to be some "magic", e.g. custom code or call to helpers
+                        } else if (what.substring(0,1) == "@") {
+                            // special attribute setting, not css
+                            what = what.substring(1);
+                            $(el).attr(what, val);
+                        } else if (what == "$text") {
+                            $(el).text(val);
+                        } else if (what == "$html") {
+                            $(el).html(val);
+                        } else {
+                            $(el).css(what, val);
+                        }
                     }
                 }
             });
