@@ -60,6 +60,13 @@ Note however, that it does not handle the countNested=true case.
             detail.pFull = detail.n/detail.fullTotal;
             // 
             progresses.each(function(i, el) {
+                var spe = {
+                    bottom: function(fontSize, botByRatio, botFixed) {
+                        botFixed = botFixed || 0;
+                        $(el).css('font-size', (fontSize * designRatio)+"px");
+                        $(el).css('top', (slide.bottom - botFixed - botByRatio*designRatio)+'px');
+                    }
+                };
                 var att = $(el).attr(event == INITEVENT ? opts.dataProgressOnce : event == SIZEEVENT ? opts.dataProgressSize : opts.dataProgress);
                 if (att == null || att.length == 0) return;
                 var tasks = att.split(/ *; */);
