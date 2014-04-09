@@ -176,6 +176,12 @@ Use left/right arrow keys to browse the presentation.<br/>
    data-progress-size=": spe.bottom(12, 14, 10)" > <!-- last parameter is 0 by default -->
    <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
 </p>
+
+<!-- even a built-in class for a font-size of 10px (in designSize terms) -->
+<p class="deck-status deck-progress-10" style="color: white; padding-left: 200px;">
+   <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
+</p>
+
 <!-- advanced, more flexible, less useful stuff -->
 <p class="deck-status" style="top:0" data-progress-size="$text: designRatio"> will be removed by the designRatio value</p>
 <p class="deck-status" style="top:20px" data-progress-size="$html: '&lt;em>'+designRatio+'&lt;/em>'"> will be removed by the designRatio value</p>
