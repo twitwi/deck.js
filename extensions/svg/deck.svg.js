@@ -205,6 +205,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                         +"\nMaybe the file does not exist?"
                                         +"\nOr maybe"
                                         +"\n - it has no w or h attribute?"
+                                        +"\n - you're using a file that is within a symbolic-link folder?"
                                         +"\n - you're using chrome with local files?"
                                         +"\n   ⇒ try to restart chrome with '--disable-web-security'");
                                 event.releaseInit();
