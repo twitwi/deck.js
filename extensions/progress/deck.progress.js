@@ -169,6 +169,7 @@ Note however, that it does not handle the countNested=true case.
 	    statusTotal: '.deck-status-total',
 	    statusFakeEnd: '.deck-status-fake-end',
 	    statusFullTotal: '.deck-status-full-total',
+	    progress10: '.deck-progress-10'
         },
         alert: {
             wrongDataProgress: true,
@@ -181,6 +182,8 @@ Note however, that it does not handle the countNested=true case.
     });
     
     $document.bind('deck.init', function() {
+        var opts = $.deck('getOptions');
+        $(opts.selectors.progress10).attr(opts.dataProgressSize, ':spe.bottom(10, 10)')
         markRootSlides();
         fireEventOnCurrentSlide(INITEVENT);
         fireEventOnCurrentSlide(SIZEEVENT);
