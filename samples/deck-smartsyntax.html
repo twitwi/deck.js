@@ -166,11 +166,16 @@ Use left/right arrow keys to browse the presentation.<br/>
 
 <!-- a more classical progress: adapt the position and the size according to the slides, display slide count-->
 <p class="deck-status" 
-   data-progress-size="font-size: (10*designRatio)+'px' ; top: (slide.bottom - 10 - 14*designRatio)+'px'">
-    <!--         ^ called only if resized (and at the beginning)               ^ to be above the example bars  -->
+   data-progress-size="font-size: (12*designRatio)+'px' ; top: (slide.bottom - 14*designRatio - 10)+'px'">
+    <!--         ^ called only if resized (and at the beginning)                                ^ to be above the example bars  -->
     <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
 </p>
 
+<!-- a nice built-in for that -->
+<p class="deck-status" style="color: green; padding-left: 100px;"
+   data-progress-size=": spe.bottom(12, 14, 10)" > <!-- last parameter is 0 by default -->
+   <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
+</p>
 <!-- advanced, more flexible, less useful stuff -->
 <p class="deck-status" style="top:0" data-progress-size="$text: designRatio"> will be removed by the designRatio value</p>
 <p class="deck-status" style="top:20px" data-progress-size="$html: '&lt;em>'+designRatio+'&lt;/em>'"> will be removed by the designRatio value</p>
