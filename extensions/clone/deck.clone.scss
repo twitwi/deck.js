@@ -1,4 +1,10 @@
 
+body.is-clone .clonepointer {
+    /* default convenient positioning for clone pointers */
+    position: absolute;
+    z-index: 10;
+}
+
 body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) {
     &>.slide.deck-current, &>.slide.deck-child-current {
         border: 5px solid grey;
