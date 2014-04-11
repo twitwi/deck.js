@@ -27,6 +27,7 @@ This module provides a support for cloning the deck.
         fitFollowsClone: true
     });
 
+    var hadClones = false;
     var cleanClones = function() {
         var opts = $[deck]('getOptions');
         // remove closed windows
@@ -38,10 +39,12 @@ This module provides a support for cloning the deck.
         // tag/untag the current container depending on the presence of clones
         if (clones.length > 0) {
             $("body").addClass(opts.classes.hasClones);
-            if (opts.fitFollowsClone) $[deck]('disableScale');
+            if (opts.fitFollowsClone && !hadClones) $[deck]('disableScale');
+            hadClones = true;
         } else {
             $("body").removeClass(opts.classes.hasClones);
-            if (opts.fitFollowsClone) $[deck]('enableScale');
+            if (opts.fitFollowsClone && hadClones) $[deck]('enableScale');
+            hadClones = false;
         }
     };
 
