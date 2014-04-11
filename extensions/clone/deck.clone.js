@@ -125,6 +125,7 @@ This module provides a support for cloning the deck.
         var x = (e.clientX - r.left) / r.width;
         var y = (e.clientY - r.top) / r.height;
         cleanClones();
+        if (x < 0 || y < 0 || x > 1 || y > 1) return;
         $.each(clones, function(index, clone) {
             clone.deck('pointerAt', x, y);
         });
