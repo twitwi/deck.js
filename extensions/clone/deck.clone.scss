@@ -1,0 +1,28 @@
+
+body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) {
+    &>.slide.deck-current, &>.slide.deck-child-current {
+        border: 5px solid grey;
+        left: 0;
+        top: 0;
+        width:800px;
+        height:600px;
+        transform: translate(20px, 20px);
+        -webkit-transform: translate(20px, 20px);
+        
+        & + .slide {
+            border: 5px solid grey;
+            display: block !important;
+            visibility: visible;
+            top: 0;
+            left: 0;
+            width: 800px;
+            height: 600px;
+            transform: translate(-50%, -50%) scale(.5) translate(50%, 50%) translate(200%,0)
+                       translate(80px, 40px);
+            -webkit-transform: translate(-50%, -50%) scale(.5) translate(50%, 50%) translate(200%,0)
+                       translate(80px, 40px);
+
+            &.deck-next { outline-color: red;}
+        }
+    }
+}
