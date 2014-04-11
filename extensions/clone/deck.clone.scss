@@ -7,16 +7,18 @@ body.is-clone .clonepointer {
 
 body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) {
     &>.slide.deck-current, &>.slide.deck-child-current {
-        border: 5px solid grey;
+        outline: 5px solid grey; /* use outline to avoid layout issues with old themes and allow for precise pointer position estimation */
+        overflow: hidden;
         left: 0;
         top: 0;
-        width:800px;
-        height:600px;
+        width: 800px;
+        height: 600px;
         transform: translate(20px, 20px);
         -webkit-transform: translate(20px, 20px);
         
         & + .slide {
-            border: 5px solid grey;
+            outline: 5px solid grey;
+            overflow: hidden;
             display: block !important;
             visibility: visible;
             top: 0;
