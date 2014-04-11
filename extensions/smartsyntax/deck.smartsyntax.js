@@ -281,8 +281,9 @@ This module provides a support for a shorter syntax for slides.
         $('.smart').each(function() {
             var it = this;
             var slides = interpretationOfSmartLanguage(it.innerHTML, document);
-            it.innerHTML = ""; // clear the smart node
             $(it).after(slides);
+            // remove the smart node (to avoid having an empty non-slide sibling (e.g., in the presenter view))
+            $(it).remove();
         });
         $[deck]('reInitSlidesArray')
     });
