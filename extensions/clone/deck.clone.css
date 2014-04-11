@@ -3,6 +3,16 @@ body.is-clone .clonepointer {
   position: absolute;
   z-index: 10;
 }
+body.is-clone .clonepointer.scale-on-click {
+  transition: transform 80ms linear;
+  -webkit-transition: transform 80ms linear;
+}
+body.is-clone .clonepointer.scale-on-click.pointer-click {
+  transition: transform 150ms linear;
+  -webkit-transition: transform 150ms linear;
+  transform: translate(-50%, -50%) scale(1.5, 1.5) translate(50%, 50%);
+  -webkit-transform: translate(-50%, -50%) scale(1.5, 1.5) translate(50%, 50%);
+}
 
 body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) > .slide.deck-current, body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) > .slide.deck-child-current {
   outline: 5px solid grey;
