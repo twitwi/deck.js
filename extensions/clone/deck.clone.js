@@ -58,6 +58,9 @@ This module provides a support for cloning the deck.
         cleanClones();
         return clone;
     });
+    $[deck]('extend', 'cleanClones', function() { // to be triggered by the closing of a clone window
+        setTimeout(cleanClones, 1);
+    });
     $[deck]('extend', 'pointerAt', function(rx, ry) {
         var pos = {left: (rx*100)+"%", top: (ry*100)+"%"};
         var opts = $[deck]('getOptions');
@@ -92,6 +95,9 @@ This module provides a support for cloning the deck.
                     window.opener.$.deck.apply(window.opener.$, arguments);
                 }
             }
+            $(window).on('unload', function() {
+                parentDeck('cleanClones');
+            });
         } else { // it is a normal window
             /* bind clone key events */
             $d.unbind('keydown.deckclone').bind('keydown.deckclone', function(e) {
