@@ -23,7 +23,8 @@ This module provides a support for cloning the deck.
         },
         keys: {
             clone: 67 // c
-        }
+        },
+        fitFollowsClone: true
     });
 
     var cleanClones = function() {
@@ -37,8 +38,10 @@ This module provides a support for cloning the deck.
         // tag/untag the current container depending on the presence of clones
         if (clones.length > 0) {
             $("body").addClass(opts.classes.hasClones);
+            if (opts.fitFollowsClone) $[deck]('disableScale');
         } else {
             $("body").removeClass(opts.classes.hasClones);
+            if (opts.fitFollowsClone) $[deck]('enableScale');
         }
     };
 
