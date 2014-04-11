@@ -19,7 +19,8 @@ This module provides a support for cloning the deck.
         },
         classes: {
             isClone: 'is-clone',
-            hasClones: 'has-clones'
+            hasClones: 'has-clones',
+            pointerClick: 'pointer-click',
         },
         keys: {
             clone: 67 // c
@@ -71,6 +72,16 @@ This module provides a support for cloning the deck.
         }
         pointers.css(pos);
         // using % position instead of ".offset" as there are jitter/glitches with it
+    });
+    $[deck]('extend', 'pointerDown', function() {
+        var opts = $[deck]('getOptions');
+        var pointers = $(opts.selectors.clonepointer);
+        pointers.addClass(opts.classes.pointerClick);
+    });
+    $[deck]('extend', 'pointerUp', function() {
+        var opts = $[deck]('getOptions');
+        var pointers = $(opts.selectors.clonepointer);
+        pointers.removeClass(opts.classes.pointerClick);
     });
     
     var isClone = false;
@@ -132,6 +143,20 @@ This module provides a support for cloning the deck.
         if (x < 0 || y < 0 || x > 1 || y > 1) return;
         $.each(clones, function(index, clone) {
             clone.deck('pointerAt', x, y);
+        });
+    })
+    .bind('mousedown', function(e) {
+        if (isClone) return;
+        cleanClones();
+        $.each(clones, function(index, clone) {
+            clone.deck('pointerDown');
+        });
+    })
+    .bind('mouseup', function(e) {
+        if (isClone) return;
+        cleanClones();
+        $.each(clones, function(index, clone) {
+            clone.deck('pointerUp');
         });
     });
     
