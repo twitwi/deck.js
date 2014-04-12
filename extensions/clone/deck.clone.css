@@ -20,8 +20,6 @@ body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) > .slide.
   overflow: hidden;
   left: 0;
   top: 0;
-  width: 800px;
-  height: 600px;
   transform: translate(20px, 20px);
   -webkit-transform: translate(20px, 20px);
 }
@@ -32,8 +30,6 @@ body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) > .slide.
   visibility: visible;
   top: 0;
   left: 0;
-  width: 800px;
-  height: 600px;
   transform: translate(-50%, -50%) scale(0.5) translate(50%, 50%) translate(200%, 0) translate(80px, 40px);
   -webkit-transform: translate(-50%, -50%) scale(0.5) translate(50%, 50%) translate(200%, 0) translate(80px, 40px);
 }
