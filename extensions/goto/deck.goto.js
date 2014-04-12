@@ -15,6 +15,18 @@ the deck container.
   var $document = $(document);
   var rootCounter;
 
+  var maybeAddSnippet = function() {
+    var options = $.deck('getOptions');
+    if (options.snippets.goto) {
+      $('<form/>').addClass('goto-form').attr('action', '.').attr('method', 'get')
+        .append($('<label/>').attr('for', 'goto-slide').text('Go to slide:'))
+        .append($('<input/>').attr('type', 'text').attr('id', 'goto-slide').attr('name', 'slidenum').attr('list', 'goto-datalist'))
+        .append($('<datalist/>').attr('id', 'goto-datalist'))
+        .append($('<input/>').attr('type', 'submit').attr('value', 'Go'))
+      .appendTo($.deck('getContainer'));
+    }
+  };
+
   var bindKeyEvents = function() {
     $document.unbind('keydown.deckgoto');
     $document.bind('keydown.deckgoto', function(event) {
@@ -136,6 +148,10 @@ the deck container.
       gotoInput: '#goto-slide'
     },
 
+    snippets: {
+      goto: true
+    },
+
     keys: {
       goto: 71 // g
     },
@@ -181,6 +197,7 @@ the deck container.
   });
 
   $document.bind('deck.init', function() {
+    maybeAddSnippet();
     bindKeyEvents();
     populateDatalist();
     markRootSlides();
