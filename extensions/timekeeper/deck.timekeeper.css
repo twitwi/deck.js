@@ -28,7 +28,7 @@ body:not(.has-clones) .timekeeper {
 }
 .timekeeper .timekeeper-time.timekeeper-time, .timekeeper .timekeeper-local-relative-time.timekeeper-time {
   border-left: 2px solid grey;
-  margin-left: -10px;
+  /*margin-left: -10px; not needed with the injected template (no space in it)*/
   margin-right: -15px;
 }
 .timekeeper .timekeeper-relative-time {

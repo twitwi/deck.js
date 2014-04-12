@@ -28,6 +28,9 @@ It also injects some default html for it if none is found (and styles it for the
             timekeeperNotification: "timekeeper-notification",
             timekeeperLogsVisible: "timekeeper-logs-visible"
         },
+        snippets: {
+            timekeeper: true
+        },
         alert: {
             localStorageUnsupported: true
         },
@@ -48,6 +51,18 @@ It also injects some default html for it if none is found (and styles it for the
     $d.bind('deck.init', function() {
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
+
+        if (opts.snippets.timekeeper) {
+            var d = function() {return $('<div/>');}
+            var divTK = d().addClass("timekeeper timekeeper-logs-toggle");
+            divTK.append(d().addClass("timekeeper-local-relative-time"));
+            divTK.append(d().addClass("timekeeper-time"));
+            divTK.append(d().addClass("timekeeper-relative-time"));
+            divTK.append(d().addClass("timekeeper-clear"));
+            divTK.append(d().addClass("timekeeper-bang"));
+            divTK.appendTo(container);
+            $('<pre/>').addClass("timekeeper-logs").appendTo(container);
+        }
 
         if (!window.localStorage && opts.alert.localStorageUnsupported) { alert(
             "LocalStorage is unsupported in your browser, timing features are disabled (timekeeper extension).");
