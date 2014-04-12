@@ -15,7 +15,7 @@
             
         <style type="text/css">
             .deck-container>section.slide {padding:0;} /* as samples were originally designed with neon padding */
-            body.has-clones .deck-container {background: #333;}
+            body.has-clones .deck-container {background: #111;}
             .deck-container>.slide {border: 1px dashed #333;} /* for the demo */
             .slide h1 {font-size: 3em;}
             .slide h1 b {color: #0F0;}
@@ -25,7 +25,7 @@
 
 	<script src="../extensions/includedeck/load.js"></script>
         <script>
-            includedeck("profile-2 theme:neon", {
+            includedeck("profile-3 theme:neon", {
                PREFIX: "../", // deck.js is in the parent folder for this presentation
                AFTERINIT: function() {
                   $(function() {
@@ -155,9 +155,18 @@ Use left/right arrow keys to browse the presentation.<br/>
 </form>
 
 <!-- deck.clone snippet: simple red box with top-left corner as cursor position -->
-<div class="clonepointer" style="position:absolute; width:20px; height:20px; background-color:red; z-index:10"></div>
+<div class="clonepointer" style="width:20px; height:20px; background-color:red;"></div>
 <!-- deck.clone snippet: simple green box with center as cursor position -->
-<div class="clonepointer" style="position:absolute; z-index:11"><div style="margin: -13px 0 0 -13px; width:18px; height:18px; border:4px solid green;"></div></div>
+<div class="clonepointer scale-on-click"><div style="margin: -13px 0 0 -13px; width:18px; height:18px; border:4px solid green;"></div></div>
+
+<div class="timekeeper timekeeper-logs-toggle">
+    <div class="timekeeper-local-relative-time"></div>
+    <div class="timekeeper-time"></div>
+    <div class="timekeeper-relative-time"></div>
+    <div class="timekeeper-clear"></div>
+    <div class="timekeeper-bang"></div>
+</div>
+<pre class="timekeeper-logs"></pre>
 
 </div>
 </body>
