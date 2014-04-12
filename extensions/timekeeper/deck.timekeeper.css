@@ -12,6 +12,9 @@
   padding: 4px;
   margin: -4px;
 }
+body:not(.has-clones) .timekeeper {
+  visibility: hidden;
+}
 .timekeeper .timekeeper-time, .timekeeper .timekeeper-local-relative-time {
   margin: 0;
   padding: 0;
