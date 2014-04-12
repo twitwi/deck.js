@@ -1,0 +1,85 @@
+/* the time etc */
+.timekeeper {
+  font-size: 28px;
+  border-radius: 3px;
+  background: black;
+  color: white;
+  display: inline-block;
+  position: absolute;
+  left: 840px;
+  top: 340px;
+  width: 400px;
+  padding: 0;
+}
+body:not(.has-clones) .timekeeper {
+  visibility: hidden;
+}
+.timekeeper .timekeeper-time, .timekeeper .timekeeper-local-relative-time {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+  vertical-align: middle;
+}
+.timekeeper .timekeeper-time.timekeeper-local-relative-time, .timekeeper .timekeeper-local-relative-time.timekeeper-local-relative-time {
+  color: grey;
+}
+.timekeeper .timekeeper-time.timekeeper-time, .timekeeper .timekeeper-local-relative-time.timekeeper-time {
+  border-left: 2px solid grey;
+  margin-left: -10px;
+  margin-right: -15px;
+}
+.timekeeper .timekeeper-relative-time {
+  margin-top: 5px;
+  border-top: 2px solid grey;
+  text-align: center;
+  font-size: 300%;
+}
+.timekeeper .timekeeper-bang, .timekeeper .timekeeper-clear {
+  display: inline-block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 45%;
+  border: 2px solid grey;
+  border-radius: 15px;
+  background: black;
+}
+.timekeeper .timekeeper-bang.timekeeper-bang, .timekeeper .timekeeper-clear.timekeeper-bang {
+  top: 5px;
+}
+.timekeeper .timekeeper-bang.timekeeper-clear, .timekeeper .timekeeper-clear.timekeeper-clear {
+  top: 18px;
+}
+.timekeeper .timekeeper-bang:not(.timekeeper-notification), .timekeeper .timekeeper-clear:not(.timekeeper-notification) {
+  transition: background 300ms linear;
+  -webkit-transition: background 300ms linear;
+}
+.timekeeper .timekeeper-bang.timekeeper-notification, .timekeeper .timekeeper-clear.timekeeper-notification {
+  border-color: white;
+  background: green;
+}
+.timekeeper .timekeeper-bang.timekeeper-notification.timekeeper-clear, .timekeeper .timekeeper-clear.timekeeper-notification.timekeeper-clear {
+  background: red;
+}
+
+/* the logs */
+.timekeeper-logs {
+  visibility: hidden;
+  border: 2px solid black;
+  border-radius: 2px;
+  background: #111;
+  color: yellow;
+  padding: 5px;
+  font-size: 10px;
+  position: absolute;
+  width: 500px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: .8;
+}
+.timekeeper-logs.timekeeper-logs-visible {
+  visibility: visible;
+}
