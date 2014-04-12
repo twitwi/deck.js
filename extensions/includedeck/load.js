@@ -83,7 +83,14 @@ function includedeck(m, c) {
             prefix + "/extensions/simplemath/deck.simplemath.js"
         ],
         "smartsyntax": [ prefix + "/extensions/smartsyntax/deck.smartsyntax.js" ],
-        "clone": [ prefix + "/extensions/clone/deck.clone.js" ],
+        "clone": [
+            prefix + "/extensions/clone/deck.clone.css",
+            prefix + "/extensions/clone/deck.clone.js"
+        ],
+        "timekeeper": [
+            prefix + "/extensions/timekeeper/deck.timekeeper.css",
+            prefix + "/extensions/timekeeper/deck.timekeeper.js"
+        ],
         "goto": [
             prefix + "/extensions/goto/deck.goto.css",
             prefix + "/extensions/goto/deck.goto.js"
@@ -129,7 +136,7 @@ function includedeck(m, c) {
         "profile-2-fitnofs": ["@_newdeck", "@_smartsyntax", "@_fit", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
         /// profile-3: big profile = profile-2 / with new status (progress) + all good bundled extensions
         "profile-3": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
-                      "@_metadata", "@_attribution", "@_container-styling"],
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper"],
         dummy: {}
     };
 
