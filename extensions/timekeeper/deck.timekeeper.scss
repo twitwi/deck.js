@@ -12,7 +12,8 @@
     left: 840px;
     top: 340px;
     width: 400px;
-    padding: 0;
+    padding: 4px;
+    margin: -4px;
 
     .timekeeper-time, .timekeeper-local-relative-time {
         margin: 0;
@@ -42,8 +43,8 @@
         position: absolute;
         width: 10px; height: 10px;
         left: 45%;
-        &.timekeeper-bang {top: 5px;}
-        &.timekeeper-clear {top: 18px;}
+        &.timekeeper-bang {top: 10px;}
+        &.timekeeper-clear {top: 23px;}
         border: 2px solid grey;
         border-radius: 15px;
         background: black;
