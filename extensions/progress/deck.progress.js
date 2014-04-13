@@ -65,6 +65,11 @@ Note however, that it does not handle the countNested=true case.
                         botFixed = botFixed || 0;
                         $(el).css('font-size', (fontSize * designRatio)+"px");
                         $(el).css('top', (slide.bottom - botFixed - botByRatio*designRatio)+'px');
+                    },
+                    top: function(fontSize, topByRatio, topFixed) {
+                        topFixed = topFixed || 0;
+                        $(el).css('font-size', (fontSize * designRatio)+"px");
+                        $(el).css('top', (slide.top + topFixed + topByRatio*designRatio)+'px');
                     }
                 };
                 var att = $(el).attr(event == INITEVENT ? opts.dataProgressOnce : event == SIZEEVENT ? opts.dataProgressSize : opts.dataProgress);
