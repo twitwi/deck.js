@@ -120,7 +120,10 @@ function includedeck(m, c) {
             prefix + "/extensions/svg/deck.svg.js"
         ],
         "metadata": [ prefix + "/extensions/metadata/deck.metadata.js" ],
-        "attribution": [ prefix + "/extensions/attribution/deck.attribution.js" ],
+        "attribution": [
+            prefix + "/extensions/attribution/deck.attribution.css",
+            prefix + "/extensions/attribution/deck.attribution.js"
+        ],
         "container-styling": [ prefix + "/extensions/container-styling/deck.container-styling.js" ],
         //
         // Themes
