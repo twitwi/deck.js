@@ -22,8 +22,8 @@
             .slide h1 em {color: #445; text-shadow: none; font-size: .3em;}
 
             .deck-container .slide .slide {opacity: 1;} /* undo the shaded of non-current slides */
-            .slide .tinyhighlight {color: #F77; font-size: 66%;}
-            .slide b {color: #0F0; font-size: 75%;}
+            .slide .tinyhighlight {color: #F77; font-size: 66%; border: 1px dashed #833;}
+            .slide:not(#title-slide) b {color: #0F0; font-size: 75%;}
         </style>
 
 	<script src="../extensions/includedeck/load.js"></script>
@@ -76,7 +76,7 @@
         </li>
         <li class="slide">
             An element with class <b>var-title-br</b>: <span class="var-title-br tinyhighlight"></span>
-            (<b>...-br</b> &rArr; separator replaced by a <b>br</b> tag)
+            (<b>...-br</b> &rArr; separator replaced by a <b>&lt;br/></b> tag)
         </li>
         <li class="slide">The footer uses classes <b>var-author</b> and <b>var-title</b></li>
     </ul>
