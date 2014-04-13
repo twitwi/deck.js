@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            
+        <title>deck.progress.js test/demo</title>
+            
+        <meta name="description" content="deck.*.js">
+        <meta name="author" content="Rémi Emonet">
+        <!--meta name="viewport" content="width=1024, user-scalable=no"/-->
+            
+        <style type="text/css">
+            .deck-container>section.slide {padding:0;} /* as samples were originally designed with neon padding */
+            .deck-container>.slide {border: 1px dashed #333;} /* for the demo */
+            .slide ul ul {margin-bottom: 0.25em;} /* remove some big spacing with neon nested lists */
+            .deck-container > .slide .deck-before, .deck-container > .slide .deck-previous {opacity: 0.6;} /* <-- override darkish neon theme --> */
+            .slide h1 {font-size: 3em;}
+            .slide h1 b {color: #0F0;}
+            .slide h1 em {color: #445; text-shadow: none; font-size: .3em;}
+            .slide h1 em {color: #445; text-shadow: none; font-size: .3em; display: inline-block;}
+            .slide .smaller {text-shadow: none; font-size: .8em;}
+
+            .slide b {color: blue;}
+            .slide .highlight {color: red;}
+            .funny b {color: chartreuse}
+            .svgThatFloatsRight {float: right}
+
+            .slide .floatright {float:right;}
+            .slide div.svgitem {display: inline-block; vertical-align: middle;}
+
+            /* smoothly animate all the status stuff */
+            .deck-container .deck-status {
+               transition: all 300ms;
+               -webkit-transition: all 300ms;
+            }
+
+            /* more compact theme */
+            .slide h2 {font-size: 30px;}
+
+            .deck-status span {color: #77F;}
+            .deck-status .ratio-0 {color: red;}
+            .deck-status .ratio-1 {color: green;}
+            .deck-status .ratio-2 {color: white;}
+            .deck-status.content-is-bar {line-height: 1.1em; color: white;}
+            .deck-status.content-is-bar div {position: absolute; height: .8em; outline: 1px solid grey; z-index: -1;}
+
+.funky-gradient { /* from http://www.colorzilla.com/gradient-editor/ */
+background: #00ff19; /* Old browsers */
+background: -moz-linear-gradient(left, #00ff19 0%, #ff3838 52%, #078fff 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#00ff19), color-stop(52%,#ff3838), color-stop(100%,#078fff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left, #00ff19 0%,#ff3838 52%,#078fff 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left, #00ff19 0%,#ff3838 52%,#078fff 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left, #00ff19 0%,#ff3838 52%,#078fff 100%); /* IE10+ */
+background: linear-gradient(to right, #00ff19 0%,#ff3838 52%,#078fff 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ff19', endColorstr='#078fff',GradientType=1 ); /* IE6-9 */
+}
+        </style>
+
+	<script src="../extensions/includedeck/load.js"></script>
+        <script>
+            includedeck("profile-3 theme:neon", {
+               PREFIX: "../" // deck.js is in the parent folder for this presentation
+            })
+        </script>
+
+    </head>
+
+<body>
+<div class="deck-container">
+
+    <section class="slide" data-container-class="no-status" id="title-slide">
+	<h1 title="use arrow keys to navigate">Getting started with deck.js:<br/><b>progress</b> extension
+            <br/><em>use right arrow to move on</em>
+        </h1>
+    </section>
+    <section class="slide" data-container-class="no-status">
+        <h2>“progress”: What?</h2>
+        <ul>
+            <li>Use and goal</li>
+            <ul>
+                <li>easy scaling and positioning of the status<br/> (slide counter)</li>
+                <li>flexibility to create amazing progress indicators</li>
+                <li>possibility to fake the number of the last slide</li>
+            </ul>
+            <li>Demo</li>
+            <ul>
+                <li>go through the slides</li>
+                <li>see and understand what can be done</li>
+                <li>view sources for details on syntax</li>
+            </ul>
+        </ul>
+    </section>
+
+
+    <section class="slide">
+        <h2>Slide a</h2>
+    </section>
+    <section class="slide">
+        <h2>Slide b</h2>
+    </section>
+    <section class="slide">
+        <h2>Slide c</h2>
+    </section>
+    <section class="slide">
+        <h2>Slide d</h2>
+    </section>
+    <section class="slide">
+        <h2>Slide e (with steps…)</h2>
+        <span class="slide">h</span>
+        <span class="slide">e</span>
+        <span class="slide">l</span>
+        <span class="slide">l</span>
+        <span class="slide">o</span>
+        <br/>
+        <span class="slide">w</span>
+        <span class="slide">o</span>
+        <span class="slide">r</span>
+        <span class="slide">l</span>
+        <span class="slide">d</span>
+    </section>
+    <section class="slide">
+        <h2>Slide f</h2>
+    </section>
+    <section class="slide deck-status-fake-end">
+        <h2>Fake end: lure your audience</h2>
+    </section>
+    <section class="slide">
+        <h2>Slide i (with steps…)</h2>
+        <span class="slide">H</span>
+        <span class="slide">E</span>
+        <span class="slide">L</span>
+        <span class="slide">L</span>
+        <span class="slide">O</span>
+        <br/>
+        <span class="slide">W</span>
+        <span class="slide">O</span>
+        <span class="slide">R</span>
+        <span class="slide">L</span>
+        <span class="slide">D</span>
+    </section>
+    <section class="slide">
+        <h2>Slide j</h2>
+    </section>
+    <section class="slide">
+        <h2>Slide k</h2>
+    </section>
+
+<!-- we can make stop the smartsyntax section and start another afterwards -->
+<section class="slide">
+    <h2>Browser support: should be ok</h2>
+</section>
+<!-- DEMO: progress -->
+
+<!-- deck.navigation snippet -->
+<!--a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a-->
+
+
+<!-- THIS CAN BE A NICE DEFAULT AND SIMPLE STATUS -->
+<p class="deck-status deck-progress-10" style="color:yellow">
+    <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
+</p>
+
+<!-- POSITION IN THE SLIDE -->
+   <!-- using a convenient ': spe.top' helper -->
+   <div class="deck-status" data-progress-size=": spe.top(15, 70)"> Hi </div>
+   <!-- same, but manually, more flexible but more verbose -->
+   <div class="deck-status" data-progress-size="font-size: (15*designRatio)+'px' ; top: (slide.top + 70*designRatio)+'px'"> <span style="margin-left: 6em; color: red">there</span> </div>
+
+<!-- ALTERNATIVE FOR THE NICE DEFAULT -->
+<p class="deck-status" data-progress-size=": spe.bottom(10, 20)" style="color:red"> <!-- 20 is the offset from the bottom -->
+    <span class="deck-status-current"></span> / <span class="deck-status-total"></span>
+</p>
+
+<!-- GETTING PROGRESS INFO -->
+<div class="deck-status" data-progress-size=": spe.top(15, 90)">
+    <!-- current slide, etc -->
+    Top Level − Current: <span class="deck-status-current"></span> ; Total: <span class="deck-status-total"></span> ; True total (fake-free): <span class="deck-status-full-total"></span>
+    <br/>
+    <!-- alternate way --> 
+    Top Level − Current: <span data-progress="$text: n"></span> ; Total: <span data-progress="$text: N"></span> ; True total (fake-free): <span data-progress="$text: fullTotal"></span>
+    <br/>
+    <!-- at each step -->
+    Stepwise − Current: <span data-progress="$text: detail.n"></span> ; Total: <span data-progress="$text: detail.N"></span> ; True total (fake-free): <span data-progress="$text: detail.fullTotal"></span>
+</div>
+
+<!-- GETTING PROPORTIONNAL PROGRESS INFO -->
+<div class="deck-status" data-progress-size=": spe.top(15, 160)">
+    <!-- current slide, etc -->
+    Top Level − over total: <span data-progress="$text: n / N"></span> ; over true total (fake-free): <span data-progress="$text: n / fullTotal"></span>
+    <br/>
+    <!-- shortcuts -->
+    Top Level − over total: <span data-progress="$text: p"></span> ; over true total (fake-free): <span data-progress="$text: pFull"></span>
+    <br/>
+    <!-- at each step -->
+    Stepwise − over total: <span data-progress="$text: detail.n / detail.N"></span> ; over true total (fake-free): <span data-progress="$text: detail.n / detail.fullTotal"></span>
+    <br/> 
+    <!-- shortcuts -->
+    Stepwise − over total: <span data-progress="$text: detail.p"></span> ; over true total (fake-free): <span data-progress="$text: detail.pFull"></span>
+</div>
+
+<!-- GETTING SHAPE INFO -->
+<div class="deck-status" data-progress-size=": spe.top(15, 250)">
+    <!-- slide position -->
+    Slide − left: <span data-progress-size="$text: slide.left"></span> ; top: <span data-progress-size="$text: slide.top"></span>
+    <br/> Slide − right: <span data-progress-size="$text: slide.right"></span> ; bottom: <span data-progress-size="$text: slide.bottom"></span>
+    <br/> Slide − width: <span data-progress-size="$text: slide.width"></span> ; height: <span data-progress-size="$text: slide.height"></span>
+    <br/>
+    <!-- screen etc -->
+    Screen − width: <span data-progress-size="$text: screen.width"></span> ; height: <span data-progress-size="$text: screen.height"></span> ; designRatio: <span data-progress-size="$text: designRatio"></span>
+</div>
+
+<!-- SETTING ATTRIBUTES AND HTML CONTENT -->
+<div class="deck-status" data-progress-size=": spe.top(15, 340)">
+    <!-- attribute setting, e.g., class -->
+    Attribute 'class' based on designRatio − <span data-progress-size="@class: 'ratio-'+Math.round(designRatio)">here</span> (class is <span data-progress-size="$text: 'ratio-'+Math.round(designRatio)"></span>, resize to change)
+    <br/>
+    <!-- content as HTML -->
+    Content as HTML − design ratio in <em>italic</em> is <span data-progress-size="$html: '&lt;em>' + Math.round(designRatio*100)/100 + '&lt;/em>'"></span>
+</div>
+
+<!-- MAKING PROGRESS BARS WITH THIS -->
+<div class="deck-status content-is-bar" data-progress-size=": spe.top(15, 390)">
+    <!-- example: a bar taking up to the slide width -->
+    Top level<br/>
+    <div data-progress="left: slide.left ; width: p * slide.width" style="background: #8F8;"> </div>
+    <br/>
+    <div data-progress="left: slide.left ; width: pFull * slide.width" style="background: #4F4;"> </div>
+    <br/>
+    Stepwise<br/>
+    <div data-progress="left: slide.left ; width: detail.p * slide.width" style="background: #F88;"> </div>
+    <br/>
+    <div data-progress="left: slide.left ; width: detail.pFull * slide.width" style="background: #F44;"> </div>
+    <br/>
+    Funky gradients<br/>
+    <div data-progress="left: slide.left ; width: detail.pFull * slide.width" class="funky-gradient"> </div>
+    <br/>
+    <div data-progress="left: slide.left ; width: detail.pFull * slide.width" style="overflow:hidden"><div class="funky-gradient" data-progress-size="width: slide.width"></div></div>
+    <br/>
+    Full page<br/>
+    <div data-progress="width: detail.pFull * screen.width" style="overflow:hidden;"><div class="funky-gradient" data-progress-size="width: screen.width"></div></div>
+    <br/>
+</div>
+
+<!-- BONUS: FULL SLIDE VERTICAL BAR -->
+<div class="deck-status" style="background: red; left: auto; right:0px; width: 2px; bottom:0;" data-progress="height: detail.p * screen.height ; opacity: detail.p">
+</div>
+
+</div>
+</body>
+</html>
