@@ -36,7 +36,7 @@ Note however, that it does not handle the countNested=true case.
         var lastDetail = icur;
         for (; icur < $.deck('getSlides').length; icur++) {
             last = $.deck('getSlide', icur).data('rootSlide');
-            lastDetail = icur;
+            lastDetail = icur+1;
             if ($.deck('getSlide', icur).filter(opts.selectors.statusFakeEnd).size() > 0) break;
         }
 	$(opts.selectors.statusTotal).text(last);
