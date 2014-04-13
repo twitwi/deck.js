@@ -1,0 +1,16 @@
+
+.deck-container {
+    .attribution-wrap {position: relative;}
+    .attribution-link {
+        font-size: 10px;
+        color: white;
+        background: black;
+        border: 1px solid darkgrey;
+        opacity: 0.6;
+        right: 0;
+        bottom: 5px;
+        position: absolute;
+        padding: 0 5px;
+    }
+}
+
