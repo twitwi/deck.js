@@ -22,6 +22,9 @@ This module provides a support for cloning the deck.
             hasClones: 'has-clones',
             pointerClick: 'pointer-click',
         },
+        snippets: {
+            clone: true
+        },
         keys: {
             clone: 67 // c
         },
@@ -93,6 +96,18 @@ This module provides a support for cloning the deck.
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
         
+        if (opts.snippets.timekeeper) {
+            var d = function() {return $('<div/>');}
+            d().addClass("clonepointer scale-on-click").append(
+                d().attr("style", "border: 2px solid red; border-radius: 50%; z-index:10;"
+                         +"margin: -11px 0 0 -11px; width:20px; height:20px; opacity: .5;")
+                ).appendTo(container);
+            d().addClass("clonepointer scale-on-click").append(
+                d().attr("style", "border: 2px solid red; border-radius: 50%; z-index:10;"
+                         +"margin: -16px 0 0 -16px; width:30px; height:30px;")
+                ).appendTo(container);
+        }
+
         $(opts.selectors.clonepointer).hide();
 
         isClone = window.opener && window.opener.___iscloner___;
