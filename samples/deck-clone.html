@@ -148,25 +148,10 @@ Use left/right arrow keys to browse the presentation.<br/>
 <!-- deck.status snippet -->
 <p class="deck-status"> <span class="deck-status-current"></span> / <span class="deck-status-total"></span> </p>
 
-<!-- deck.goto snippet -->
-<form action="." method="get" class="goto-form">
-    <label for="goto-slide">Go to slide:</label> <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
-    <datalist id="goto-datalist"></datalist> <input type="submit" value="Go">
-</form>
-
-<!-- deck.clone snippet: simple red box with top-left corner as cursor position -->
+<!-- cloned pointer will be added automatically by the clone extension, use {snippets: { clone:false }} to not do it (and maybe add your custom one
 <div class="clonepointer" style="width:20px; height:20px; background-color:red;"></div>
-<!-- deck.clone snippet: simple green box with center as cursor position -->
 <div class="clonepointer scale-on-click"><div style="margin: -13px 0 0 -13px; width:18px; height:18px; border:4px solid green;"></div></div>
-
-<div class="timekeeper timekeeper-logs-toggle">
-    <div class="timekeeper-local-relative-time"></div>
-    <div class="timekeeper-time"></div>
-    <div class="timekeeper-relative-time"></div>
-    <div class="timekeeper-clear"></div>
-    <div class="timekeeper-bang"></div>
-</div>
-<pre class="timekeeper-logs"></pre>
+-->
 
 </div>
 </body>
