@@ -57,14 +57,15 @@
 <section class="slide">
     <h2>“clone”: What?</h2>
     <ul>
-        <li>Duplicate your window</li>
+        <li>Duplicates your window</li>
         <li>Forwards events to all clones</li>
-        <li>Replicates mouse pointer</li>
-        <li>Usage
+        <li>Replicates the mouse pointer</li>
+        <li>What for?
             <ul>
                 <li>put a second view on a second screen</li>
-                <li>view next slide on your view (theme)</li>
-                <li>view notes on your view (extension)</li>
+                <li>see the current and the next slide</li>
+                <li>monitor time (timekeeper extension)</li>
+                <li>view notes (ext)</li>
             </ul>
         </li>
     </ul>
@@ -102,7 +103,7 @@
     <ul>
         <li class="slide">Slide events are propagated to clone(s)
             <ul>
-                <li class="slide">from master to clone(s)</li>
+                <li class="slide">from master to clone(s), and vice versa</li>
                 <li class="slide">try left/right arrows</li>
                 <li class="slide">try up arrow (with the “<a href="deck-step.html">step</a>” extension)</li>
             </ul>
@@ -110,8 +111,9 @@
         <li class="slide">Mouse pointer is replicated
             <ul>
                 <li class="slide">try to move your mouse (on the master)</li>
-                <li class="slide">custom style using HTML+CSS</li>
-                <li class="slide">examples: red box, centered green box, …</li>
+                <li class="slide">try also to click</li>
+                <li class="slide">default pointer: red circles</li>
+                <li class="slide">possible custom style using HTML+CSS</li>
             </ul>
         </li>
     </ul>
@@ -120,11 +122,32 @@
 <section class="slide">
     <h2>“clone”: Styling</h2>
     <ul>
-        <li class="slide">Master view styling
+        <li class="slide">Presenter view styling
             <ul>
                 <li>adds the “has-clones” class when cloned</li>
+                <li>by default: shows the presenter view</li>
                 <li>in this deck: gray background</li>
-                <li>allow for a presenter view (next slide, notes, …)</li>
+            </ul>
+        </li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h2>“timekeeper”: features</h2>
+    <ul>
+        <li><b>timekeeper</b>: enriches the presenter view
+            <ul>
+                <li>current time</li>
+                <li>presentation timer</li>
+                <li>time elapsed since last bang!</li>
+                <li>logs of events (click the timer)</li>
+            </ul>
+        </li>
+        <li>Reseting timers
+            <ul>
+                <li>Mark an instant, Bang!: ESCAPE</li>
+                <li>Reset main timer: SHIFT+ESCAPE</li>
+                <li>NB: presentations from a “site” share the timer</li>
             </ul>
         </li>
     </ul>
@@ -133,7 +156,13 @@
 <section class="slide">
     <h2>Browser support</h2>
     <ul>
-        <li>Should be ok</li>
+        <li>Clone: should be ok</li>
+        <li>Timekeeper
+            <ul>
+                <li>Uses <a href="http://caniuse.com/#search=localStorage">localStorage</a></li>
+                <li>Might have “security” restrictions with local files (<a href="http://stackoverflow.com/a/2705057/2297277">solution</a>, see the comments too)</li>
+            </ul>
+        </li>
     </ul>
 </section>
 <!-- DEMO: clone -->
