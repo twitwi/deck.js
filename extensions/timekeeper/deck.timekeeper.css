@@ -80,6 +80,7 @@ body:not(.has-clones) .timekeeper {
   top: 0;
   bottom: 0;
   opacity: .8;
+  overflow-y: scroll;
 }
 .timekeeper-logs.timekeeper-logs-visible {
   visibility: visible;
