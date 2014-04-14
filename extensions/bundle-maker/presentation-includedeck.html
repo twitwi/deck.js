@@ -13,20 +13,28 @@
 
 
 
-        <!-- override some style here if needed (or in an external file) -->
+        <!-- override some style here if needed (or use an external file) -->
         <style type="text/css">
-            .niceClass {border: 1px solid black;}
+            .deck-container .title-slide {border: 1px solid red; font-size: 70%;}
+            .deck-container > .slide {border: 1px solid #EEE;}
             .slide b {color: blue;}
-            .deck-container > .slide {border: 1px solid green;}
-            body.has-clones .deck-container {background: lightslategrey;}
-            .deck-container .title-slide {border: 1px solid red; font-size: 70%}
+            .niceClass {border: 1px solid black;}
+
+            /* simple example for full screen images (could integrate in a theme or future extension) */
+            .deck-container.fsimg .slide {padding:0;}
+            /*.deck-container.fsimg {background: black;}*/
+            .fsimg h2 {display: none;}
+            .fsimg .deck-status {display: none;}
+            .fsimg img {min-width:800px; min-height:600px; position: absolute; left:0; top:0; margin:0; }
+            .fsimg .attribution-wrap {width:800px; height:600px;}
         </style>
 	<script src="deck.js/extensions/includedeck/load.js"></script>
         <script>
-            includedeck("profile-3 theme:web-2.0", {})
+            includedeck("profile-3 theme:swiss", {})
 
-            // The "{}" can be filled with optional arguments such as
+            // Advanced: the "{}" can be filled with optional arguments such as
             //// PREFIX: "deck.js",
+            //// INITDELAY: 500,
             //// BEFORELOAD: function() {alert('will load')},
             //// BEFOREINIT: function() {alert('loaded')},
             //// AFTERINIT: function() {alert('inited')},
@@ -35,23 +43,23 @@
             //// fitMode: "stretched", // to strech (variable aspect ratio)
 
             // You can alternatively select what to include (as in these commented out examples)
-            //// includedeck("smartsyntax fit-fs simplemath clone goto status navigation menu step events anim svg");
-            //// includedeck(["smartsyntax", "fit-fs", "simplemath", "clone", "goto", "status", "navigation", "menu", "step", "events", "anim svg"]);
-            //// includedeck("profile-1");
-
+            //// includedeck(["profile-3", "theme:swiss"]);
+            //// includedeck(["profile-3", "mytheme.css", "custom.js"]);
         </script>
     </head>
 
 
 <body>
-This text should not be displayed if everything goes well: use left/right arrow keys to browse the presentation.<br/>
 
 <div class="deck-container">
+    <div class="deck-loading-splash" style="background: white; color: blue;">
+        <span class="vcenter" style="font-size: 30px; font-family: Arial; ">Please wait, your deck is loading…</span>
+    </div>
 
 <!-- this presentation uses smart syntax -->
 <section class="smart">
 
-==New Presentation With deck.js and Extensions==[title-slide]
+==<span class="var-title"></span>==[title-slide][*no-status]
 
 =Metadata usage=
 * Title: <span class="var-title"/>
@@ -62,6 +70,18 @@ This text should not be displayed if everything goes well: use left/right arrow 
 @svg:niceClass deck.js/samples/smiley.svg 700px 400px
 @anim-appear:300: #left | #right + #bottom | -#right
 
+=Attribution=[*no-status]
+<img src="deck.js/samples/snowcub-small.jpg" style="height: 400px" data-attribution="https://www.flickr.com/photos/immortel/7961300558/sizes/c/" data-attribution-content="CC by Immortel"/>
+
+==[*fsimg]
+<img src="deck.js/samples/snowcub-small.jpg" data-attribution="https://www.flickr.com/photos/immortel/7961300558/sizes/c/" data-attribution-content="CC by Immortel"/>
+
+==[*fsimg]
+<img src="deck.js/samples/snowcub-small.jpg" />
+
+==[*fsimg]
+<img src="deck.js/samples/smiley.svg" data-attribution="http://openclipart.org/detail/77641/smiley-face-by-inky2010" data-attribution-content="by inky2010"/>
+
 =Hello=
 * Hi, .....
 * Todo
@@ -71,16 +91,18 @@ This text should not be displayed if everything goes well: use left/right arrow 
 ** <a href="http://home.heeere.com/tech-deckjs-ext.html">online samples</a>
 ** <a href="deck.js/samples">local samples</a>
 
-==Thank you for your attention==[end-slide]
+==Thank you for your attention==[end-slide][*no-status]
 </section>
 
 <!-- end of the presentation -->
 
 
 
+<!-- progress bar -->
+<div data-progress-size=":spe.bottom(1, 0) ; left: slide.left+'px' ; height: designRatio+'px'" data-progress="width: detail.p * slide.width" style="background: #F88; position: absolute;"> </div>
 
 <!-- deck.status snippet -->
-<p class="deck-status">
+<p class="deck-status deck-progress-10">
     <span class="deck-status-current"></span>
     /
     <span class="deck-status-total"></span>
@@ -89,20 +111,10 @@ This text should not be displayed if everything goes well: use left/right arrow 
     −
     <span class="var-title"></span>
 </p>
-<!-- deck.goto snippet -->
-<form action="." method="get" class="goto-form">
-	<label for="goto-slide">Go to slide:</label>
-	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
-	<datalist id="goto-datalist"></datalist>
-	<input type="submit" value="Go">
-</form>
+
 <!-- deck.navigation snippet -->
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
-<!-- deck.clone snippet: two circles -->
-<div class="clonepointer" style="position:absolute; z-index:11"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -11px 0 0 -11px; width:20px; height:20px; opacity: .5;"></div></div>
-<div class="clonepointer" style="position:absolute; z-index:11"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -16px 0 0 -16px; width:30px; height:30px;"></div></div>
-
 
 
 

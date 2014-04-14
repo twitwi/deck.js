@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="deck.js/core/deck.core.css">
 
 	<!-- Style theme. More available in deck.js/themes/style/ or create your own. -->
-	<link rel="stylesheet" href="deck.js/themes/style/web-2.0.css">
+	<link rel="stylesheet" href="deck.js/themes/style/swiss.css">
 
 	<!-- Transition, for your audience, use it only for short presentations, see deck.js/themes/transition -->
 	<!--link rel="stylesheet" href="deck.js/themes/transition/****.css"-->
@@ -40,12 +40,14 @@
         <!-- clone by typing 'c'   (popups a slave presentation) (uses "clone snippet" at the end of the page) -->
 	<link rel="stylesheet" href="deck.js/extensions/clone/deck.clone.css">
         <script src="deck.js/extensions/clone/deck.clone.js"></script>
-        <!-- goto by typing 'g'   (uses "goto snippet" at the end of the page) -->
+	<link rel="stylesheet" href="deck.js/extensions/timekeeper/deck.timekeeper.css">
+        <script src="deck.js/extensions/timekeeper/deck.timekeeper.js"></script>
+        <!-- goto by typing 'g' -->
 	<link rel="stylesheet" href="deck.js/extensions/goto/deck.goto.css">
         <script src="deck.js/extensions/goto/deck.goto.js"></script>
-        <!-- slide number indicator   (uses "status snippet" at the end of the page) -->
-        <link rel="stylesheet" href="deck.js/extensions/status/deck.status.css">
-        <script src="deck.js/extensions/status/deck.status.js"></script>
+        <!-- slide number indicator -->
+        <link rel="stylesheet" href="deck.js/extensions/progress/deck.progress.css">
+        <script src="deck.js/extensions/progress/deck.progress.js"></script>
         <!-- navigation buttons   (uses "navigation snippet" at the end of the page) -->
 	<link rel="stylesheet" href="deck.js/extensions/navigation/deck.navigation.css">
         <script src="deck.js/extensions/navigation/deck.navigation.js"></script>
@@ -61,6 +63,9 @@
         <script src="deck.js/extensions/svg/deck.svg.js"></script>
 
         <script src="deck.js/extensions/metadata/deck.metadata.js"></script>
+        <script src="deck.js/extensions/attribution/deck.attribution.js"></script>
+	<link rel="stylesheet" href="deck.js/extensions/attribution/deck.attribution.css">
+        <script src="deck.js/extensions/container-styling/deck.container-styling.js"></script>
 
 
         <!-- Deck.js options (advanced) -->
@@ -73,11 +78,18 @@
 
         <!-- override some style here if needed (or in an external file) -->
         <style type="text/css">
-            .niceClass {border: 1px solid black;}
+            .deck-container .title-slide {border: 1px solid red; font-size: 70%;}
+            .deck-container > .slide {border: 1px solid #EEE;}
             .slide b {color: blue;}
-            .deck-container > .slide {border: 1px solid green;}
-            body.has-clones .deck-container {background: lightslategrey;}
-            .deck-container .title-slide {border: 1px solid red; font-size: 70%}
+            .niceClass {border: 1px solid black;}
+
+            /* simple example for full screen images (could integrate in a theme or future extension) */
+            .deck-container.fsimg .slide {padding:0;}
+            /*.deck-container.fsimg {background: black;}*/
+            .fsimg h2 {display: none;}
+            .fsimg .deck-status {display: none;}
+            .fsimg img {min-width:800px; min-height:600px; position: absolute; left:0; top:0; margin:0; }
+            .fsimg .attribution-wrap {width:800px; height:600px;}
         </style>
     </head>
 
@@ -86,11 +98,16 @@
 This text should not be displayed if everything goes well: use left/right arrow keys to browse the presentation.<br/>
 
 <div class="deck-container">
+    <!-- splash needs includedeck 
+    <div class="deck-loading-splash" style="background: white; color: blue;">
+        <span class="vcenter" style="font-size: 30px; font-family: Arial; ">Please wait, your deck is loading…</span>
+    </div>    -->
 
- <!-- this presentation uses smart syntax -->
+
+<!-- this presentation uses smart syntax -->
 <section class="smart">
 
-==New Presentation With deck.js and Extensions==[title-slide]
+==<span class="var-title"></span>==[title-slide][*no-status]
 
 =Metadata usage=
 * Title: <span class="var-title"/>
@@ -101,6 +118,18 @@ This text should not be displayed if everything goes well: use left/right arrow 
 @svg:niceClass deck.js/samples/smiley.svg 700px 400px
 @anim-appear:300: #left | #right + #bottom | -#right
 
+=Attribution=[*no-status]
+<img src="deck.js/samples/snowcub-small.jpg" style="height: 400px" data-attribution="https://www.flickr.com/photos/immortel/7961300558/sizes/c/" data-attribution-content="CC by Immortel"/>
+
+==[*fsimg]
+<img src="deck.js/samples/snowcub-small.jpg" data-attribution="https://www.flickr.com/photos/immortel/7961300558/sizes/c/" data-attribution-content="CC by Immortel"/>
+
+==[*fsimg]
+<img src="deck.js/samples/snowcub-small.jpg" />
+
+==[*fsimg]
+<img src="deck.js/samples/smiley.svg" data-attribution="http://openclipart.org/detail/77641/smiley-face-by-inky2010" data-attribution-content="by inky2010"/>
+
 =Hello=
 * Hi, .....
 * Todo
@@ -110,17 +139,18 @@ This text should not be displayed if everything goes well: use left/right arrow 
 ** <a href="http://home.heeere.com/tech-deckjs-ext.html">online samples</a>
 ** <a href="deck.js/samples">local samples</a>
 
-==Thank you for your attention==[end-slide]
-
+==Thank you for your attention==[end-slide][*no-status]
 </section>
 
 <!-- end of the presentation -->
 
 
 
+<!-- progress bar -->
+<div data-progress-size=":spe.bottom(1, 0) ; left: slide.left+'px' ; height: designRatio+'px'" data-progress="width: detail.p * slide.width" style="background: #F88; position: absolute;"> </div>
 
 <!-- deck.status snippet -->
-<p class="deck-status">
+<p class="deck-status deck-progress-10">
     <span class="deck-status-current"></span>
     /
     <span class="deck-status-total"></span>
@@ -129,20 +159,10 @@ This text should not be displayed if everything goes well: use left/right arrow 
     −
     <span class="var-title"></span>
 </p>
-<!-- deck.goto snippet -->
-<form action="." method="get" class="goto-form">
-	<label for="goto-slide">Go to slide:</label>
-	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
-	<datalist id="goto-datalist"></datalist>
-	<input type="submit" value="Go">
-</form>
+
 <!-- deck.navigation snippet -->
 <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
 <a href="#" class="deck-next-link" title="Next">&#8594;</a>
-<!-- deck.clone snippet: simple red box with top-left corner as cursor position -->
-<div class="clonepointer scale-on-click"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -11px 0 0 -11px; width:20px; height:20px; opacity: .5;"></div></div>
-<div class="clonepointer scale-on-click"><div style="border: 2px solid red; border-radius: 50%; z-index:10; margin: -16px 0 0 -16px; width:30px; height:30px;"></div></div>
-
 
 
 
