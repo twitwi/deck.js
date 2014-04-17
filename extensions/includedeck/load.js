@@ -218,7 +218,8 @@ function includedeck(m, c) {
         stack = stack || [];
         if (l.length == 0) return;
         if ("string" !== typeof l[0]) {
-            head.js.apply(head, stack.concat(prefix + "/extensions/includedeck/___dummy___auto___.js").concat(function() {
+            // "" as a workaround for head.load.js (used to be a ___dummy___ file
+            head.js.apply(head, stack.concat("").concat(function() {
                 l[0]();
                 loadsAndCalls(l.slice(1), []);
             })); 
