@@ -1,4 +1,7 @@
 
+var argv_modules = process.argv[2] || "profile-3 theme:swiss"
+var argv_out = process.argv[3] || "deckjs-custom.js"
+
 var FS = require('fs');
 
 var writefile = function(where, what) {
@@ -22,16 +25,18 @@ console.log = function (d) {
   process.stdout.write(d + '\n');
 };
 
+var deckjsdir = process.argv[1].replace(/\/[^\/]*\/[^\/]*\/[^\/]*$/g, '/')
 
 ACTUALLY_EXPORT_A_LIST_OF_FILES = 'oh yeah!';
-var includedeck = includejs('extensions/includedeck/load.js');
-var files = includedeck("extensions/includedeck/load.js profile-3 theme:swiss", {PREFIX: '.'});
+var includedeck_loadjs = deckjsdir + 'extensions/includedeck/load.js'
+var includedeck = includejs(includedeck_loadjs);
+var files = includedeck(includedeck_loadjs + " " + argv_modules, {PREFIX: deckjsdir});
 
 var header = ""
 var alljs = ""
 var allcss = ""
 
-var gitversion = readfile('.git/refs/heads/master').replace(/\n/g, '')
+var gitversion = readfile(deckjsdir+'.git/refs/heads/master').replace(/\n/g, '')
 var nl = '\n'
 header += "/*" + nl
 header += "  This is a packed deck.js with some extensions and styles." + nl
@@ -56,4 +61,4 @@ header += "*/" + nl
 allcss = allcss.replace(/(["\\])/g, '\\$1').replace(/\n/g, '\\n');
 alljs = header + alljs;
 alljs += 'function ACTUALLY_FILL_CSS(el) { $(el).text("'+allcss+'") }';
-writefile('extensions/bundle-maker/deckjs-extended.js', alljs);
+writefile(argv_out, alljs);
