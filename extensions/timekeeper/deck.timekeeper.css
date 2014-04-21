@@ -70,18 +70,33 @@ body:not(.has-clones) .timekeeper {
   visibility: hidden;
   border: 2px solid black;
   border-radius: 2px;
-  background: #111;
+  background: #181818;
   color: yellow;
   padding: 5px;
-  font-size: 10px;
   position: absolute;
   width: 500px;
   right: 0;
   top: 0;
   bottom: 0;
   opacity: .8;
-  overflow-y: scroll;
 }
 .timekeeper-logs.timekeeper-logs-visible {
   visibility: visible;
+}
+.timekeeper-logs pre {
+  font-size: 10px;
+  overflow-y: scroll;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.timekeeper-logs .button {
+  color: white;
+  background: black;
+  display: inline-block;
+  padding: 0 5px;
+  border: 1px solid white;
+  border-radius: 3px;
 }

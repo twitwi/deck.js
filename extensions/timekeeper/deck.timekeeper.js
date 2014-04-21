@@ -20,6 +20,7 @@ It also injects some default html for it if none is found (and styles it for the
             timekeeperRelativeTime: ".timekeeper-relative-time",
             timekeeperLocalRelativeTime: ".timekeeper-local-relative-time",
             timekeeperLogs: ".timekeeper-logs",
+            timekeeperLogsPre: ".timekeeper-logs pre",
             timekeeperLogsToggle: ".timekeeper-logs-toggle",
             timekeeperBang: ".timekeeper-bang",
             timekeeperClear: ".timekeeper-clear"
@@ -52,6 +53,24 @@ It also injects some default html for it if none is found (and styles it for the
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
 
+        // sligthly edited from
+        var selectText = function(text) {
+            var doc = document
+            , range, selection
+            ;
+            if (doc.body.createTextRange) { //ms
+                range = doc.body.createTextRange();
+                range.moveToElementText(text);
+                range.select();
+            } else if (window.getSelection) { //all others
+                selection = window.getSelection();
+                range = doc.createRange();
+                range.selectNodeContents(text);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
+        }
+
         if (opts.snippets.timekeeper) {
             var d = function() {return $('<div/>');}
             var divTK = d().addClass("timekeeper timekeeper-logs-toggle");
@@ -61,7 +80,10 @@ It also injects some default html for it if none is found (and styles it for the
             divTK.append(d().addClass("timekeeper-clear"));
             divTK.append(d().addClass("timekeeper-bang"));
             divTK.appendTo(container);
-            $('<pre/>').addClass("timekeeper-logs").appendTo(container);
+            var divLog = d().addClass("timekeeper-logs");
+            var pre = $('<pre/>').appendTo(divLog);
+            divLog.append(d().addClass("button").click(function() { selectText(pre.get(0)) }).html("select all"));
+            divLog.appendTo(container);
         }
 
         if (!window.localStorage && opts.alert.localStorageUnsupported) { alert(
@@ -122,7 +144,7 @@ It also injects some default html for it if none is found (and styles it for the
             var data = localStorage.getItem(opts.localStorage.timekeeperLogs);
             data = log + "\n" + data;
             localStorage.setItem(opts.localStorage.timekeeperLogs, data);
-            $(opts.selectors.timekeeperLogs).html(data);
+            $(opts.selectors.timekeeperLogsPre).html(data);
         }
 
 
