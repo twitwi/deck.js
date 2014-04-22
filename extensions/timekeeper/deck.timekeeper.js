@@ -83,6 +83,7 @@ It also injects some default html for it if none is found (and styles it for the
             var divLog = d().addClass("timekeeper-logs");
             var pre = $('<pre/>').appendTo(divLog);
             divLog.append(d().addClass("button").click(function() { selectText(pre.get(0)) }).html("select all"));
+            divLog.append(d().addClass("button").addClass("timekeeper-logs-toggle").css({position:'float', float:'right', color:'orange'}).html("X"));
             divLog.appendTo(container);
         }
 
