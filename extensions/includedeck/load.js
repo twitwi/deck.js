@@ -168,10 +168,15 @@ function includedeck(m, c) {
     var toLoad = [];
     var addInfo = function(k) {
         if (k.substring(0, 6) == "theme:") {
+            k = k.substring(6)
             if (forceTheme) { // replace by the url forced theme (works only with default themes...
-                toLoad = toLoad.concat(prefix + "/themes/style/" + forceTheme + ".css");
+                k = forceTheme
+            }
+            if (k.substring(0, 2) == "x:") {
+                k = k.substring(2)
+                toLoad = toLoad.concat(prefix + "/deck.js-theme-builder/" + k + ".css");
             } else {
-                toLoad = toLoad.concat(prefix + "/themes/style/" + k.substring(6) + ".css");
+                toLoad = toLoad.concat(prefix + "/themes/style/" + k + ".css");
             }
             return;
         }
