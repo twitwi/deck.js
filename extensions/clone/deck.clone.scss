@@ -6,10 +6,10 @@ body.is-clone .clonepointer {
 
     &.scale-on-click {
         transition: transform 80ms linear;
-        -webkit-transition: transform 80ms linear;
+        -webkit-transition: -webkit-transform 80ms linear;
         &.pointer-click {
             transition: transform 150ms linear;
-            -webkit-transition: transform 150ms linear;
+            -webkit-transition: -webkit-transform 150ms linear;
             transform: translate(-50%,-50%) scale(1.5, 1.5) translate(50%,50%);
             -webkit-transform: translate(-50%,-50%) scale(1.5, 1.5) translate(50%,50%);
         }
