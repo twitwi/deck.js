@@ -188,7 +188,7 @@ Note however, that it does not handle the countNested=true case.
     
     $document.bind('deck.init', function() {
         var opts = $.deck('getOptions');
-        $(opts.selectors.progress10).attr(opts.dataProgressSize, ':spe.bottom(10, 10)')
+        $(opts.selectors.progress10).attr(opts.dataProgressSize, ':spe.bottom(10, 12)')
         markRootSlides();
         fireEventOnCurrentSlide(INITEVENT);
         fireEventOnCurrentSlide(SIZEEVENT);
