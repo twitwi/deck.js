@@ -108,8 +108,8 @@
         designWidth: 800,
         designHeight: 600,
         fitMode: "center middle",
-        fitMarginX: 5,
-        fitMarginY: 5,
+        fitMarginX: 0,
+        fitMarginY: 0,
         scaleDebounce: 200
     });
     
