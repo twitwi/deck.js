@@ -1,0 +1,29 @@
+.deck-container .slide.top-left h2 {
+  position: absolute;
+  border: 0px;
+  top: 50px;
+  left: 50px;
+}
+.deck-container .slide.top-right h2 {
+  position: absolute;
+  border: 0px;
+  top: 50px;
+  right: 50px;
+}
+.deck-container .slide.bottom-left h2 {
+  position: absolute;
+  border: 0px;
+  bottom: 50px;
+  left: 50px;
+}
+.deck-container .slide.bottom-right h2 {
+  position: absolute;
+  border: 0px;
+  bottom: 50px;
+  right: 50px;
+}
+.deck-container .slide.darkened h2 {
+  background: rgba(0, 0, 0, 0.75);
+  padding: 15px;
+  margin: -15px;
+}

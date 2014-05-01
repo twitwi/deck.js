@@ -1,0 +1,23 @@
+
+.deck-container {
+
+    @mixin h2-pos($t, $l) {
+        .slide.#{$t}-#{$l} h2 {
+            position: absolute;
+            border: 0px;
+            #{$t}: 50px;
+            #{$l}: 50px;
+        }
+    }
+
+    @include h2-pos(top, left);
+    @include h2-pos(top, right);
+    @include h2-pos(bottom, left);
+    @include h2-pos(bottom, right);
+    
+    .slide.darkened h2 {
+        background: rgba(0,0,0, 0.75);
+        padding: 15px;
+        margin: -15px;
+    }    
+}
