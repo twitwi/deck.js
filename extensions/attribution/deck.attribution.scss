@@ -1,6 +1,11 @@
 
 .deck-container {
-    .attribution-wrap {position: relative;}
+    .attribution-wrap {
+        /* cover the complete offset parent */
+        position: absolute;
+        left: 0; width: 100%;
+        top: 0; height: 100%;
+    }
     .attribution-link {
         font-size: 10px;
         color: white;

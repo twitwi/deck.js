@@ -27,7 +27,7 @@ This module automatically adds some text and a link for elements having a "data-
             var c = $(el).attr(o.dataAttributionContent);
             var cc = $(el).attr(o.dataAttributionClass);
             var a = $(el).attr(o.dataAttribution);
-            var w = $(el).wrap("<div>").parent();
+            var w = $("<div>");
             w.addClass(o.classes.attributionWrapper);
             var link = $("<a>");
             link.addClass(o.classes.attributionLink);
@@ -38,7 +38,8 @@ This module automatically adds some text and a link for elements having a "data-
             } else {
                 link.html(a);
             }
-            $(el).after(link);
+            $(el).after(w);
+            $(w).append(link);
         });
     });
 })(jQuery, 'deck');
