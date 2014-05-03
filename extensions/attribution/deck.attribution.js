@@ -33,6 +33,7 @@ This module automatically adds some text and a link for elements having a "data-
             link.addClass(o.classes.attributionLink);
             if (!! cc) link.addClass(cc);
             link.attr("href", a);
+            link.attr("target", "_blank");
             if (!! c) {
                 link.html(c);
             } else {
