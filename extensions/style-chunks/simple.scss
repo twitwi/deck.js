@@ -1,6 +1,39 @@
 
 .deck-container {
 
+    @mixin background-size($mode) {
+        -webkit-background-size: $mode;
+        -moz-background-size: $mode;
+        -o-background-size: $mode;
+        background-size: $mode;
+    }
+
+    .slide.image-full, .slide.image-fit {
+        >*:not(img):not(.img) {
+            z-index: 100;
+        }
+        >img, >div.img {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            left: 0; top: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+        div.img {
+            width: 100%; height: 100%;
+            outline: 2px solid red;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        &.image-full div.img {
+            @include background-size(cover);
+        }
+        &.image-fit div.img {
+            @include background-size(contain);
+        }
+    }
+
     @mixin h2-pos($t, $l) {
         .slide.#{$t}-#{$l} h2 {
             position: absolute;
@@ -14,6 +47,10 @@
     @include h2-pos(top, right);
     @include h2-pos(bottom, left);
     @include h2-pos(bottom, right);
+
+    .slide.no-title {
+        h1, h2 { display: none; }
+    }
     
     .slide.darkened h2 {
         background: rgba(0,0,0, 0.75);

@@ -1,3 +1,34 @@
+.deck-container .slide.image-full > *:not(img):not(.img), .deck-container .slide.image-fit > *:not(img):not(.img) {
+  z-index: 100;
+}
+.deck-container .slide.image-full > img, .deck-container .slide.image-full > div.img, .deck-container .slide.image-fit > img, .deck-container .slide.image-fit > div.img {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+}
+.deck-container .slide.image-full div.img, .deck-container .slide.image-fit div.img {
+  width: 100%;
+  height: 100%;
+  outline: 2px solid red;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.deck-container .slide.image-full.image-full div.img, .deck-container .slide.image-fit.image-full div.img {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.deck-container .slide.image-full.image-fit div.img, .deck-container .slide.image-fit.image-fit div.img {
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+}
 .deck-container .slide.top-left h2 {
   position: absolute;
   border: 0px;
@@ -21,6 +52,9 @@
   border: 0px;
   bottom: 50px;
   right: 50px;
+}
+.deck-container .slide.no-title h1, .deck-container .slide.no-title h2 {
+  display: none;
 }
 .deck-container .slide.darkened h2 {
   background: rgba(0, 0, 0, 0.75);
