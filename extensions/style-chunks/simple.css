@@ -1,5 +1,5 @@
-.deck-container .slide.image-full > *:not(img):not(.img), .deck-container .slide.image-fit > *:not(img):not(.img) {
-  z-index: 100;
+.deck-container .slide.image-full > .attribution-wrap, .deck-container .slide.image-full > img, .deck-container .slide.image-full > div.img, .deck-container .slide.image-fit > .attribution-wrap, .deck-container .slide.image-fit > img, .deck-container .slide.image-fit > div.img {
+  z-index: -1;
 }
 .deck-container .slide.image-full > img, .deck-container .slide.image-full > div.img, .deck-container .slide.image-fit > img, .deck-container .slide.image-fit > div.img {
   margin: 0;

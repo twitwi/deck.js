@@ -9,8 +9,8 @@
     }
 
     .slide.image-full, .slide.image-fit {
-        >*:not(img):not(.img) {
-            z-index: 100;
+        >.attribution-wrap, >img, >div.img {
+            z-index: -1;
         }
         >img, >div.img {
             margin: 0;
