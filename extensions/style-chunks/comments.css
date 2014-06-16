@@ -1,0 +1,47 @@
+.deck-container:not(.deck-globalscale) div.comment, .deck-container:not(.deck-globalscale) .comment {
+  z-index: 1000 !important;
+  /* might need theme specific thing here */
+  background-color: yellow;
+  /* force opaque... */
+  color: darkred;
+}
+
+.deck-container:not(.deck-globalscale) .hasSVG .comment {
+  /*transform: none;*/
+  -webkit-transform: none;
+}
+
+body:not(.has-clones):not(.show-comments) .deck-container > .slide .comment, body:not(.has-clones):not(.show-comments) .deck-container > .slide .showwhencomment {
+  display: none;
+}
+
+.deck-container > .slide div.comment {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /*outline: 1px solid red;*/
+  border-radius: 3px;
+  color: darkred;
+  background: rgba(255, 255, 128, 0.7);
+  /*        opacity: .8;*/
+  font-size: 14px;
+  line-height: initial;
+  padding: 1px 15px;
+  width: auto;
+  height: 20px;
+  margin: 0;
+  margin-left: 100px;
+  margin-top: -6.6px;
+  margin-bottom: -13.2px;
+}
+
+.deck-container > .slide div.comment.small {
+  width: 120px;
+  margin-left: -100px;
+}
+
+.deck-container > .slide div.comment.twolines {
+  height: 40px;
+  margin-top: -13.333px;
+  margin-bottom: -26.667px;
+}
