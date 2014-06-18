@@ -2,11 +2,11 @@
 
 $(document).bind('deck.init', function() {
 
-$(".autoshow").each(function(){
+$(".autoshow, .autoshow-raw").each(function(){
     $('>div:gt(0)', this).hide();
 })
 
-$('.autoshow').each(function(){
+$('.autoshow, .autoshow-raw').each(function(){
   var t = this
   $('>div:not(:first)', t).css('display', 'none');
   var period = parseInt($(t).attr('data-period') || 4400);
