@@ -17,9 +17,23 @@ TODO:
 (function($, deck, undefined) {
     var $d = $(document);
     var may = function(f) {return f ? f : function() {}};
-    var startsWith = function(longStr, part) {return longStr.substr(0, part.length) == part;}
     var endsWith = function(longStr, part) {return longStr.indexOf(part, longStr.length - part.length) !== -1;}
-    var startsWithIgnoreCase = function(longStr, part) {return longStr.substr(0, part.length).toUpperCase() == part.toUpperCase();}
+    var REST = null;
+    var startsWith = function(longStr, part) {
+        var res = longStr.substr(0, part.length) == part;
+        REST = res ? longStr.slice(part.length) : null;
+        RESTRIM = res ? REST.replace(/^ */, "") : null;
+        return res;
+    }
+    var startsWithIgnoreCase = function(longStr, part) {
+        var res = longStr.substr(0, part.length).toUpperCase() == part.toUpperCase();
+        REST = res ? longStr.slice(part.length) : null;
+        RESTRIM = res ? REST.replace(/^ */, "") : null;
+        return res;
+    }
+
+    // the animation duration is stateful across the smarkdown sections
+    var animationDuration = 400;
 
     function clone(a) { return JSON.parse(JSON.stringify(a)) }
     function findTag(tree, regexp, startAt=0) {
@@ -33,14 +47,14 @@ TODO:
         return -1;
     }
     function addSpaceSeparatedAttr(o, a, c) {
-        if (o[a])
-            o[a] += " " + c;
+        ensureHasAttributes(o);
+        if (o[1][a])
+            o[1][a] += " " + c;
         else
-            o[a] = c;
+            o[1][a] = c;
     }
-    function addClass(tag, c) {
-        ensureHasAttributes(tag);
-        addSpaceSeparatedAttr(tag[1], 'class', c);
+    function addClass(o, c) {
+        addSpaceSeparatedAttr(o, 'class', c);
     }
     function isObject(o) {
         return !Array.isArray(o) && typeof(o) === 'object';
@@ -79,7 +93,7 @@ TODO:
                 tree[1].id = decorations[d].slice(1);
             } else {
                 if (startsWith(decorations[d], "*")) {
-                    addSpaceSeparatedAttr(tree[1], "data-container-class", decorations[d].slice(1));
+                    addSpaceSeparatedAttr(tree, "data-container-class", decorations[d].slice(1));
                 }
                 addClass(tree, decorations[d]);
             }                
@@ -88,7 +102,7 @@ TODO:
     function maybeProcessAtSomething(tree, index) {
         var line = tree[index];
         if (startsWithIgnoreCase(line, "@SVG:")) {
-            var parts = line.replace(/@SVG\: */i, "").split(/ +/);
+            var parts = RESTRIM.split(/ +/);
             var obj = ["div", {
                 'data-src': parts[1],
                 'data-width': parts[2],
@@ -97,10 +111,58 @@ TODO:
             }, ""];
             Array.forEach(parts[0].split(/,/), function (p) { addClass(obj, p); });
             tree[index] = obj;
-            return true;
+        } else if (startsWithIgnoreCase(line, "@ANIM:")) {
+            line = line.replace(/@ANIM\: */i, "");
+            var allToAdd = [];
+            var parts = line.split(/ *\| */); // TODO: configurize + reconsider all separators?
+            for (i in parts) {
+                // process each group of simultaneous animations
+                var subparts = parts[i].split(/ *\+ */);
+                for (ii in subparts) {
+                    var what = subparts[ii];
+                    if (what == "") continue; // as a good side effect, this allows to set a "anim-continue" on all elements (e.g., put a + at the end of the line) 
+                    var continuating  = ii != subparts.length-1;
+                    var toAdd = ["div", {}, ""];
+                    addClass(toAdd, "slide");
+                    // TODO: DURATION
+                    // process the individual element (reminder: animationDuration is global)
+                    function dw() { addSpaceSeparatedAttr(toAdd, "data-what", REST); }
+                    if (startsWithIgnoreCase(what, "%play:")) {
+                        addClass(toAdd, "anim-play");
+                        dw();
+                    } else if (startsWithIgnoreCase(what, "%pause:")) {
+                        addClass(toAdd, "anim-pause");
+                        dw();
+                    } else if (startsWith(what, "%viewbox:")) {
+                        addClass(toAdd, "anim-viewboxas");
+                        // TODO: if REST contains ':', two params (then the target is specified, else it is just all SVGs root elements)
+                        addSpaceSeparatedAttr(toAdd, "data-as", REST);
+                        addSpaceSeparatedAttr(toAdd, "data-what", "svg");
+                    } else if (startsWith(what, "%attr:")) {
+                        var main = RESTRIM.split(/ *: */);
+                        addClass(toAdd, "anim-attribute");
+                        addSpaceSeparatedAttr(toAdd, "data-what", main[0]);
+                        addSpaceSeparatedAttr(toAdd, "data-attr", main.slice(1).join(":"));
+                    } else if (startsWith(what, "+")) {
+                        addClass(toAdd, "anim-show");
+                        dw();
+                    } else if (startsWith(what, "-")) {
+                        addClass(toAdd, "anim-hide");
+                        dw();
+                    } else {
+                        addClass(toAdd, "anim-show");
+                        addSpaceSeparatedAttr(toAdd, "data-what", what);
+                    }
+                    if (continuating) addClass(toAdd, "anim-continue");
+                    allToAdd.push(toAdd);
+                }
+            }
+            tree.splice.apply(tree, Array.concat([index, 1], allToAdd)); // just replacing the text with allToAdd elements
+        } else {
+            return false;
         }
         // TODO? handle the decorations for comments
-        return false;
+        return true;
     }
 
     var interpretationOfSmartLanguage = function(smark, doc) {
