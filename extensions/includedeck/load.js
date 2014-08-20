@@ -84,6 +84,10 @@ function includedeck(m, c) {
             prefix + "/extensions/simplemath/deck.simplemath.js"
         ],
         "smartsyntax": [ prefix + "/extensions/smartsyntax/deck.smartsyntax.js" ],
+        "smarkdown": [
+            prefix + "/extensions/smarkdown/markdown.js",
+            prefix + "/extensions/smarkdown/deck.smarkdown.js"
+        ],
         "clone": [
             prefix + "/extensions/clone/deck.clone.css",
             prefix + "/extensions/clone/deck.clone.js"
@@ -140,6 +144,9 @@ function includedeck(m, c) {
         "profile-2-fitnofs": ["@_newdeck", "@_smartsyntax", "@_fit", "@_simplemath", "@_clone", "@_goto", "@_status", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg"],
         /// profile-3: big profile = profile-2 / with new status (progress) + all good bundled extensions
         "profile-3": ["@_newdeck", "@_smartsyntax", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper"],
+        /// profile-4: big profile (as profile 3) but with the smarkdown instead of the smartsyntax
+        "profile-4": ["@_newdeck", "@_smarkdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper"],
         dummy: {}
     };
