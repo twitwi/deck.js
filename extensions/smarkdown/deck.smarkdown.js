@@ -20,18 +20,6 @@ TODO:
     var startsWith = function(longStr, part) {return longStr.substr(0, part.length) == part;}
     var endsWith = function(longStr, part) {return longStr.indexOf(part, longStr.length - part.length) !== -1;}
     var startsWithIgnoreCase = function(longStr, part) {return longStr.substr(0, part.length).toUpperCase() == part.toUpperCase();}
-    var maybeAddClasses = function(toWhat, spaceSeparatedClasses, uniqueId) {
-        if (uniqueId != "") $(toWhat).attr("id", uniqueId);
-        if (spaceSeparatedClasses == "") return;
-        var parts = spaceSeparatedClasses.split(/ +/);
-        for (i in parts) {
-            if (startsWith(parts[i], "*")) {
-                $(toWhat).attr("data-container-class", parts[i].substring(1));
-            } else {
-                $(toWhat).addClass(parts[i]);
-            }
-        }
-    }
 
     function clone(a) { return JSON.parse(JSON.stringify(a)) }
     function findTag(tree, regexp, startAt=0) {
@@ -50,8 +38,9 @@ TODO:
         else
             o[a] = c;
     }
-    function addClass(o, c) {
-        addSpaceSeparatedAttr(o, 'class', c);
+    function addClass(tag, c) {
+        ensureHasAttributes(tag);
+        addSpaceSeparatedAttr(tag[1], 'class', c);
     }
     function isObject(o) {
         return !Array.isArray(o) && typeof(o) === 'object';
@@ -92,9 +81,26 @@ TODO:
                 if (startsWith(decorations[d], "*")) {
                     addSpaceSeparatedAttr(tree[1], "data-container-class", decorations[d].slice(1));
                 }
-                addClass(tree[1], decorations[d]);
+                addClass(tree, decorations[d]);
             }                
         }
+    }
+    function maybeProcessAtSomething(tree, index) {
+        var line = tree[index];
+        if (startsWithIgnoreCase(line, "@SVG:")) {
+            var parts = line.replace(/@SVG\: */i, "").split(/ +/);
+            var obj = ["div", {
+                'data-src': parts[1],
+                'data-width': parts[2],
+                'data-height': parts[3],
+                'class': "svg-object"
+            }, ""];
+            Array.forEach(parts[0].split(/,/), function (p) { addClass(obj, p); });
+            tree[index] = obj;
+            return true;
+        }
+        // TODO? handle the decorations for comments
+        return false;
     }
 
     var interpretationOfSmartLanguage = function(smark, doc) {
@@ -116,7 +122,10 @@ TODO:
         })(jstree);
 
         console.log(clone(jstree));
-        // process the {#… .…} and @stuff and //… stuff
+        // process:
+        // - the class and id decorations like    {#first hightlight slide}
+        // - the @... custom notations
+        // - TODO: the // for comments
         for (s in jstree) {
             if (s == 0 || (s==1 && isObject(jstree[1]))) continue;
             var slide = jstree[s];
@@ -124,22 +133,17 @@ TODO:
                 var i = 1;
                 while (i < tree.length) {
                     if (Array.isArray(tree[i])) patch(tree[i]);
-                    else if (typeof(tree[i]) == 'string'
-                             && hasIDOrClassDecoration(tree[i])
-                            ) {
-                        processIDOrClassDecoration(tree, i);
+                    else if (typeof(tree[i]) == 'string') {
+                        if (maybeProcessAtSomething(tree, i)) continue;
+                        else if (hasIDOrClassDecoration(tree[i])) processIDOrClassDecoration(tree, i);
                     }
                     i++;
                 }
             })(slide);
-            console.log("SLIDE")
-            console.log(clone(slide))
             ensureHasAttributes(slide);
             var hAttributes = lazyGetAttributes(slide[2]);
-            console.log(clone(slide[2]))
-            console.log(clone(hAttributes))
             slide[1] = clone(hAttributes);
-            addClass(slide[1], 'slide');
+            addClass(slide, 'slide');
         }
 
         console.log(clone(jstree));
