@@ -1519,7 +1519,7 @@ function escapeHTML( text ) {
 function render_tree( jsonml ) {
   // basic case
   if ( typeof jsonml === "string" ) {
-    return escapeHTML( jsonml );
+    return jsonml; // modified for deck.smarkdown.js
   }
 
   var tag = jsonml.shift(),
