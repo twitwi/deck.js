@@ -44,11 +44,14 @@ TODO:
         }
         return -1;
     }
-    function addClass(o, c) {
-        if (o['class'])
-            o['class'] += " " + c;
+    function addSpaceSeparatedAttr(o, a, c) {
+        if (o[a])
+            o[a] += " " + c;
         else
-            o['class'] = c;
+            o[a] = c;
+    }
+    function addClass(o, c) {
+        addSpaceSeparatedAttr(o, 'class', c);
     }
     function isObject(o) {
         return !Array.isArray(o) && typeof(o) === 'object';
@@ -72,7 +75,7 @@ TODO:
     }
     function processIDOrClassDecoration(tree, index) {
         var matched = hasIDOrClassDecoration(tree[index]); // make sure the group is set
-        if (!matched) { alert("hum"); return; } // TODO better even though it should be dead code
+        if (!matched) { alert("should call processIDOrClassDecoration() only if hasIDOrClassDecoration is true"); return; }
         var base = RegExp.$1;
         var decorations = RegExp.$2.split(/ +/);
         if (ensureHasAttributes(tree)) {
@@ -82,14 +85,13 @@ TODO:
         for (d in decorations) {
             // allow .class and class notations
             if (startsWith(decorations[d], ".")) decorations[d] = decorations[d].slice(1);
+
             if (startsWith(decorations[d], "#")) {
                 tree[1].id = decorations[d].slice(1);
             } else {
-            // TODO handle "*" stuff
-            /*
-            if (startsWith(parts[i], "*")) {
-                $(toWhat).attr("data-container-class", parts[i].substring(1));
-                */
+                if (startsWith(decorations[d], "*")) {
+                    addSpaceSeparatedAttr(tree[1], "data-container-class", decorations[d].slice(1));
+                }
                 addClass(tree[1], decorations[d]);
             }                
         }
