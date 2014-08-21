@@ -20,6 +20,7 @@ TODO:
     var endsWith = function(longStr, part) {return longStr.indexOf(part, longStr.length - part.length) !== -1;}
     var REST = null;
     var startsWith = function(longStr, part) {
+        if (part == "%+class:") alert(":::"+longStr+":::");
         var res = longStr.substr(0, part.length) == part;
         REST = res ? longStr.slice(part.length) : null;
         RESTRIM = res ? REST.replace(/^ */, "") : null;
@@ -134,7 +135,7 @@ TODO:
             Array.forEach(parts[0].split(/,/), function (p) { addClass(obj, p); });
             tree[index] = obj;
         } else if (startsWithIgnoreCase(line, "@ANIM:")) {
-            line = line.replace(/@ANIM\: */i, "");
+            line = RESTRIM.replace(/%[+]/i, "%%"); // protect the "%+class" from being split
             var allToAdd = [];
             var parts = line.split(/ *\| */); // TODO: configurize + reconsider all separators?
             for (i in parts) {
@@ -165,6 +166,16 @@ TODO:
                         addClass(toAdd, "anim-attribute");
                         addSpaceSeparatedAttr(toAdd, "data-what", main[0]);
                         addSpaceSeparatedAttr(toAdd, "data-attr", main.slice(1).join(":"));
+                    } else if (startsWith(what, "%%class:")) {
+                        var main = RESTRIM.split(/ *: */);
+                        addClass(toAdd, "anim-addclass");
+                        addSpaceSeparatedAttr(toAdd, "data-class", main[0]);
+                        addSpaceSeparatedAttr(toAdd, "data-what", main.slice(1).join(":"));
+                    } else if (startsWith(what, "%-class:")) {
+                        var main = RESTRIM.split(/ *: */);
+                        addClass(toAdd, "anim-removeclass");
+                        addSpaceSeparatedAttr(toAdd, "data-class", main[0]);
+                        addSpaceSeparatedAttr(toAdd, "data-what", main.slice(1).join(":"));
                     } else if (startsWith(what, "+")) {
                         addClass(toAdd, "anim-show");
                         dw();
@@ -221,7 +232,6 @@ TODO:
                     if (Array.isArray(tree[i])) {
                         if (tree[i][0] === "li") {
                             var li = tree[i];
-                            console.log("LI:", clone(li))
                             if (Array.isArray(li[1]) && li[1][0] === "p") {
                                 li.splice.apply(li, Array.concat( [1, 1], li[1].slice(1)));
                                 continue;
