@@ -124,15 +124,32 @@ TODO:
     function maybeProcessAtSomething(tree, index) {
         var line = tree[index];
         if (startsWithIgnoreCase(line, "@SVG:")) {
-            var parts = RESTRIM.split(/ +/);
-            var obj = ["div", {
-                'data-src': parts[1],
-                'data-width': parts[2],
-                'data-height': parts[3],
-                'class': "svg-object"
-            }, ""];
-            Array.forEach(parts[0].split(/,/), function (p) { addClass(obj, p); });
-            tree[index] = obj;
+            var content = RESTRIM
+            if (hasIDOrClassDecoration(content)) {
+                // new version
+                var parts = content.split(/ +/);
+                var obj = ["div", {
+                    'data-src': parts[0],
+                    'data-width': parts[1],
+                    'data-height': parts[2],
+                    'class': "svg-object"
+                }, parts.slice(3).join(" ")];
+                // TODO: alert when wrong number of args
+                processIDOrClassDecoration(obj, 2);
+                tree[index] = obj;
+            } else {
+                // TODO allow this only when an option is set option
+                // old, smartsyntax version
+                var parts = content.split(/ +/);
+                var obj = ["div", {
+                    'data-src': parts[1],
+                    'data-width': parts[2],
+                    'data-height': parts[3],
+                    'class': "svg-object"
+                }, ""];
+                Array.forEach(parts[0].split(/,/), function (p) { addClass(obj, p); });
+                tree[index] = obj;
+            }
         } else if (startsWithIgnoreCase(line, "@ANIM:")) {
             line = RESTRIM.replace(/%[+]/i, "%%"); // protect the "%+class" from being split
             var allToAdd = [];
