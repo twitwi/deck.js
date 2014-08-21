@@ -99,6 +99,28 @@ TODO:
             }                
         }
     }
+    function possiblyHideIfEmpty(tree) { // if it contains only anim stuf etc
+        var hide = false;
+        var i = isObject(tree[1]) ? 2 : 1;
+        function onlyDivAnims(tt) {
+            var only = true;
+            var start = isObject(tt[1]) ? 2 : 1;
+            Array.forEach(tt.slice(start), function(e) {
+                if (!Array.isArray(e) || !isObject(e[1]) || (" "+e[1]["class"]).indexOf(" anim-") == -1) {
+                    only = false;
+                }
+            });
+            return only;
+        }
+
+        if (onlyDivAnims(tree)) hide = true;
+        else if (tree.length == i+1 && Array.isArray(tree[i]) && tree[i][0] == "p"
+                 && onlyDivAnims(tree[i])) hide = true;
+        if (hide) {
+            ensureHasAttributes(tree);
+            tree[1].style = "display: none";
+        }
+    }
     function maybeProcessAtSomething(tree, index) {
         var line = tree[index];
         if (startsWithIgnoreCase(line, "@SVG:")) {
@@ -191,6 +213,26 @@ TODO:
         for (s in jstree) {
             if (s == 0 || (s==1 && isObject(jstree[1]))) continue;
             var slide = jstree[s];
+            ensureHasAttributes(slide);
+            // cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations)
+            (function patch(tree){ // tree is slide or a subelement
+                var i = 1;
+                while (i < tree.length) {
+                    if (Array.isArray(tree[i])) {
+                        if (tree[i][0] === "li") {
+                            var li = tree[i];
+                            console.log("LI:", clone(li))
+                            if (Array.isArray(li[1]) && li[1][0] === "p") {
+                                li.splice.apply(li, Array.concat( [1, 1], li[1].slice(1)));
+                                continue;
+                            }
+                        }
+                        patch(tree[i]);
+                    }
+                    i++;
+                }
+            })(slide);
+            // process @anim... and {} decoration
             (function patch(tree){ // tree is slide or a subelement
                 var i = 1;
                 while (i < tree.length) {
@@ -202,7 +244,17 @@ TODO:
                     i++;
                 }
             })(slide);
-            ensureHasAttributes(slide);
+            // cleanup: hide empty "li" after @anim processing
+            (function patch(tree){ // tree is slide or a subelement
+                var i = 1;
+                while (i < tree.length) {
+                    if (Array.isArray(tree[i])) {
+                        if (tree[i][0] === "li" && possiblyHideIfEmpty(tree[i])) continue;
+                        else patch(tree[i]);
+                    }
+                    i++;
+                }
+            })(slide);
             var hAttributes = lazyGetAttributes(slide[2]);
             slide[1] = clone(hAttributes);
             addClass(slide, 'slide');
