@@ -8,9 +8,8 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 /*
 This module provides a support for a shorter syntax for slides, with a syntax that is closer to plain markdown.
 TODO:
-- configurize the .smark
-- review for simpler and unified @anim-appear etc
-- have a shortcut for {slide}
+- configurize the .smark and the default duration also
+- have a shortcut for {slide}?
 
 */
 
@@ -147,10 +146,16 @@ TODO:
                     var continuating  = ii != subparts.length-1;
                     var toAdd = ["div", {}, ""];
                     addClass(toAdd, "slide");
-                    // TODO: DURATION
                     // process the individual element (reminder: animationDuration is global)
                     function dw() { addSpaceSeparatedAttr(toAdd, "data-what", REST); }
-                    if (startsWithIgnoreCase(what, "%play:")) {
+                    function dd() { addSpaceSeparatedAttr(toAdd, "data-dur", ""+animationDuration); }
+                    if (startsWithIgnoreCase(what, "%duration:")) {
+                        animationDuration = RESTRIM;
+                        continue;
+                    } else if (startsWithIgnoreCase(what, "%dur:")) {
+                        animationDuration = RESTRIM;
+                        continue;
+                    } else if (startsWithIgnoreCase(what, "%play:")) {
                         addClass(toAdd, "anim-play");
                         dw();
                     } else if (startsWithIgnoreCase(what, "%pause:")) {
@@ -161,11 +166,13 @@ TODO:
                         // TODO: if REST contains ':', two params (then the target is specified, else it is just all SVGs root elements)
                         addSpaceSeparatedAttr(toAdd, "data-as", REST);
                         addSpaceSeparatedAttr(toAdd, "data-what", "svg");
+                        dd();
                     } else if (startsWith(what, "%attr:")) {
                         var main = RESTRIM.split(/ *: */);
                         addClass(toAdd, "anim-attribute");
                         addSpaceSeparatedAttr(toAdd, "data-what", main[0]);
                         addSpaceSeparatedAttr(toAdd, "data-attr", main.slice(1).join(":"));
+                        dd();
                     } else if (startsWith(what, "%%class:")) {
                         var main = RESTRIM.split(/ *: */);
                         addClass(toAdd, "anim-addclass");
@@ -181,10 +188,11 @@ TODO:
                         dw();
                     } else if (startsWith(what, "-")) {
                         addClass(toAdd, "anim-hide");
-                        dw();
+                        dw(); dd();
                     } else {
                         addClass(toAdd, "anim-show");
                         addSpaceSeparatedAttr(toAdd, "data-what", what);
+                        dd();
                     }
                     if (continuating) addClass(toAdd, "anim-continue");
                     allToAdd.push(toAdd);
