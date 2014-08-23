@@ -222,6 +222,9 @@ TODO:
         // TODO? handle the decorations for comments
         return true;
     }
+    function processMath(content) {
+        return content.replace(/\$([^$][^$]*)\$/g, '<span class="latex">\\displaystyle $1</span>').replace(/\$\$/, '$');
+    }
 
     var interpretationOfSmartLanguage = function(smark, doc) {
         console.log(smark)
@@ -286,6 +289,17 @@ TODO:
                     if (Array.isArray(tree[i])) {
                         if (tree[i][0] === "li" && possiblyHideIfEmpty(tree[i])) continue;
                         else patch(tree[i]);
+                    }
+                    i++;
+                }
+            })(slide);
+            // process the $math$
+            (function patch(tree){ // tree is slide or a subelement
+                var i = 1;
+                while (i < tree.length) {
+                    if (Array.isArray(tree[i])) patch(tree[i]);
+                    else if (typeof(tree[i]) == 'string') {
+                        tree[i] = processMath(tree[i]);
                     }
                     i++;
                 }
