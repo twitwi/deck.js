@@ -117,6 +117,12 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             },
             doit: function(c, factor) {
                 if (factor === undefined) factor = 1
+                c.all().each( function() {
+                    // finish all previous animations
+                    while ($(this).queue().length) {
+                        $(this).stop(false, true);
+                    }
+                });
                 var k = c.attribute()
                 c.previousCss = []
                 c.previousElement = []
