@@ -104,8 +104,8 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
         });
         classical(o.selectors.animAttribute, {
             init: function(c) {
-                c.previousElement = [];
-                c.all().css(c.attribute(), '') // for the jquery anim to work the css attribute should not be defined in the element (in the html) so we suppose it is empty by default (and thus, if it is not empty, it means it has been set by jquery)
+                c.all().css(c.attribute(), ''); // clear the style (if it had been set by previous animations, e.g., if we come back on a slide)
+                // for the jquery anim to work the css attribute should not be defined in the element (in the html) so we suppose it is empty by default (and thus, if it is not empty, it means it has been set by jquery)
             },
             undo: function(c) {
                 var k = c.attribute()
