@@ -145,22 +145,44 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             fast: function(c) {c.all().each(function(){this.pause()})}
         });
         classical(o.selectors.animViewboxAs, {
-            create: function(c) {c.whatFrom = {}},
+            create: function(c) {
+                c.attribute = function() {return "svgViewBox"};
+                c.value = function() {
+                    var asWhat = $(c.as());
+                    var a = function (i) {return asWhat.attr(i)}
+                    var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
+                    return toViewBox;
+                };
+            },
             init: function(c) {this.undo(c)},
-            undo: function(c) {c.all().animate(c.whatFrom, 0)},
+            undo: function(c) {
+                var k = c.attribute()
+                for (i in c.previousElement) { // use the saved list of elements and values
+                    var whatTo = {}
+                    whatTo[k] = c.previousValue[i]
+                    $(c.previousElement[i]).animate(whatTo, 0)
+                }
+            },
             doit: function(c, factor) {
                 if (factor === undefined) factor = 1
-                var attr = "svgViewBox";
-                var whatTo = {};
-                var asWhat = $(c.as());
-                var a = function (i) {return asWhat.attr(i)}
-                // todo should do as with the generic attribute above (maintain a list)
-                c.whatFrom[attr] = c.all().first().get(0).attributes.getNamedItem('viewBox').value // custom access to the svg viewbox attribute
-                var toViewBox = a('x')+" "+a('y')+" "+a('width')+" "+a('height');
-                whatTo[attr] = toViewBox;
+                c.all().each( function() {
+                    // finish all previous animations
+                    while ($(this).queue().length) {
+                        $(this).stop(false, true);
+                    }
+                });
+                var k = c.attribute()
+                c.previousValue = []
+                c.previousElement = []
+                c.all().each( function() {
+                    c.previousElement.push(this);
+                    c.previousValue.push(this.attributes.getNamedItem('viewBox').value);
+                }); // save a list of elements and values
+                var whatTo = {}
+                whatTo[k] = c.value()
                 c.all().animate(whatTo, c.dur()*factor)
             },
-            fast: function(c) {this.doit(c, 0)}
+            fast: function(c) {this.doit(c,0)}
         });
         classical(o.selectors.animContinue, {
             doit: function(c) {setTimeout(function(){$[deck]('next')}, 1)}
