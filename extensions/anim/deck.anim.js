@@ -133,17 +133,6 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             },
             fast: function(c) {this.doit(c,0)}
         });
-        classical(o.selectors.animPlay, {
-            init: function(c) {c.all().each(function(){this.pause(); try{this.currentTime=0}catch(e){} })},
-            undo: function(c) {c.all().each(function(){this.pause()})},
-            doit: function(c) {c.all().each(function(){this.play()})},
-            fast: function(c) {c.all().each(function(){this.play()})}
-        });
-        classical(o.selectors.animPause, {
-            undo: function(c) {c.all().each(function(){this.play()})},
-            doit: function(c) {c.all().each(function(){this.pause()})},
-            fast: function(c) {c.all().each(function(){this.pause()})}
-        });
         classical(o.selectors.animViewboxAs, {
             create: function(c) {
                 c.attribute = function() {return "svgViewBox"};
@@ -183,6 +172,17 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 c.all().animate(whatTo, c.dur()*factor)
             },
             fast: function(c) {this.doit(c,0)}
+        });
+        classical(o.selectors.animPlay, {
+            init: function(c) {c.all().each(function(){this.pause(); try{this.currentTime=0}catch(e){} })},
+            undo: function(c) {c.all().each(function(){this.pause()})},
+            doit: function(c) {c.all().each(function(){this.play()})},
+            fast: function(c) {c.all().each(function(){this.play()})}
+        });
+        classical(o.selectors.animPause, {
+            undo: function(c) {c.all().each(function(){this.play()})},
+            doit: function(c) {c.all().each(function(){this.pause()})},
+            fast: function(c) {c.all().each(function(){this.pause()})}
         });
         classical(o.selectors.animContinue, {
             doit: function(c) {setTimeout(function(){$[deck]('next')}, 1)}
