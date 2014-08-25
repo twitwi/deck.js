@@ -53,6 +53,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 all: function() {return $(this.what(),this.toplevel())}
             }
         };
+        var globalHasAnimContinue = false;
         var classical = function(selector, methods) {
             $(selector).each(function(i, el) {
                 var c = context(el);
@@ -139,8 +140,8 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 if (factor === undefined) factor = 1
                 c.all().each( function() {
                     // finish all previous animations
-                    while ($(this).queue().length) {
-                        $(this).stop(false, true);
+                    if (!globalHasAnimContinue && $(this).queue().length) {
+                        $(this).finish();
                     }
                 });
                 var k = c.attribute()
@@ -186,8 +187,8 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 if (factor === undefined) factor = 1
                 c.all().each( function() {
                     // finish all previous animations
-                    while ($(this).queue().length) {
-                        $(this).stop(false, true);
+                    if (!globalHasAnimContinue && $(this).queue().length) {
+                        $(this).finish();
                     }
                 });
                 var k = c.attribute()
@@ -215,11 +216,11 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             fast: function(c) {c.all().each(function(){this.pause()})}
         });
         classical(o.selectors.animContinue, {
-            doit: function(c) {setTimeout(function(){$[deck]('next')}, 1)}
+            doit: function(c) {setTimeout(function(){ globalHasAnimContinue = true; $[deck]('next') ; globalHasAnimContinue = false; }, 1)}
             // do not do it in fast mode
         });
         classical(o.selectors.animWait, {
-            doit: function(c) {setTimeout(function(){$[deck]('next')}, c.dur())}
+            doit: function(c) {setTimeout(function(){ globalHasAnimContinue = true; $[deck]('next') ; globalHasAnimContinue = false; }, c.dur())}
         });
         // handle the chained undo for "anim-continue"
         $(o.selectors.animContinue + "," + o.selectors.animWait).each(function(i, curSlide) {
