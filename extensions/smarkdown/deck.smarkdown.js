@@ -125,9 +125,9 @@ TODO:
         var line = tree[index];
         if (startsWithIgnoreCase(line, "@SVG:")) {
             var content = RESTRIM
-            if (hasIDOrClassDecoration(content)) {
+            var parts = content.split(/ +/);
+            if (hasIDOrClassDecoration(content) || parts.length == 3) {
                 // new version
-                var parts = content.split(/ +/);
                 var obj = ["div", {
                     'data-src': parts[0],
                     'data-width': parts[1],
@@ -135,12 +135,11 @@ TODO:
                     'class': "svg-object"
                 }, parts.slice(3).join(" ")];
                 // TODO: alert when wrong number of args
-                processIDOrClassDecoration(obj, 2);
+                if (hasIDOrClassDecoration(content)) processIDOrClassDecoration(obj, 2);
                 tree[index] = obj;
             } else {
                 // TODO allow this only when an option is set option
                 // old, smartsyntax version
-                var parts = content.split(/ +/);
                 var obj = ["div", {
                     'data-src': parts[1],
                     'data-width': parts[2],
