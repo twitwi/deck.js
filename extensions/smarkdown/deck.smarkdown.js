@@ -94,8 +94,9 @@ TODO:
             } else {
                 if (startsWith(decorations[d], "*") | startsWith(decorations[d], "/")) {
                     addSpaceSeparatedAttr(tree, "data-container-class", decorations[d].slice(1));
+                } else {
+                    addClass(tree, decorations[d]);
                 }
-                addClass(tree, decorations[d]);
             }                
         }
     }
