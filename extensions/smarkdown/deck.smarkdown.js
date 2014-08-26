@@ -73,6 +73,11 @@ TODO:
             return {};
         }
     }
+    function lazyUnsetAttributes(tree) {
+        if (isObject(tree[1])) {
+            tree.splice(1, 1);
+        }
+    }
     function hasIDOrClassDecoration(s) {
         return s.match(/^(.*)\{([^{}<>]*)\}$/);
     }
@@ -306,6 +311,7 @@ TODO:
             })(slide);
             var hAttributes = lazyGetAttributes(slide[2]);
             slide[1] = clone(hAttributes);
+            lazyUnsetAttributes(slide[2]);
             addClass(slide, 'slide');
         }
 
