@@ -130,6 +130,11 @@ function includedeck(m, c) {
             prefix + "/extensions/attribution/deck.attribution.js"
         ],
         "container-styling": [ prefix + "/extensions/container-styling/deck.container-styling.js" ],
+        // Style extensions
+        "style-chunks": [
+	    prefix + "/extensions/style-chunks/simple.css",
+	    prefix + "/extensions/style-chunks/comments.css"
+        ],
         //
         // Themes
         // // by convention, "theme:blabla" will load the default blabla theme
@@ -148,6 +153,9 @@ function includedeck(m, c) {
         /// profile-4: big profile (as profile 3) but with the smarkdown instead of the smartsyntax
         "profile-4": ["@_newdeck", "@_smarkdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper"],
+        /// profile-5: use smarkdown and include more useful things (CSS: simple, comments)
+        "profile-5": ["@_newdeck", "@_smarkdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
         dummy: {}
     };
 
