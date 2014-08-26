@@ -92,7 +92,7 @@ TODO:
             if (startsWith(decorations[d], "#")) {
                 tree[1].id = decorations[d].slice(1);
             } else {
-                if (startsWith(decorations[d], "*")) {
+                if (startsWith(decorations[d], "*") | startsWith(decorations[d], "/")) {
                     addSpaceSeparatedAttr(tree, "data-container-class", decorations[d].slice(1));
                 }
                 addClass(tree, decorations[d]);
