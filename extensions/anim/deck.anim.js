@@ -50,6 +50,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 attribute: function() {return $(el).attr("data-attr").split(':')[0]},
                 as: function() {return $(el).attr("data-as")},
                 path: function() {return $(el).attr("data-path")},
+                reverse: function() {var r = $(el).attr("data-reverse"); return r && r.toUpperCase() == "TRUE";},
                 value: function() {return $(el).attr("data-attr").split(':')[1]},
                 toplevel: function() {return $[deck]('getToplevelSlideOf', el).node},
                 all: function() {return $(this.what(),this.toplevel())}
@@ -227,7 +228,9 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                     }
                 });
                 var path = $(c.path()).get(0);
-                var s = path.getPointAtLength(0);
+                var rev = c.reverse();
+                var len = path.getTotalLength()
+                var s = path.getPointAtLength(rev?len:0);
                 c.previousValue = [];
                 c.previousElement = [];
                 c.all().each( function() {
@@ -239,11 +242,12 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                         c.previousValue.push(null);
                     }
                     c.previousElement.push(this);
-                    $(this).css({svgDeckAnim:0.0});
+                    $(this).css({svgDeckAnim: 0.});
                     $(this).animate({svgDeckAnim: 1.}, {
                         duration: c.dur()*factor,
                         step: function(v) {
-                            var p = path.getPointAtLength(v * path.getTotalLength());
+                            if (rev) v = 1-v;
+                            var p = path.getPointAtLength(v * len);
                             $(this).attr("transform", 'translate('+(p.x-s.x)+','+(p.y-s.y)+')' + base);
                         }
                     });
