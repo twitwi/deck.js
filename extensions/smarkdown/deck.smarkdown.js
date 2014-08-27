@@ -127,6 +127,20 @@ TODO:
             tree[1].style = "display: none";
         }
     }
+    function maybeProcessComment(tree, index) {
+        var line = tree[index];
+        var clean = function(s) { return s;}; //return s.replace(/\/\\\//g, '//'); };
+        if (line.match(/^(.*?)[\n\s]*\/\/ +(.*)/)) {
+            console.log(line, RegExp.$1, RegExp.$2)
+            var obj = ["div", {
+                'class': "comment"
+            }, clean(RegExp.$2)];
+            tree.splice(index, 1, RegExp.$1, obj);
+            return true;
+        }
+        tree[index] = clean(tree[index]);
+        return false;
+    }
     function maybeProcessAtSomething(tree, index) {
         var line = tree[index];
         if (startsWithIgnoreCase(line, "@SVG:")) {
@@ -291,7 +305,8 @@ TODO:
                 while (i < tree.length) {
                     if (Array.isArray(tree[i])) patch(tree[i]);
                     else if (typeof(tree[i]) == 'string') {
-                        if (maybeProcessAtSomething(tree, i)) continue;
+                        if (maybeProcessComment(tree, i)) continue;
+                        else if (maybeProcessAtSomething(tree, i)) continue;
                         else if (hasIDOrClassDecoration(tree[i])) processIDOrClassDecoration(tree, i);
                     }
                     i++;
