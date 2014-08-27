@@ -195,6 +195,16 @@ TODO:
                         addSpaceSeparatedAttr(toAdd, "data-what", main[0]);
                         addSpaceSeparatedAttr(toAdd, "data-attr", main.slice(1).join(":"));
                         dd();
+                    } else if (startsWith(what, "%along:")) {
+                        var main = RESTRIM.split(/ *: */);
+                        addClass(toAdd, "anim-along");
+                        if (startsWith(main[0], "-")) {
+                            main[0] = RESTRIM;
+                            addSpaceSeparatedAttr(toAdd, "data-reverse", "true");
+                        }
+                        addSpaceSeparatedAttr(toAdd, "data-path", main[0]);
+                        addSpaceSeparatedAttr(toAdd, "data-what", main.slice(1).join(":"));
+                        dd();
                     } else if (startsWith(what, "%%class:")) {
                         var main = RESTRIM.split(/ *: */);
                         addClass(toAdd, "anim-addclass");
