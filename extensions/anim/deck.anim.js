@@ -126,6 +126,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 for (i in c.previousElement) { // use the saved list of elements and values
                     var whatTo = {};
                     whatTo[k] = c.previousCss[i];
+                    $(c.previousElement[i]).finish();
                     if (c.previousElement[i] instanceof SVGElement) {
                         if (whatTo[k] != null) {
 	                    var realAttrName = svgRealAttrName(k) || k;
@@ -183,6 +184,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 for (i in c.previousElement) { // use the saved list of elements and values
                     var whatTo = {}
                     whatTo[k] = c.previousValue[i]
+                    $(c.previousElement[i]).finish();
                     $(c.previousElement[i]).animate(whatTo, 0)
                 }
             },
@@ -212,6 +214,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             undo: function(c) {
                 for (i in c.previousElement) { // use the saved list of elements and values
                     var prev = c.previousValue[i];
+                    $(c.previousElement[i]).finish();
                     $(c.previousElement[i]).attr("transform", prev);
                 }
             },
