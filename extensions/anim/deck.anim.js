@@ -244,7 +244,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                         duration: c.dur()*factor,
                         step: function(v) {
                             var p = path.getPointAtLength(v * path.getTotalLength());
-                            $(this).attr("transform", base+'translate('+(p.x-s.x)+','+(p.y-s.y)+')');
+                            $(this).attr("transform", 'translate('+(p.x-s.x)+','+(p.y-s.y)+')' + base);
                         }
                     });
                 });
