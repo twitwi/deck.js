@@ -26,6 +26,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             animPlay: ".anim-play",
             animPause: ".anim-pause",
             animViewboxAs: ".anim-viewboxas",
+            animAlong: ".anim-along",
             //
             animContinue: ".anim-continue"
         },
@@ -48,6 +49,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 classs: function() {return $(el).attr("data-class")},
                 attribute: function() {return $(el).attr("data-attr").split(':')[0]},
                 as: function() {return $(el).attr("data-as")},
+                path: function() {return $(el).attr("data-path")},
                 value: function() {return $(el).attr("data-attr").split(':')[1]},
                 toplevel: function() {return $[deck]('getToplevelSlideOf', el).node},
                 all: function() {return $(this.what(),this.toplevel())}
@@ -119,6 +121,7 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 this.undo(c);
             },
             undo: function(c) {
+                // TODO: [feature] could allow multiple attributes to be passed and animated simultaneously
                 var k = c.attribute()
                 for (i in c.previousElement) { // use the saved list of elements and values
                     var whatTo = {};
@@ -203,6 +206,47 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 c.all().animate(whatTo, c.dur()*factor)
             },
             fast: function(c) {this.doit(c,0)}
+        });
+        classical(o.selectors.animAlong, {
+            init: function(c) {this.undo(c)},
+            undo: function(c) {
+                for (i in c.previousElement) { // use the saved list of elements and values
+                    var prev = c.previousValue[i];
+                    $(c.previousElement[i]).attr("transform", prev);
+                }
+            },
+            doit: function(c, factor) {
+                if (factor === undefined) factor = 1;
+                c.all().each( function() {
+                    // finish all previous animations
+                    if (!globalHasAnimContinue && $(this).queue().length) {
+                        $(this).finish();
+                    }
+                });
+                var path = $(c.path()).get(0);
+                var s = path.getPointAtLength(0);
+                c.previousValue = [];
+                c.previousElement = [];
+                c.all().each( function() {
+                    var base = "";
+                    if ($(this).attr("transform") != null) {
+                        base = $(this).attr("transform"); // TODO maybe can use attr also above (anim-attr)
+                        c.previousValue.push(base);
+                    } else {
+                        c.previousValue.push(null);
+                    }
+                    c.previousElement.push(this);
+                    $(this).css({svgDeckAnim:0.0});
+                    $(this).animate({svgDeckAnim: 1.}, {
+                        duration: c.dur()*factor,
+                        step: function(v) {
+                            var p = path.getPointAtLength(v * path.getTotalLength());
+                            $(this).attr("transform", base+'translate('+(p.x-s.x)+','+(p.y-s.y)+')');
+                        }
+                    });
+                });
+            },
+            fast: function(c) {this.doit(c, 0);}
         });
         classical(o.selectors.animPlay, {
             init: function(c) {c.all().each(function(){this.pause(); try{this.currentTime=0}catch(e){} })},
