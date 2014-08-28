@@ -81,6 +81,37 @@ TODO:
     function hasIDOrClassDecoration(s) {
         return s.match(/^(.*)\{([^{}<>]*)\}$/);
     }
+    function maybeProcessCopySlide(tree, index) {
+        var slide = tree[index];
+        ensureHasAttributes(slide);
+        if (slide.length != 3) return false;
+        if (slide[2][0] != "h1") return false;
+        ensureHasAttributes(slide[2]);
+        if (startsWithIgnoreCase(slide[2][2], "@COPY:#")) {
+            var main = RESTRIM.split(/:/);
+            var idOfBase = main[0];
+            var animPart = main.slice(1).join(":");
+            var hasAnim = ! animPart.match(/^\s*$/);
+            var base = null;
+            for (i in tree) {
+                if (i == 0 || (i==1 && isObject(tree[1]))) continue;
+                ensureHasAttributes(tree[i]);
+                if (tree[i][1].id == idOfBase) {
+                    base = tree[i];
+                    break;
+                }
+            }
+            if (base == null) { alert("pb"); return false; } // TODO should alert based on options
+            var content = [["div", {}, "@anim:" + animPart]];
+            content = Array.concat(content, clone(base.slice(2)));
+            slide[1] = clone(base[1]);
+            delete slide[1].id;
+            if (hasAnim) addClass(slide, "anim-continue");
+            slide.splice.apply(slide, Array.concat([2, 1], content)); // replace the h1 with content
+            return true;
+        }
+        return false;
+    }
     function processIDOrClassDecoration(tree, index) {
         var matched = hasIDOrClassDecoration(tree[index]); // make sure the group is set
         if (!matched) { alert("should call processIDOrClassDecoration() only if hasIDOrClassDecoration is true"); return; }
@@ -131,7 +162,6 @@ TODO:
         var line = tree[index];
         var clean = function(s) { return s;}; //return s.replace(/\/\\\//g, '//'); };
         if (line.match(/^(.*?)[\n\s]*\/\/ +(.*)/)) {
-            console.log(line, RegExp.$1, RegExp.$2)
             var obj = ["div", {
                 'class': "comment"
             }, clean(RegExp.$2)];
@@ -256,10 +286,8 @@ TODO:
     }
 
     var interpretationOfSmartLanguage = function(smark, doc) {
-        console.log(smark)
         var jstree = markdown.toHTMLTree(smark);
         
-        console.log(clone(jstree));
         // split at each h2 or h1
         (function makeTopLevelDivs(jsTree) {
             var firstIndex = findTag(jsTree, /^(h1|h2)$/);
@@ -273,15 +301,18 @@ TODO:
             makeTopLevelDivs(jsTree);
         })(jstree);
 
-        console.log(clone(jstree));
         // process:
         // - the class and id decorations like    {#first hightlight slide}
         // - the @... custom notations
-        // - TODO: the // for comments
+        // - the // for comments
         for (s in jstree) {
             if (s == 0 || (s==1 && isObject(jstree[1]))) continue;
             var slide = jstree[s];
             ensureHasAttributes(slide);
+            if (maybeProcessCopySlide(jstree, s)) {
+                //continue;
+                // actually we want to apply anims to it
+            }
             // cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations)
             (function patch(tree){ // tree is slide or a subelement
                 var i = 1;
@@ -334,13 +365,19 @@ TODO:
                     i++;
                 }
             })(slide);
+            // now propagate to the slide
             var hAttributes = lazyGetAttributes(slide[2]);
-            slide[1] = clone(hAttributes);
+            if (slide[1]['class']) {
+                var cl = slide[1]['class'];
+                slide[1] = clone(hAttributes);
+                addClass(slide, cl);
+            } else {
+                slide[1] = clone(hAttributes);
+            }
             lazyUnsetAttributes(slide[2]);
             addClass(slide, 'slide');
         }
 
-        console.log(clone(jstree));
         return markdown.renderJsonML(jstree);
     }
 
