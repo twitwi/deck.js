@@ -110,7 +110,17 @@ This module provides a support for cloning the deck.
 
         $(opts.selectors.clonepointer).hide();
 
-        isClone = window.opener && window.opener.___iscloner___;
+        function safeIsClone(w) {
+            try {
+                return w.opener && w.opener.___iscloner___;
+            } catch(e) {
+                // when linked from another origin, there is an opener
+                // but accessing its properties throws a security exception
+                return false;
+            }
+        }
+
+        isClone = safeIsClone(window);
 
         if (isClone) { // it's a clone!
             $("body").addClass(opts.classes.isClone);
