@@ -142,7 +142,7 @@ TODO:
         function onlyDivAnims(tt) {
             var only = true;
             var start = isObject(tt[1]) ? 2 : 1;
-            Array.forEach(tt.slice(start), function(e) {
+            tt.slice(start).forEach(function(e) {
                 if (!Array.isArray(e) || !isObject(e[1]) || (" "+e[1]["class"]).indexOf(" anim-") == -1) {
                     only = false;
                 }
@@ -196,7 +196,7 @@ TODO:
                     'data-height': parts[3],
                     'class': "svg-object"
                 }, ""];
-                Array.forEach(parts[0].split(/,/), function (p) { addClass(obj, p); });
+                parts[0].split(/,/).forEach(function (p) { addClass(obj, p); });
                 tree[index] = obj;
             }
         } else if (startsWithIgnoreCase(line, "@ANIM:")) {
