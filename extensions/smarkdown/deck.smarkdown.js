@@ -103,11 +103,11 @@ TODO:
             }
             if (base == null) { alert("pb"); return false; } // TODO should alert based on options
             var content = [["div", {}, "@anim:" + animPart]];
-            content = Array.concat(content, clone(base.slice(2)));
+            content = content.concat(clone(base.slice(2)));
             slide[1] = clone(base[1]);
             delete slide[1].id;
             if (hasAnim) addClass(slide, "anim-continue");
-            slide.splice.apply(slide, Array.concat([2, 1], content)); // replace the h1 with content
+            slide.splice.apply(slide, [2, 1].concat(content)); // replace the h1 with content
             return true;
         }
         return false;
@@ -274,7 +274,7 @@ TODO:
                     allToAdd.push(toAdd);
                 }
             }
-            tree.splice.apply(tree, Array.concat([index, 1], allToAdd)); // just replacing the text with allToAdd elements
+            tree.splice.apply(tree, [index, 1].concat(allToAdd)); // just replacing the text with allToAdd elements
         } else {
             return false;
         }
@@ -294,8 +294,7 @@ TODO:
             if (firstIndex == -1) return;
             var secondIndex = findTag(jsTree, /^(h1|h2)$/, firstIndex+1);
             if (secondIndex == -1) secondIndex = jsTree.length;
-            var slide = Array.concat(
-                ["section"], // we will add the 'slide' class later below
+            var slide = ["section"].concat( // we will add the 'slide' class later below
                 jsTree.splice(firstIndex, secondIndex - firstIndex));
             jsTree.splice(firstIndex, 0, slide);
             makeTopLevelDivs(jsTree);
@@ -321,7 +320,7 @@ TODO:
                         if (tree[i][0] === "li") {
                             var li = tree[i];
                             if (Array.isArray(li[1]) && li[1][0] === "p") {
-                                li.splice.apply(li, Array.concat( [1, 1], li[1].slice(1)));
+                                li.splice.apply(li, [1, 1].concat(li[1].slice(1)));
                                 continue;
                             }
                         }
