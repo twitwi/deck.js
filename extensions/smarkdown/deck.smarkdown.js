@@ -36,8 +36,8 @@ TODO:
     var animationDuration = 400;
 
     function clone(a) { return JSON.parse(JSON.stringify(a)) }
-    function findTag(tree, regexp, startAt=0) {
-        var i = startAt;
+    function findTag(tree, regexp, startAt) {
+        var i = startAt || 0;
         while (i < tree.length) {
             if (Array.isArray(tree[i]) && tree[i][0].match(regexp)) {
                 return i;
