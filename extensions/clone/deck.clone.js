@@ -20,7 +20,7 @@ This module provides a support for cloning the deck.
         classes: {
             isClone: 'is-clone',
             hasClones: 'has-clones',
-            pointerClick: 'pointer-click',
+            pointerClick: 'pointer-click'
         },
         snippets: {
             clone: true
