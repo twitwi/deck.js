@@ -54,7 +54,7 @@ var va_view = 'web';
 
 // The script itself begins
 
-const mmlns = 'http://www.w3.org/1998/Math/MathML';
+var/*const*/ mmlns = 'http://www.w3.org/1998/Math/MathML';
 
 /*
 // VA: Fix displayed equations first.
@@ -162,7 +162,7 @@ if( va_view == 'web' ){
 */
 
 // VA: changed char_map
-const char_map = {
+var/*const*/ char_map = {
   'script': [
 	     '\uD835\uDC9C', '\u212C', '\uD835\uDC9E', //abc
 	     '\uD835\uDC9F', '\u2130', '\u2131', //def
@@ -197,7 +197,7 @@ const char_map = {
 		    '\uD835\uDD50', '\u2124', ], //yz
 };
 
-const uppercase_re = /[A-Z]/;
+var/*const*/ uppercase_re = /[A-Z]/;
 
 function fix_mathvariant(node, style)
 {
@@ -1769,11 +1769,11 @@ function v_collect_invisible_group (tokens , v_stop_tokens ) {
 }
 
 
-const tokenize_re = /(\\begin|\\operatorname|\\mathrm|\\mathop|\\end)\s*\{\s*([A-Z a-z]+)\s*\}|(\\[a-zA-Z]+|\\[\\#\{\},:;!])|(\s+)|([0-9\.]+)|([\$!"#%&'()*+,-.\/:;<=>?\[\]^_`\{\|\}~])|([a-zA-Z])/g;
+var/*const*/ tokenize_re = /(\\begin|\\operatorname|\\mathrm|\\mathop|\\end)\s*\{\s*([A-Z a-z]+)\s*\}|(\\[a-zA-Z]+|\\[\\#\{\},:;!])|(\s+)|([0-9\.]+)|([\$!"#%&'()*+,-.\/:;<=>?\[\]^_`\{\|\}~])|([a-zA-Z])/g;
 
-const tokenize_text_re = /[\${}\\]|\\[a-zA-Z]+|[^{}\$]+/g;
+var/*const*/ tokenize_text_re = /[\${}\\]|\\[a-zA-Z]+|[^{}\$]+/g;
 
-const tokenize_text_commands = {
+var/*const*/ tokenize_text_commands = {
   '\\textrm': 1,
   '\\textsl': 1,
   '\\textit': 1,
@@ -1895,7 +1895,7 @@ function patch_img(node)
   {
     var parent = node.parentNode;
     var previous = parent.previousSibling;
-    const non_whitespace = /[^\s]/;
+    var/*const*/ non_whitespace = /[^\s]/;
 
         if(previous &&
        previous.nodeType == node.TEXT_NODE &&
