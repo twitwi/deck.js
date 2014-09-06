@@ -13,11 +13,11 @@ This module automatically adds some text and a link for elements having a "data-
     $.extend(true, $.deck.defaults, {
         classes: {
             attributionWrapper: 'attribution-wrap',
-            attributionLink: 'attribution-link',
+            attributionLink: 'attribution-link'
         },
         dataAttribution: "data-attribution",
         dataAttributionContent: "data-attribution-content",
-        dataAttributionClass: "data-attribution-class",
+        dataAttributionClass: "data-attribution-class"
     });
 
     var $d = $(document);
