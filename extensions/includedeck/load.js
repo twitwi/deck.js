@@ -234,17 +234,17 @@ function includedeck(m, c) {
     }
     
     // custom adapter function to split the load list at each function and call by head.js by block (need to end with a function)
+    // in the end, for IE9 compat, we load everything one by one... maybe switching to lazyload.js would avoid needing this.
     var loadsAndCalls = function(l, stack) {
         stack = stack || [];
         if (l.length == 0) return;
         if ("string" !== typeof l[0]) {
-            // "" as a workaround for head.load.js (used to be a ___dummy___ file
-            head.js.apply(head, stack.concat("").concat(function() {
-                l[0]();
-                loadsAndCalls(l.slice(1), []);
-            })); 
+            l[0]();
+            loadsAndCalls(l.slice(1));
         } else {
-            loadsAndCalls(l.slice(1), stack.concat(l[0]));
+            head.js(l[0], function() {
+                loadsAndCalls(l.slice(1));
+            });
         }
     }
     cb.beforeLoad();
