@@ -31,6 +31,7 @@ TODO:
         RESTRIM = res ? REST.replace(/^ */, "") : null;
         return res;
     }
+    var isArray = Array.isArray || $.isArray; // there is also an alternative in markdownjs
 
     // the animation duration is stateful across the smarkdown sections
     var animationDuration = 400;
@@ -39,7 +40,7 @@ TODO:
     function findTag(tree, regexp, startAt) {
         var i = startAt || 0;
         while (i < tree.length) {
-            if (Array.isArray(tree[i]) && tree[i][0].match(regexp)) {
+            if (isArray(tree[i]) && tree[i][0].match(regexp)) {
                 return i;
             }
             i++;
@@ -57,7 +58,7 @@ TODO:
         addSpaceSeparatedAttr(o, 'class', c);
     }
     function isObject(o) {
-        return !Array.isArray(o) && typeof(o) === 'object';
+        return !isArray(o) && typeof(o) === 'object';
     }
     function ensureHasAttributes(tree) {
         if (!isObject(tree[1])) {
@@ -143,7 +144,7 @@ TODO:
             var only = true;
             var start = isObject(tt[1]) ? 2 : 1;
             tt.slice(start).forEach(function(e) {
-                if (!Array.isArray(e) || !isObject(e[1]) || (" "+e[1]["class"]).indexOf(" anim-") == -1) {
+                if (!isArray(e) || !isObject(e[1]) || (" "+e[1]["class"]).indexOf(" anim-") == -1) {
                     only = false;
                 }
             });
@@ -151,7 +152,7 @@ TODO:
         }
 
         if (onlyDivAnims(tree)) hide = true;
-        else if (tree.length == i+1 && Array.isArray(tree[i]) && tree[i][0] == "p"
+        else if (tree.length == i+1 && isArray(tree[i]) && tree[i][0] == "p"
                  && onlyDivAnims(tree[i])) hide = true;
         if (hide) {
             ensureHasAttributes(tree);
@@ -316,10 +317,10 @@ TODO:
             (function patch(tree){ // tree is slide or a subelement
                 var i = 1;
                 while (i < tree.length) {
-                    if (Array.isArray(tree[i])) {
+                    if (isArray(tree[i])) {
                         if (tree[i][0] === "li") {
                             var li = tree[i];
-                            if (Array.isArray(li[1]) && li[1][0] === "p") {
+                            if (isArray(li[1]) && li[1][0] === "p") {
                                 li.splice.apply(li, [1, 1].concat(li[1].slice(1)));
                                 continue;
                             }
@@ -333,7 +334,7 @@ TODO:
             (function patch(tree){ // tree is slide or a subelement
                 var i = 1;
                 while (i < tree.length) {
-                    if (Array.isArray(tree[i])) patch(tree[i]);
+                    if (isArray(tree[i])) patch(tree[i]);
                     else if (typeof(tree[i]) == 'string') {
                         if (maybeProcessComment(tree, i)) continue;
                         else if (maybeProcessAtSomething(tree, i)) continue;
@@ -346,7 +347,7 @@ TODO:
             (function patch(tree){ // tree is slide or a subelement
                 var i = 1;
                 while (i < tree.length) {
-                    if (Array.isArray(tree[i])) {
+                    if (isArray(tree[i])) {
                         if (tree[i][0] === "li" && possiblyHideIfEmpty(tree[i])) continue;
                         else patch(tree[i]);
                     }
@@ -357,7 +358,7 @@ TODO:
             (function patch(tree){ // tree is slide or a subelement
                 var i = 1;
                 while (i < tree.length) {
-                    if (Array.isArray(tree[i])) patch(tree[i]);
+                    if (isArray(tree[i])) patch(tree[i]);
                     else if (typeof(tree[i]) == 'string') {
                         tree[i] = processMath(tree[i]);
                     }
