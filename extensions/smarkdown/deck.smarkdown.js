@@ -57,6 +57,13 @@ TODO:
     function addClass(o, c) {
         addSpaceSeparatedAttr(o, 'class', c);
     }
+    function hasClass(o, c) {
+        if (!isObject(o[1]) || !o[1]['class']) {
+            return false;
+        } else {
+            return o[1]['class'].match(new RegExp("\\b"+c+"\\b"));
+        }
+    }
     function isObject(o) {
         return !isArray(o) && typeof(o) === 'object';
     }
@@ -363,6 +370,7 @@ TODO:
             })(slide);
             // process the $math$
             (function patch(tree){ // tree is slide or a subelement
+                if (hasClass(tree, "smark-nomath")) return;
                 var i = 1;
                 while (i < tree.length) {
                     if (isArray(tree[i])) patch(tree[i]);
