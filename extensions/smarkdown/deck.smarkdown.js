@@ -116,10 +116,12 @@ TODO:
     function processIDOrClassDecoration(tree, index) {
         var matched = hasIDOrClassDecoration(tree[index]); // make sure the group is set
         if (!matched) { alert("should call processIDOrClassDecoration() only if hasIDOrClassDecoration is true"); return; }
+        var returnValue = false; // whether we added the attributes
         var base = RegExp.$1;
         var decorations = RegExp.$2.split(/ +/);
         if (ensureHasAttributes(tree)) {
             if (index>0) index++;
+            returnValue = true;
         }
         tree[index] = base;
         for (d in decorations) {
@@ -136,6 +138,7 @@ TODO:
                 }
             }                
         }
+        return returnValue;
     }
     function possiblyHideIfEmpty(tree) { // if it contains only anim stuf etc
         var hide = false;
@@ -338,7 +341,11 @@ TODO:
                     else if (typeof(tree[i]) == 'string') {
                         if (maybeProcessComment(tree, i)) continue;
                         else if (maybeProcessAtSomething(tree, i)) continue;
-                        else if (hasIDOrClassDecoration(tree[i])) processIDOrClassDecoration(tree, i);
+                        else if (hasIDOrClassDecoration(tree[i])) {
+                            if (processIDOrClassDecoration(tree, i)) {
+                                i++; // avoid processing the same element twice
+                            }
+                        }
                     }
                     i++;
                 }
