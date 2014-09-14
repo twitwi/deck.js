@@ -405,6 +405,9 @@ TODO:
             // remove the smart node (to avoid having an empty non-slide sibling (e.g., in the presenter view))
             $(it).remove();
         });
+        var opts = $[deck]('getOptions');
+        var maybe = function(f) { return f || (function(){}); }
+        maybe(opts.AFTERSMARKDOWN)();
         $[deck]('reInitSlidesArray')
     });
 
