@@ -380,6 +380,17 @@ TODO:
                     i++;
                 }
             })(slide);
+            // change things to textarea (to help with codemirror) https://github.com/iros/deck.js-codemirror/issues/19
+            (function patch(tree){ // tree is slide or a subelement
+                if (hasClass(tree, "smark-textarea")) {
+                    tree[3][0] = "textarea";
+                }
+                var i = 1;
+                while (i < tree.length) {
+                    if (isArray(tree[i])) patch(tree[i]);
+                    i++;
+                }
+            })(slide);
             // now propagate to the slide
             var hAttributes = lazyGetAttributes(slide[2]);
             if (slide[1]['class']) {
