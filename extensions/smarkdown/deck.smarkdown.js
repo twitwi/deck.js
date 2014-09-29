@@ -34,7 +34,8 @@ TODO:
     var isArray = Array.isArray || $.isArray; // there is also an alternative in markdownjs
 
     // the animation duration is stateful across the smarkdown sections
-    var animationDuration = 400;
+    var animationDurationDefault = 400;
+    var animationDuration = animationDurationDefault;
 
     function clone(a) { return JSON.parse(JSON.stringify(a)) }
     function findTag(tree, regexp, startAt) {
@@ -227,10 +228,10 @@ TODO:
                     function dw() { addSpaceSeparatedAttr(toAdd, "data-what", REST); }
                     function dd() { addSpaceSeparatedAttr(toAdd, "data-dur", ""+animationDuration); }
                     if (startsWithIgnoreCase(what, "%duration:")) {
-                        animationDuration = RESTRIM;
+                        animationDuration = RESTRIM == "" ? animationDurationDefault : RESTRIM;
                         continue;
                     } else if (startsWithIgnoreCase(what, "%dur:")) {
-                        animationDuration = RESTRIM;
+                        animationDuration = RESTRIM == "" ? animationDurationDefault : RESTRIM;
                         continue;
                     } else if (startsWithIgnoreCase(what, "%play:")) {
                         addClass(toAdd, "anim-play");
