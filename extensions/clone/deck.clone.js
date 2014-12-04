@@ -96,7 +96,7 @@ This module provides a support for cloning the deck.
         var opts = $[deck]('getOptions');
         var container = $[deck]('getContainer');
         
-        if (opts.snippets.timekeeper) {
+        if (opts.snippets.clone) {
             var d = function() {return $('<div/>');}
             d().addClass("clonepointer scale-on-click").append(
                 d().attr("style", "border: 2px solid red; border-radius: 50%; z-index:10;"
