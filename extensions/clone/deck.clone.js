@@ -6,7 +6,8 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 */
 
 /*
-This module provides a support for cloning the deck.
+This module provides a support for cloning the deck and enabling a presenter view.
+It also provides the behavior that copies the current "notes" to a "notes-target", to be used in the presenter view.
 */
 
 (function($, deck, undefined) {
@@ -15,7 +16,9 @@ This module provides a support for cloning the deck.
         
     $.extend(true, $[deck].defaults, {	
         selectors: {
-            clonepointer: ".clonepointer"
+            clonepointer: '.clonepointer',
+            cloneNotes: '.notes',
+            cloneNotesTarget: '.notes-target'
         },
         classes: {
             isClone: 'is-clone',
@@ -106,6 +109,8 @@ This module provides a support for cloning the deck.
                 d().attr("style", "border: 2px solid red; border-radius: 50%; z-index:10;"
                          +"margin: -16px 0 0 -16px; width:30px; height:30px;")
                 ).appendTo(container);
+            d().addClass(opts.selectors.cloneNotesTarget.replace(/\./, ''))
+                .appendTo(container);
         }
 
         $(opts.selectors.clonepointer).hide();
@@ -155,6 +160,15 @@ This module provides a support for cloning the deck.
             $.each(clones, function(index, clone) {
                 clone.deck('go', to);
             });
+            
+            var opts = $[deck]('getOptions');
+            var currentTopLevel = $[deck]('getToplevelSlideOf', $[deck]('getSlide', to)).node;
+            var notes = $(opts.selectors.cloneNotes, currentTopLevel).html();
+            if (notes === undefined) {
+                $(opts.selectors.cloneNotesTarget).html("");
+            } else {
+                $(opts.selectors.cloneNotesTarget).html(notes);
+            }
         }
     })
     /* Replicate mouse cursor */

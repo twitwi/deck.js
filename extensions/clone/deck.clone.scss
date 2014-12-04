@@ -16,6 +16,10 @@ body.is-clone .clonepointer {
     }
 }
 
+.notes, .notes-target {
+    display: none;
+}
+
 body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) {
     &>.slide.deck-current, &>.slide.deck-child-current {
         outline: 5px solid grey; /* use outline to avoid layout issues with old themes and allow for precise pointer position estimation */
@@ -39,5 +43,15 @@ body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) {
 
             &.deck-next { outline-color: red;}
         }
+
+    }
+    .notes-target {
+        display: block;
+        background: black;
+        color: #FFB;
+        padding: 5px;
+        position: absolute;
+        left: 840px; right: 0;
+        top: 340px; bottom: 0;
     }
 }
