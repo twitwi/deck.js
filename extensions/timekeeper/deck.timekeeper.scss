@@ -96,3 +96,9 @@
         border-radius: 3px;
     }
 }
+
+body.has-clones .deck-container:not(.deck-globalscale):not(.deck-menu) {
+    div.notes-target {
+        top: 490px;
+    }
+}
