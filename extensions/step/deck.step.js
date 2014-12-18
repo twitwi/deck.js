@@ -33,7 +33,9 @@ It also overrides the defaults keybinding and countNested value (so it is better
             // down arrow,
             nextTopLevel: [40],
             // key 'z'
-            nextEndOfTopLevel: [90]
+            nextEndOfTopLevel: [90],
+            // key 'a'
+            previousEndOfTopLevel: [65]
         },
         countNested: false
     });
@@ -102,6 +104,15 @@ It also overrides the defaults keybinding and countNested value (so it is better
             $[deck]('go', icur-1);            
         }
     });
+    $[deck]('extend', 'previousEndOfTopLevelSlide', function() {
+        /* Find the current parent and take the previous slide (last of previous top level) */
+        var current = $[deck]('getSlideIndex', $[deck]('getSlide'));
+        var currentParent = $[deck]('getToplevelSlideOfIndex', current).index;
+        alert(current + " " +currentParent)
+        if (currentParent > 0) {
+            $[deck]('go', currentParent - 1);
+        }
+    });
     $d.bind('deck.init', function() {
         $d.unbind('keydown.decknexttoplevel').bind('keydown.decknexttoplevel', function(e) {
             var $opts = $[deck]('getOptions');
@@ -125,6 +136,14 @@ It also overrides the defaults keybinding and countNested value (so it is better
             if (e.which === key || $.inArray(e.which, key) > -1) {
                 e.preventDefault();
                 $[deck]('previousTopLevelSlide');
+            }
+        });
+        $d.unbind('keydown.deckpreviousendoftoplevel').bind('keydown.deckpreviousendoftoplevel', function(e) {
+            var $opts = $[deck]('getOptions');
+            var key = $opts.keys.previousEndOfTopLevel;
+            if (e.which === key || $.inArray(e.which, key) > -1) {
+                e.preventDefault();
+                $[deck]('previousEndOfTopLevelSlide');
             }
         });
     });
