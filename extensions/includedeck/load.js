@@ -252,7 +252,8 @@ function includedeck(m, c) {
         $(function() {
             var doIt = function() {
                 cb.beforeInit();
-                $.deck(conf);
+                window.defaultDeckCallIsAnError = true;
+                $.deck('init', conf);
                 cb.afterInit();
                 cb.atExit();
             };
