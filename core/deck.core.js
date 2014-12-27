@@ -313,11 +313,12 @@ that use the API provided by core.
   var setupHashBehaviors = function() {
     $fragmentLinks = $();
     $.each(slides, function(i, $slide) {
-      var hash;
+      var hash, altHash;
 
       assignSlideId(i, $slide);
       hash = '#' + $slide.attr('id');
-      if (hash === window.location.hash) {
+      altHash = '#/' + $slide.attr('id');
+      if (hash === window.location.hash || altHash === window.location.hash) {
         setTimeout(function() {
           $.deck('go', i);
         }, 1);
