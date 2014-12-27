@@ -617,7 +617,12 @@ that use the API provided by core.
       return methods[method].apply(this, args);
     }
     else {
-      return methods.init(method, arg);
+      if (window.defaultDeckCallIsAnError) {
+        alert("'" + method + "' not found (or meant to be a parameter-less init)");
+      }
+      else {
+        return methods.init(method, arg);
+      }
     }
   };
 
