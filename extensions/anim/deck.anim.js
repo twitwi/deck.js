@@ -95,16 +95,16 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             fast: function(c) {c.all().animate({'opacity': 0.}, 0)}
         });
         classical(o.selectors.animAddClass, {
-            init: function(c) {c.all().removeClass(c.classs())},
-            undo: function(c) {c.all().removeClass(c.classs())},
-            doit: function(c) {c.all().addClass(c.classs())},
-            fast: function(c) {c.all().addClass(c.classs())}
+            init: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })},
+            undo: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })},
+            doit: function(c) {c.all().each(function() { this.classList.add(c.classs()) })},
+            fast: function(c) {c.all().each(function() { this.classList.add(c.classs()) })} 
         });
         classical(o.selectors.animRemoveClass, {
-            init: function(c) {c.all().addClass(c.classs())},
-            undo: function(c) {c.all().addClass(c.classs())},
-            doit: function(c) {c.all().removeClass(c.classs())},
-            fast: function(c) {c.all().removeClass(c.classs())}
+            init: function(c) {c.all().each(function() { this.classList.add(c.classs()) })},
+            undo: function(c) {c.all().each(function() { this.classList.add(c.classs()) })},
+            doit: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })},
+            fast: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })} 
         });
         function svgRealAttrName(a) {
             if (startsWith(a, "svg")) {
