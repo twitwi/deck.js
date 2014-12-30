@@ -108,7 +108,6 @@ It also overrides the defaults keybinding and countNested value (so it is better
         /* Find the current parent and take the previous slide (last of previous top level) */
         var current = $[deck]('getSlideIndex', $[deck]('getSlide'));
         var currentParent = $[deck]('getToplevelSlideOfIndex', current).index;
-        alert(current + " " +currentParent)
         if (currentParent > 0) {
             $[deck]('go', currentParent - 1);
         }
