@@ -58,7 +58,7 @@ for (f in files) {
 
 header += "*/" + nl
 
-allcss = allcss.replace(/(["\\])/g, '\\$1').replace(/\n/g, '\\n');
+allcss = allcss.replace(/(["\\])/g, '\\$1').replace(/\n/g, '\\n"+\n"');
 alljs = header + alljs;
 alljs += 'function ACTUALLY_FILL_CSS(el) { $(el).text("'+allcss+'") }';
 writefile(argv_out, alljs);
