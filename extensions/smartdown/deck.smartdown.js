@@ -493,7 +493,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         });
         var opts = $[deck]('getOptions');
         var maybe = function(f) { return f || (function(){}); }
-        maybe(opts.AFTERSMARKDOWN)();
+        if (typeof opts.AFTERSMARKDOWN !== 'undefined') {
+            alert("Warning: you're using 'smartdown' but you have a AFTERSMARKDOWN property.\nThis new 'smartdown' (smart vs smark) uses AFTERSMARTDOWN (with a T).")
+        }
         $[deck]('reInitSlidesArray')
     });
 
