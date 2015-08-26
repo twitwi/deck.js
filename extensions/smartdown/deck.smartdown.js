@@ -84,7 +84,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         }
     }
     function hasIDOrClassDecoration(s) {
-        return s.match(/^([\s\S]*)\{([^{}<>]*)\}[\n\r]*$/);
+        return s.match(/^(|([\s\S]*[^\n\r\s]))[\n\r\s]*\{([^{}<>]*)\}[\n\r]*$/);
     }
     function maybeProcessCopySlide(tree, index) {
         var slide = tree[index];
@@ -122,7 +122,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         var matched = hasIDOrClassDecoration(txt); // make sure the group is set
         if (!matched) { return; }
         var base = RegExp.$1; // set by hasIDOrClassDecoration
-        var decorations = RegExp.$2.split(/ +/);
+        var decorations = RegExp.$3.split(/ +/);
         var node = txtNode.parentNode;
         txtNode.textContent = base;
         for (d in decorations) {
