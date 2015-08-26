@@ -48,11 +48,11 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         return -1;
     }
     function addSpaceSeparatedAttr(o, a, c) {
-        ensureHasAttributes(o);
-        if (o[1][a])
-            o[1][a] += " " + c;
-        else
-            o[1][a] = c;
+        if (o.hasAttribute(a)) {
+            o.setAttribute(a, o.getAttribute(a)+" "+c);
+        } else {
+            o.setAttribute(a, c);
+        }
     }
     function addClass(o, c) {
         addSpaceSeparatedAttr(o, 'class', c);
@@ -120,32 +120,27 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         }
         return false;
     }
-    function processIDOrClassDecoration(tree, index) {
-        var matched = hasIDOrClassDecoration(tree[index]); // make sure the group is set
+    function processIDOrClassDecoration(txtNode, txt) {
+        var matched = hasIDOrClassDecoration(txt); // make sure the group is set
         if (!matched) { alert("should call processIDOrClassDecoration() only if hasIDOrClassDecoration is true"); return; }
-        var returnValue = false; // whether we added the attributes
-        var base = RegExp.$1;
+        var base = RegExp.$1; // set by hasIDOrClassDecoration
         var decorations = RegExp.$2.split(/ +/);
-        if (ensureHasAttributes(tree)) {
-            if (index>0) index++;
-            returnValue = true;
-        }
-        tree[index] = base;
+        var node = txtNode.parentNode;
+        txtNode.textContent = base;
         for (d in decorations) {
             // allow .class and class notations
             if (startsWith(decorations[d], ".")) decorations[d] = decorations[d].slice(1);
 
             if (startsWith(decorations[d], "#")) {
-                tree[1].id = decorations[d].slice(1);
+                node.setAttribute('id', decorations[d].slice(1));
             } else {
                 if (startsWith(decorations[d], "*") | startsWith(decorations[d], "/")) {
-                    addSpaceSeparatedAttr(tree, "data-container-class", decorations[d].slice(1));
+                    addSpaceSeparatedAttr(node, "data-container-class", decorations[d].slice(1));
                 } else {
-                    addClass(tree, decorations[d]);
+                    addClass(node, decorations[d]);
                 }
             }                
         }
-        return returnValue;
     }
     function possiblyHideIfEmpty(tree) { // if it contains only anim stuf etc
         var hide = false;
@@ -299,6 +294,18 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function nodelistToArray(nl) {
         return Array.prototype.slice.call(nl);
     }
+    function eachNode(tree, app) {
+        for (var i = 0; i < tree.childNodes.length; i++) {
+            var res = app(i, tree.childNodes[i]);
+            if (typeof res === 'number') { i += res; }
+        }
+    }
+    function isElement(node) {
+        return node.nodeType == node.ELEMENT_NODE;
+    }
+    function isText(node) {
+        return node.nodeType == node.TEXT_NODE;
+    }
     function replaceChildNodes(node, elements) {
         while (node.firstChild) {
             node.removeChild(node.firstChild);
@@ -315,9 +322,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         });
         var wrap = document.createElement('div');
         wrap.innerHTML = converter.makeHtml(smart);
-        window.wrap = wrap;
 
-        var toplevelArray = nodelistToArray(wrap.childNodes);
+        var tree = nodelistToArray(wrap.childNodes); // toplevel is an array (only top level for now)
+
         // split at each h2 or h1
         (function makeTopLevelDivs(tree) {
             var firstIndex = findTag(tree, /^(h1|h2)$/i);
@@ -332,12 +339,47 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 slide.appendChild(block[i]);
             }
             makeTopLevelDivs(tree);
-        })(toplevelArray);
+        })(tree);
 
-        replaceChildNodes(wrap, toplevelArray);
-        return nodelistToArray(wrap.childNodes);
-        /*
+        window.tree = tree;
 
+        // process:
+        // - the class and id decorations like    {#first hightlight slide}
+        // - the @... custom notations
+        // - the // for comments
+        for (s in tree) {
+            var slide = tree[s];
+
+            // TODO maybeProcessCopySlide(jstree, s)) TODO also includes (maybe 'kind of meta slides' loaded from the config processing, and just replacing at this time)
+
+            // TODO used to:: cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations) ..... check it still poses a real problem
+
+            // process @anim... and {} decoration
+            (function patch(tree){ // tree is slide or a subelement
+                eachNode(tree, function(i, node) {
+                    if (isElement(node)) {
+                        patch(node);
+                    } else if (isText(node)) {
+                        var txt = node.textContent;
+                        if (hasIDOrClassDecoration(txt)) {
+                            processIDOrClassDecoration(node, txt);
+                        }
+                        /*
+                        if (maybeProcessComment(tree, i)) continue;
+                        else if (maybeProcessAtSomething(tree, i)) continue;
+                        else if (hasIDOrClassDecoration(tree[i])) {
+                            if (processIDOrClassDecoration(tree, i)) {
+                                
+                            }
+                        }
+                        */
+                    } else {
+                        alert("Should not happen: "+node.nodeType);
+                    }
+                });
+            })(slide);
+        }
+/*
         // process:
         // - the class and id decorations like    {#first hightlight slide}
         // - the @... custom notations
@@ -433,6 +475,8 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
 
         return markdown.renderJsonML(jstree);
 */
+
+        return tree;
     }
 
     // this have to be executed before the deck init
