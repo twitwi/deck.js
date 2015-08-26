@@ -88,6 +88,10 @@ function includedeck(m, c) {
             prefix + "/extensions/smarkdown/markdown.js",
             prefix + "/extensions/smarkdown/deck.smarkdown.js"
         ],
+        "smartdown": [
+            prefix + "/extensions/smartdown/showdown.js",
+            prefix + "/extensions/smartdown/deck.smartdown.js"
+        ],
         "clone": [
             prefix + "/extensions/clone/deck.clone.css",
             prefix + "/extensions/clone/deck.clone.js"
@@ -155,6 +159,9 @@ function includedeck(m, c) {
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper"],
         /// profile-5: use smarkdown and include more useful things (CSS: simple, comments)
         "profile-5": ["@_newdeck", "@_smarkdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
+        /// profile-6 WIP : same as profile 5 but use smartdown
+        "profile-6": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
         dummy: {}
     };
