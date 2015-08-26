@@ -16,6 +16,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     var may = function(f) {return f ? f : function() {}};
     var endsWith = function(longStr, part) {return longStr.indexOf(part, longStr.length - part.length) !== -1;}
     var REST = null;
+    var RESTRIM = null;
     var startsWith = function(longStr, part) {
         if (part == "%+class:") alert(":::"+longStr+":::");
         var res = longStr.substr(0, part.length) == part;
@@ -120,7 +121,8 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         }
         return false;
     }
-    function maybeProcessIDOrClassDecoration(txtNode, txt) {
+    function maybeProcessIDOrClassDecoration(txtNode) {
+        var txt = txtNode.textContent;
         var matched = hasIDOrClassDecoration(txt); // make sure the group is set
         if (!matched) { return; }
         var base = RegExp.$1; // set by hasIDOrClassDecoration
@@ -188,33 +190,26 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         }
         return false;
     }
-    function maybeProcessAtSomething(tree, index) {
-        var line = tree[index];
+    function maybeProcessAtSomething(txtNode) {
+        var node = txtNode.parentNode;
+        var line = txtNode.textContent;
         if (startsWithIgnoreCase(line, "@SVG:")) {
             var content = RESTRIM
             var parts = content.split(/ +/);
-            if (hasIDOrClassDecoration(content) || parts.length == 3) {
-                // new version
-                var obj = ["div", {
+            if (parts.length == 3 || (parts.length > 3 && hasIDOrClassDecoration(line))) {
+                var div = document.createElement('div');
+                $(div).attr({
                     'data-src': parts[0],
                     'data-width': parts[1],
                     'data-height': parts[2],
-                    'class': "svg-object"
-                }, parts.slice(3).join(" ")];
-                // TODO: alert when wrong number of args
-                if (hasIDOrClassDecoration(content)) processIDOrClassDecoration(obj, 2);
-                tree[index] = obj;
+                    'class': 'svg-object'
+                });
+                $(div).text(parts.slice(3).join(" "));
+                $(div).insertAfter(txtNode);
+                txtNode.remove();
             } else {
-                // TODO allow this only when an option is set option
-                // old, smartsyntax version
-                var obj = ["div", {
-                    'data-src': parts[1],
-                    'data-width': parts[2],
-                    'data-height': parts[3],
-                    'class': "svg-object"
-                }, ""];
-                parts[0].split(/,/).forEach(function (p) { addClass(obj, p); });
-                tree[index] = obj;
+                alert("Expecting 3 parameters to '@SVG: path width height'");
+                return false;
             }
         } else if (startsWithIgnoreCase(line, "@ANIM:")) {
             line = RESTRIM.replace(/%[+]/i, "%%"); // protect the "%+class" from being split
@@ -378,9 +373,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                         patch(node);
                     } else if (isText(node)) {
                         var txt = node.textContent;
-                        if (maybeProcessComment(node, txt)) return -1;
-                        //if (maybeProcessAtSomething(tree, i)) return -1;
-                        if (maybeProcessIDOrClassDecoration(node, txt)) return -1;
+                        if (maybeProcessComment(node)) return -1;
+                        if (maybeProcessAtSomething(node)) return -1;
+                        if (maybeProcessIDOrClassDecoration(node)) return -1;
                     } else {
                         alert("Should not happen: "+node.nodeType);
                     }
