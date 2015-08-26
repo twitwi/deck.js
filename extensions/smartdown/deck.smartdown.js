@@ -59,11 +59,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         addSpaceSeparatedAttr(o, 'class', c);
     }
     function hasClass(o, c) {
-        if (!isObject(o[1]) || !o[1]['class']) {
-            return false;
-        } else {
-            return o[1]['class'].match(new RegExp("\\b"+c+"\\b"));
-        }
+        return isElement(o) && $(o).hasClass(c);
     }
     function isObject(o) {
         return !isArray(o) && typeof(o) === 'object';
@@ -297,7 +293,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         return true;
     }
     function processMath(content) {
-        return content.replace(/\$([^$][^$]*)\$/g, '<span class="latex">\\displaystyle $1</span>').replace(/\$\$/, '$');
+        return content.
+            replace(/\$((\\[$]|[^$])([^$\\]|[\\].)*)\$/g, '<span class="latex">\\displaystyle $1</span>').
+            replace(/\$\$/, '$');
     }
 
     function nodelistToArray(nl) {
@@ -368,17 +366,31 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             // TODO used to:: cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations) ..... check it still poses a real problem
 
             // process @anim... and {} decoration
-            (function patch(tree){ // tree is slide or a subelement
+            (function patch(tree){ // tree is a slide or a subelement
                 eachNode(tree, function(i, node) {
                     if (isElement(node)) {
                         patch(node);
                     } else if (isText(node)) {
                         var txt = node.textContent;
+                        // return -1 means reprocess from the same position
                         if (maybeProcessComment(node)) return -1;
                         if (maybeProcessAtSomething(node)) return -1;
                         if (maybeProcessIDOrClassDecoration(node)) return -1;
                     } else {
-                        alert("Should not happen: "+node.nodeType);
+                        alert('Should not happen: '+node.nodeType);
+                    }
+                });
+            })(slide);
+            // process the $math$
+            (function patch(tree){ // tree is a slide or a subelement
+                if (hasClass(tree, 'smark-nomath')) return;
+                eachNode(tree, function(i, node) {
+                    if (isElement(node)) {
+                        patch(node);
+                    } else if (isText(node) && node.textContent.contains('$')) {
+                        var wrap = document.createElement('div');
+                        wrap.innerHTML = processMath(node.textContent);
+                        replaceNodeByNodes(node, wrap.childNodes);
                     }
                 });
             })(slide);
