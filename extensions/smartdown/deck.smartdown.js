@@ -87,7 +87,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         }
     }
     function hasIDOrClassDecoration(s) {
-        return s.match(/^(.*)\{([^{}<>]*)\}$/);
+        return s.match(/^([\s\S]*)\{([^{}<>]*)\}[\n\r]*$/);
     }
     function maybeProcessCopySlide(tree, index) {
         var slide = tree[index];
