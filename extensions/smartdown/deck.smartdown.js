@@ -325,6 +325,15 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         }
         node.remove();
     }
+    function changeTagname(to) {
+        return function changeTagName(_, elt) {
+            var newElt = $("<"+to+"/>");
+            Array.prototype.slice.call(elt.attributes).forEach(function(a) {
+                newElt.attr(a.name, a.value);
+            });
+            $(elt).wrapInner(newElt).children(0).unwrap();
+        };
+    }
 
     var interpretationOfSmartLanguage = function(smart, doc) {
 
@@ -391,6 +400,21 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                         var wrap = document.createElement('div');
                         wrap.innerHTML = processMath(node.textContent);
                         replaceNodeByNodes(node, wrap.childNodes);
+                    }
+                });
+            })(slide);
+            // change things to textarea (to help with codemirror) https://github.com/iros/deck.js-codemirror/issues/19
+            // TODO: do better (unwrap) and also auto
+            (function patch(tree){ // tree is a slide or a subelement
+                eachNode(tree, function(i, node) {
+                    if (isElement(node)) {
+                        if (hasClass(node, "smartarea")) {
+                            node.innerHTML = node.textContent; // unescape entities
+                            replaceNodeByNodes(node.parentNode, [node]); // pre unwrap
+                            changeTagname('textarea')(i, node);
+                        } else {
+                            patch(node);
+                        }
                     }
                 });
             })(slide);
