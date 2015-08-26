@@ -120,9 +120,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         }
         return false;
     }
-    function processIDOrClassDecoration(txtNode, txt) {
+    function maybeProcessIDOrClassDecoration(txtNode, txt) {
         var matched = hasIDOrClassDecoration(txt); // make sure the group is set
-        if (!matched) { alert("should call processIDOrClassDecoration() only if hasIDOrClassDecoration is true"); return; }
+        if (!matched) { return; }
         var base = RegExp.$1; // set by hasIDOrClassDecoration
         var decorations = RegExp.$2.split(/ +/);
         var node = txtNode.parentNode;
@@ -164,17 +164,28 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             tree[1].style = "display: none";
         }
     }
-    function maybeProcessComment(tree, index) {
-        var line = tree[index];
-        var clean = function(s) { return s;}; //return s.replace(/\/\\\//g, '//'); };
-        if (line.match(/^(.*?)[\n\s]*\/\/ +(.*)/)) {
-            var obj = ["div", {
-                'class': "comment"
-            }, clean(RegExp.$2)];
-            tree.splice(index, 1, RegExp.$1, obj);
+    function maybeProcessComment(txtNode) {
+        var line = txtNode.textContent;
+        var clean = function(s) { return s.replace(/ *$/, ''); };
+        if (line.match(/^([\s\S]*)\/\/(.*)$/)) {
+            var d1 = RegExp.$1;
+            var d2 = RegExp.$2;
+            txtNode.textContent = clean(d1);
+            var node = txtNode.parentNode;
+            var comm = document.createElement('div');
+            comm.classList.add('comment');
+            $(comm).text(clean(d2));
+            
+            if (txtNode.textContent == '') {
+                // in the case the comment is on an empty thingthen move it to previous sibling
+                node.previousElementSibling.appendChild(comm);
+                node.remove();
+            } else {
+                $(comm).insertAfter(txtNode);
+            }
+
             return true;
         }
-        tree[index] = clean(tree[index]);
         return false;
     }
     function maybeProcessAtSomething(tree, index) {
@@ -295,9 +306,15 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         return Array.prototype.slice.call(nl);
     }
     function eachNode(tree, app) {
-        for (var i = 0; i < tree.childNodes.length; i++) {
+        // handles some kind of live updates + a return additional offset
+        var i = 0;
+        while (i < tree.childNodes.length) {
             var res = app(i, tree.childNodes[i]);
-            if (typeof res === 'number') { i += res; }
+            i++;
+            if (typeof res === 'number') {
+                i += res;
+                if (i<0) i = 0;
+            }
         }
     }
     function isElement(node) {
@@ -333,7 +350,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             if (secondIndex == -1) secondIndex = tree.length;
 
             var slide = document.createElement('section');
-            slide.setAttribute('class', 'slide');
+            slide.classList.add('slide');
             var block = Array.prototype.splice.call(tree, firstIndex, secondIndex - firstIndex, slide);
             for (i in block) {
                 slide.appendChild(block[i]);
@@ -361,18 +378,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                         patch(node);
                     } else if (isText(node)) {
                         var txt = node.textContent;
-                        if (hasIDOrClassDecoration(txt)) {
-                            processIDOrClassDecoration(node, txt);
-                        }
-                        /*
-                        if (maybeProcessComment(tree, i)) continue;
-                        else if (maybeProcessAtSomething(tree, i)) continue;
-                        else if (hasIDOrClassDecoration(tree[i])) {
-                            if (processIDOrClassDecoration(tree, i)) {
-                                
-                            }
-                        }
-                        */
+                        if (maybeProcessComment(node, txt)) return -1;
+                        //if (maybeProcessAtSomething(tree, i)) return -1;
+                        if (maybeProcessIDOrClassDecoration(node, txt)) return -1;
                     } else {
                         alert("Should not happen: "+node.nodeType);
                     }
