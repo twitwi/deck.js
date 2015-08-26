@@ -222,8 +222,8 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     var what = subparts[ii];
                     if (what == "") continue; // as a good side effect, this allows to set a "anim-continue" on all elements (e.g., put a + at the end of the line) 
                     var continuating  = ii != subparts.length-1;
-                    var toAdd = ["div", {}, ""];
-                    addClass(toAdd, "slide");
+                    var toAdd = document.createElement('div');
+                    addClass(toAdd, 'slide');
                     // process the individual element (reminder: animationDuration is global)
                     function dw() { addSpaceSeparatedAttr(toAdd, "data-what", REST); }
                     function dd() { addSpaceSeparatedAttr(toAdd, "data-dur", ""+animationDuration); }
@@ -286,7 +286,10 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     allToAdd.push(toAdd);
                 }
             }
-            tree.splice.apply(tree, [index, 1].concat(allToAdd)); // just replacing the text with allToAdd elements
+            // replacing the parent node with allToAdd elements
+            txtNode.remove();
+            replaceNodeByNodes(node, allToAdd);
+            return true;
         } else {
             return false;
         }
@@ -318,13 +321,11 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function isText(node) {
         return node.nodeType == node.TEXT_NODE;
     }
-    function replaceChildNodes(node, elements) {
-        while (node.firstChild) {
-            node.removeChild(node.firstChild);
+    function replaceNodeByNodes(node, nodes) {
+        for (var i = nodes.length; i >= 0; i--) {
+            $(nodes[i]).insertAfter(node);
         }
-        for (i in elements) {
-            node.appendChild(elements[i]);
-        }
+        node.remove();
     }
 
     var interpretationOfSmartLanguage = function(smart, doc) {
