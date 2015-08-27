@@ -314,7 +314,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     }
     function processMath(content) {
         return content.
-            replace(/\$((\\[$]|[^$])([^$\\]|[\\].)*)\$/g, '<span class="latex">\\displaystyle $1</span>').
+            replace(/\$((\\[$]|[^$])([^$\\]|[\\].)*)\$/g, '<span class="latex">$1</span>').
             replace(/\$\$/, '$');
     }
 
