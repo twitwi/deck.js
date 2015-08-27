@@ -64,25 +64,6 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function isObject(o) {
         return !isArray(o) && typeof(o) === 'object';
     }
-    function ensureHasAttributes(tree) {
-        if (!isObject(tree[1])) {
-            tree.splice(1, 0, {});
-            return true;
-        }
-        return false;
-    }
-    function lazyGetAttributes(tree) {
-        if (isObject(tree[1])) {
-            return tree[1];
-        } else {
-            return {};
-        }
-    }
-    function lazyUnsetAttributes(tree) {
-        if (isObject(tree[1])) {
-            tree.splice(1, 1);
-        }
-    }
     function hasIDOrClassDecoration(s) {
         return s.match(/^(|([\s\S]*[^\n\r\s]))[\n\r\s]*\{([^{}<>]*)\}[\n\r]*$/);
     }
@@ -105,13 +86,37 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 alert("Could not find matches for selector '"+baseSelector+"' in @COPY");
                 return s;
             }
-            console.log(0,base);
             slide = $(base).clone().get(0);
             slide.removeAttribute('id');
             if (hasAnim) {
                 $('<div>').text('@anim:'+animPart).insertBefore(slide.firstChild);
             }
             slides[s] = slide;
+            return s;
+        } else if (startsWithIgnoreCase(slide.firstChild.textContent, '@CHUNK:')) {
+            var main = RESTRIM.split(/:/);
+            var include = main[0];
+            var content = null;
+            if (include.startsWith('#')) {
+                console.log("####", include);
+                content = $(include).text();
+            } else {
+                console.log("URL", include);
+                $.ajax({
+                    url: include,
+                    contentType: 'text/plain',
+                    dataType: 'text',
+                    async: false,
+                    success: function(d) { content = d; },
+                    error: function(jqXHR, status, err) {
+                        alert("Got a '"+status+"' error in chunk '"+include+"'");
+                        console.log(err);
+                    }
+                });
+            }
+            var chunkSlides = interpretationOfSmartLanguage(content, document);
+            // TODO optionally prefix all ids
+            Array.prototype.splice.apply(slides, [s, 1].concat(chunkSlides));
             return s;
         }
         return s;
@@ -375,7 +380,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             var slide = tree[s];
 
             s = maybeProcessGenerateSlides(tree, s);
-            console.log(slide, tree[s], slide.firstChild.textContent);
+            //console.log(slide, tree[s], slide.firstChild.textContent);
             slide = tree[s]; // the slide potentially got replaced
 
             // TODO also includes (maybe 'kind of meta slides' loaded from the config processing, and just replacing at this time)
