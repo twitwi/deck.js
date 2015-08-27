@@ -83,6 +83,16 @@ function includedeck(m, c) {
             prefix + "/libs/display-latex2.user.js",
             prefix + "/extensions/simplemath/deck.simplemath.js"
         ],
+        "katex": [
+            /*
+            prefix + "/extensions/katex/katex/katex.min.css",
+            prefix + "/extensions/katex/katex/katex.min.js",
+            /*/
+            prefix + "/extensions/katex/kevinb7-KaTeX/build/katex.min.js",
+            prefix + "/extensions/katex/kevinb7-KaTeX/build/katex.min.css",
+            //*/
+            prefix + "/extensions/katex/deck.katex.js"
+        ],
         "smartsyntax": [ prefix + "/extensions/smartsyntax/deck.smartsyntax.js" ],
         "smarkdown": [
             prefix + "/extensions/smarkdown/markdown.js",
@@ -160,8 +170,8 @@ function includedeck(m, c) {
         /// profile-5: use smarkdown and include more useful things (CSS: simple, comments)
         "profile-5": ["@_newdeck", "@_smarkdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
-        /// profile-6 WIP : same as profile 5 but use smartdown
-        "profile-6": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
+        /// profile-6 WIP : same as profile 5 but use smartdown+katex
+        "profile-6": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
         dummy: {}
     };
