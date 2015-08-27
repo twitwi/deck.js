@@ -86,36 +86,35 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function hasIDOrClassDecoration(s) {
         return s.match(/^(|([\s\S]*[^\n\r\s]))[\n\r\s]*\{([^{}<>]*)\}[\n\r]*$/);
     }
-    function maybeProcessCopySlide(tree, index) {
-        var slide = tree[index];
-        ensureHasAttributes(slide);
-        if (slide.length != 3) return false;
-        if (slide[2][0] != "h1") return false;
-        ensureHasAttributes(slide[2]);
-        if (startsWithIgnoreCase(slide[2][2], "@COPY:#")) {
+    function maybeProcessGenerateSlides(slides, s) {
+        var slide = slides[s];
+        if (! slide.firstChild.tagName.match(/^h1$/i)) return s;
+        if (startsWithIgnoreCase(slide.firstChild.textContent, '@COPY:')) {
             var main = RESTRIM.split(/:/);
-            var idOfBase = main[0];
-            var animPart = main.slice(1).join(":");
+            var baseSelector = main[0];
+            var animPart = main.slice(1).join(':');
             var hasAnim = ! animPart.match(/^\s*$/);
             var base = null;
-            for (i in tree) {
-                if (i == 0 || (i==1 && isObject(tree[1]))) continue;
-                ensureHasAttributes(tree[i]);
-                if (tree[i][1].id == idOfBase) {
-                    base = tree[i];
-                    break;
+            for (i in slides) {
+                if ($(slides[i]).is(baseSelector)) {
+                    base = slides[i];
                 }
             }
-            if (base == null) { alert("pb"); return false; } // TODO should alert based on options
-            var content = [["div", {}, "@anim:" + animPart]];
-            content = content.concat(clone(base.slice(2)));
-            slide[1] = clone(base[1]);
-            delete slide[1].id;
-            if (hasAnim) addClass(slide, "anim-continue");
-            slide.splice.apply(slide, [2, 1].concat(content)); // replace the h1 with content
-            return true;
+            if (base == null) {
+                // TODO should alert based on options
+                alert("Could not find matches for selector '"+baseSelector+"' in @COPY");
+                return s;
+            }
+            console.log(0,base);
+            slide = $(base).clone().get(0);
+            slide.removeAttribute('id');
+            if (hasAnim) {
+                $('<div>').text('@anim:'+animPart).insertBefore(slide.firstChild);
+            }
+            slides[s] = slide;
+            return s;
         }
-        return false;
+        return s;
     }
     function maybeProcessIDOrClassDecoration(txtNode) {
         var txt = txtNode.textContent;
@@ -372,10 +371,14 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         // - the class and id decorations like    {#first hightlight slide}
         // - the @... custom notations
         // - the // for comments
-        for (s in tree) {
+        for (var s = 0; s < tree.length; s++) {
             var slide = tree[s];
 
-            // TODO maybeProcessCopySlide(jstree, s)) TODO also includes (maybe 'kind of meta slides' loaded from the config processing, and just replacing at this time)
+            s = maybeProcessGenerateSlides(tree, s);
+            console.log(slide, tree[s], slide.firstChild.textContent);
+            slide = tree[s]; // the slide potentially got replaced
+
+            // TODO also includes (maybe 'kind of meta slides' loaded from the config processing, and just replacing at this time)
 
             // TODO used to:: cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations) ..... check it still poses a real problem
 
