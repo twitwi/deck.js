@@ -67,9 +67,28 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function hasIDOrClassDecoration(s) {
         return s.match(/^(|([\s\S]*[^\n\r\s]))[\n\r\s]*\{([^{}<>]*)\}[\n\r]*$/);
     }
+    function resolveChunk(include){
+        var content = null;
+        if (include.startsWith('#')) {
+            content = $(include).text();
+        } else {
+            $.ajax({
+                url: include,
+                contentType: 'text/plain',
+                dataType: 'text',
+                async: false,
+                success: function(d) { content = d; },
+                error: function(jqXHR, status, err) {
+                    alert("Got a '"+status+"' error in chunk '"+include+"'");
+                    console.log(err);
+                }
+            });
+        }
+        return content;
+    }
     function maybeProcessGenerateSlides(slides, s) {
         var slide = slides[s];
-        if (! slide.firstChild.tagName.match(/^h1$/i)) return s;
+        if (!isElement(slide.firstChild) || !slide.firstChild.tagName.match(/^h1$/i)) return s;
         if (startsWithIgnoreCase(slide.firstChild.textContent, '@COPY:')) {
             var main = RESTRIM.split(/:/);
             var baseSelector = main[0];
@@ -96,24 +115,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         } else if (startsWithIgnoreCase(slide.firstChild.textContent, '@CHUNK:')) {
             var main = RESTRIM.split(/:/);
             var include = main[0];
-            var content = null;
-            if (include.startsWith('#')) {
-                console.log("####", include);
-                content = $(include).text();
-            } else {
-                console.log("URL", include);
-                $.ajax({
-                    url: include,
-                    contentType: 'text/plain',
-                    dataType: 'text',
-                    async: false,
-                    success: function(d) { content = d; },
-                    error: function(jqXHR, status, err) {
-                        alert("Got a '"+status+"' error in chunk '"+include+"'");
-                        console.log(err);
-                    }
-                });
-            }
+            var content = resolveChunk(include);
             var chunkSlides = interpretationOfSmartLanguage(content, document);
             // TODO optionally prefix all ids
             Array.prototype.splice.apply(slides, [s, 1].concat(chunkSlides));
@@ -144,6 +146,20 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             }                
         }
     }
+    function maybeProcessChunk(txtNode) {
+        var txt = txtNode.textContent;
+        var node = txtNode.parentNode;
+        if (startsWithIgnoreCase(txt, '@CHUNK:')) {
+            var main = RESTRIM.split(/:/);
+            var include = main[0];
+            var content = resolveChunk(include);
+            var chunkParts = interpretationOfSmartLanguage(content, document, false);
+            replaceNodeByNodes(node, chunkParts);
+            return false; // we don't need to reprocess
+        }
+        return false;
+    }
+    /*
     function possiblyHideIfEmpty(tree) { // if it contains only anim stuf etc
         var hide = false;
         var i = isObject(tree[1]) ? 2 : 1;
@@ -165,7 +181,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             ensureHasAttributes(tree);
             tree[1].style = "display: none";
         }
-    }
+    }*/
     function maybeProcessComment(txtNode) {
         var line = txtNode.textContent;
         var clean = function(s) { return s.replace(/ *$/, ''); };
@@ -345,7 +361,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         });
     }
 
-    var interpretationOfSmartLanguage = function(smart, doc) {
+    var interpretationOfSmartLanguage = function(smart, doc, isRoot) {
+
+        isRoot = typeof isRoot !== 'undefined' ? isRoot : true;
 
         var converter = new showdown.Converter({
             noHeaderId: true,
@@ -356,7 +374,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         var tree = nodelistToArray(wrap.childNodes); // toplevel is an array (only top level for now)
 
         // split at each h2 or h1
-        (function makeTopLevelDivs(tree) {
+        if (isRoot) (function makeTopLevelDivs(tree) {
             var firstIndex = findTag(tree, /^(h1|h2)$/i);
             if (firstIndex == -1) return;
             var secondIndex = findTag(tree, /^(h1|h2)$/i, firstIndex+1);
@@ -379,11 +397,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         for (var s = 0; s < tree.length; s++) {
             var slide = tree[s];
 
-            s = maybeProcessGenerateSlides(tree, s);
+            if (isRoot) s = maybeProcessGenerateSlides(tree, s);
             //console.log(slide, tree[s], slide.firstChild.textContent);
             slide = tree[s]; // the slide potentially got replaced
-
-            // TODO also includes (maybe 'kind of meta slides' loaded from the config processing, and just replacing at this time)
 
             // TODO used to:: cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations) ..... check it still poses a real problem
 
@@ -395,6 +411,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     } else if (isText(node)) {
                         var txt = node.textContent;
                         // return -1 means reprocess from the same position
+                        if (maybeProcessChunk(node)) return -1;
                         if (maybeProcessComment(node)) return -1;
                         if (maybeProcessAtSomething(node)) return -1;
                         if (maybeProcessIDOrClassDecoration(node)) return -1;
@@ -431,10 +448,14 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     }
                 });
             })(slide);
-            // now propagate the first title attribute to the slide
-            adoptAttributes(slide, slide.children[0]);
-            // and make it a slide
-            slide.classList.add('slide');
+
+            if (isRoot) {
+                // now propagate the first title attribute to the slide
+                adoptAttributes(slide, slide.children[0]);
+                // and make it a slide
+                slide.classList.add('slide');
+            }
+
         }
         return tree;
     }
