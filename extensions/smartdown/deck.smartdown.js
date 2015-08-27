@@ -334,6 +334,12 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             $(elt).wrapInner(newElt).children(0).unwrap();
         };
     }
+    function adoptAttributes(dest, src) {
+        Array.prototype.slice.call(src.attributes).forEach(function(a) {
+            dest.setAttribute(a.name, a.value);
+            src.removeAttribute(a.name);
+        });
+    }
 
     var interpretationOfSmartLanguage = function(smart, doc) {
 
@@ -353,7 +359,6 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             if (secondIndex == -1) secondIndex = tree.length;
 
             var slide = document.createElement('section');
-            slide.classList.add('slide');
             var block = Array.prototype.splice.call(tree, firstIndex, secondIndex - firstIndex, slide);
             for (i in block) {
                 slide.appendChild(block[i]);
@@ -404,7 +409,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 });
             })(slide);
             // change things to textarea (to help with codemirror) https://github.com/iros/deck.js-codemirror/issues/19
-            // TODO: do better (unwrap) and also auto
+            // TODO: do better (safer unwrap) and also auto from language-...
             (function patch(tree){ // tree is a slide or a subelement
                 eachNode(tree, function(i, node) {
                     if (isElement(node)) {
@@ -418,104 +423,11 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     }
                 });
             })(slide);
+            // now propagate the first title attribute to the slide
+            adoptAttributes(slide, slide.children[0]);
+            // and make it a slide
+            slide.classList.add('slide');
         }
-/*
-        // process:
-        // - the class and id decorations like    {#first hightlight slide}
-        // - the @... custom notations
-        // - the // for comments
-        for (s in jstree) {
-            if (s == 0 || (s==1 && isObject(jstree[1]))) continue;
-            var slide = jstree[s];
-            ensureHasAttributes(slide);
-            if (maybeProcessCopySlide(jstree, s)) {
-                //continue;
-                // actually we want to apply anims to it
-            }
-            // cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations)
-            (function patch(tree){ // tree is slide or a subelement
-                var i = 1;
-                while (i < tree.length) {
-                    if (isArray(tree[i])) {
-                        if (tree[i][0] === "li") {
-                            var li = tree[i];
-                            if (isArray(li[1]) && li[1][0] === "p") {
-                                li.splice.apply(li, [1, 1].concat(li[1].slice(1)));
-                                continue;
-                            }
-                        }
-                        patch(tree[i]);
-                    }
-                    i++;
-                }
-            })(slide);
-            // process @anim... and {} decoration
-            (function patch(tree){ // tree is slide or a subelement
-                var i = 1;
-                while (i < tree.length) {
-                    if (isArray(tree[i])) patch(tree[i]);
-                    else if (typeof(tree[i]) == 'string') {
-                        if (maybeProcessComment(tree, i)) continue;
-                        else if (maybeProcessAtSomething(tree, i)) continue;
-                        else if (hasIDOrClassDecoration(tree[i])) {
-                            if (processIDOrClassDecoration(tree, i)) {
-                                i++; // avoid processing the same element twice
-                            }
-                        }
-                    }
-                    i++;
-                }
-            })(slide);
-            // cleanup: hide empty "li" after @anim processing
-            (function patch(tree){ // tree is slide or a subelement
-                var i = 1;
-                while (i < tree.length) {
-                    if (isArray(tree[i])) {
-                        if (tree[i][0] === "li" && possiblyHideIfEmpty(tree[i])) continue;
-                        else patch(tree[i]);
-                    }
-                    i++;
-                }
-            })(slide);
-            // process the $math$
-            (function patch(tree){ // tree is slide or a subelement
-                if (hasClass(tree, "smark-nomath")) return;
-                var i = 1;
-                while (i < tree.length) {
-                    if (isArray(tree[i])) patch(tree[i]);
-                    else if (typeof(tree[i]) == 'string') {
-                        tree[i] = processMath(tree[i]);
-                    }
-                    i++;
-                }
-            })(slide);
-            // change things to textarea (to help with codemirror) https://github.com/iros/deck.js-codemirror/issues/19
-            (function patch(tree){ // tree is slide or a subelement
-                if (hasClass(tree, "smark-textarea")) {
-                    tree[3][0] = "textarea";
-                }
-                var i = 1;
-                while (i < tree.length) {
-                    if (isArray(tree[i])) patch(tree[i]);
-                    i++;
-                }
-            })(slide);
-            // now propagate to the slide
-            var hAttributes = lazyGetAttributes(slide[2]);
-            if (slide[1]['class']) {
-                var cl = slide[1]['class'];
-                slide[1] = clone(hAttributes);
-                addClass(slide, cl);
-            } else {
-                slide[1] = clone(hAttributes);
-            }
-            lazyUnsetAttributes(slide[2]);
-            addClass(slide, 'slide');
-        }
-
-        return markdown.renderJsonML(jstree);
-*/
-
         return tree;
     }
 
