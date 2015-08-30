@@ -346,7 +346,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         node.remove();
     }
     function changeTagname(to) {
-        return function changeTagName(_, elt) {
+        return function(_, elt) {
             var newElt = $("<"+to+"/>");
             Array.prototype.slice.call(elt.attributes).forEach(function(a) {
                 newElt.attr(a.name, a.value);
@@ -434,11 +434,23 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 });
             })(slide);
             // change things to textarea (to help with codemirror) https://github.com/iros/deck.js-codemirror/issues/19
-            // TODO: do better (safer unwrap) and also auto from language-...
             (function patch(tree){ // tree is a slide or a subelement
                 eachNode(tree, function(i, node) {
                     if (isElement(node)) {
-                        if (hasClass(node, "smartarea")) {
+                        var unwrapIt = hasClass(node, "smartarea");
+                        if (!unwrapIt) { // auto for codemirror language-...
+                            if (node.tagName.match(/^code$/i) &&
+                                node.parentNode.tagName.match(/^pre$/i)) {
+                                // we found a code>pre, look for language-... in its classes
+                                for (var i = 0; i < node.classList.length; i++) {
+                                    if (node.classList[i].match(/^language-/)) {
+                                        unwrapIt = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (unwrapIt) {
                             node.innerHTML = node.textContent; // unescape entities
                             replaceNodeByNodes(node.parentNode, [node]); // pre unwrap
                             changeTagname('textarea')(i, node);
