@@ -19,7 +19,7 @@ http://khan.github.io/KaTeX/
             var it = this;
             var v = $(it).text();
             v = "\\displaystyle "+v+"";
-            console.log(v);
+            //console.log(v);
             katex.render(v, it, {breakOnUnsupportedCmds: false});
         });
     });
