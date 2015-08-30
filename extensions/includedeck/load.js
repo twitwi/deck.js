@@ -144,6 +144,14 @@ function includedeck(m, c) {
 	    prefix + "/extensions/style-chunks/simple.css",
 	    prefix + "/extensions/style-chunks/comments.css"
         ],
+        /////////////////////////////////////////
+        // external extensions (not in this repository at the time of writting)
+        "codemirror": [
+            prefix + "/extensions/codemirror/codemirror-compressed.js",
+            prefix + "/extensions/codemirror/deck.codemirror.js",
+            prefix + "/extensions/codemirror/codemirror.css"
+        ],
+        /////////////////////////////////////////
         //
         // Themes
         // // by convention, "theme:blabla" will load the default blabla theme
