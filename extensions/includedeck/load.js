@@ -145,6 +145,12 @@ function includedeck(m, c) {
 	    prefix + "/extensions/style-chunks/comments.css"
         ],
         /////////////////////////////////////////
+        // pre profile custom incubator include
+        "profile-6-incubator": [
+            prefix + "/extensions/incubator/simple-layouts.css",
+            prefix + "/extensions/incubator/toggle-comments.js"
+        ],
+        /////////////////////////////////////////
         // external extensions (not in this repository at the time of writting)
         "codemirror": [
             prefix + "/extensions/codemirror/codemirror-compressed.js",
@@ -175,7 +181,7 @@ function includedeck(m, c) {
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
         /// profile-6: same as profile 5 but use smartdown+katex
         "profile-6": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
-                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_profile-6-incubator"],
         dummy: {}
     };
 
