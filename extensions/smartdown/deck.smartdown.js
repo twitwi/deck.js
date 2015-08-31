@@ -185,9 +185,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function maybeProcessComment(txtNode) {
         var line = txtNode.textContent;
         var clean = function(s) { return s.replace(/ *$/, ''); };
-        if (line.match(/^([\s\S]*) \/\/(.*)$/) || line.match(/^()\/\/(.*)$/)) {
+        if (line.match(/^([\s\S]*)( |\n)\/\/(.*)[\n\r]*$/) || line.match(/^()()\/\/(.*)[\n\r]*$/)) {
             var d1 = RegExp.$1;
-            var d2 = RegExp.$2;
+            var d2 = RegExp.$3;
             txtNode.textContent = clean(d1);
             var node = txtNode.parentNode;
             var comm = document.createElement('div');
