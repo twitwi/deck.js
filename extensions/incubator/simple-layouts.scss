@@ -1,0 +1,82 @@
+
+@mixin layouts() {
+
+    .slide .floatright {
+        float: right;
+    }
+    .slide .floatleft {
+        float: left;
+    }
+    .slide .displaynone {
+        display: none;
+    }
+    .slide li.no {
+        list-style: none !important;
+    }
+    
+    .slide.no-bullets {
+        ol, ul {
+            list-style: none !important;
+        }
+    }
+    .slide .center {
+        text-align: center;
+    }
+    .slide .left {
+        float: left;
+        width: 50%;
+    }
+    .slide .right {
+        float: right;
+        width: 50%;
+    }
+    @for $i from 1 through 12 {
+        .slide .c#{$i} {
+            width: percentage($i/12) !important;
+        }
+    }
+    @for $i from 1 through 24 {
+        .slide .C#{$i} {
+            width: percentage($i/24) !important;
+        }
+    }
+    .slide .clearboth {
+        clear: both;
+    }
+    .slide.media-left {
+        &>*:not(h2):not(h1):not(img):not(blockquote):not(pre):not(div):not(figure):not(.media)  {
+            margin-left: 400px;
+        }
+        &>figure, &>img, &>blockquote, &>pre, &>.media {
+            float: left;
+            width: 50%;
+            box-sizing: border-box;
+        }
+    }
+    .slide.media-right {
+        &>*:not(h2):not(h1):not(img):not(blockquote):not(pre):not(div):not(figure):not(.media) {
+            margin-right: 400px;
+        }
+        &>figure, &>img, &>blockquote, &>pre, &>.media {
+            float: right;
+            width: 50%;
+            box-sizing: border-box;
+        }
+    }
+    .slide.image-stripes {
+        &>div {
+            overflow: hidden;
+            align-content: center;
+        }
+        img {
+            height: 400px;
+            max-width: none;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+    }
+}
+
+@include layouts();
+
