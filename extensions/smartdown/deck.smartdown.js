@@ -339,6 +339,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function isText(node) {
         return node.nodeType == node.TEXT_NODE;
     }
+    function isXmlComment(node) {
+        return node.nodeType == node.COMMENT_NODE;
+    }
     function replaceNodeByNodes(node, nodes) {
         for (var i = nodes.length; i >= 0; i--) {
             $(nodes[i]).insertAfter(node);
@@ -409,12 +412,13 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     if (isElement(node)) {
                         patch(node);
                     } else if (isText(node)) {
-                        var txt = node.textContent;
                         // return -1 means reprocess from the same position
                         if (maybeProcessChunk(node)) return -1;
                         if (maybeProcessComment(node)) return -1;
                         if (maybeProcessAtSomething(node)) return -1;
                         if (maybeProcessIDOrClassDecoration(node)) return -1;
+                    } else if (isXmlComment(node)) {
+                        // ignore
                     } else {
                         alert('Should not happen: '+node.nodeType);
                     }
