@@ -108,7 +108,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             slide = $(base).clone().get(0);
             slide.removeAttribute('id');
             if (hasAnim) {
-                $('<div>').text('@anim:'+animPart).insertBefore(slide.firstChild);
+                $('<div>').text('@anim:'+animPart).insertAfter(slide.firstChild); // first is the heading, we want to keep it there
             }
             slides[s] = slide;
             return s;
