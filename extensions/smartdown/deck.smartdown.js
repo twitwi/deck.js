@@ -475,6 +475,21 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 });
             })(slide);
 
+            // custom class to change the element type
+            (function patch(tree){ // tree is a slide or a subelement
+                eachNode(tree, function(i, node) {
+                    if (isElement(node)) {
+                        if (hasClass(node, "smartpre")) { // easier to put a pre in a list
+                            changeTagname('pre')(i, node);
+                        } else if (hasClass(node, "smartcode")) { // work around bug with code with entities in lists
+                            changeTagname('code')(i, node);
+                        } else {
+                            patch(node);
+                        }
+                    }
+                });
+            })(slide);
+
             if (isRoot) {
                 // now propagate the first title attribute to the slide
                 adoptAttributes(slide, slide.children[0]);
