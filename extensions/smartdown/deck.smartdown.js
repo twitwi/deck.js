@@ -333,6 +333,17 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             }
         }
     }
+    function eachTextNodeRecursive(tree, f) {
+        (function patch(tree) {
+            eachNode(tree, function(i, node) {
+                if (isElement(node)) {
+                    patch(node);
+                } else if (isText(node)) {
+                    f(i, node);
+                }
+            });
+        })(tree);
+    }
     function isElement(node) {
         return node.nodeType == node.ELEMENT_NODE;
     }
@@ -409,23 +420,13 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             // TODO used to:: cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations) ..... check it still poses a real problem
 
             // process @anim... and {} decoration
-            (function patch(tree){ // tree is a slide or a subelement
-                eachNode(tree, function(i, node) {
-                    if (isElement(node)) {
-                        patch(node);
-                    } else if (isText(node)) {
-                        // return -1 means reprocess from the same position
-                        if (maybeProcessChunk(node)) return -1;
-                        if (maybeProcessComment(node)) return -1;
-                        if (maybeProcessAtSomething(node)) return -1;
-                        if (maybeProcessIDOrClassDecoration(node)) return -1;
-                    } else if (isXmlComment(node)) {
-                        // ignore
-                    } else {
-                        alert('Should not happen: '+node.nodeType);
-                    }
-                });
-            })(slide);
+            eachTextNodeRecursive(slide, function(i, node) {
+                // return -1 means reprocess from the same position
+                if (maybeProcessChunk(node)) return -1;
+                if (maybeProcessComment(node)) return -1;
+                if (maybeProcessAtSomething(node)) return -1;
+                if (maybeProcessIDOrClassDecoration(node)) return -1;
+            });
             // process the $math$
             (function patch(tree){ // tree is a slide or a subelement
                 if (hasClass(tree, 'smark-nomath')) return;
@@ -435,15 +436,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     } else if (isText(node) && node.textContent.contains('$')) {
                         var wrap = document.createElement('div');
                         wrap.innerHTML = processMath(node.textContent);
-                        (function patch2(tree2) { // TODO refactor to eachTextNodeRecursive(f)
-                            eachNode(tree2, function(i2, node2) {
-                                if (isElement(node2)) {
-                                    patch2(node2);
-                                } else if (isText(node2)) {
-                                    maybeProcessIDOrClassDecoration(node2);
-                                }
-                            });
-                        })(wrap);
+                        eachTextNodeRecursive(wrap, function(i2, node2) {
+                            maybeProcessIDOrClassDecoration(node2);
+                        });
                         replaceNodeByNodes(node, wrap.childNodes);
                     }
                 });
