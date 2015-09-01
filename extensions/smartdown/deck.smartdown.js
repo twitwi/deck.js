@@ -370,6 +370,8 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
 
         var converter = new showdown.Converter({
             noHeaderId: true,
+            parseImgDimensions: true,
+            literalMidWordUnderscores: true // _ is convenient in math blocks
         });
         var wrap = document.createElement('div');
         wrap.innerHTML = converter.makeHtml(smart);
