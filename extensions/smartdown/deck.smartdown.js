@@ -64,9 +64,6 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
     function isObject(o) {
         return !isArray(o) && typeof(o) === 'object';
     }
-    function hasIDOrClassDecoration(s) {
-        return s.match(/^(|([\s\S]*[^\n\r\s]))[\n\r\s]*\{([^{}<>]*)\}[\n\r]*$/);
-    }
     function resolveChunk(include){
         var content = null;
         if (include.startsWith('#')) {
@@ -123,6 +120,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             return s;
         }
         return s;
+    }
+    function hasIDOrClassDecoration(s) {
+        return s.match(/^(|([\s\S]*[^\n\r\s]))[\n\r\s]*\{([^{}<>]*)\}[\n\r]*$/);
     }
     function maybeProcessIDOrClassDecoration(txtNode) {
         var txt = txtNode.textContent;
