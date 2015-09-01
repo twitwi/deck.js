@@ -339,7 +339,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 if (isElement(node)) {
                     patch(node);
                 } else if (isText(node)) {
-                    f(i, node);
+                    return f(i, node);
                 }
             });
         })(tree);
