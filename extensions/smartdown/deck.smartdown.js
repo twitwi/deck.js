@@ -458,6 +458,10 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                                         break;
                                     }
                                 }
+                                // if we have a pre>code and we won't unwrap it, propagate the class/id to the pre
+                                if (!unwrapIt) {
+                                    adoptAttributes(node.parentNode, node);
+                                }
                             }
                         }
                         if (unwrapIt) {
