@@ -435,6 +435,15 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     } else if (isText(node) && node.textContent.contains('$')) {
                         var wrap = document.createElement('div');
                         wrap.innerHTML = processMath(node.textContent);
+                        (function patch2(tree2) { // TODO refactor to eachTextNodeRecursive(f)
+                            eachNode(tree2, function(i2, node2) {
+                                if (isElement(node2)) {
+                                    patch2(node2);
+                                } else if (isText(node2)) {
+                                    maybeProcessIDOrClassDecoration(node2);
+                                }
+                            });
+                        })(wrap);
                         replaceNodeByNodes(node, wrap.childNodes);
                     }
                 });
