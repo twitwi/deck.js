@@ -194,8 +194,8 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             comm.classList.add('comment');
             $(comm).text(clean(d2));
             
-            if (txtNode.textContent == '') {
-                // in the case the comment is on an empty thingthen move it to previous sibling
+            if (txtNode.textContent == '' && node.childNodes.length == 1) {
+                // in the case the comment is on an empty thing (and only child) then move it to previous sibling
                 node.previousElementSibling.appendChild(comm);
                 node.remove();
             } else {
