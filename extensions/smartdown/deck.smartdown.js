@@ -334,10 +334,14 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             }
         }
     }
-    function eachTextNodeRecursive(tree, f) {
+    function eachTextNodeRecursive(tree, f, prunePredicate) {
+        if (typeof prunePredicate === 'undefined') {
+            prunePredicate = function() { return false; };
+        }
         (function patch(tree) {
             eachNode(tree, function(i, node) {
                 if (isElement(node)) {
+                    if (prunePredicate(i, node)) return;
                     patch(node);
                 } else if (isText(node)) {
                     return f(i, node);
@@ -429,21 +433,19 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 if (maybeProcessIDOrClassDecoration(node)) return -1;
             });
             // process the $math$
-            (function patch(tree){ // tree is a slide or a subelement
-                if (hasClass(tree, 'smark-nomath')) return;
-                eachNode(tree, function(i, node) {
-                    if (isElement(node)) {
-                        patch(node);
-                    } else if (isText(node) && node.textContent.contains('$')) {
-                        var wrap = document.createElement('div');
-                        wrap.innerHTML = processMath(node.textContent);
-                        eachTextNodeRecursive(wrap, function(i2, node2) {
-                            maybeProcessIDOrClassDecoration(node2);
-                        });
-                        replaceNodeByNodes(node, wrap.childNodes);
-                    }
-                });
-            })(slide);
+            eachTextNodeRecursive(slide, function(i, node) { // what to do to a text node
+                if (node.textContent.contains('$')) {
+                    var wrap = document.createElement('div');
+                    wrap.innerHTML = processMath(node.textContent);
+                    eachTextNodeRecursive(wrap, function(i2, node2) {
+                        maybeProcessIDOrClassDecoration(node2);
+                    });
+                    replaceNodeByNodes(node, wrap.childNodes);
+                }
+            }, function(i, node) { // when to prune
+                return hasClass(node, 'smart-nomath')
+                    || node.tagName.match(/^(textarea|code|pre)$/i)
+            });
             // change things to textarea (to help with codemirror) https://github.com/iros/deck.js-codemirror/issues/19
             (function patch(tree){ // tree is a slide or a subelement
                 eachNode(tree, function(i, node) {
@@ -471,7 +473,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                             adoptAttributes(parent, node);
                             changeTagname('textarea')(i, node);
                             changeTagname('div')(-999, parent);
-                            // NB: changeTagname "detaches/replaces" the original 'node' and 'parent'
+                            // NB: changeTagname "detaches/replaces" the original 'node' and 'parent'... so don't try to use them down here
                         } else {
                             patch(node);
                         }
