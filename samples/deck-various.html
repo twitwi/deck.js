@@ -55,8 +55,25 @@
 
 	<script src="../extensions/includedeck/load.js"></script>
         <script>
-            includedeck("profile-3 theme:neon", {
-               INITDELAY: 1000, // give some time to the user to see the splash (more useful: can help the browser show the splash on resource-heavy presentations)
+            // TO INCUBATE
+            function reSrc() {
+                var tmp = this.src;
+                this.src = "";
+                this.src = tmp;
+                console.log('resourced '+tmp); // currently to check that the lazy logic below is ok
+            }
+            function gogogo() {
+               $('.gif-click-replay').click(reSrc);
+               $(".slide").has(".gif-autostart").addBack(".gif-autostart").bind('deck.becameCurrent', function(ev, direction) {
+                  // TODO: filter nested, more clean
+                  $(this).filter(".gif-autostart").each(reSrc);
+                  $(".gif-autostart", this).not($(".slide .gif-autostart, .slide.gif-autostart", this)).each(reSrc);
+               });
+            }
+            // ...//
+
+            includedeck("profile-6 theme:neon", {
+               BEFOREINIT: gogogo,
                PREFIX: "../" // deck.js is in the parent folder for this presentation
             })
         </script>
@@ -131,6 +148,17 @@
             </ul>
         </li>
     </ul>
+</section>
+<section class="slide">
+    <h2>Playing gif at the proper time</h2>
+    <p>
+    The left gif should (re)start right when shown.
+    The one on the right should also (re)start when shown, but can also be replayed by clicking.
+    </p>
+    <p class="slide" style="width: 45%; float:left">
+        <img src="http://33.media.tumblr.com/bd3aac6428db17e9a499e06adf876be5/tumblr_inline_ntk5s7bA4U1raprkq_500.gif" alt="online gif" class="gif-autostart">
+    </p>
+    <img style="width: 45%; float right;" src="http://31.media.tumblr.com/265d44b9503782d921a6695eddb4d4ae/tumblr_inline_ntk5zmSKP21raprkq_500.gif" alt="online gif" class="slide gif-autostart gif-click-replay">
 </section>
 <section class="slide">
     <h2>Support and notes</h2>
