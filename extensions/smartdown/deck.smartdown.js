@@ -379,6 +379,11 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             src.removeAttribute(a.name);
         });
     }
+    function copyAttributes(dest, src) {
+        Array.prototype.slice.call(src.attributes).forEach(function(a) {
+            dest.setAttribute(a.name, a.value);
+        });
+    }
 
     var interpretationOfSmartLanguage = function(smart, doc, isRoot) {
 
@@ -446,34 +451,30 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                 return hasClass(node, 'smart-nomath')
                     || node.tagName.match(/^(textarea|code|pre)$/i)
             });
-            // change things to textarea (to help with codemirror) https://github.com/iros/deck.js-codemirror/issues/19
+
             (function patch(tree){ // tree is a slide or a subelement
                 eachNode(tree, function(i, node) {
                     if (isElement(node)) {
-                        var makeTextarea = hasClass(node, "smartarea");
-                        if (!makeTextarea) { // auto for codemirror language-...
-                            if (node.tagName.match(/^code$/i) &&
-                                node.parentNode.tagName.match(/^pre$/i)) {
-                                // we found a code>pre, look for language-... in its classes
-                                for (var i = 0; i < node.classList.length; i++) {
-                                    if (node.classList[i].match(/^language-/)) {
-                                        makeTextarea = true;
-                                        break;
-                                    }
-                                }
-                                // if we have a pre>code and we won't unwrap it, propagate the class/id to the pre
-                                if (!makeTextarea) {
-                                    adoptAttributes(node.parentNode, node);
+                        var precodepatch = false;
+                        if (node.tagName.match(/^code$/i) &&
+                            node.parentNode.tagName.match(/^pre$/i)) {
+                            // we found a code>pre, look for language-... in its classes
+                            for (var i = 0; i < node.classList.length; i++) {
+                                if (node.classList[i].match(/^language-/)) {
+                                    precodepatch = true;
+                                    break;
                                 }
                             }
+                            // if we have a pre>code and we won't patch it, propagate the class/id to the pre
+                            if (!precodepatch) {
+                                adoptAttributes(node.parentNode, node);
+                            }
                         }
-                        if (makeTextarea) {
+                        if (precodepatch) {
                             node.innerHTML = node.textContent; // unescape entities
-                            var parent = node.parentNode;
-                            adoptAttributes(parent, node);
-                            changeTagname('textarea')(i, node);
-                            changeTagname('div')(-999, parent);
-                            // NB: changeTagname "detaches/replaces" the original 'node' and 'parent'... so don't try to use them down here
+                            copyAttributes(node.parentNode, node);
+                            // custom-remove some copied attributes
+                            node.classList.remove('slide');
                         } else {
                             patch(node);
                         }
@@ -483,12 +484,25 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
 
             // custom class to change the element type
             (function patch(tree){ // tree is a slide or a subelement
+                var hasClassRemove = function(n, c) {
+                    if (hasClass(n, c)) {
+                        n.classList.remove(c);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
                 eachNode(tree, function(i, node) {
                     if (isElement(node)) {
-                        if (hasClass(node, "smartpre")) { // easier to put a pre in a list
+                        if (hasClassRemove(node, "smartpre")) { // easier to put a pre in a list
                             changeTagname('pre')(i, node);
-                        } else if (hasClass(node, "smartcode")) { // work around bug with code with entities in lists
+                        } else if (hasClassRemove(node, "smartcode")) { // work around bug with code with entities in lists
                             changeTagname('code')(i, node);
+                        } else if (hasClassRemove(node, "smartprecode")) { // work around bug with code with entities in lists
+                            $(node).wrap('<pre/>');
+                            changeTagname('code')(i, node);
+                        } else if (hasClassRemove(node, "smartarea")) { // work around bug with code with entities in lists
+                            changeTagname('textarea')(i, node);
                         } else {
                             patch(node);
                         }
