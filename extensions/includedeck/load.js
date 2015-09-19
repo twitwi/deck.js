@@ -144,6 +144,11 @@ function includedeck(m, c) {
 	    prefix + "/extensions/style-chunks/simple.css",
 	    prefix + "/extensions/style-chunks/comments.css"
         ],
+        "highlight": [
+            prefix + "/extensions/highlight/github.min.css",
+            prefix + "/extensions/highlight/highlight.min.js",
+            prefix + "/extensions/highlight/deck.highlight.js"
+        ],
         /////////////////////////////////////////
         // pre profile custom incubator include
         "profile-6-incubator": [
@@ -152,7 +157,7 @@ function includedeck(m, c) {
         ],
         /////////////////////////////////////////
         // external extensions (not in this repository at the time of writting)
-        "codemirror": [
+        "codemirror": [ /* please prefer "highlight" for plain highlighting */
             prefix + "/extensions/codemirror/codemirror-compressed.js",
             prefix + "/extensions/codemirror/deck.codemirror.js",
             prefix + "/extensions/codemirror/codemirror.css"
@@ -179,9 +184,9 @@ function includedeck(m, c) {
         /// profile-5: use smarkdown and include more useful things (CSS: simple, comments)
         "profile-5": ["@_newdeck", "@_smarkdown", "@_fit-fs", "@_simplemath", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks"],
-        /// profile-6: same as profile 5 but use smartdown+katex
+        /// profile-6: same as profile 5 but use smartdown+katex+highlight
         "profile-6": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
-                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_profile-6-incubator"],
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_profile-6-incubator"],
         dummy: {}
     };
 
