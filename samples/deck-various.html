@@ -53,9 +53,33 @@
             .slide:not(#title-slide) b {color: #0F0; font-size: 75%;}
         </style>
 
+
 	<script src="../extensions/includedeck/load.js"></script>
+        <!-- TO INCUBATE (full-screen on click) -->
+        <style type="text/css">
+          .FS {
+              position: fixed !important;
+              left:0; width:100% !important;
+              top:0; height:100% !important;
+              background: white;
+              z-index: 1; /* in front of katex equations */
+              transition: * 1s;
+          }
+          .FS svg {
+          }
+        </style>
         <script>
-            // TO INCUBATE
+            function registerClickToggle() {
+                    $(".hasSVG").each(function(i, e) {
+                        $(e).click(function() {
+                            $(e).toggleClass('FS');
+                        });
+                    });
+            }
+        </script>
+        <!-- END -->
+        <script>
+            // TO INCUBATE (gif replay)
             function reSrc() {
                 var tmp = this.src;
                 this.src = "";
@@ -73,7 +97,9 @@
             // ...//
 
             includedeck("profile-6 theme:neon", {
+               INITDELAY: 100, // give some time to the user to see the splash (more useful: can help the browser show the splash on resource-heavy presentations)
                BEFOREINIT: gogogo,
+               AFTERINIT: registerClickToggle,
                PREFIX: "../" // deck.js is in the parent folder for this presentation
             })
         </script>
@@ -159,6 +185,25 @@
         <img src="http://33.media.tumblr.com/bd3aac6428db17e9a499e06adf876be5/tumblr_inline_ntk5s7bA4U1raprkq_500.gif" alt="online gif" class="gif-autostart">
     </p>
     <img style="width: 45%; float right;" src="http://31.media.tumblr.com/265d44b9503782d921a6695eddb4d4ae/tumblr_inline_ntk5zmSKP21raprkq_500.gif" alt="online gif" class="slide gif-autostart gif-click-replay">
+</section>
+<section class="slide">
+    <h2>"Zooming" on an SVG Image</h2>
+    <p>
+    Sometimes, it can be useful to put a given diagram in full screen.
+    Try clicking on an image and see it goes full screen.
+    Click again to bring it back in place.
+    </p>
+    <object type="deckjs/svg" class="svg1">
+        <param name="src" value="circle.svg" />
+        <param name="width" value="200px" />
+        <param name="height" value="200px" />
+    </object>
+    <object type="deckjs/svg" class="svg2">
+        <param name="src" value="circle.svg" />
+        <param name="width" value="200px" />
+        <param name="height" value="200px" />
+    </object>
+    <div class="anim-hide slide" data-what=".svg1 #circleRed, .svg1 #circleBlue"></div>
 </section>
 <section class="slide">
     <h2>Support and notes</h2>
