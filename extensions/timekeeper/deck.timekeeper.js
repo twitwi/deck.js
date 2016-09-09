@@ -1,6 +1,6 @@
 /*!
 Deck JS - deck.timekeeper
-Copyright (c) 2013-2014 Rémi Emonet
+Copyright (c) 2013-2016 Rémi Emonet
 Licensed under the MIT license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 */
@@ -121,7 +121,14 @@ It also injects some default html for it if none is found (and styles it for the
             return y + "-" + pad("00", m) + "-" + pad("00", d);
         }
         var clearStorage = function(what) {
-            // TODO archive
+            { // archive
+                var currentArchives = localStorage.getItem(opts.localStorage.timekeeperArchives);
+                var currentLogs = localStorage.getItem(opts.localStorage.timekeeperLogs);
+                currentArchives = currentLogs + "\n\n" + currentArchives;
+                currentArchives = currentArchives.substr(0, opts.localStorage.timekeeperArchivesMaxSize);
+                localStorage.setItem(opts.localStorage.timekeeperArchives, currentArchives);
+            }
+            // clear
             localStorage.setItem(opts.localStorage.timekeeperLogs, null);
             log("CLEARED BY USER");
             localStorage.setItem(opts.localStorage.timekeeperBase, JSON.stringify(new Date()));
