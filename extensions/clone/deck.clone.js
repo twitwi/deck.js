@@ -1,6 +1,6 @@
 /*!
 Deck JS - deck.clone
-Copyright (c) 2011-2014 Rémi Emonet, original version from Rémi BARRAQUAND
+Copyright (c) 2011-2016 Rémi Emonet, original version from Rémi BARRAQUAND
 Licensed under the MIT license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 */
@@ -18,12 +18,15 @@ It also provides the behavior that copies the current "notes" to a "notes-target
         selectors: {
             clonepointer: '.clonepointer',
             cloneNotes: '.notes',
-            cloneNotesTarget: '.notes-target'
+            cloneNotesTarget: '.notes-target',
+            cloneSync: '.sync'
         },
         classes: {
             isClone: 'is-clone',
             hasClones: 'has-clones',
-            pointerClick: 'pointer-click'
+            pointerClick: 'pointer-click',
+            cloneSyncReadPrefix: 'clone-',
+            cloneSyncWritePrefix: 'write-'
         },
         snippets: {
             clone: true
@@ -67,6 +70,27 @@ It also provides the behavior that copies the current "notes" to a "notes-target
     });
     $[deck]('extend', 'cleanClones', function() { // to be triggered by the closing of a clone window
         setTimeout(cleanClones, 1);
+    });
+    $[deck]('extend', 'cloneSetItem', function(k, v, propagating) {
+        if (isClone && !propagating) {
+            parentDeck('cloneSetItem', k, v);
+            return;
+        }
+        var opts = $[deck]('getOptions');
+        var oldValue = localStorage.getItem(k, v);
+        $(opts.selectors.cloneSync+'.'+k).val(v);
+        // should we broadcast to other clones
+        if (oldValue == v) {
+            return;
+        }
+        localStorage.setItem(k, v);
+        cleanClones();
+        $.each(clones, function(index, clone) {
+            clone.deck('cloneSetItem', k, v, true);
+        });
+    });
+    $[deck]('extend', 'cloneGetItem', function(k) {
+        return localStorage.getItem(k, v);
     });
     $[deck]('extend', 'pointerAt', function(rx, ry) {
         var pos = {left: (rx*100)+"%", top: (ry*100)+"%"};
@@ -115,6 +139,20 @@ It also provides the behavior that copies the current "notes" to a "notes-target
 
         $(opts.selectors.clonepointer).hide();
 
+        
+        $('.sync').each(function(ii) {
+            var classes = this.classList;
+            for (var i = 0; i < classes.length; i++) {
+                var c = classes.item(i);
+                if (c.startsWith(opts.classes.cloneSyncWritePrefix)) {
+                    $(this).on('keyup', function(e) {
+                        var k = opts.classes.cloneSyncReadPrefix + c.substr(opts.classes.cloneSyncWritePrefix.length);
+                        $[deck]('cloneSetItem', k, $(e.target).val());
+                    });
+                }
+            }
+        });
+        
         function safeIsClone(w) {
             try {
                 return w.opener && w.opener.___iscloner___;
@@ -198,7 +236,7 @@ It also provides the behavior that copies the current "notes" to a "notes-target
             clone.deck('pointerUp');
         });
     });
-    
+
     /*
         Simple Clone manager (must be improved, by for instance adding cloning
         option e.g. propagate change, etc.)
