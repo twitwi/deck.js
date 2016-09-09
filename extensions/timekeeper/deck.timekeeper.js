@@ -99,16 +99,26 @@ It also injects some default html for it if none is found (and styles it for the
             if (s.length >= base.length) return s;
             else return base.substring(0, base.length - s.length) + s
         }
-        var formatTime = function(t) {
+        var formatTime = function(t, daily) {
+            daily = daily || false;
             var min = parseInt(t / 1000 / 60);
             var sec = parseInt(t / 1000 - 60 * min);
             if (min > 60) {
                 var hours = parseInt(t / 1000 / 60 / 60);
                 min = parseInt(t / 1000 / 60 - 60 * hours);
-                return pad("00", hours) +":"+ pad("00", min) + ":" + pad("00", sec)
+                if (daily) {
+                    hours = t.getHours();
+                }
+                return pad("00", hours) +":"+ pad("00", min) + ":" + pad("00", sec);
             } else {
-                return pad("00", min) + ":" + pad("00", sec)
+                return pad("00", min) + ":" + pad("00", sec);
             }
+        }
+        var formatDate = function(t) {
+            var y = t.getFullYear();
+            var m = t.getMonth() + 1;
+            var d = t.getDate();
+            return y + "-" + pad("00", m) + "-" + pad("00", d);
         }
         var clearStorage = function(what) {
             // TODO archive
@@ -135,14 +145,15 @@ It also injects some default html for it if none is found (and styles it for the
         }
         var log = function(what) {
             var now = new Date();
-            var time = now.toString()
+            var dateString = formatDate(now);
+            var timeString = formatTime(now, true);
             var localBase = getDateOrSet(opts.localStorage.timekeeperLocalBase, now);
             var base = getDateOrSet(opts.localStorage.timekeeperBase, now);
             var db = (now - localBase)/1000;
             var dcb = (now - base)/1000;
             var dbtime = formatTime(now - localBase);
             var dcbtime = formatTime(now - base);
-            var log = time.replace(/GMT.*/, "") + " " + what + " " + dcb + " " + db + " " + dcbtime + " " + dbtime;
+            var log = dateString + " " + timeString + " " + what + " " + dcb + " " + db + " " + dcbtime + " " + dbtime;
             
             var data = localStorage.getItem(opts.localStorage.timekeeperLogs);
             data = log + "\n" + data;
