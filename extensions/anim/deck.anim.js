@@ -20,6 +20,8 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             animHide: ".anim-hide",
             animAddClass: ".anim-addclass",
             animRemoveClass: ".anim-removeclass",
+            animAddContainerClass: ".anim-addcontainerclass",
+            animRemoveContainerClass: ".anim-removecontainerclass",
             animAttribute: ".anim-attribute",
             animWait: ".anim-wait",
             // specific ones
@@ -105,6 +107,18 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             undo: function(c) {c.all().each(function() { this.classList.add(c.classs()) })},
             doit: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })},
             fast: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })} 
+        });
+        classical(o.selectors.animAddContainerClass, {
+            init: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) },
+            undo: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) },
+            doit: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) },
+            fast: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) } 
+        });
+        classical(o.selectors.animRemoveContainerClass, {
+            init: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) },
+            undo: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) },
+            doit: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) },
+            fast: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) } 
         });
         function svgRealAttrName(a) {
             if (startsWith(a, "svg")) {
