@@ -82,6 +82,31 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
                 });
             });
         };
+        var simpleWithGlobalState = function(selector, methods) {
+            $(selector).each(function(i, el) {
+                var c = context(el);
+                may(methods, methods.create)(c);
+                $(el).bind('deck.bigJumped', function(_, direction) {
+                    if (direction == 'forward') {
+                        may(methods, methods.doit)(c);
+                    } else {
+                        may(methods, methods.undo)(c);
+                    }
+                }).bind('deck.lostCurrent', function(_, direction, from, to) {
+                    if (direction == 'forward' || Math.abs(from - to)>1 ) return; // if a big step, let the "step" extension do its job
+                    may(methods, methods.undo)(c);
+                }).bind('deck.becameCurrent', function(_, direction, from, to) {
+                    if (direction == 'reverse' || Math.abs(from - to)>1 ) return; // if a big step, let the "step" extension do its job
+                    if (c.delay()>0) {
+                        setTimeout(function() {
+                            may(methods, methods.doit)(c);
+                        }, c.delay());
+                    } else {
+                        may(methods, methods.doit)(c);
+                    }
+                });
+            });
+        };
         
         // here come the real animations
         classical(o.selectors.animShow, {
@@ -108,17 +133,13 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
             doit: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })},
             fast: function(c) {c.all().each(function() { this.classList.remove(c.classs()) })} 
         });
-        classical(o.selectors.animAddContainerClass, {
-            init: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) },
+        simpleWithGlobalState(o.selectors.animAddContainerClass, {
             undo: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) },
             doit: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) },
-            fast: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) } 
         });
-        classical(o.selectors.animRemoveContainerClass, {
-            init: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) },
+        simpleWithGlobalState(o.selectors.animRemoveContainerClass, {
             undo: function(c) {$[deck]('getContainer').get(0).classList.add(c.classs()) },
             doit: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) },
-            fast: function(c) {$[deck]('getContainer').get(0).classList.remove(c.classs()) } 
         });
         function svgRealAttrName(a) {
             if (startsWith(a, "svg")) {
