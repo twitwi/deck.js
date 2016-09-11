@@ -329,6 +329,12 @@ https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
         var container = $[deck]('getContainer');
         $(container).addClass(o.classes.animReady)
     }
+    // automatically enrich the "step" default
+    $(document).bind('deck.beforeInit', function() {
+        var sel = $[deck]('getOptions').selectors;
+        sel.subslidesToAlwaysNotify = [sel.subslidesToAlwaysNotify, sel.animAddContainerClass, sel.animRemoveContainerClass].join(",");
+    });
+    // call init
     $(document).bind('deck.init', function() {
         doInit();
     });
