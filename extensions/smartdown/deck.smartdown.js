@@ -280,14 +280,24 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                         dd();
                     } else if (startsWith(what, "%%class:")) {
                         var main = RESTRIM.split(/ *: */);
-                        addClass(toAdd, "anim-addclass");
-                        addSpaceSeparatedAttr(toAdd, "data-class", main[0]);
-                        addSpaceSeparatedAttr(toAdd, "data-what", main.slice(1).join(":"));
+                        if (main[0].startsWith("/")) {
+                            addClass(toAdd, "anim-addcontainerclass");
+                            addSpaceSeparatedAttr(toAdd, "data-class", main[0].substr(1));
+                        } else {
+                            addClass(toAdd, "anim-addclass");
+                            addSpaceSeparatedAttr(toAdd, "data-class", main[0]);
+                            addSpaceSeparatedAttr(toAdd, "data-what", main.slice(1).join(":"));
+                        }
                     } else if (startsWith(what, "%-class:")) {
                         var main = RESTRIM.split(/ *: */);
-                        addClass(toAdd, "anim-removeclass");
-                        addSpaceSeparatedAttr(toAdd, "data-class", main[0]);
-                        addSpaceSeparatedAttr(toAdd, "data-what", main.slice(1).join(":"));
+                        if (main[0].startsWith("/")) {
+                            addClass(toAdd, "anim-removecontainerclass");
+                            addSpaceSeparatedAttr(toAdd, "data-class", main[0].substr(1));
+                        } else {
+                            addClass(toAdd, "anim-removeclass");
+                            addSpaceSeparatedAttr(toAdd, "data-class", main[0]);
+                            addSpaceSeparatedAttr(toAdd, "data-what", main.slice(1).join(":"));
+                        }
                     } else if (startsWith(what, "+")) {
                         addClass(toAdd, "anim-show");
                         dw();
