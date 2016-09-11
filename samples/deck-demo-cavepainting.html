@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+            
+        <title>Getting started with deck.js: cave painting</title>
+            
+        <meta name="description" content="deck.*.js">
+        <meta name="author" content="Rémi Emonet">
+        <meta name="venue" content="website for   deck.js extensions">
+        <!--meta name="viewport" content="width=1024, user-scalable=no"/-->
+            
+        <style type="text/css">
+        /* for the data-container-class example */
+
+/* V1 */
+.deck-container.v1step1,
+.deck-container.v1step2,
+.deck-container.v1step3,
+.deck-container.v1
+{
+    background: url(landscape.svg);
+    background-size: auto 100%;
+    transition: background 400ms linear;
+    -webkit-transition: background 400ms;
+    background-position: 0% 0;
+}
+.deck-container.v1step1 { background-position: 33% 0; }
+.deck-container.v1step2 { background-position: 66% 0; }
+.deck-container.v1step3 { background-position: 100% 0; }
+
+
+/* V2 */
+#v2 { display: none; }
+.deck-container.v2inprogress #v2 { display: block; }
+
+
+            /* Other stuff for styling neon */
+            .deck-container>section.slide {padding:0;} /* as samples were originally designed with neon padding */
+            .deck-container>.slide {border: 1px dotted #333;} /* for the demo */
+            .slide h1 {font-size: 3em;}
+            .slide h1 b {color: #0F0;}
+            .slide h1 em {color: #445; text-shadow: none; font-size: .3em;}
+            .slide h2 {font-size: 1em;}
+
+            .deck-container .slide .slide {opacity: 1;} /* undo the shaded of non-current slides */
+            .slide .tinyhighlight {color: #F77; font-size: 66%; border: 1px dashed #833;}
+            .slide:not(#title-slide) b {color: #0F0; font-size: 75%;}
+        </style>
+
+
+	<script src="../extensions/includedeck/load.js"></script>
+        <script>
+            includedeck("profile-6 theme:neon", {
+               INITDELAY: 100, // give some time to the user to see the splash (more useful: can help the browser show the splash on resource-heavy presentations)
+               //BEFOREINIT: gogogo,
+               //AFTERINIT: registerClickToggle,
+               PREFIX: "../" // deck.js is in the parent folder for this presentation
+            })
+        </script>
+
+    </head>
+
+<body>
+
+<div class="deck-container">
+
+    <div class="deck-loading-splash" style="background: white; color: blue;">
+        <span class="vcenter" style="font-size: 30px; font-family: Arial; "><a href="http://www.youtube.com/watch?v=ttnrb756PoI" target="blank">Please wait</a>, your deck is loading…</span>
+    </div>
+
+<!-- Begin slides -->
+<section class="slide" data-container-class="no-status" id="title-slide">
+	<h1 title="use arrow keys to navigate" class="var-title">
+            <br/><em>use right arrow to move on</em>
+        </h1>
+</section>
+
+<section class="slide">
+    <h1>next: data-container-class and CSS</h1>
+</section>
+
+<section class="slide" data-container-class="v1">
+    <h2>Using data-container-class and CSS</h2>
+    <ul>
+        <li class="slide" data-container-class="v1step1">Step 1</li>
+        <li class="slide" data-container-class="v1step2">Step 2</li>
+        <li class="slide" data-container-class="v1step3">Step 3</li>
+    </ul>
+</section>
+
+<section class="slide">
+    <h1>next: using deck-progress</h1>
+</section>
+
+<div id="v2"
+     NOdata-progress-size="width: screen.width ; height: screen.height"
+     data-progress-size="left: slide.left; top: slide.top; width: slide.width ; height: slide.height"
+     data-progress="background-position: ((detail.n - 9) * 100 / 7 ) + '% 0'"
+     style="position: absolute; 
+            background: url(landscape.svg);
+            background-size: auto 100%;
+            transition: background 400ms linear;"
+     ></div>
+
+<section class="slide">
+    <h2>Using deck-progress <span data-progress="$text: ((detail.n - 9) * 100 / 7 ) + '%'"></span></h2>
+    <ul>
+        <li class="anim-addcontainerclass slide withglobalimpact" data-class="v2inprogress">NB: we switch the bg on</li>
+        <li class="slide">NB: can be fullscreen or slide-sized</li>
+        <li class="slide">Step 1</li>
+        <li class="slide">Step 2</li>
+        <li class="slide">Step 3</li>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Still using deck-progress <span data-progress="$text: ((detail.n - 9) * 100 / 7 ) + '%'"></span></h2>
+    <ul>
+        <li>Here we are on a new slide, with the same background object</li>
+        <li class="slide">NB: "- 9" is to start at the proper place</li>
+        <li class="slide">NB: "/ 7" is because there are 8 slides for us in total (could use detail.N-1)</li>
+        <li class="anim-removecontainerclass slide withglobalimpact" data-class="v2inprogress">NB: we switch the bg off</li>
+        <li class="slide">OK</li>
+    </ul>
+</section>
+
+
+<section class="slide">
+    <h1>next: using deck-progress</h1>
+</section>
+
+
+
+
+<section class="slide">
+    <h2>“container-class” extension (and no-status class)</h2>
+    <ul>
+        <li>“container-styling”</li>
+        <ul>
+            <li>when a slide has an "data-container-class"</li>
+            <li>it is propagated as "class" to the container</li>
+        </ul>
+        <li>Example</li>
+        <ul>
+            <li>first slide has <tt>data-container-class="no-status"</tt></li>
+            <li>"no-status" hides the slide counter</li>
+            <li class="slide">next step has <tt>data-container-class="red"</tt></li>
+            <li class="slide" data-container-class="red">per custom css, "red" means red background</li>
+            <li class="slide">or allow for “out-of-the-box” effects…</li>
+            <li class="slide" data-container-class="shrunk"></li>
+        </ul>
+    </ul>
+</section>
+<section class="slide">
+    <h2>Support and notes</h2>
+    <ul>
+    </ul>
+</section>
+<!-- DEMO: various -->
+
+<!-- deck.navigation snippet -->
+<!--a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a-->
+
+<!-- deck.status snippet -->
+<p class="deck-status deck-progress-10"> <span class="deck-status-current"></span> / <span class="deck-status-total"></span> − <span class="var-author">will be replaced by author</span> − <span class="var-title">will be replaced by the title</span></p>
+
+</div>
+</body>
+</html>
