@@ -17,7 +17,8 @@ It also overrides the defaults keybinding and countNested value (so it is better
     // and go on
     $.extend(true, $[deck].defaults, {
         selectors: {
-            subslidesToNotify: ".slide,.onshowtoplevel"
+            subslidesToNotify: ".slide,.onshowtoplevel",
+            subslidesToAlwaysNotify: ".slide.withglobalimpact"
         },
         // Here we redefined the defaults:
         //  - we avoid counting nested slides
@@ -153,6 +154,23 @@ It also overrides the defaults keybinding and countNested value (so it is better
             direction = "reverse";
         }
         var opts = $[deck]('getOptions');
+        // Notify slides between 'from' and 'to' that are special, and touch a global state
+        var all = $[deck]('getSlides').map(function(q, i) {return q.get(0);});
+        $(
+            all.slice(from+1, to+1)
+                .filter(function(e) { return e.matches(opts.selectors.subslidesToAlwaysNotify); })
+        )
+            .each(function() {
+                $(this).triggerHandler('deck.bigJumped', direction);
+            });
+        $(
+            all.slice(to+1, from+1).reverse()
+                .filter(function(e) { return e.matches(opts.selectors.subslidesToAlwaysNotify); })
+        )
+            .each(function() {
+                $(this).triggerHandler('deck.bigJumped', direction);
+            });
+        // Notify slides inside the 'to' toplevel: first all for init, then the one before the 'to' target
         $($[deck]('getToplevelSlideOfIndex', to).node.find(opts.selectors.subslidesToNotify).get().reverse()).each(function(ind, el) {$(el).triggerHandler('deck.toplevelBecameCurrent', direction)});
         for (icur = $[deck]('getToplevelSlideOfIndex', to).index + 1; icur < to+1; icur++) {
             $[deck]('getSlides')[icur].triggerHandler('deck.afterToplevelBecameCurrent', 'forward');
