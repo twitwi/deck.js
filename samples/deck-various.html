@@ -38,6 +38,17 @@
                border: 10px solid red;
                opacity: 1;
             }
+            .deck-container.lastsubslide:not(.no-status)::after {
+               position: absolute;
+               right: 0;
+               top: 0;
+               content: "⛶";
+               color: red;
+               font-size: 50px;
+            }
+            .deck-container.lastsubslide>.slide {
+               outline: 1px solid blue;
+            }
             body, .deck-container.zoom2 { max-width: 100%; max-height: 100%; overflow: hidden; }
 
             /* Other stuff for styling neon */
@@ -136,7 +147,7 @@
             <li class="slide">next step has <tt>data-container-class="red"</tt></li>
             <li class="slide" data-container-class="red">per custom css, "red" means red background</li>
             <li class="slide">or allow for “out-of-the-box” effects…</li>
-            <li class="slide" data-container-class="shrunk"></li>
+            <li class="slide" style="color:red" data-container-class="shrunk">… and warning before slide change</li>
         </ul>
     </ul>
 </section>
