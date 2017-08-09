@@ -194,7 +194,14 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 SVG.svg({
                     loadURL: attributes['src'],
                     onLoad: function($svg, w, h) {
-                        var px = function (str) {return str.replace("px", "")}
+                        var px = function (str) {return str.replace("px", "")
+				.replace("mm", "")
+				.replace("pt", "")
+				.replace("cm", "")
+				.replace("m", "")
+				.replace("in", "")
+				.replace("pc", "")
+				.replace("ft", "")}
                         var aa = $($svg.root());
                         aa.attr('width', '100%');
                         aa.attr('height', '100%');
