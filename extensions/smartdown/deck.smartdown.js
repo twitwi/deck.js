@@ -191,7 +191,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             var d2 = RegExp.$3;
             txtNode.textContent = clean(d1);
             var node = txtNode.parentNode;
-            var comm = document.createElement('div');
+            var comm = document.createElement('span');
             comm.classList.add('comment');
             $(comm).text(clean(d2));
             
