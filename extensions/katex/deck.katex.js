@@ -1,6 +1,6 @@
 /*!
 Deck JS - deck.katek.js
-Copyright (c) 2015 Rémi Emonet,
+Copyright (c) 2015-2017 Rémi Emonet,
 Formatting "latex" maths using the katek library (lighter than mathjax)
 */
 
@@ -16,11 +16,10 @@ http://khan.github.io/KaTeX/
     $d.bind('deck.init', function() {
         var container = $[deck]('getContainer');
         $('.latex', container).each(function() {
-            var it = this;
-            var v = $(it).text();
+            this.classList.remove('latex');
+            var v = $(this).text();
             v = "\\displaystyle "+v+"";
-            //console.log(v);
-            katex.render(v, it, {breakOnUnsupportedCmds: false});
+            katex.render(v, this, {breakOnUnsupportedCmds: false});
         });
     });
 })(jQuery, 'deck');
