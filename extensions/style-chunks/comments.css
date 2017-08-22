@@ -15,7 +15,8 @@ body:not(.has-clones):not(.show-comments) .deck-container > .slide .comment, bod
   display: none;
 }
 
-.deck-container > .slide div.comment {
+.deck-container > .slide .comment {
+  display: block; /* used to be a div, so... */
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -35,12 +36,12 @@ body:not(.has-clones):not(.show-comments) .deck-container > .slide .comment, bod
   margin-bottom: -13.2px;
 }
 
-.deck-container > .slide div.comment.small {
+.deck-container > .slide .comment.small {
   width: 120px;
   margin-left: -100px;
 }
 
-.deck-container > .slide div.comment.twolines {
+.deck-container > .slide .comment.twolines {
   height: 40px;
   margin-top: -13.333px;
   margin-bottom: -26.667px;
