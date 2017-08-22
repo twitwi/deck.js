@@ -1,6 +1,6 @@
 /*!
 Deck JS - deck.smartdown
-Copyright (c) 2015-2015 Rémi Emonet
+Copyright (c) 2015-2017 Rémi Emonet
 Licensed under the MIT license.
 https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
 */
@@ -106,7 +106,7 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             slide.removeAttribute('id');
             if (hasAnim) {
                 slide.classList.add('anim-continue');
-                $('<div>').text('@anim:'+animPart).insertAfter(slide.firstChild); // first is the heading, we want to keep it there
+                $('<span>').text('@anim:'+animPart).insertAfter(slide.firstChild); // first is the heading, we want to keep it there
             }
             slides[s] = slide;
             return s;
@@ -239,8 +239,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     var what = subparts[ii];
                     if (what == "") continue; // as a good side effect, this allows to set a "anim-continue" on all elements (e.g., put a + at the end of the line) 
                     var continuating  = ii != subparts.length-1;
-                    var toAdd = document.createElement('div');
+                    var toAdd = document.createElement('span');
                     addClass(toAdd, 'slide');
+                    toAdd.style.display = 'none';
                     // process the individual element (reminder: animationDuration is global)
                     function dw() { addSpaceSeparatedAttr(toAdd, "data-what", REST); }
                     function dd() { addSpaceSeparatedAttr(toAdd, "data-dur", ""+animationDuration); }
@@ -313,9 +314,11 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
                     allToAdd.push(toAdd);
                 }
             }
-            // replacing the parent node with allToAdd elements
-            txtNode.remove();
-            replaceNodeByNodes(node, allToAdd);
+            // replacing the content with allToAdd elements, hiding the container if empty
+            if (node.childNodes.length == 1) {
+                node.style.display = 'none';
+            }
+            replaceNodeByNodes(txtNode, allToAdd);
             return true;
         } else {
             return false;
