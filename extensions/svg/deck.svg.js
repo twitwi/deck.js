@@ -194,12 +194,16 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                 SVG.svg({
                     loadURL: attributes['src'],
                     onLoad: function($svg, w, h) {
-                        var px = function (str) {return str.replace("px", "")}
                         var aa = $($svg.root());
                         aa.attr('width', '100%');
                         aa.attr('height', '100%');
-                        if (aa.attr('viewBox') == undefined) {
-                            if (w==undefined || h==undefined) {
+                        if (aa.attr('viewBox') !== undefined) {
+                            event.releaseInit();
+                        } else {
+                            // jquery cannot see the viewBox, so we have to create/propagate it
+
+                            if (w===undefined || h===undefined) {
+                                // could not load...
                                 if (opts.alert.missingSVG) alert(
                                     "There seem to be a problem with the loading of\n   '"+attributes['src'] + "'\n"
                                         +"\nMaybe the file does not exist?"
@@ -210,9 +214,16 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                         +"\n   ⇒ try to restart chrome with '--disable-web-security'");
                                 event.releaseInit();
                             } else {
-                                var to = "0 0 " + px(w) + " " + px(h);
-                                $svg.root().setAttribute("viewBox", to);
-                                aa.attr("svgViewBox", to);
+                                var vb = $svg.root().getAttribute('viewBox');
+                                if (vb === null) {
+                                    // no viewBox attribute, use the w and h to force the viewBox
+                                    var px = function (str) {
+                                        return str.replace("px", "");
+                                    }
+                                    vb = "0 0 " + px(w) + " " + px(h);
+                                }
+                                $svg.root().setAttribute("viewBox", vb);
+                                aa.attr("svgViewBox", vb);
                                 if (attributes['stretch'] == 'true') $svg.root().setAttribute('preserveAspectRatio', "none");
                                 if (notDisabled('stylerewrite')) {
                                     svgPatcher.styleToAttributes($svg.root(), attributes['src']);
