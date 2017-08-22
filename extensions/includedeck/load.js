@@ -2,7 +2,7 @@
 /*!
  * Includedeck.
  *
- * Copyright (c) 2013-2014 Rémi Emonet.
+ * Copyright (c) 2013-2017 Rémi Emonet.
  * Licensed under the MIT license.
  * https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
  *
@@ -129,6 +129,7 @@ function includedeck(m, c) {
         "events": [ prefix + "/extensions/events/deck.events.js" ],
         "anim": [ prefix + "/extensions/anim/deck.anim.js" ],
         "svg": [
+            prefix + "/extensions/svg/deck.svg.css",
             prefix + "/libs/jquerysvg/jquery.svg.min.js" ,
             prefix + "/libs/jquerysvg/jquery.svganim.min.js",
             prefix + "/extensions/svg/deck.svg.js"
@@ -139,6 +140,10 @@ function includedeck(m, c) {
             prefix + "/extensions/attribution/deck.attribution.js"
         ],
         "container-styling": [ prefix + "/extensions/container-styling/deck.container-styling.js" ],
+        "savedom": [
+            prefix + "/extensions/savedom/deck.savedom.css",
+            prefix + "/extensions/savedom/deck.savedom.js",
+        ],
         // Style extensions
         "style-chunks": [
 	    prefix + "/extensions/style-chunks/simple.css",
