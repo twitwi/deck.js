@@ -154,7 +154,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         var createSVG = function(object, attributes) {
             var $canvas, $control, $next, $reload, $placeholder;
             /* Create svg canvas */
-            $canvas = $("<div />").attr({
+            $canvas = $("<span />").attr({
                 'id':  $(object).attr('id'),
                 'data-src': attributes['src'],
                 'class': opts.classes.svgPlaceholder + " " + $(object).attr('class')
