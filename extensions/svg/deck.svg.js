@@ -218,7 +218,18 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
                                 if (vb === null) {
                                     // no viewBox attribute, use the w and h to force the viewBox
                                     var px = function (str) {
-                                        return str.replace("px", "");
+                                        // see https://www.w3.org/TR/css3-values/#absolute-lengths
+                                        var units = {'': 1,
+                                                     px: 1,
+                                                     cm: 96/2.54,
+                                                     mm: 96/10/2.54,
+                                                     Q:  96/40/2.54,
+                                                     in: 96,
+                                                     pc: 96/6,
+                                                     pt: 96/72,
+                                                    };
+                                        var parts = str.split(/^([\d.]+)/).slice(1);
+                                        return parseFloat(parts[0]) * units[parts[1]];
                                     }
                                     vb = "0 0 " + px(w) + " " + px(h);
                                 }
