@@ -193,6 +193,9 @@ function includedeck(m, c) {
         /// profile-6: same as profile 5 but use smartdown+katex+highlight
         "profile-6": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_profile-6-incubator"],
+        /// profile-7: same as profile 6 with samedom added
+        "profile-7": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_profile-6-incubator", "@_savedom"],
         dummy: {}
     };
 
