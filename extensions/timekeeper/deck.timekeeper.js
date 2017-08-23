@@ -72,15 +72,16 @@ It also injects some default html for it if none is found (and styles it for the
         }
 
         if (opts.snippets.timekeeper) {
+            $('.timekeeper.auto-inserted, .timekeeper-logs.auto-inserted').remove();
             var d = function() {return $('<div/>');}
-            var divTK = d().addClass("timekeeper timekeeper-logs-toggle");
+            var divTK = d().addClass("timekeeper timekeeper-logs-toggle auto-inserted");
             divTK.append(d().addClass("timekeeper-local-relative-time"));
             divTK.append(d().addClass("timekeeper-time"));
             divTK.append(d().addClass("timekeeper-relative-time"));
             divTK.append(d().addClass("timekeeper-clear"));
             divTK.append(d().addClass("timekeeper-bang"));
             divTK.appendTo(container);
-            var divLog = d().addClass("timekeeper-logs");
+            var divLog = d().addClass("timekeeper-logs auto-inserted");
             var pre = $('<pre/>').appendTo(divLog);
             divLog.append(d().addClass("button").click(function() { doBang() }).html("Bang!"));
             divLog.append(d().addClass("button").click(function() { selectText(pre.get(0)) }).html("select all"));
