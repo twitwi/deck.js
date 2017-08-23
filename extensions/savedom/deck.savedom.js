@@ -16,8 +16,8 @@ The feature is useful in the process of make a single-file presentation.
             savedomOnClick: '.save-dom-button'
         },
         keys: {
-            // % key
-            saveDOM: [165],
+            // 'd'
+            saveDOM: [68],
         }
     });
     var $d = $(document);
