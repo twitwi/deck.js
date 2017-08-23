@@ -18,6 +18,7 @@ the deck container.
   var maybeAddSnippet = function() {
     var options = $.deck('getOptions');
     if (options.snippets.goto) {
+      $('.goto-form.auto-inserted').remove();
       if ($(options.selectors.gotoForm).size() > 0 && options.alert.goto) {
         alert("'options.snippets.goto' is true but a "+options.selectors.gotoForm+" has been found."
               +"\nThis might cause interaction glitches."
@@ -25,7 +26,7 @@ the deck container.
               +"\nSuggestion: remove your html snippet or pass the {snippets: {goto: false}} option."
              );
       }
-      $('<form/>').addClass('goto-form').attr('action', '.').attr('method', 'get')
+      $('<form/>').addClass('goto-form').addClass('auto-inserted').attr('action', '.').attr('method', 'get')
         .append($('<label/>').attr('for', 'goto-slide').text('Go to slide:'))
         .append($('<input/>').attr('type', 'text').attr('id', 'goto-slide').attr('name', 'slidenum').attr('list', 'goto-datalist'))
         .append($('<datalist/>').attr('id', 'goto-datalist'))
