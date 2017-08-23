@@ -58,7 +58,7 @@ The feature is useful in the process of make a single-file presentation.
     });
     $d.bind('deck.init', function() {
         var o = $.deck('getOptions');
-        $(o.selectors.savedomOnClick).each(function(i, el){
+        $(o.selectors.savedomOnClick).click(function(i, el){
             $[deck]('saveDOM');
         });
         $d.unbind('keydown.saveDOM').bind('keydown.saveDOM', function(e) {
