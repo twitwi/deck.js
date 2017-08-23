@@ -1,12 +1,14 @@
 /*!
-Deck JS - deck.katek.js
+Deck JS - deck.katex.js
 Copyright (c) 2015-2017 Rémi Emonet,
-Formatting "latex" maths using the katek library (lighter than mathjax)
+Formatting "latex" maths using the katex library (lighter than mathjax)
 */
 
 /*
 This module provides a support for latex equation syntax.
 http://khan.github.io/KaTeX/
+
+current version twitwi/0.8.2-fordeckjs
 */
 
 (function($, deck, undefined) {
