@@ -18,6 +18,9 @@ The feature is useful in the process of make a single-file presentation.
         keys: {
             // 'd'
             saveDOM: [68],
+        },
+        alert: {
+            howToInline: true
         }
     });
     var $d = $(document);
@@ -39,6 +42,18 @@ The feature is useful in the process of make a single-file presentation.
             a.download = 'export.html';
             a.href = objectURL;
             a.onclick = function() {
+                var opts = $.deck('getOptions');
+                if (opts.alert.howToInline) alert(
+                    "To make a single-file standalone presentation:"
+                        +"\n"
+                        +"\n 1) save the download next to your presentation file"
+                        +"\n 2) name it for example export.html"
+                        +"\n 3) install nodejs and https://github.com/remy/inliner"
+                        +"\n 4) invoke the inliner with this command:"
+                        +"\n       inliner -n -m export.html > standalone.html"
+                        +"\n"
+                        +"\n ⇒⇒⇒ 'standalone.html' should now contain everything,"
+                        +"\n                       you can move where you want.");
                 setTimeout(function() {
                     a.parentElement.removeChild(a);
                 }, 222);
