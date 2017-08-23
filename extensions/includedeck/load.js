@@ -32,6 +32,7 @@ if (typeof ACTUALLY_EXPORT_A_LIST_OF_FILES == 'undefined')
 
 // this is the actual includedeck
 function includedeck(m, c) {
+    if (typeof IS_AN_EXPORTED_DECK !== 'undefined') m = undefined;
     var maybe = function(f) { return f || (function(){}); }
     var modules = m || [];
     var conf = c || {};
