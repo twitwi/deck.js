@@ -124,12 +124,13 @@ It also provides the behavior that copies the current "notes" to a "notes-target
         var container = $[deck]('getContainer');
         
         if (opts.snippets.clone) {
+            $('.clonepointer.auto-inserted').remove();
             var d = function() {return $('<div/>');}
-            d().addClass("clonepointer scale-on-click").append(
+            d().addClass("clonepointer scale-on-click auto-inserted").append(
                 d().attr("style", "border: 2px solid red; border-radius: 50%; z-index:10;"
                          +"margin: -11px 0 0 -11px; width:20px; height:20px; opacity: .5;")
                 ).appendTo(container);
-            d().addClass("clonepointer scale-on-click").append(
+            d().addClass("clonepointer scale-on-click auto-inserted").append(
                 d().attr("style", "border: 2px solid red; border-radius: 50%; z-index:10;"
                          +"margin: -16px 0 0 -16px; width:30px; height:30px;")
                 ).appendTo(container);
