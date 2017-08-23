@@ -25,7 +25,13 @@ The feature is useful in the process of make a single-file presentation.
         console.log("Save DOM");
 
         var addSaveLink = function() {
+            var scrpt = document.createElement('script');
+            scrpt.textContent = 'IS_AN_EXPORTED_DECK = true;';
+            document.body.prepend(scrpt);
             var content = '<!DOCTYPE html>\n<html>\n'+document.body.parentElement.innerHTML+'\n</html>';
+            scrpt.remove();
+            IS_AN_EXPORTED_DECK = undefined;
+
             var objectURL = URL.createObjectURL(new Blob([content], {type : 'text/html'}));
             var a = document.createElement('a');
             a.classList.add('save-dom-link');
