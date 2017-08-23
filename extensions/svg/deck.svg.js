@@ -17,7 +17,7 @@ This module provides a support for managed svg inclusion (allowing proper DOM ac
         classes: {
             svgPlaceholder: 'deck-svg'
         },
-	selectors: {
+	      selectors: {
             svgObject: "object[type='deckjs/svg'], div.svg-object",
             svgObjectDisable: {
                 idrewrite: ".no-idrewrite",
