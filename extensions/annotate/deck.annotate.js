@@ -105,10 +105,10 @@
           context.beginPath();
           var radius = Math.sqrt(
             Math.pow(Math.abs(start.x - end.x), 2) +
-            Math.pow(Math.abs(start.y - end.y), 2)) / 2;
+            Math.pow(Math.abs(start.y - end.y), 2));
           
-          var centerX = start.x + (end.x - start.x) / 2;
-          var centerY = start.y + (end.y - start.y) / 2;
+          var centerX = start.x; // + (end.x - start.x) / 2;
+          var centerY = start.y; // + (end.y - start.y) / 2;
           
           context.strokeStyle = this.params.color;
           context.lineWidth = this.params.diameter;
