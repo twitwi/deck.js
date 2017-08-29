@@ -239,11 +239,9 @@
       }
       
       var elem = this.dom[0];
-      
-      if(this.dom.width){  
-        elem.width = this.dom.width();  // Clears canvas
-        elem.height = this.dom.height()
-      }
+
+      elem.width = $deck("getOptions").designWidth;
+      elem.height = $deck("getOptions").designHeight;
       
       if(!$deck("getOptions").annotate.enabled || !elem){
         return;
@@ -458,11 +456,15 @@
       
     $(document.body).append(tools);
   }
-  
+
+  var getSlide = function(ind) {
+    return $[deck]('getToplevelSlideOf', $[deck]('getSlide', ind)).node;
+  }
+
   // Add canvases to slides
 	$d.bind('deck.init', function(){
     var opts = $deck('getOptions');
-    var slides = $deck('getSlides');
+    var slides = $deck('getTopLevelSlides');
     canvases = new ShapeMap(opts.annotate.persistentStorage);
     
     $.each(slides, function(idx, slide){
@@ -480,7 +482,7 @@
     createTools(opts);
     
     if(opts.annotate.enabled){
-      enableCanvasOnSlide($deck('getSlide'));
+      enableCanvasOnSlide(getSlide());
       if(opts.annotate.showTools){
         $("#" + opts.ids.annotateTools).show();
       }
@@ -488,9 +490,14 @@
     
     // Slide change event
     $d.bind('deck.change', function(event, from, to){
+
+      if ($[deck]('getToplevelSlideOfIndex', to).node.is($[deck]('getToplevelSlideOfIndex', from).node)) {
+        return;
+      }
+
       $('.' + opts.classes.annotateCanvas).hide();  // Hide all canvases
       if(opts.annotate.enabled){
-        var slide = $deck('getSlide', to);
+        var slide = getSlide(to);
         enableCanvasOnSlide(slide);
         var cv = getCanvas(slide);
         if(cv){
@@ -545,7 +552,7 @@
   });
   
   function getContainer(slide){
-    slide = slide || $deck('getSlide');
+    slide = slide || getSlide();
     var opts = $deck('getOptions');
     return slide.children('.' + opts.classes.annotateCanvas);
   }
