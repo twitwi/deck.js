@@ -73,6 +73,17 @@
     border-radius: 50%;
 }
 
+#size-picker .sizebox {
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    min-height: 1.5em;
+    min-width: 1.5em;
+    border: 2px solid black;
+    margin: 1px;
+}
+
 #size-picker .size {
     display: inline-block;
     vertical-align: middle;

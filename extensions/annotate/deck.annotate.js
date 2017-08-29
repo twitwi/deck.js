@@ -181,9 +181,11 @@
       currentColor: '#00f',
       colors: {
         'blue': '#00f',
-        'black': '#000',
-        'red': '#f00',
         'green': '#0f0',
+        'red': '#f00',
+        'lightgray': '#999',
+        'black': '#000',
+        'gray': '#666',
         'cyan': '#0ff',
         'yellow': '#ff0',
         'magenta': '#f0f',
@@ -396,19 +398,23 @@
       .attr('id', 'size-picker')
       .appendTo(pickers);
     $.each(opts.annotate.lineDiameters, function(name, size){
-      var elem = $("<span>")
-        .addClass('size')
-        .width(size)
-        .height(size)
-        .css('background-color', 'black')
-        .attr('title', name)
+      $("<div/>")
+        .addClass('sizebox')
         .appendTo(sizePicker)
+        .attr('title', name)
         .click(function(e){
-          var opts = $deck('getOptions');
-          $('.size.active').removeClass('active');
-          $(this).addClass('active');
-          opts.annotate.currentLineDiameter = size;
-        });
+            var opts = $deck('getOptions');
+            $('.sizebox.active').removeClass('active');
+            $(this).addClass('active');
+            opts.annotate.currentLineDiameter = size;
+        })
+        .append(
+          $("<span>")
+            .addClass('size')
+            .width(size)
+            .height(size)
+            .css('background-color', 'black')
+        );
     });
     
     // Select default size
