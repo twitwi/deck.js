@@ -2,6 +2,9 @@
   var $deck = $[deck];
   var $d = $(document);
   var canvases;
+
+  var x; // function to transform click events
+  var y; // function to transform click events
 	
 	// Each shape has this interface:
   //
@@ -41,17 +44,16 @@
       
       // Start drawing this shape.
       this.begin = function(e){
-        var mouseX = e.pageX - _canvas.offsetLeft;
-        var mouseY = e.pageY - _canvas.offsetTop;
-        
+        var mouseX = x(e);
+        var mouseY = y(e);
         addClick(mouseX, mouseY);
       };
       
       // The shape is being extended.
       // This is typically due to a mouse drag
       this.extend = function(e){
-        var mouseX = e.pageX - _canvas.offsetLeft;
-        var mouseY = e.pageY - _canvas.offsetTop;
+        var mouseX = x(e);
+        var mouseY = y(e);
         addClick(mouseX, mouseY, true);
       }
       
@@ -85,16 +87,16 @@
       var end;
       
       this.begin = function(e){
-        var mouseX = e.pageX - _canvas.offsetLeft;
-        var mouseY = e.pageY - _canvas.offsetTop;
+        var mouseX = x(e);
+        var mouseY = y(e);
         
         start = {x: mouseX, y: mouseY};
         end = start;
       };
       
       this.extend = function(e){
-        var mouseX = e.pageX - _canvas.offsetLeft;
-        var mouseY = e.pageY - _canvas.offsetTop;
+        var mouseX = x(e);
+        var mouseY = y(e);
         end = {x: mouseX, y: mouseY};
       };
       
@@ -123,15 +125,15 @@
       var end;
       
       this.begin = function(e){
-        var mouseX = e.pageX - _canvas.offsetLeft;
-        var mouseY = e.pageY - _canvas.offsetTop;
+          var mouseX = x(e);
+          var mouseY = y(e);
         start = {x: mouseX, y: mouseY};
         end = start;
       };
       
       this.extend = function(e){
-        var mouseX = e.pageX - _canvas.offsetLeft;
-        var mouseY = e.pageY - _canvas.offsetTop;
+        var mouseX = x(e);
+        var mouseY = y(e);
         end = {x: mouseX, y: mouseY};
       };
       
@@ -501,6 +503,23 @@
       }
 
       $('.' + opts.classes.annotateCanvas).hide();  // Hide all canvases
+
+        {
+          let w = opts.designWidth;
+          let h = opts.designHeight;
+          // set the coordinates extractors
+          x = function(e) {
+              let current = getSlide();
+              let r = current.get(0).getBoundingClientRect();
+              return w * (e.clientX - r.left) / r.width;
+          };
+          y = function(e) {
+              let current = getSlide();
+              let r = current.get(0).getBoundingClientRect();
+              return h * (e.clientY - r.top) / r.height;
+          };
+      }
+
       if(opts.annotate.enabled){
         var slide = getSlide(to);
         enableCanvasOnSlide(slide);
