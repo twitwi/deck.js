@@ -450,16 +450,10 @@
       .addClass('expand-arrow')
       .addClass('right')
       .appendTo(tools)
-      .toggle(
-        function(){
-          $(this).removeClass("right").addClass("left");
-          $("#picker-tools").removeClass("hidden");
-        },
-        function(){
-          $(this).removeClass("left").addClass("right");
-          $("#picker-tools").addClass("hidden");
-        }
-      );
+      .click( function (e){
+          $(this).toggleClass('right left');
+          $("#picker-tools").toggleClass("hidden");
+      });
       
     $(document.body).append(tools);
   }
