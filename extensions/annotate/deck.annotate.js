@@ -57,7 +57,8 @@
       
       this.draw = function(context){
         var opts = $deck('getOptions');
-        
+        var m = opts.annotate.designSizeMultiplier;
+
         context.strokeStyle = this.params.color;
         context.lineJoin = _lineJoin;
         context.lineWidth = this.params.diameter;
@@ -191,6 +192,7 @@
         'large': 20
       },
       persistentStorage: false,  // Uses localStorage to keep annotations beyond a refresh
+      designSizeMultiplier: 1.5,
     }
 	});
   
@@ -240,8 +242,10 @@
       
       var elem = this.dom[0];
 
-      elem.width = $deck("getOptions").designWidth;
-      elem.height = $deck("getOptions").designHeight;
+      var opts = $deck("getOptions");
+      var m = opts.annotate.designSizeMultiplier;
+      elem.width = opts.designWidth * m;
+      elem.height = opts.designHeight * m;
       
       if(!$deck("getOptions").annotate.enabled || !elem){
         return;
@@ -249,6 +253,7 @@
       
       var context = elem.getContext("2d");
       if(_shapes){
+        context.scale(m, m);
         for(var i = 0; i < _shapes.length; i++){
           _shapes[i].draw(context);
         }
