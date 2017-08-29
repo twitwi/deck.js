@@ -178,20 +178,25 @@
       enabled: false,
       showTools: true,
 			colorsPerRow: 3,
-      currentColor: null,
+      currentColor: '#00f',
       colors: {
+        'blue': '#00f',
         'black': '#000',
         'red': '#f00',
         'green': '#0f0',
-        'blue': '#00f'
+        'cyan': '#0ff',
+        'yellow': '#ff0',
+        'magenta': '#f0f',
       },
       currentShape: null,
 			shapes: shapes,
       currentLineDiameter: null,
 			lineDiameters: {
-        'small': 5,
-        'medium': 10,
-        'large': 20
+        'small': 2,
+        'medium': 6,
+        'large': 12,
+        'Large': 18,
+        'tiny': 1,
       },
       persistentStorage: false,  // Uses localStorage to keep annotations beyond a refresh
       designSizeMultiplier: 1.5,
