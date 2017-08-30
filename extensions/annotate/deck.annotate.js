@@ -32,6 +32,7 @@
       var _canvas = canvas;
       this.params = params;
       var _lineJoin = "round";
+      var _lineCap = "round";
       
       var clicks = []
       function addClick(x, y, dragging){
@@ -63,6 +64,7 @@
 
         context.strokeStyle = this.params.color;
         context.lineJoin = _lineJoin;
+        context.lineCap = _lineCap;
         context.lineWidth = this.params.diameter;
         context.beginPath();
         for(var i = 0; i < clicks.length; i++){
