@@ -118,3 +118,14 @@
     display: inline-block;
     border-left: 10px solid blue;
 }
+
+#deck-annotate-tools .actionbutton {
+    display: inline-flex;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+    min-height: 1.5em;
+    min-width: 1.5em;
+    border: 2px solid black;
+    margin: 1px;
+}

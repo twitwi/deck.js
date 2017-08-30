@@ -228,13 +228,19 @@
     
     this.clear = function(){
       _shapes = [];
-      _redo = [];
+      _redo = []; 
+      this.previousCanvas = null;
+      this.previousDrawnIndex = -1;
+      this.backupCanvas = null;
       this.redraw();
     }
     
     this.undo = function(){
       if(_shapes.length > 0){
         _redo.push(_shapes.pop());
+        this.previousCanvas = null;
+        this.previousDrawnIndex = -1;
+        this.backupCanvas = null;
       }
       this.redraw();
     }
@@ -489,7 +495,24 @@
     
     // Select default color
     colorPicker.children().first().click();
-    
+
+    // Create undo/do/clear buttons
+    let button = function(text, method) {
+      $("<div/>")
+        .addClass('actionbutton')
+        .appendTo(tools)
+        .click(function() {
+          var cv = getCanvas();
+          if(cv){
+            cv[method]();
+          }
+        })
+        .text(text);
+    };
+    button('↶', 'undo');
+    button('↷', 'redo');
+    button('↯', 'clear');
+
     // Create expand link.
     $("<div>")
       .addClass('expand-arrow')
