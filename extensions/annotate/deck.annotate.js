@@ -64,8 +64,8 @@
         context.strokeStyle = this.params.color;
         context.lineJoin = _lineJoin;
         context.lineWidth = this.params.diameter;
+        context.beginPath();
         for(var i = 0; i < clicks.length; i++){
-          context.beginPath();
           if(clicks[i].dragging && i){
             context.moveTo(clicks[i - 1].x, clicks[i - 1].y);
           }
@@ -73,9 +73,9 @@
             context.moveTo(clicks[i].x - 1, clicks[i].y);
           }
           context.lineTo(clicks[i].x, clicks[i].y);
-          context.closePath();
-          context.stroke();
         }
+        context.closePath();
+        context.stroke();
       }
     },
     
