@@ -245,7 +245,11 @@
       }
       this.redraw();
     }
-    
+
+    this.previousCanvas = null;
+    this.previousDrawnIndex = -1;
+    this.backupCanvas = null;
+
     this.redraw = function(){
       if(!this.dom){
         return;
@@ -253,21 +257,49 @@
       
       var elem = this.dom[0];
 
+      if (this.previousCanvas !== elem) {
+          this.previousDrawnIndex = -1;
+      }
+      this.previousCanvas = elem;
+
       var opts = $deck("getOptions");
+
       var m = opts.annotate.designSizeMultiplier;
-      elem.width = opts.designWidth * m;
-      elem.height = opts.designHeight * m;
-      
+      {
+          let w = opts.designWidth * m;
+          let h = opts.designHeight * m;
+          if (elem.width != w || elem.height != h) {
+              elem.width = opts.designWidth * m;
+              elem.height = opts.designHeight * m;
+              this.previousDrawnIndex = -1;
+          }
+          if (!this.backupCanvas || this.backupCanvas.width != w || this.backupCanvas.height != h) {
+              this.backupCanvas = document.createElement('canvas');
+              this.backupCanvas.width = w;
+              this.backupCanvas.height = h;
+          }
+      }
+
       if(!$deck("getOptions").annotate.enabled || !elem){
         return;
       }
       
       var context = elem.getContext("2d");
       if(_shapes){
+        context.resetTransform();
+        context.clearRect(0, 0, elem.width, elem.height);
+        context.drawImage(this.backupCanvas, 0, 0);
         context.scale(m, m);
-        for(var i = 0; i < _shapes.length; i++){
+        let start = Math.max(0, this.previousDrawnIndex+1);
+        for(var i = start; i < _shapes.length-1; i++){
           _shapes[i].draw(context);
+          this.previousDrawnIndex = i;
         }
+        if (start < _shapes.length-1) {
+          var backCtx = this.backupCanvas.getContext('2d');
+          backCtx.drawImage(elem, 0, 0);
+        }
+        _shapes[_shapes.length-1].draw(context);
       }
     }
   }
