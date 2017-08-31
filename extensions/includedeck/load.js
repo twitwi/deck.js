@@ -145,6 +145,10 @@ function includedeck(m, c) {
             prefix + "/extensions/savedom/deck.savedom.css",
             prefix + "/extensions/savedom/deck.savedom.js",
         ],
+        "annotate": [
+            prefix + "/extensions/annotate/deck.annotate.css",
+            prefix + "/extensions/annotate/deck.annotate.js",
+        ],
         // Style extensions
         "style-chunks": [
 	    prefix + "/extensions/style-chunks/simple.css",
@@ -195,7 +199,7 @@ function includedeck(m, c) {
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_profile-6-incubator"],
         /// profile-7: same as profile 6 with samedom added
         "profile-7": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
-                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_profile-6-incubator", "@_savedom"],
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_profile-6-incubator", "@_savedom", "@_annotate"],
         dummy: {}
     };
 
