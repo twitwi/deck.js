@@ -5,7 +5,9 @@
 
   var x; // function to transform click events
   var y; // function to transform click events
-	
+
+ var now = function() { return +Date.now(); }
+
 	// Each shape has this interface:
   //
   // canvas: DOM object for the canvas
@@ -39,7 +41,8 @@
         clicks.push({
           x: x,
           y: y,
-          dragging: dragging
+          dragging: dragging,
+          t: now()
         });
       }
       
@@ -96,14 +99,14 @@
         var mouseX = x(e);
         var mouseY = y(e);
         
-        start = {x: mouseX, y: mouseY};
+        start = {x: mouseX, y: mouseY, t: now()};
         end = start;
       };
       
       this.extend = function(e){
         var mouseX = x(e);
         var mouseY = y(e);
-        end = {x: mouseX, y: mouseY};
+        end = {x: mouseX, y: mouseY, t: now()};
       };
       
       this.draw = function(context){
@@ -138,14 +141,14 @@
       this.begin = function(e){
           var mouseX = x(e);
           var mouseY = y(e);
-        start = {x: mouseX, y: mouseY};
+        start = {x: mouseX, y: mouseY, t: now()};
         end = start;
       };
       
       this.extend = function(e){
         var mouseX = x(e);
         var mouseY = y(e);
-        end = {x: mouseX, y: mouseY};
+        end = {x: mouseX, y: mouseY, t: now()};
       };
       
       this.draw = function(context){
@@ -246,6 +249,7 @@
       this.previousDrawnIndex = -1;
       this.backupCanvas = null;
       this.redraw();
+      log("CLEAR");
     }
     
     this.undo = function(){
@@ -254,6 +258,7 @@
         this.previousCanvas = null;
         this.previousDrawnIndex = -1;
         this.backupCanvas = null;
+        log("UNDO");
       }
       this.redraw();
     }
@@ -261,6 +266,7 @@
     this.redo = function(){
       if(_redo.length > 0){
         _shapes.push(_redo.pop());
+        log("REDO");
       }
       this.redraw();
     }
