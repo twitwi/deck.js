@@ -79,6 +79,10 @@
         context.closePath();
         context.stroke();
       }
+
+      this.log = function(l) {
+        l("line " + JSON.stringify(params) + " " + JSON.stringify(clicks));
+      }
     },
     
     circle: function(canvas, params){
@@ -117,6 +121,11 @@
           context.arc(centerX, centerY, radius, 2 * Math.PI, false);
           context.stroke();
         }
+
+      };
+
+      this.log = function(l) {
+        l("circle " + JSON.stringify(params) + " " + JSON.stringify([start, end]));
       };
     },
     
@@ -147,6 +156,10 @@
           context.lineWidth = this.params.diameter;
           context.stroke();        
         }
+      };
+
+      this.log = function(l) {
+        l("rectangle " + JSON.stringify(params) + " " + JSON.stringify([start, end]));
       };
     }
   };
@@ -664,6 +677,11 @@
     $deck("getOptions").annotate.enabled = false;
     getContainer(slide).hide();
   }
+
+  function log(what) {
+    // could make it robust to the absence of timekeeper if needed (e.g., try catch)
+    $[deck]('addToTimekeeperLog', "@NN1 "+what); // simple versioning
+  }
   
   // Set up the click hooks for a canvas
   function initializeCanvas(canvas){
@@ -695,22 +713,22 @@
         canvases.get(canvasId).redraw();
       }
     });
-    
-    canvas.mouseup(function(e){
+      
+    var endShape = function(e){
       if(currentShape && currentShape.end){
-        currentShape.end(e);
-        currentShape = null;
+         currentShape.end(e);
       }
+      if(currentShape && currentShape.log){
+         currentShape.log(log);
+      }
+      currentShape = null;
       painting = false;
-    });
+    }
+
+    canvas.mouseup(endShape);
+
+    canvas.mouseleave(endShape);
     
-    canvas.mouseleave(function(e){
-      if(currentShape && currentShape.end){
-        currentShape.end(e);
-        currentShape = null;
-      }
-      painting = false;
-    });
   }
     
   // Make sure resizing the window changes the canvas size
