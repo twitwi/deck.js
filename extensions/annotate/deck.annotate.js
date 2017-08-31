@@ -305,7 +305,9 @@
           var backCtx = this.backupCanvas.getContext('2d');
           backCtx.drawImage(elem, 0, 0);
         }
-        _shapes[_shapes.length-1].draw(context);
+        if (_shapes.length > 0) {
+          _shapes[_shapes.length-1].draw(context);
+        }
       }
     }
   }
