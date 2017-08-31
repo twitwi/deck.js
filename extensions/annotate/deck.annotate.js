@@ -185,7 +185,7 @@
         'blue': '#00f',
         'green': '#0f0',
         'red': '#f00',
-        'lightgray': '#999',
+        'white': '#fff',
         'black': '#000',
         'gray': '#666',
         'cyan': '#0ff',
