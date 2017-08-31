@@ -169,6 +169,8 @@ It also injects some default html for it if none is found (and styles it for the
             $(opts.selectors.timekeeperLogsPre).html(data);
         }
 
+        $[deck]('extend', 'addToTimekeeperLog', log);
+
 
         var saveCurrent = -1;
         $(document).bind('deck.change', function(e, from, to) {
