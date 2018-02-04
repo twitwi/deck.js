@@ -402,11 +402,12 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
 
         isRoot = typeof isRoot !== 'undefined' ? isRoot : true;
 
-        var converter = new showdown.Converter({
-            noHeaderId: true,
-            parseImgDimensions: true,
-            literalMidWordUnderscores: true // _ is convenient in math blocks
-        });
+        var converter = new showdown.Converter();
+        converter.setFlavor('github');
+        converter.setOption('noHeaderId',  true),
+        converter.setOption('parseImgDimensions', true);
+        converter.setOption('literalMidWordUnderscores', true); // _ is convenient in math blocks
+        converter.setOption('simpleLineBreaks', false);
         var wrap = document.createElement('div');
         wrap.innerHTML = converter.makeHtml(smart);
 
