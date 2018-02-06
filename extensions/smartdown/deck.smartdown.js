@@ -131,6 +131,9 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         var base = RegExp.$1; // set by hasIDOrClassDecoration
         var decorations = RegExp.$3.split(/ +/);
         var node = txtNode.parentNode;
+        if (node.tagName == 'STYLE') { // CSS style often end in {....} and we never want to add a class to it
+            return;
+        }
         txtNode.textContent = base;
         for (d in decorations) {
             // allow .class and class notations
