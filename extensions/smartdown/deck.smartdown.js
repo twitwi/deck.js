@@ -412,7 +412,12 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
         converter.setOption('literalMidWordUnderscores', true); // _ is convenient in math blocks
         converter.setOption('simpleLineBreaks', false);
         var wrap = document.createElement('div');
-        wrap.innerHTML = converter.makeHtml(smart);
+        wrap.innerHTML = smart;
+        $('mdiv', wrap).each(function(i, e) {
+            e.setAttribute('data-markdown', true);
+            changeTagname('div')(i, e);
+        });
+        wrap.innerHTML = converter.makeHtml(wrap.innerHTML);
 
         var tree = nodelistToArray(wrap.childNodes); // toplevel is an array (only top level for now)
 
