@@ -76,6 +76,7 @@ It also provides the behavior that copies the current "notes" to a "notes-target
             parentDeck('cloneSetItem', k, v);
             return;
         }
+        // TODO: should probably trigger an event for other extensions to leverage this cloneSetItem as a way of communicating between clones
         var opts = $[deck]('getOptions');
         var oldValue = localStorage.getItem(k, v);
         $(opts.selectors.cloneSync+'.'+k).val(v);
