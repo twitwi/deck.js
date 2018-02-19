@@ -5,10 +5,16 @@ This repository is a merge of:
 - the deck.events.js extension project (+ my patch)
 - all my extensions (SVG, anim, clone/presenter view, ...)
 
+If you want to start using `deck.js` with these extensions, have a look at [the starter kit](https://github.com/twitwi/deck.js-starterkit/) at <https://github.com/twitwi/deck.js-starterkit/>.
+
+----
 
 NB: the README below is the one from deck.js, as is.
 
 
+----
+----
+---- 
 #deck.js
 
 A JavaScript library for building modern HTML presentations. deck.js is flexible enough to let advanced CSS and JavaScript authors craft highly customized decks, but also provides templates and themes for the HTML novice to build a standard slideshow.
