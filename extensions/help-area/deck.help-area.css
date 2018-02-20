@@ -1,0 +1,43 @@
+.helparea-div {
+  position: absolute;
+  overflow: hidden;
+  z-index: 5;
+  /* */
+  right: 15%;
+  width: 70%;
+  bottom: 0;
+  /* */
+  background: rgba(50, 70, 50, 0.9);
+  border: 2px solid lime;
+  border-bottom: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.helparea-div .helparea {
+  overflow: auto;
+  min-height: 300px;
+  max-height: 700px; /* overriden by the progress extension if available */
+}
+.helparea-div .helparea h3 {
+  padding: .6em;
+}
+.helparea-div .helpkeys {
+  display: grid;
+  grid-template-columns: 100px auto;
+}
+.helparea-div .helpkeys>div:nth-of-type(2n+1) {
+  text-align: center;
+}
+
+.helparea-div {
+  display: none;
+}
+.deck-helparea .helparea-div {
+  display: block;
+}
+
+@media print {
+  .helparea-div {
+    display: none;
+  }
+}
