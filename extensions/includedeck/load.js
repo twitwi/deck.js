@@ -2,7 +2,7 @@
 /*!
  * Includedeck.
  *
- * Copyright (c) 2013-2017 Rémi Emonet.
+ * Copyright (c) 2013-2018 Rémi Emonet.
  * Licensed under the MIT license.
  * https://github.com/imakewebthings/deck.js/blob/master/MIT-license.txt
  *
@@ -215,13 +215,28 @@ function includedeck(m, c) {
     // TODO?: handle default extensions (deck.js/extensions/N/deck.N.{js,css}
     // TODO?: some should come before others, e.g. anim before svg, (or before any (deck) or before most (loading...))
 
-    // if there are two '#' in the url, take everything after the second as a theme name
+    // if there are two '#' in the url, take everything after the second as a theme name or session storage settings
     var forceTheme = null;
-    if ((typeof ACTUALLY_EXPORT_A_LIST_OF_FILES == 'undefined') && (window.location.hash.replace(/[^#]/gi, '').length == 2)) {
-        var theme = window.location.hash.replace(/^.*#/gi, '')
-        var base = window.location.hash.replace(/#[^#]*$/gi, '')
-        forceTheme = theme;
-        window.location.hash = base;
+    if ((typeof ACTUALLY_EXPORT_A_LIST_OF_FILES == 'undefined') && (window.location.hash.replace(/[^#]/gi, '').length >= 2)) {
+        var parts = window.location.hash.split(/\b(?=#)/); // split just before a #
+        for (i in parts) {
+            if (parts[i].startsWith("##t:")) {
+                // TODO consider force-adding the theme to the list (currently it will load only if theme:... is in the list)
+                forceTheme = parts[i].substr(4);
+            } else if (parts[i].startsWith("##s:") || parts[i].startsWith("##l:")) {
+                var storage = parts[i].startsWith("##s:") ? window.sessionStorage : window.localStorage;
+                var expr = parts[i].substr(4);
+                if (expr.replace(/[^=]/gi, '').length == 0) {
+                    storage[expr] = true;
+                } else {
+                    var k = expr.split("=", 1)[0];
+                    var v = expr.substr(1+k.length);
+                    storage[k] = v;
+                }
+            } else if (parts[i].startsWith("#")) {
+                window.location.hash = parts[i];
+            }
+        }
     }
 
     var toLoad = [];
