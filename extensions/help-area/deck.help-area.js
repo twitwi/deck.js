@@ -32,6 +32,8 @@ tools that have no key binding and edition of rare configuration variables.
           .append($('<h3/>').text('Help, Tools and Configuration'))
           .append($('<h4/>').text('Keys'))
           .append($('<div/>').addClass('helpkeys'))
+          .append($('<h4/>').text('Session Variables'))
+          .append($('<div/>').addClass('sessionvars'))
         )
       .appendTo($.deck('getContainer'));
     }
@@ -104,6 +106,49 @@ tools that have no key binding and edition of rare configuration variables.
       .appendTo($('.helparea-div .helpkeys'))
       $('<div/>').text(docStringOrElement)
       .appendTo($('.helparea-div .helpkeys'))
+  });
+
+  /*
+  jQuery.deck('helpSessionStorage', storageKey, docStringOrElement, editable=true, clearable=true)
+
+  Adds a viewer/editor for a session storage value.
+  */
+  $.deck('extend', 'helpSessionStorage', function(key, docStringOrElement, editable, clearable) {
+    var editable = (typeof editable !== 'undefined') ? editable : true;
+    var clearable = (typeof clearable !== 'undefined') ? clearable : true;
+    var options = $.deck('getOptions');
+    var input = $('<input/>').val(window.sessionStorage.getItem(key));
+    var div2 = $('<div/>');
+    $('<span/>').text(docStringOrElement).appendTo(div2);
+    $(input).appendTo(div2);
+    $('<div/>').text(key).appendTo($('.helparea-div .sessionvars'));
+    $(div2).appendTo($('.helparea-div .sessionvars'));
+
+    if (!editable) {
+      $(input).prop('enabled', false);
+    }
+    var saveForUndo = null;
+    var span = $('<span>⤬</span>');
+    input.change(function() {
+      window.sessionStorage.setItem(key, $(this).val());
+      saveForUndo = null;
+      $(this).text('⤬');
+    });
+    span.click(function() {
+      if (saveForUndo == null) {
+        saveForUndo = window.sessionStorage.getItem(key);
+        window.sessionStorage.removeItem(key);
+        input.val('');
+        $(this).text('⟲');
+      } else {
+        window.sessionStorage.setItem(key, saveForUndo);
+        saveForUndo = null;
+        $(this).text('⤬');
+      }
+    });
+    if (clearable) {
+      span.appendTo(div2);
+    }
   });
 
   /*

@@ -21,11 +21,20 @@
 .helparea-div .helparea h3 {
   padding: .6em;
 }
+/* */
 .helparea-div .helpkeys {
   display: grid;
   grid-template-columns: 100px auto;
 }
 .helparea-div .helpkeys>div:nth-of-type(2n+1) {
+  text-align: center;
+}
+/* */
+.helparea-div .sessionvars {
+  display: grid;
+  grid-template-columns: 100px auto;
+}
+.helparea-div .sessionvars>div:nth-of-type(2n+1) {
   text-align: center;
 }
 
