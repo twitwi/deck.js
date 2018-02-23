@@ -93,7 +93,7 @@ tools that have no key binding and edition of rare configuration variables.
   });
 
   /*
-  jQuery.deck('helpAdvertiseKey')
+  jQuery.deck('helpAdvertiseKey', keyPath, docStringOrElement)
 
   Add a key binding in the help area, from its keyPath.
   The keypath is what to put after options.keys, to get the key code.
