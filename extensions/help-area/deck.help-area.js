@@ -189,5 +189,8 @@ tools that have no key binding and edition of rare configuration variables.
     bindKeyEvents();
     $.deck('helpAdvertiseKey', 'helparea', 'Toggle this help area');
   });
+
+  // show other extensions that this extension has been loaded
+  window.helpAreaAvailable = 1.0;
 })(jQuery);
 
