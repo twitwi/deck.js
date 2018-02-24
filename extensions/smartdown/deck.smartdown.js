@@ -449,8 +449,22 @@ This is actually the third try and it uses showdown.js (1st: smartsyntax, 2nd: s
             //console.log(slide, tree[s], slide.firstChild.textContent);
             slide = tree[s]; // the slide potentially got replaced
 
-            // TODO used to:: cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list, but it would break the decorations) ..... check it still poses a real problem
-
+            // cleanup: first, remove first "p" in a "li" (happens when one put an empty line in a bullet list) (this cleanup is non-compliant, but it is convenient)
+            (function patch(tree){ // tree is slide or a subelement
+                eachNode(tree, function(i, node) {
+                    if (isElement(node)) {
+                        console.log(node.children.length);
+                        if (node.tagName.match(/^li$/i) && node.children.length >= 1) {
+                            var p = node.children[0];
+                            if (p.tagName.match(/^p$/i)) {
+                                $(p).contents().unwrap();
+                            }
+                        } else {
+                            patch(node);
+                        }
+                    }
+                });
+            })(slide);
             // process @anim... and {} decoration
             eachTextNodeRecursive(slide, function(i, node) {
                 // return -1 means reprocess from the same position
