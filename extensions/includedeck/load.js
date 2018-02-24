@@ -149,10 +149,14 @@ function includedeck(m, c) {
             prefix + "/extensions/annotate/deck.annotate.css",
             prefix + "/extensions/annotate/deck.annotate.js",
         ],
+        "help-area": [
+            prefix + "/extensions/help-area/deck.help-area.css",
+            prefix + "/extensions/help-area/deck.help-area.js",
+        ],
         // Style extensions
         "style-chunks": [
-	    prefix + "/extensions/style-chunks/simple.css",
-	    prefix + "/extensions/style-chunks/comments.css"
+	          prefix + "/extensions/style-chunks/simple.css",
+	          prefix + "/extensions/style-chunks/comments.css"
         ],
         "highlight": [
             prefix + "/extensions/highlight/github.min.css",
@@ -164,6 +168,11 @@ function includedeck(m, c) {
         "profile-6-incubator": [
             prefix + "/extensions/incubator/simple-layouts.css",
             prefix + "/extensions/incubator/toggle-comments.js"
+        ],
+        "profile-8-incubator": [
+            prefix + "/extensions/incubator/simple-layouts.css",
+            prefix + "/extensions/incubator/toggle-comments.js",
+            prefix + "/extensions/incubator/author-tools.js"
         ],
         /////////////////////////////////////////
         // external extensions (not in this repository at the time of writting)
@@ -200,6 +209,9 @@ function includedeck(m, c) {
         /// profile-7: same as profile 6 with savedom added
         "profile-7": ["@_newdeck", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
                       "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_profile-6-incubator", "@_savedom", "@_annotate"],
+        /// profile-8: same as profile 7 with help-area added (and updates)
+        "profile-8": ["@_newdeck", "@_help-area", "@_smartdown", "@_fit-fs", "@_katex", "@_clone", "@_goto", "@_progress", "@_navigation", "@_menu", "@_step", "@_events", "@_anim", "@_svg",
+                      "@_metadata", "@_attribution", "@_container-styling", "@_timekeeper", "@_style-chunks", "@_highlight", "@_savedom", "@_annotate", "@_profile-8-incubator"],
         dummy: {}
     };
 
