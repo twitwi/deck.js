@@ -183,7 +183,7 @@ It also provides the behavior that copies the current "notes" to a "notes-target
             /* bind clone key events */
             $d.unbind('keydown.deckclone').bind('keydown.deckclone', function(e) {
                 if (e.which === opts.keys.clone || $.inArray(e.which, opts.keys.clone) > -1) {
-                    if (e.ctrlKey) return; // do not trigger on Ctrl+C (by default)
+                    if (e.ctrlKey || e.metaKey) return; // do not trigger on Ctrl+C (by default)
                     $[deck]('addClone');
                     window.___iscloner___ = true;
                     e.preventDefault();
