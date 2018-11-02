@@ -210,6 +210,9 @@ on the deck container.
     bindKeyEvents();
     bindTouchEvents();
     setupMenuSlideSelection();
+    if (window.helpAreaAvailable) { // always add, as a means of discovery
+      $.deck('helpAdvertiseKey', 'menu', 'Open slide selector (menu)');
+    }
   });
 
   $document.bind('deck.change', function(event, from, to) {
