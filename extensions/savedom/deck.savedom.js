@@ -84,5 +84,8 @@ The feature is useful in the process of make a single-file presentation.
                 $[deck]('saveDOM');
             }
         });
+        if (window.helpAreaAvailable) { // always add, as a means of discovery
+            $.deck('helpAdvertiseKey', 'saveDOM', 'Dump current slides (DOM) to a .html file');
+        }
     });
 })(jQuery, 'deck');
