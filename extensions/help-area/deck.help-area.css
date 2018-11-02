@@ -24,7 +24,7 @@
 /* */
 .helparea-div .helpkeys {
   display: grid;
-  grid-template-columns: 100px auto;
+  grid-template-columns: 150px auto;
 }
 .helparea-div .helpkeys>div:nth-of-type(2n+1) {
   text-align: center;
@@ -44,7 +44,21 @@
 .deck-helparea .helparea-div {
   display: block;
 }
-
+.helpkeys .kbd {
+  background-color: rgb(225, 227, 229);
+  border-color: rgb(173, 179, 185);
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset;
+  color: rgb(36, 39, 41);
+  display: inline-block;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  margin: 0 1.1px;
+  padding: 1.1px 6.6px;
+  text-shadow: rgb(255, 255, 255) 0px 1px 0px;
+  font-size: 18px;
+}
 @media print {
   .helparea-div {
     display: none;

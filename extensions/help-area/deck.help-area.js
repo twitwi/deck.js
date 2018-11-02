@@ -94,6 +94,34 @@ tools that have no key binding and edition of rare configuration variables.
     },
   });
 
+    var formatKeys = function(o, k) {
+      var special = {
+        37: '🡐',
+        38: '🡒',
+        39: '🡑',
+        40: '🡓',
+        33: '⇞',
+        34: '⇟',
+        8:  '⟵',
+        13: '⏎',
+        32: '␣',
+      };
+      var keyString = function(o) {
+        return special[o] || String.fromCharCode(o).toLowerCase();
+      };
+      var wrap = function(o) {
+        return '<span class="kbd">'+o+'</span>';
+      };
+      var path = ("keys."+k).split('.');
+      for (var i in path) {
+        o = o[path[i]];
+        if (typeof o === 'undefined') { return "NOTFOUND "+path; }
+      }
+      if (!Array.isArray(o)) {
+          o = [o];
+      }
+      return o.map(keyString).map(wrap).join(' ');
+    }
   /*
   jQuery.deck('helpAdvertiseKey', keyPath, docStringOrElement)
 
@@ -102,7 +130,7 @@ tools that have no key binding and edition of rare configuration variables.
   */
   $.deck('extend', 'helpAdvertiseKey', function(keyPath, docStringOrElement) {
     var options = $.deck('getOptions');
-      $('<div/>').text(String.fromCharCode(options.keys[keyPath])).attr('title', keyPath) // TODO parse foo.bar.foo and handle list with modifiers
+      $('<div/>').html(formatKeys(options, keyPath)).attr('title', keyPath) // TODO parse foo.bar.foo and handle list with modifiers
       .appendTo($('.helparea-div .helpkeys'))
       $('<div/>').text(docStringOrElement)
       .appendTo($('.helparea-div .helpkeys'))
