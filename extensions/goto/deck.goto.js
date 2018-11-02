@@ -214,6 +214,9 @@ the deck container.
     populateDatalist();
     markRootSlides();
     handleFormSubmit();
+    if (window.helpAreaAvailable) { // always add, as a means of discovery
+      $.deck('helpAdvertiseKey', 'goto', 'Go to slide');
+    }
   });
 })(jQuery);
 
