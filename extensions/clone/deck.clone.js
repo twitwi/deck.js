@@ -190,6 +190,10 @@ It also provides the behavior that copies the current "notes" to a "notes-target
                 }
             });
         }
+
+        if (window.helpAreaAvailable) { // always add, as a means of discovery
+            $.deck('helpAdvertiseKey', 'clone', 'Pop-up a clone window for the presenter view');
+        }
     })
     /* Update current slide number with each change event */
     .bind('deck.change', function(e, from, to) {
