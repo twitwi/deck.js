@@ -611,6 +611,9 @@
           cv.redraw();
         }
       }
+      if (window.helpAreaAvailable) { // always add, as a means of discovery
+        $.deck('helpAdvertiseKey', 'annotate.toggleCanvas', 'Toggle paint tools (manual slide annotation)');
+      }
     });
     
     $d.bind('keyup.deck', function(e){
