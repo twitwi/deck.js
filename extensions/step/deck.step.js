@@ -172,6 +172,14 @@ It also adds provides better handling of subslides, for the purpose of animation
                 $[deck]('previousEndOfTopLevelSlide');
             }
         });
+        if (window.helpAreaAvailable) { // always add, as a means of discovery
+            $.deck('helpAdvertiseKey', 'previous', 'Step/animate back to the previous (inner) slide');
+            $.deck('helpAdvertiseKey', 'next', 'Step/animate to the next (inner) slide');
+            $.deck('helpAdvertiseKey', 'previousEndOfTopLevel', 'View previous top-level slide');
+            $.deck('helpAdvertiseKey', 'nextEndOfTopLevel', 'View next top-level slide');
+            $.deck('helpAdvertiseKey', 'nextTopLevel', 'Skip to the (start of the) next slide');
+            $.deck('helpAdvertiseKey', 'previousTopLevel', 'Go back to the start of the Previous slide');
+        };
     });
     // When jumping (not steping), we will init the subslides (in case they are animations), in a backward order, and then fast forward necessary animations
     var bigJump = function(from, to) {
