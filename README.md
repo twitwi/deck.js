@@ -1,4 +1,10 @@
 
+(I'm switching to https://sli.dev/ and not actively maintaining the nuedeck project)
+
+---
+
+
+
 This repository is a merge of:
 
 - the main deck.js project
