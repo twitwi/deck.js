@@ -1,5 +1,5 @@
 
-(I'm switching to https://sli.dev/ and not actively maintaining the nuedeck project)
+(I'm switching to https://sli.dev/ and not actively maintaining this deck.js fork)
 
 ---
 
